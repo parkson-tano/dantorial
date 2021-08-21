@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} dantorial {%endblock title %}
+{% block carousel %}
+<div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true"
+            aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+        {% for caro in carousel|slice:":3" %} {% if forloop.first %}
+        <div class="carousel-item active" data-bs-interval="4000">
+            {% else %}5
+            <div class="carousel-item" data-bs-interval="4000">
+                {% endif %}
+                <img class="bd-placeholder-img" src="{{ caro.image.url }}" alt="" style="
+            max-height: 100vh;
+            max-width: 100%;
+            height: auto;
+            width: 100%;
+            display: block;
+          " />
+                <div class="container">
+                    <div class="carousel-caption text-start">
+                        <h1>{{ caro.title }}</h1>
+                        <p>{{ caro.text }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+{% endblock carousel %} {% block content %}
+<form action="" class="h-100 p-5 text-dark bg-dark rounded-3">
+    <div class="row align-items-md-stretch">
+        <div class="col-sm-6 col-lg-1">
+            <div class="input-group mb-3">
+                <select class="form-select" id="inputGroupSelect02">
+                    <option selected>Who are you?</option>
+                    <option value="1">Teacher</option>
+                    <option value="2">Student</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-2">
+            <div class="input-group mb-3">
+                <select class="form-select select-picker" data-live-search="true" id="inputGroupSelect02">
+                    {% for coun in country %}
+                    <option value="{{coun.id}}">{{ coun.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="col-sm-4 col-lg-2">
+            <div class="input-group mb-3">
+                <select class="form-select select-picker" data-live-search="true" id="inputGroupSelect02">
+                    {% for reg in regions %}
+                    <option value="{{reg.id}}">{{reg.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="col-sm-4 col-lg-2">
+            <div class="input-group mb-3">
+                <select class="form-select select-picker" id="inputGroupSelect02" data-live-search="true">
+                    {% for sub_reg in subregion %}
+                    <option value="{{sub_reg.id}}">{{ sub_reg.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="col-sm-4 col-lg-2">
+            <div class="input-group mb-3">
+                <select class="form-select select-picker" id="inputGroupSelect02" data-live-search="true">
+                    {% for cit in city %}
+                    <option value="{{cit.id}}">{{ cit.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="col-sm-10 col-lg-2">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Quater" aria-label="Quater"
+                    aria-describedby="basic-addon1" />
+            </div>
+        </div>
+        <div class="col-sm-2 col-lg-1">
+            <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+    </div>
+</form>
+<div class="container">
+    <div class="row mb-3">
+        <div class="col-lg-12">
+            <h3 class="text-center">Browse By Category</h3>
+            <div class="row">
+                {% for caro in carousel %}
+                <div class="col-sm-6 col-lg-3 mt-2">
+                    <div class="card" style="width: 100%">
+                        <img src="{{caro.image.url}}" class="card-img-top" alt="..." />
+                        <div class="card-body">
+                            <h3 class="card-title">Secondary School</h3>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="d-grid gap-2 col-sm-6 col-lg-3 mx-auto mt-2">
+                <button class="btn btn-primary" type="button">See All Category</button>
+            </div>
+            <div class="row mb-4">
+                <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3 mb-3">
+                    <div class="col-lg-6 bg-success mt-2 mb-2 me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+                        <div class="my-3 p-3">
+                            <h2 class="display-3">Looking for Profile Home Lesson Teacher?</h2>
+                            <p class="lead">Study their profile and get in touch with the best for your children</p>
+                        </div>
+                        <div class="bg-dark shadow-sm mx-auto"
+                            style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+                    </div>
+                    <div class="col-lg-6 bg-primary me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+                        <div class="my-3 py-3">
+                            <h2 class="display-5">Are you a skill student or teacher?</h2>
+                            <p class="lead">Find students in need of your help around you</p>
+                        </div>
+                        <div class="bg-light shadow-sm mx-auto"
+                            style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-5">
+                <h3 class="text-center">Browse By Subject</h3>
+                <div class="row">
+                    {% for caro in carousel %}
+                    <div class="col-sm-6 col-lg-3 mt-2">
+                        <div class="card" style="width: 100%">
+                            <img src="{{caro.image.url}}" class="card-img-top rounded" alt="..." />
+                            <div class="card-body">
+                                <h3 class="card-title">Chemistry</h3>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="d-grid gap-2 col-sm-6 col-lg-4 mx-auto mt-2">
+                    <button class="btn btn-primary" type="button">See All Subject</button>
+                </div>
+            </div>
+            <div class="row align-items-md-stretch mb-3">
+                {% for caro in carousel %}
+                <div class="col-lg-3 col-sm-6 me-0 ml-0 mb-2 p-1">
+                    <div class="card y-0 mr-auto ml-auto me-0" style="width: 100%">
+                        <img src="{{caro.image.url}}" class="card-img-top rounded-circle" alt="..." />
+                        <div class="card-body">
+                            <h3 class="card-title">connect nad search</h3>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="d-grid gap-2 col-sm-6 col-lg-4 mx-auto mt-2 mb-3">
+                <button class="btn btn-primary" type="button">Register today!!!</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
