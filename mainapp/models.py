@@ -56,8 +56,8 @@ ACC = (
 )
 
 GENDER = (
-    ('male', 'male'), 
-    ('female', 'female')
+    ('male', 'Male'), 
+    ('female', 'Female')
 )
 
 class ProfilePersonal(models.Model):
@@ -68,12 +68,13 @@ class ProfilePersonal(models.Model):
     first_name = models.CharField(max_length=30,null=True, blank=True)
     last_name = models.CharField(max_length=30, null=True, blank=True)
     phone_number = models.CharField(max_length=15, null=True, blank=True)
-    country = models.ForeignKey(Country, on_delete=models.PROTECT)
+    country = models.ForeignKey(Country, on_delete=models.PROTECT, default='1')
     region = ChainedForeignKey(Region, chained_field="country",
         chained_model_field="country",
         show_all=False,
         auto_choose=True,
-        sort=True)
+        sort=True,
+        default=1)
     # subregion = ChainedForeignKey(SubRegion, chained_field="region",
     #     chained_model_field="region",
     #     show_all=False,
@@ -95,14 +96,14 @@ class ProfilePersonal(models.Model):
     def __str__(self):
         return self.user.username
 
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     super().save(*args, **kwargs)
 
-        img = Image.open(self.profile_pic.path)
-        if img.height >100 or img.width>100:
-            output_size = (200,200)
-            img.thumbnail(output_size)
-            img.save(self.profile_pic.path)
+    #     img = Image.open(self.profile_pic.path)
+    #     if img.height >100 or img.width>100:
+    #         output_size = (200,200)
+    #         img.thumbnail(output_size)
+    #         img.save(self.profile_pic.path)
 
 @receiver(post_save,sender=User)
 def create_profile(sender,instance,created,**kwargs):
@@ -134,12 +135,21 @@ def save_profile(sender,instance,**kwargs):
 class Subject(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name ='user_category')
-    subcategory = models.ForeignKey(SubCategory, on_delete=models.CASCADE, related_name ='user_subcategory')
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name ='user_subject')
-    target = models.CharField(max_length=30, choices=TAG, null=True, blank=True)
+    subcategory = ChainedForeignKey(SubCategory, chained_field="category",
+        chained_model_field="category",
+        show_all=False,
+        auto_choose=True,
+        sort=True, related_name="user_subcategory")
+    
+    subject = ChainedForeignKey(Subject, chained_field="subcategory",
+        chained_model_field="subcategory",
+        show_all=False,
+        auto_choose=True,
+        sort=True, related_name="user_subject")
+    level = models.CharField(max_length=30, choices=TAG, null=True, blank=True)
     charge = models.CharField(max_length=30, choices=CHARGE, null=True, blank=True)
     amount = models.FloatField(null=True, blank=True)
 
     def __str__(self):
-        return self.user
+        return self.user.username
  

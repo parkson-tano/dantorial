@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+profile
+{% endblock title %}
+{% block content %}
+<!-- <div style="margin-top: 100px;">
+  {{userprofile.user}}
+
+  {% for s in userprofile.user.subject_set.all %}
+  {{s.amount}}
+  {% endfor %} -->
+<h3>{{product.title}}</h3>
+<hr>
+<div class="row">
+  <div class="col-md-7">
+    <img src=" {{userprofile.profile_pic.url}} " alt="" style="width:100%; object-fit: contain;" class="rounded">
+    <div class='row mt-3'>
+      <h3 class='text-center'>Subjects</h3>
+      <hr>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Subject</th>
+            <th>Level</th>
+            <th>Fee</th>
+            <!-- <th>Action</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          {% for subject in userprofile.user.subject_set.all %}
+          <tr>
+            <td> {{ subject.category }}</td>
+            </td>
+            <td> {{ subject.subject }}</td>
+            <td> {{ subject.level }} </td>
+            <td> {{ subject.amount }} </td>
+
+            {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col-md-5">
+    <div class="card" style="width: 100%;">
+      <h4 class="text-center">Personal Information</h4>
+      <hr>
+      <div class="card-body">
+        <h2 class="card-subtitle">{{userprofile.first_name}} {{userprofile.last_name}}</h2>
+
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><strong>Account: </strong> <em>{{ userprofile.account_type|capfirst}}</em> </li>
+        <li class="list-group-item"><strong>Age:</strong> <em>{{userprofile.date_of_birth|timesince}}</em> </li>
+        <li class="list-group-item"><strong>Gender:</strong> <em>{{userprofile.gender|capfirst}}</em> </li>
+        <li class="list-group-item"><strong>Location:</strong> {{userprofile.region}}</li>
+        <li class="list-group-item"><strong>Language:</strong> {{userprofile.user.profileinfo.language}}</li>
+        <li class="list-group-item"><strong>Level of Education:</strong> {{userprofile.level_of_education}} </li>
+        <li class="list-group-item"><strong>Address: </strong> {{userprofile.address_1|capfirst}},
+          {{userprofile.address_2|capfirst}}</li>
+        <li class="list-group-item"><strong>contact:</strong> {{userprofile.phone_number}}</li>
+      </ul>
+      <div class="card-body">
+        <a href="#" class="btn btn-primary">Send a message</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-10 mb-5">
+    <section id="components">
+      <h2 class="sticky-xl-top fw-bold pt-3 pt-xl-5 pb-2 pb-xl-3">Professional Information</h2>
+
+      <article class="my-3" id="accordion">
+        <div>
+          <div class="bd-example">
+            <div class="accordion" id="accordionExample">
+              <div class="accordion-item">
+                <h4 class="accordion-header" id="headingOne">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                    aria-expanded="true" aria-controls="collapseOne">
+                    Bio
+                  </button>
+                </h4>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                  data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    <strong> {{userprofile.user.profileinfo.bio}}</strong>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h4 class="accordion-header" id="headingTwo">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Experience
+                  </button>
+                </h4>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                  data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    <strong> {{ userprofile.user.profileinfo.experience }} </strong>
+                  </div>
+                </div>
+              </div>
+        
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+  </div>
+
+
+  {% endblock content %}

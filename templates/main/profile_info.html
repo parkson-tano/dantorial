@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+login
+{% endblock title %}
+{% block content %}
+
+<body>
+    <div class="container-fluid p-0">
+        <div class="row mt-5">
+            <div class="col-sm-4 col-md-4 col-lg-3 mx-auto">
+                <div class="card border-0 shadow rounded-3 my-5">
+                    <div class="card-body p-0 p-sm-0">
+                        <div class="list-group mx-auto">
+                            <a href="{% url 'dantorial:profile' %}"
+                                class="list-group-item list-group-item-action">
+                                Personal Information
+                            </a>
+                            <a href="{% url 'dantorial:profile-info' %}"
+                                class="list-group-item list-group-item-action active">Profile Information</a>
+                            <a href="{% url 'dantorial:my-subject' %}"
+                                class="list-group-item list-group-item-action">My Subjects</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8 col-md-8 col-lg-7 mx-auto">
+                <div class="card border-0 shadow rounded-3 my-5">
+                    <div class="card-body p-2 p-sm-5">
+                        <h5 class="card-title text-center mb-3 fw-light fs-5">Profile Information</h5>
+                        <h5>
+                            Language: {{profile_info.language|capfirst}}
+                        </h5>
+                        <h5>
+                            Bio: {{profile_info.bio}}
+                        </h5>
+                        <h5>
+                            Experience: {{profile_info.experience|capfirst}}
+                        </h5>
+
+                        <hr class="my-4">
+                        <div class="d-grid">
+                            <a href="{% url 'dantorial:profile-info-edit' user.profileinfo.id%}"
+                                class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">Edit Profile</a>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <script src="/static/smart-selects/admin/js/chainedfk.js"></script>
+<script src="/static/smart-selects/admin/js/bindfields.js"></script> -->
+</body>
+
+
+{% endblock content %}

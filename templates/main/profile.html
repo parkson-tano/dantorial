@@ -1,6 +1,87 @@
-{{profile.user}} <br>
-{{ profile.first_name }} <br>
-{{ profile.last_name }} <br>
-{{ profile.email_address }} <br>
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+login
+{% endblock title %}
+{% block content %}
 
-<a href='{% url "dantorial:profile_edit" profile.id %}' >cjhh</a>
+<body>
+    <div class="container-fluid p-0">
+        <div class="row mt-5">
+            <div class="col-sm-4 col-md-4 col-lg-3 mx-auto">
+                <div class="card border-0 shadow rounded-3 my-5">
+                    <div class="card-body p-0 p-sm-0">
+                        <div class="list-group mx-auto">
+                            <a href="{% url 'dantorial:profile'  %}"
+                                class="list-group-item list-group-item-action active">
+                                Personal Information
+                            </a>
+                            <a href="{% url 'dantorial:profile-info' %}"
+                                class="list-group-item list-group-item-action">Profile Information</a>
+                            <a href="{% url 'dantorial:my-subject'%}"
+                                class="list-group-item list-group-item-action">My Subjects</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8 col-md-8 col-lg-7 mx-auto">
+                <div class="card border-0 shadow rounded-3 my-5">
+                    <div class="card-body p-2 p-sm-5">
+                        <h5 class="card-title text-center mb-3 fw-light fs-5">Personal Information</h5>
+                        <div class="text-center">
+                            <img src="{{profile.profile_pic.url}}" class="rounded-circle" alt="..." style="width:400px;">
+                        </div>
+                        <h5>
+                            Account Type: {{profile.account_type|capfirst}}
+                        </h5>
+                        <h5>
+                            Username: {{profile.user.username}}
+                        </h5>
+                        <h5>
+                            Account Name: {{profile.first_name}} {{profile.last_name}}
+                        </h5>
+                        <h5>
+                            Title: {{profile.title|capfirst}}
+                        </h5>
+                        <h5>
+                            Gender: {{profile.gender|capfirst}}
+                        </h5>
+                        <h5>
+                            Phone_Number: {{profile.phone_number}}
+                        </h5>
+                        <!-- <h5>
+                            Country: {{profile.country|capfirst}}
+                        </h5> -->
+                        <h5>
+                            Region: {{profile.region|capfirst}}
+                        </h5>
+                        <h5>
+                            Level of education: {{profile.level_of_education|capfirst}}
+                        </h5>
+                        <h5>
+                            Date of Birth: {{profile.date_of_birth}}
+                        </h5>
+                        <h5>
+                            Address: {{profile.address_1|capfirst}}
+                        </h5>
+                        <h5>
+                            Address#2: {{profile.address_2|capfirst}}
+                        </h5>
+
+                        <hr class="my-4">
+                        <div class="d-grid">
+                            <a href="{% url 'dantorial:profile-edit' user.profilepersonal.id%}"
+                                class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">Edit Profile</a>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <script src="/static/smart-selects/admin/js/chainedfk.js"></script>
+<script src="/static/smart-selects/admin/js/bindfields.js"></script> -->
+</body>
+
+
+{% endblock content %}

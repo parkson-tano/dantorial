@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+login
+{% endblock title %}
+{% block content %}
+    <div class="container-fluid p-0">
+        <div class="row mt-5">
+            <div class="col-sm-6 col-md-6 col-lg-3 mx-auto">
+                <div class="card border-0 shadow rounded-3 my-5">
+                    <div class="card-body p-0 p-sm-0">
+                        <div class="list-group mx-auto">
+                            <a href="{% url 'dantorial:profile' %}"
+                                class="list-group-item list-group-item-action">
+                                Personal Information
+                            </a>
+                            <a href="{% url 'dantorial:profile-info' %}"
+                                class="list-group-item list-group-item-action">Profile Information</a>
+                            <a href="{% url 'dantorial:my-subject' %}"
+                                class="list-group-item list-group-item-action active">My Subjects</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-7 mx-auto">
+                <div class="card border-0 shadow rounded-3 my-0 my-lg-5">
+                    <div class="card-body p-2 p-sm-5">
+                        <h5 class="card-title text-center mb-3 fw-light fs-5">Profile Information</h5>
+                        <table class="table">
+            <thead>
+                <tr>
+                    <th>SN</th>
+                    <th>Category</th>
+                    <th>SubCategory</th>
+                    <th>subject</th>
+                    <th>Level</th>
+                    {% if user.profilepersonal.account_type == 'tutor'%}
+                      <th>Charge</th>
+                      <th>Amount</th>
+                    {% endif %}
+                    <!-- <th>Action</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for ord in subject %}
+                <tr>
+                    <td> {{ forloop.counter }} </td>
+                    <td> {{ ord.category }}</td>
+                    <td> {{ ord.subcategory }} </td>
+                    <td> {{ ord.subject }} </td>
+                    <td> {{ ord.level }} </td>
+                    {% if user.profilepersonal.account_type == 'tutor'%}
+                    <!-- <td> {{ forloop.counter }} </td>
+                    <td> {{ ord.category }}</td>
+                    <td> {{ ord.subcategory }} </td>
+                    <td> {{ ord.subject }} </td>
+                    <td> {{ ord.level }} </td> -->
+                    <td> {{ ord.charge }} </td>
+                    <td> {{ ord.amount }} </td>
+                    {% endif %}
+
+                    <!-- <td> <a href="#" class="btn btn-danger"> Remove</a> </td> -->
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+                        <hr class="my-4">
+                        <div class="d-grid">
+                            <a href="{% url 'dantorial:add-subject'%}"
+                                class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">Add Subject</a>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <script src="/static/smart-selects/admin/js/chainedfk.js"></script>
+<script src="/static/smart-selects/admin/js/bindfields.js"></script> -->
+
+
+
+{% endblock content %}

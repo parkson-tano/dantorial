@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from .models import *
 
+from category.models import Category
 from datetime import date
 from django import forms
 
@@ -63,7 +64,7 @@ class UserRegistrationForm(forms.ModelForm):
 class PersonalProfileForm(forms.ModelForm):
     class Meta:
         model = ProfilePersonal
-        fields = ['account_type', 'title', 'first_name', 'last_name', 
+        fields = ['account_type', 'title', 'gender','first_name', 'last_name', 
         'phone_number','country', 'region','date_of_birth', 'address_1', 'address_2', 'level_of_education', 'profile_pic']
 		
 
@@ -193,16 +194,16 @@ class  ProfileInfoForm(forms.ModelForm):
 #         }
 
 class UserLoginForm(forms.Form):
-    username = forms.CharField()
+    username = forms.CharField(widget=forms.TextInput)
     password = forms.CharField(widget=forms.PasswordInput)
-    widgets = {
-			"username": forms.TextInput(attrs= { 
-				'name' : 'username',
-				'class': 'form-control',
-				'id' : "floatingInput",
-				'required' : True,
-                'placeholder':"name@example.com"
-			}),
+    # widgets = {
+	# 		"username": forms.TextInput(attrs= { 
+	# 			'name' : 'username',
+	# 			'class': 'form-control',
+	# 			'id' : "floatingInput",
+	# 			'required' : True,
+    #             'placeholder':"name@example.com"
+	# 		}),
 			# "password": forms.PasswordInput(attrs= { 
 			# 	'name' : 'password',
 			# 	'class': 'form-control',
@@ -210,4 +211,9 @@ class UserLoginForm(forms.Form):
             #     'placeholder':"name@example.com"
 			# 	'required': True,
 			# }),
-    }
+
+
+class AddSubjectForm(forms.ModelForm):
+	class Meta:
+		model = Subject
+		fields = ('category','subcategory','subject','level','charge', 'amount')

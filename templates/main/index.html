@@ -105,12 +105,15 @@
         <div class="col-lg-12">
             <h3 class="text-center">Browse By Category</h3>
             <div class="row">
-                {% for caro in carousel %}
+                {% for cat in all_cat_ind %}
                 <div class="col-sm-6 col-lg-3 mt-2">
                     <div class="card" style="width: 100%">
-                        <img src="{{caro.image.url}}" class="card-img-top" alt="..." />
+                        <img src="{{cat.image.url}}" class="card-img-top" alt="..." />
                         <div class="card-body">
-                            <h3 class="card-title">Secondary School</h3>
+                            <a href="{% url 'dantorial:subcategory' cat.slug %}">
+                                 <h3 class="card-title"> {{cat.name}} </h3>
+                            </a>
+                           
                         </div>
                     </div>
                 </div>
@@ -120,16 +123,16 @@
                 <button class="btn btn-primary" type="button">See All Category</button>
             </div>
             <div class="row mb-4">
-                <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3 mb-3">
-                    <div class="col-lg-6 bg-success mt-2 mb-2 me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+                <div class="d-lg-flex flex-md-equal w-100 my-md-3 ps-md-3 mb-3">
+                    <div class="col-lg-6 col-md-12 bg-success mt-2 mb-2 me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
                         <div class="my-3 p-3">
-                            <h2 class="display-3">Looking for Profile Home Lesson Teacher?</h2>
+                            <h2 class="display-3">Looking for Professional Home Lesson Teacher?</h2>
                             <p class="lead">Study their profile and get in touch with the best for your children</p>
                         </div>
                         <div class="bg-dark shadow-sm mx-auto"
                             style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
                     </div>
-                    <div class="col-lg-6 bg-primary me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+                    <div class="col-lg-6 col-md-12 bg-primary me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
                         <div class="my-3 py-3">
                             <h2 class="display-5">Are you a skill student or teacher?</h2>
                             <p class="lead">Find students in need of your help around you</p>
@@ -141,14 +144,32 @@
             </div>
 
             <div class="mb-5">
-                <h3 class="text-center">Browse By Subject</h3>
+                <h3 class="text-center">Browse By SubCategory</h3>
                 <div class="row">
-                    {% for caro in carousel %}
+                    {% for subcat in all_subcat_ind %}
                     <div class="col-sm-6 col-lg-3 mt-2">
                         <div class="card" style="width: 100%">
-                            <img src="{{caro.image.url}}" class="card-img-top rounded" alt="..." />
+                            <img src="{{subcat.image.url}}" class="card-img-top rounded" alt="..." />
                             <div class="card-body">
-                                <h3 class="card-title">Chemistry</h3>
+                                <h3 class="card-title"> {{subcat.name}} </h3>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="d-grid gap-2 col-sm-6 col-lg-4 mx-auto mt-2">
+                    <button class="btn btn-primary" type="button">See All SubCategory</button>
+                </div>
+            </div>
+            <div class="mb-5">
+                <h3 class="text-center">Browse By SubSubject</h3>
+                <div class="row">
+                    {% for sub in all_sub_ind %}
+                    <div class="col-sm-6 col-lg-3 mt-2">
+                        <div class="card" style="width: 100%">
+                            <img src="{{ sub.image.url }}" class="card-img-top rounded" alt="..." />
+                            <div class="card-body">
+                                <h3 class="card-title"> {{sub.name}} </h3>
                             </div>
                         </div>
                     </div>

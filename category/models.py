@@ -16,6 +16,7 @@ class Category(models.Model):
     # section = models.ForeignKey(Section, on_delete=models.CASCADE)
     name = models.CharField(max_length=40)
     slug = AutoSlugField(populate_from='name')
+    image = models.ImageField(upload_to='category_image', default='default.png')
     date_created = models.DateTimeField(auto_now_add = True)
 
     class Meta:
@@ -31,6 +32,7 @@ class SubCategory(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     slug = AutoSlugField(populate_from='name')
+    image = models.ImageField(upload_to='subcategory_image', default='default.png')
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -43,6 +45,7 @@ class Subject(models.Model):
     subcategory = models.ForeignKey(SubCategory, on_delete=models.PROTECT)
     name = models.CharField(max_length = 40)
     slug = AutoSlugField(populate_from='name')
+    image = models.ImageField(upload_to='subject_image', default='default.png')
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
