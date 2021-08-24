@@ -20,6 +20,12 @@ login
                                 class="list-group-item list-group-item-action active">Profile Information</a>
                             <a href="{% url 'dantorial:my-subject' %}"
                                 class="list-group-item list-group-item-action">My Subjects</a>
+                            {% if user.profilepersonal.account_type == 'tutor' %}
+                            <a href="{% url 'dantorial:my-experience'%}"
+                                class="list-group-item list-group-item-action">My Experience</a>
+                            <a href="{% url 'dantorial:my-qualification'%}"
+                                class="list-group-item list-group-item-action">My Qualification</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -40,7 +46,7 @@ login
 
                         <hr class="my-4">
                         <div class="d-grid">
-                            <a href="{% url 'dantorial:profile-info-edit' user.profileinfo.id%}"
+                            <a href="{% url 'dantorial:profile-info-edit' request.user.profileinfo.id%}"
                                 class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">Edit Profile</a>
                         </div>
                     </div>

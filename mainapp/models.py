@@ -75,6 +75,12 @@ class ProfilePersonal(models.Model):
         auto_choose=True,
         sort=True,
         default=1)
+    city =  ChainedForeignKey(City, chained_field="region",
+        chained_model_field="region",
+        show_all=False,
+        auto_choose=True,
+        sort=True,
+        default=1)
     # subregion = ChainedForeignKey(SubRegion, chained_field="region",
     #     chained_model_field="region",
     #     show_all=False,
@@ -91,6 +97,9 @@ class ProfilePersonal(models.Model):
     level_of_education = models.CharField(max_length=50, choices=EL, null=True, blank=True)
     date_of_birth = models.DateField(default=timezone.now)
     profile_pic = models.ImageField(upload_to='profile_img', default='media/default.png')
+    
+
+
 
 
     def __str__(self):
@@ -139,8 +148,7 @@ class Subject(models.Model):
         chained_model_field="category",
         show_all=False,
         auto_choose=True,
-        sort=True, related_name="user_subcategory")
-    
+        sort=True, related_name="user_subcategory")    
     subject = ChainedForeignKey(Subject, chained_field="subcategory",
         chained_model_field="subcategory",
         show_all=False,
@@ -153,3 +161,23 @@ class Subject(models.Model):
     def __str__(self):
         return self.user.username
  
+
+class Experience(models.Model):
+    user = models.ForeignKey(User, on_delete = models.CASCADE)
+    work_post = models.CharField(max_length=500)
+    position = models.CharField(max_length=500)
+    start_date = models.DateField(null=True, blank=True)
+    end_date = models.DateField(null=True, blank=True)
+
+    def __str__(self):
+        return self.user + ' experience'
+
+class Qualification(models.Model):
+    user = models.ForeignKey(User, on_delete = models.CASCADE)
+    school = models.CharField(max_length=200)
+    certificate = models.CharField(max_length=200)
+    start_year = models.IntegerField()
+    end_year = models.IntegerField()
+
+    def __str__(self):
+        return self.user + ' qualification'

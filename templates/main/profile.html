@@ -20,6 +20,14 @@ login
                                 class="list-group-item list-group-item-action">Profile Information</a>
                             <a href="{% url 'dantorial:my-subject'%}"
                                 class="list-group-item list-group-item-action">My Subjects</a>
+                            
+                            {% if user.profilepersonal.account_type == 'tutor' %}
+                            <a href="{% url 'dantorial:my-experience'%}"
+                                class="list-group-item list-group-item-action">My Experience</a>
+                            <a href="{% url 'dantorial:my-qualification'%}"
+                                class="list-group-item list-group-item-action">My Qualification</a>
+                            {% endif %}
+                            
                         </div>
                     </div>
                 </div>
@@ -72,6 +80,14 @@ login
                         <div class="d-grid">
                             <a href="{% url 'dantorial:profile-edit' user.profilepersonal.id%}"
                                 class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">Edit Profile</a>
+                        </div>
+                        <div class='my-2'>
+                             <form id='delete-profile' method="POST" action="{% url 'dantorial:delete_profile' profile.user.id %}">
+                                        {% csrf_token %}
+                                        <a href="{% url 'dantorial:delete_profile' profile.user.id %}">
+                                            <button class="btn btn-danger btn-login text-uppercase fw-bold"
+                                                onClick="deleteProfileFunction()">Delete Profile</button></a>
+                                    </form>
                         </div>
                     </div>
                    

@@ -4,9 +4,11 @@ from django.views.generic.edit import UpdateView, DeleteView
 from django.db.models import Q
 from django.shortcuts import  redirect, get_object_or_404
 from .models import *
+from django.utils.decorators import method_decorator
+from django.http import Http404
 from location.models import Country, City, Region, SubRegion
 from category.models import Category, SubCategory
-from .forms import AddSubjectForm, UserLoginForm, UserRegistrationForm, PersonalProfileForm, ProfileInfoForm
+from .forms import AddSubjectForm, UserLoginForm, UserRegistrationForm, PersonalProfileForm, ProfileInfoForm, AddExperienceForm, AddQualificationForm
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy, reverse
@@ -22,6 +24,7 @@ from django.contrib.auth.forms import PasswordChangeForm, UserChangeForm, Passwo
 from django.core.paginator import Paginator
 from django.db.models import Q
 from location.models import Country, Region, SubRegion, City
+from itertools import chain
 # Create your views here.
 
 class IndexView(TemplateView):
@@ -69,9 +72,21 @@ class PersonalProfileEditView(UpdateView):
     form_class = PersonalProfileForm
     success_url = reverse_lazy('dantorial:profile')
     model = ProfilePersonal
+
+    def get_object(self):
+        return self.request.user.profilepersonal
     
-    def get(request, *args, **kwargs):
-        return super().get(request, *args, **kwargs)
+    # def dispatch(self, request, *args, **kwargs):
+    #     if request.user.is_authenticated and ProfilePersonal.objects.get(user=request.user):
+    #         pass
+    #     else:
+    #         redirect('dantorial:index')
+
+    #     return super().dispatch(request, *args, **kwargs)
+    
+
+    # def get(request, *args, **kwargs):
+    #     return super().get(request, *args, **kwargs)
 
 class ProfileView(TemplateView):
     template_name = 'main/profile.html'
@@ -97,15 +112,41 @@ class ProfileInfoView(TemplateView):
         context["profile_info"] = profile_info
         return context
     
+class ProfileQualificationView(TemplateView):
+    template_name = 'main/my_qualification.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        account = self.request.user
+        context["account"] = account
+
+        qualification = Qualification.objects.filter(user = account).order_by('-id')
+        context['qualification'] = qualification
+        return context
+
+class ProfileExperienceView(TemplateView):
+    template_name = 'main/my_experience.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        account = self.request.user
+        context["account"] = account
+
+        experience = Experience.objects.filter(user = account).order_by('-id')
+        context['experience'] = experience
+        return context
 
 class ProfileInfoEditView(UpdateView):
     template_name = 'main/edit_prof_profile.html'
     form_class = ProfileInfoForm
     success_url = reverse_lazy('dantorial:profile-info')
     model = ProfileInfo
+
+    def get_object(self):
+        return self.request.user.profileinfo
     
-    def get(request, *args, **kwargs):
-        return super().get(request, *args, **kwargs)
+    # def get(request, *args, **kwargs):
+    #     return super().get(request, *args, **kwargs)
 
 class SubjectEditView(CreateView):
     template_name = 'main/add_subject.html'
@@ -116,6 +157,64 @@ class SubjectEditView(CreateView):
         form.instance.user = self.request.user
         form.save()
         return super().form_valid(form)
+
+class SubjectDeleteView(DeleteView):
+    # @method_decorator(csrf_exempt)
+    model = Subject
+    success_url = reverse_lazy('dantorial:my-subject')
+
+class ExperienceEditView(CreateView):
+    template_name = 'main/add_experience.html'
+    form_class = AddExperienceForm
+    success_url = reverse_lazy('dantorial:my-experience')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.save()
+        return super().form_valid(form)
+
+class ExperienceDeleteView(DeleteView):
+    # @method_decorator(csrf_exempt)
+    model = Experience
+    success_url = reverse_lazy('dantorial:my-experience')
+
+class QualificationEditView(CreateView):
+    template_name = 'main/add_qualification.html'
+    form_class = AddQualificationForm
+    success_url = reverse_lazy('dantorial:my-qualification')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.save()
+        return super().form_valid(form)
+
+class QualificationDeleteView(DeleteView):
+    # @method_decorator(csrf_exempt)
+    model = Qualification
+    success_url = reverse_lazy('dantorial:my-qualification')
+
+class ProfileDeleteView(DeleteView):
+    model = User
+    success_url = reverse_lazy('dantorial:index')
+
+class QualificationUpdateView(UpdateView):
+    # @method_decorator(csrf_exempt)
+    template_name = 'main/update_qualification.html'
+    form_class = AddQualificationForm
+    model = Qualification
+    success_url = reverse_lazy('dantorial:my-qualification')
+
+class ExperienceUpdateView(UpdateView):
+    template_name = 'main/update_experience.html'
+    form_class = AddExperienceForm
+    model = Experience
+    success_url = reverse_lazy('dantorial:my-experience')
+
+class SubjectUpdateView(UpdateView):
+    template_name = 'main/update_subject.html'
+    form_class = AddSubjectForm
+    model = Subject
+    success_url = reverse_lazy('dantorial:my-subject')
 
 class ProfileSubjectView(TemplateView):
     template_name = 'main/my_subject.html'
@@ -175,19 +274,25 @@ class LogoutView(View):
     def get(self, request):
         logout(request)
         return redirect('dantorial:index')
+ 
+class SearchView(TemplateView):
+    template_name = 'main/search_result.html'
 
-# class SearchView(TemplateView):
-#     template_name = 'main/search.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        acc_type = self.request.GET['typ']
+        subject = self.request.GET['subject']
+        city = self.request.GET['city']
+        quater = self.request.GET['quater']
+        user_obj = User.objects.all()
+        profile_result = ProfilePersonal.objects.filter(Q(account_type = acc_type) & (Q(city_id = city) | Q(address_1__icontains = quater) | Q(address_2__icontains = quater)))
+        subject = Subject.objects.filter(subject = subject).order_by('user')
+        final = list(chain(subject, profile_result))
+        # finals = list(set(final))
 
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         language = self.request.GET['language']
-#         category = self.request.GET['category']
-#         level_education = self.request.GET['level_of_education']
-#         target = self.request.GET['target']
-#         country = self.request.GET['country']
-#         region = self.request.GET['region']
-#         city = self.request.GET['city']
-#         quater = self.request.GET['quater']
-#         results = TutorProfile.objects.filter(Q())
-#         return context
+        print(profile_result)
+        print(subject)
+        print(f'final: {final}')
+        context['profile_result'] = final
+        # print(f'{acc_type} {subject} {city} {quater}')
+        return context

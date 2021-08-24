@@ -12,14 +12,14 @@ login
         <div class="card border-0 shadow rounded-3 my-5">
           <div class="card-body p-0 p-sm-0">
             <div class="list-group mx-auto">
-              <a href="#" class="list-group-item list-group-item-action active">
+              <a href="{% url 'dantorial:profile-edit' user.profilepersonal.id %}" class="list-group-item list-group-item-action">
                 Personal Information
               </a>
               <a href="{% url 'dantorial:profile-info-edit' user.profileinfo.id %}" class="list-group-item list-group-item-action">Profile Information</a>
               <a href="{% url 'dantorial:add-subject' %}" class="list-group-item list-group-item-action">Add Subjects</a>
-              {% if user.profilepersonal.account_type == 'tutor' %}
+                                                                  {% if user.profilepersonal.account_type == 'tutor' %}
                             <a href="{% url 'dantorial:add-experience'%}"
-                                class="list-group-item list-group-item-action">Add Experience</a>
+                                class="list-group-item list-group-item-action active">Add Experience</a>
                             <a href="{% url 'dantorial:add-qualification'%}"
                                 class="list-group-item list-group-item-action">Add Qualification</a>
                             {% endif %}
@@ -30,13 +30,14 @@ login
       <div class="col-sm-8 col-md-8 col-lg-7 mx-auto">
         <div class="card border-0 shadow rounded-3 my-5">
           <div class="card-body p-2 p-sm-5">
-            <h5 class="card-title text-center mb-3 fw-light fs-5">Edit Personal Information</h5>
-            <form class="needs-validation" method="post" action="{% url 'dantorial:profile-edit' user.profilepersonal.id %}" enctype="multipart/form-data" novalidate>
+            <h5 class="card-title text-center mb-3 fw-light fs-5">Edit Work Experience</h5>
+            <form class="needs-validation" method="post" action="" novalidate>
               {% csrf_token %}
               {{form.media.js}}
-              {{form|crispy}}
+    
+                {{form|crispy}}
               <div class="d-grid">
-                <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">submit</button>
+                <button class="btn btn-primary btn-login text-uppercase fw-bold mt-3" type="submit">Add Experience</button>
               </div>
               <hr class="my-4">
           </div>

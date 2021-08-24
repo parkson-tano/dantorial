@@ -15,6 +15,14 @@ class SubjectAdmin(admin.ModelAdmin):
     list_display = ['__str__', 'subject']
     list_filter = ['subject', 'category', 'subcategory']
 
+class ExperienceAdmin(admin.ModelAdmin):
+    list_display = ['user', 'work_post','position', 'start_date', 'end_date']
+
+class QualificationAdmin(admin.ModelAdmin):
+    list_display = ['user', 'school', 'certificate', 'start_year', 'end_year']
+
 admin.site.register(ProfilePersonal, ProfileAdmin)
 admin.site.register(ProfileInfo, TutorProfileAdmin)
 admin.site.register(Subject, SubjectAdmin)
+admin.site.register(Qualification, QualificationAdmin)
+admin.site.register(Experience, ExperienceAdmin)

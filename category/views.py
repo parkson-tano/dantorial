@@ -12,6 +12,7 @@ class CategoryView(TemplateView):
         context = super().get_context_data(**kwargs)
         category = Category.objects.all().order_by('name')
         context["category"] = category
+        
         return context
 
 class SubcategoryView(TemplateView):

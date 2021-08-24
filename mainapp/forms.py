@@ -4,7 +4,7 @@ from .models import *
 
 from category.models import Category
 from datetime import date
-from django import forms
+
 
 class DateSelectorWidget(forms.MultiWidget):
     def __init__(self, attrs=None):
@@ -65,7 +65,7 @@ class PersonalProfileForm(forms.ModelForm):
     class Meta:
         model = ProfilePersonal
         fields = ['account_type', 'title', 'gender','first_name', 'last_name', 
-        'phone_number','country', 'region','date_of_birth', 'address_1', 'address_2', 'level_of_education', 'profile_pic']
+        'phone_number','country', 'region','city','date_of_birth', 'address_1', 'address_2', 'level_of_education', 'profile_pic']
 		
 
 
@@ -217,3 +217,13 @@ class AddSubjectForm(forms.ModelForm):
 	class Meta:
 		model = Subject
 		fields = ('category','subcategory','subject','level','charge', 'amount')
+
+class AddExperienceForm(forms.ModelForm):
+	class Meta:
+		model = Experience
+		fields = ('work_post','position','start_date','end_date')
+
+class AddQualificationForm(forms.ModelForm):
+	class Meta:
+		model = Qualification
+		fields = ('school','certificate','start_year','end_year')

@@ -6,4 +6,5 @@ def location_renderer(request):
         'city' : City.objects.all(),
         'region' : Region.objects.all(),
         'subregion': SubRegion.objects.all(),
+        'city_cmr': City.objects.filter(country = 1),
     }

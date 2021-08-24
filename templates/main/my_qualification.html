@@ -16,12 +16,12 @@ login
                         <a href="{% url 'dantorial:profile-info' %}"
                             class="list-group-item list-group-item-action">Profile Information</a>
                         <a href="{% url 'dantorial:my-subject' %}"
-                            class="list-group-item list-group-item-action active">My Subjects</a>
+                            class="list-group-item list-group-item-action">My Subjects</a>
                                                     {% if user.profilepersonal.account_type == 'tutor' %}
                             <a href="{% url 'dantorial:my-experience'%}"
                                 class="list-group-item list-group-item-action">My Experience</a>
                             <a href="{% url 'dantorial:my-qualification'%}"
-                                class="list-group-item list-group-item-action">My Qualification</a>
+                                class="list-group-item list-group-item-action active">My Qualification</a>
                             {% endif %}
                     </div>
                 </div>
@@ -30,43 +30,30 @@ login
         <div class="col-sm-12 col-md-12 col-lg-7 mx-auto">
             <div class="card border-0 shadow rounded-3 my-0 my-lg-5">
                 <div class="card-body p-2 p-sm-5">
-                    <h5 class="card-title text-center mb-3 fw-light fs-5">Profile Information</h5>
+                    <h5 class="card-title text-center mb-3 fw-light fs-5">My Qualification</h5>
                     <table class="table">
                         <thead>
                             <tr>
                                 <th>SN</th>
-                                <th>Category</th>
-                                <th>SubCategory</th>
-                                <th>subject</th>
-                                <th>Level</th>
-                                {% if user.profilepersonal.account_type == 'tutor'%}
-                                <th>Charge</th>
-                                <th>Amount</th>
-                                {% endif %}
+                                <th>School</th>
+                                <th>Certificate</th>
+                                <th>Start</th>
+                                <th>End</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for ord in subject %}
+                            {% for ord in qualification %}
                             <tr>
                                 <td> {{ forloop.counter }} </td>
-                                <td> {{ ord.category }}</td>
-                                <td> {{ ord.subcategory }} </td>
-                                <td> {{ ord.subject }} </td>
-                                <td> {{ ord.level }} </td>
-                                {% if user.profilepersonal.account_type == 'tutor'%}
-                                <!-- <td> {{ forloop.counter }} </td>
-                    <td> {{ ord.category }}</td>
-                    <td> {{ ord.subcategory }} </td>
-                    <td> {{ ord.subject }} </td>
-                    <td> {{ ord.level }} </td> -->
-                                <td> {{ ord.charge }} </td>
-                                <td> {{ ord.amount }} </td>
-                                {% endif %}
+                                <td> {{ ord.school }}</td>
+                                <td> {{ ord.certificate}} </td>
+                                <td> {{ ord.start_year }} </td>
+                                <td> {{ ord.end_year }} </td>
                                 <td>
-                                    <form id='subject-delete' method="POST" action="{% url 'dantorial:delete_subject' ord.id %}">
+                                    <form id='subject-delete' method="POST" action="{% url 'dantorial:delete_qualification' ord.id %}">
                                         {% csrf_token %}
-                                        <a href="{% url 'dantorial:delete_subject' ord.id %}">
+                                        <a href="{% url 'dantorial:delete_qualification' ord.id %}">
                                             <button class="btn btn-danger"
                                                 onClick="deleteFunction()">Delete</button></a>
                                     </form>
@@ -80,7 +67,7 @@ login
 
                     <hr class="my-4">
                     <div class="d-grid">
-                        <a href="{% url 'dantorial:add-subject'%}"
+                        <a href="{% url 'dantorial:add-qualification'%}"
                             class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">Add Subject</a>
                     </div>
                 </div>

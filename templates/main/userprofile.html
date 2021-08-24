@@ -15,7 +15,7 @@ profile
 <div class="row">
   <div class="col-md-7">
     <img src=" {{userprofile.profile_pic.url}} " alt="" style="width:100%; object-fit: contain;" class="rounded">
-    <div class='row mt-3'>
+    <div class='row mt-3 me0'>
       <h3 class='text-center'>Subjects</h3>
       <hr>
       <table class="table">
@@ -32,10 +32,9 @@ profile
           {% for subject in userprofile.user.subject_set.all %}
           <tr>
             <td> {{ subject.category }}</td>
-            </td>
             <td> {{ subject.subject }}</td>
             <td> {{ subject.level }} </td>
-            <td> {{ subject.amount }} </td>
+            <td> {{ subject.amount}}FCFA</td>
 
             {% endfor %}
         </tbody>
@@ -72,19 +71,94 @@ profile
   <div class="col-md-10 mb-5">
     <section id="components">
       <h2 class="sticky-xl-top fw-bold pt-3 pt-xl-5 pb-2 pb-xl-3">Professional Information</h2>
-
       <article class="my-3" id="accordion">
         <div>
           <div class="bd-example">
             <div class="accordion" id="accordionExample">
               <div class="accordion-item">
-                <h4 class="accordion-header" id="headingOne">
-                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
-                    aria-expanded="true" aria-controls="collapseOne">
-                    Bio
+                <h4 class="accordion-header" id="headingThree">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseexperience" aria-expanded="true" aria-controls="collapseThree">
+                    <h4>
+                      Professional Experience
+                    </h4>
+
                   </button>
                 </h4>
-                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                <div id="collapseexperience" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                  data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>Work Post</th>
+                          <th>Position</th>
+                          <th>Start</th>
+                          <th>End</th>
+                          <!-- <th>Action</th> -->
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for experience in userprofile.user.experience_set.all %}
+                        <tr>
+                          <td> {{ experience.work_post }}</td>
+                          <td> {{ experience.position }}</td>
+                          <td> {{ experience.start_year }} </td>
+                          <td> {{ experience.end_year }}</td>
+
+                          {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h4 class="accordion-header" id="headingOne">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapsequalification" aria-expanded="true" aria-controls="collapseOne">
+                    <h4>
+                      Educational Qualification
+                    </h4>
+
+                  </button>
+                </h4>
+                <div id="collapsequalification" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                  data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>School</th>
+                          <th>Certificate</th>
+                          <th>Start</th>
+                          <th>End</th>
+                          <!-- <th>Action</th> -->
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for qualification in userprofile.user.qualification_set.all %}
+                        <tr>
+                          <td> {{ qualification.school }}</td>
+                          <td> {{ qualification.certificate }}</td>
+                          <td> {{ qualification.start_date }} </td>
+                          <td> {{ qualification.end_date }}</td>
+
+                          {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h4 class="accordion-header" id="headingOne">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                    aria-expanded="True" aria-controls="collapseOne">
+                    <h4>
+                      About {{userprofile.first_name|capfirst}} {{userprofile.last_name|capfirst}}
+                    </h4>
+                  </button>
+                </h4>
+                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
                   data-bs-parent="#accordionExample">
                   <div class="accordion-body">
                     <strong> {{userprofile.user.profileinfo.bio}}</strong>
@@ -95,7 +169,10 @@ profile
                 <h4 class="accordion-header" id="headingTwo">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    Experience
+                    <h4>
+                      Experience
+                    </h4>
+
                   </button>
                 </h4>
                 <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
@@ -105,13 +182,13 @@ profile
                   </div>
                 </div>
               </div>
-        
-              </div>
+
             </div>
           </div>
         </div>
-      </article>
   </div>
+  </article>
+</div>
 
 
-  {% endblock content %}
+{% endblock content %}

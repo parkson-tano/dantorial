@@ -5,25 +5,27 @@ login
 {% endblock title %}
 {% block content %}
 <div class="row gx-4 gx-lg-5 justify-content-center p-2 mt-5">
-    {% for p in pro %}
+    {% for profile in profile_result %}
     <div class="col-lg-3 col-sm-4 mt-5">
         <!-- Blog post-->
 
         <div class="card mb-4">
             <div class='card-horizontal'>
 
-                <a href="{{p.profile_pic.url}}"><img class="card-img" src="{{p.profile_pic.url}}" alt="..."
+                <a href="{{profile.profile_pic.url}}"><img class="card-img" src="{{profile.user.profilepersonal.profile_pic.url}}" alt="..."
                         style='height:15rem' /></a>
                 <div class="card-body">
-                    <div class="small text-muted">{{p.date_created|timesince}}</div>
-                    <h2 class="card-title h4">{{p.title|default:''}}</h2>
-                    <p class="card-text">{{p.first_name|default:''}}</p>
-                    <p class="mute-text">{{p.level_of_education|default:''}}</p>
-                    <p class="mute-text">{{p.user.profileinfo.bio|default:''}}
+                    <div class="small text-muted">{{profile.user.profilepersonaldate_created|timesince}}</div>
+                    <h2 class="card-title h4">{{profile.user.profilepersonal.title|default:''}}</h2>
+                    <p class="card-text">{{profile.user.profilepersonal.first_name|default:''}}</p>
+                    <p class="mute-text">{{profile.user.profilepersonal.level_of_education|default:''}}</p>
+                    <p class="mute-text">{{profile.user.profileinfo.bio|default:''}}
+                      <p class="mute-text">{{profile.subject|default:''}}
+                        <p class="mute-text">{{profile.amount|default:''}}FCFA
                         
                 </div>
                 <div class="card-footer">
-                        <a class="btn btn-danger" href="{% url 'dantorial:userprofile' p.id %}">Read more →</a>
+                        <a class="btn btn-danger" href="{% url 'dantorial:userprofile' profile.user.profilepersonal.id %}">Read more →</a>
                 </div>
             </div>
 

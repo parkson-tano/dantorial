@@ -16,8 +16,13 @@ login
                 Personal Information
               </a>
               <a href="{% url 'dantorial:profile-info-edit' user.profileinfo.id %}" class="list-group-item list-group-item-action active">Profile Information</a>
-              <a href="{% url 'dantorial:add-subject' %}" class="list-group-item list-group-item-action">My Subjects</a>
-        
+              <a href="{% url 'dantorial:add-subject' %}" class="list-group-item list-group-item-action">Add Subjects</a>
+              {% if user.profilepersonal.account_type == 'tutor' %}
+                            <a href="{% url 'dantorial:add-experience'%}"
+                                class="list-group-item list-group-item-action">Add Experience</a>
+                            <a href="{% url 'dantorial:add-qualification'%}"
+                                class="list-group-item list-group-item-action">Add Qualification</a>
+                            {% endif %}
             </div>
           </div>
         </div>
