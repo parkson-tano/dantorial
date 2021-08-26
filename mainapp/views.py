@@ -56,17 +56,18 @@ class UserProfileView(DetailView):
     def post(self, request, *args, **kwargs):
         new_comment = Review(content=request.POST.get('content'),
                                   rating=request.POST.get('rating'),
-                                  profile=self.get_object())
+                                  profile=self.get_object(),
+									user = self.request.user)
         new_comment.save()
         return self.get(self, request, *args, **kwargs)
     # def get(self, request, *args, **kwargs):
     #     form = self.form_class
     #     return render(request, self.template_name, {'form':form})
 
-    def form_valid(self, form):
-		form.instance.user = self.request.user
-        form.save()
-        return super().form_valid(form)
+#     def form_valid(self, form):
+# 		form.instance.user = self.request.user
+#         form.save()
+#         return super().form_valid(form)
 
 class AboutView(TemplateView):
     template_name = 'main/about_us.html'
