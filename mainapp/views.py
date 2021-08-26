@@ -25,6 +25,8 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from location.models import Country, Region, SubRegion, City
 from itertools import chain
+from review.models import Review
+from review.forms import ReiewForm
 # Create your views here.
 
 class IndexView(TemplateView):
@@ -43,13 +45,28 @@ class UserProfileView(DetailView):
     template_name = 'main/userprofile.html'
     context_object_name = 'userprofile'
     model = ProfilePersonal
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        comments_connected = Review.objects.filter(profile=self.get_object()).order_by('-date_created')
+        context["comments"] = comments_connected
+        context['comment_form'] = ReviewForm
+        return context
+
+    def post(self, request, *args, **kwargs):
+        new_comment = Review(content=request.POST.get('content'),
+                                  rating=request.POST.get('rating'),
+                                  profile=self.get_object())
+        new_comment.save()
+        return self.get(self, request, *args, **kwargs)
     # def get(self, request, *args, **kwargs):
     #     form = self.form_class
     #     return render(request, self.template_name, {'form':form})
 
-    # def form_valid(self, form):
-    #     form.save()
-    #     return super().form_valid(form)
+    def form_valid(self, form):
+		form.instance.user = self.request.user
+        form.save()
+        return super().form_valid(form)
 
 class AboutView(TemplateView):
     template_name = 'main/about_us.html'
