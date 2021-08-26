@@ -188,6 +188,45 @@ profile
         </div>
   </div>
   </article>
+        <div class="row">
+        <div class="col-lg-12 mb-3">
+          <!-- Blog post-->
+          <h2>Leave your comment!</h2>
+          <div id="comments_section">
+            <form method="POST" class='needs-validation'>
+              {% csrf_token %}
+              <div class="form-group">
+                {{ comment_form|crispy }}
+
+                <button class="btn btn-info" type="submit">Add comment <i class="fas fa-comments"></i></button>
+              </div>
+            </form>
+
+            {% if comments %}
+            <strong class="text-secondary">{{ user.profilepersonal.review_set.all.count }}
+              Comment{{ user.profilepersonal.comment_set.all.count|pluralize }}</strong>
+            <hr>
+            <ul class="list-group">
+              {% for comment in comments %}
+              <li class="list-group-item">
+                <div>
+                  <span>
+                    <strong class="text-info">{{ comment.user }} </strong>
+                    <small class="text-muted">{{ comment.date_created }}</small>
+                  </span>
+                  <p>
+                    {{ comment.content|safe }}
+                  </p>
+                </div>
+              </li>
+              {% endfor %}
+            </ul>
+            {% else %}
+            <strong class="text-secondary">No comments yet...</strong>
+            {% endif %}
+
+          </div>
+        </div>
 </div>
 
 
