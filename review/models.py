@@ -1,23 +1,17 @@
 from django.db import models
 from django.contrib.auth.models import User
+from mainapp.models import ProfilePersonal
 # Create your models here.
 
 class Review(models.Model):
-    comment = models.TextField()
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='review_author')
-    tutor = models.ForeignKey(User, on_delete=models.CASCADE, related_name = 'review_tutor')
-    likes = models.ManyToManyField(User, blank=True, related_name='comment_likes')
-    dislikes = models.ManyToManyField(User, blank=True, related_name='comment_dislikes')
-    rating = models.IntegerField(default=0)
-    parent = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True, related_name='+')
+    user = models.ForeignKey(User, on_delete=models.CASCADE,  null=True, blank=True)
+    profile = models.ForeignKey(ProfilePersonal, on_delete=models.CASCADE, related_name='user_profile')
+    content = models.TextField()
+    rating = models.IntegerField()
     date_created = models.DateTimeField(auto_now_add=True)
-    
-    @property
-    def children(self):
-        return Review.objects.filter(parent=self).order_by('-date_created').all()
-        
-    @property
-    def is_parent(self):
-        if self.parent is None:
-            return True
-        return False
+
+    class Meta:
+        ordering = ['-date_created']
+
+    def __str__(self):
+        return self.profile
