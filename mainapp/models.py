@@ -99,9 +99,6 @@ class ProfilePersonal(models.Model):
     profile_pic = models.ImageField(upload_to='profile_img', default='media/default.png')
     
 
-
-
-
     def __str__(self):
         return self.user.username
 
