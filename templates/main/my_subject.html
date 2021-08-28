@@ -17,12 +17,12 @@ login
                             class="list-group-item list-group-item-action">Profile Information</a>
                         <a href="{% url 'dantorial:my-subject' %}"
                             class="list-group-item list-group-item-action active">My Subjects</a>
-                                                    {% if user.profilepersonal.account_type == 'tutor' %}
-                            <a href="{% url 'dantorial:my-experience'%}"
-                                class="list-group-item list-group-item-action">My Experience</a>
-                            <a href="{% url 'dantorial:my-qualification'%}"
-                                class="list-group-item list-group-item-action">My Qualification</a>
-                            {% endif %}
+                        {% if user.profilepersonal.account_type == 'tutor' %}
+                        <a href="{% url 'dantorial:my-experience'%}" class="list-group-item list-group-item-action">My
+                            Experience</a>
+                        <a href="{% url 'dantorial:my-qualification'%}"
+                            class="list-group-item list-group-item-action">My Qualification</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -64,12 +64,19 @@ login
                                 <td> {{ ord.amount }} </td>
                                 {% endif %}
                                 <td>
-                                    <form id='subject-delete' method="POST" action="{% url 'dantorial:delete_subject' ord.id %}">
+                                    <div class='row'>
+
+                                    </div>
+                                    <form id='subject-delete' method="POST"
+                                        action="{% url 'dantorial:delete_subject' ord.id %}">
                                         {% csrf_token %}
                                         <a href="{% url 'dantorial:delete_subject' ord.id %}">
                                             <button class="btn btn-danger"
                                                 onClick="deleteFunction()">Delete</button></a>
+                                        <a href="{% url 'dantorial:update_subject' ord.id %}"
+                                            class="btn btn-success">Update</a>
                                     </form>
+
                                 </td>
 
                                 <!-- <td> <a href="#" class="btn btn-danger"> Remove</a> </td> -->

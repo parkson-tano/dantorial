@@ -105,14 +105,14 @@ class ProfilePersonal(models.Model):
     def __str__(self):
         return self.user.username
 
-    # def save(self, *args, **kwargs):
-    #     super().save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
 
-    #     img = Image.open(self.profile_pic.path)
-    #     if img.height >100 or img.width>100:
-    #         output_size = (200,200)
-    #         img.thumbnail(output_size)
-    #         img.save(self.profile_pic.path)
+        img = Image.open(self.profile_pic.path)
+        if img.height >200 or img.width>200:
+            output_size = (500,500)
+            img.thumbnail(output_size)
+            img.save(self.profile_pic.path)
 
 @receiver(post_save,sender=User)
 def create_profile(sender,instance,created,**kwargs):

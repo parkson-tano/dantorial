@@ -26,7 +26,7 @@ from django.db.models import Q
 from location.models import Country, Region, SubRegion, City
 from itertools import chain
 from review.models import Review
-from review.forms import ReiewForm
+from review.forms import ReviewForm
 # Create your views here.
 
 class IndexView(TemplateView):

@@ -35,7 +35,7 @@ urlpatterns = [
 # update view
 
     path('update/subject-<int:pk>', SubjectUpdateView.as_view(), name='update_subject'),
-    path('update/qualification-<int:pk>', QualificationUpdateView.as_view(), name='update_profile'),
+    path('update/qualification-<int:pk>', QualificationUpdateView.as_view(), name='update_qualification'),
     path('update/experience-<int:pk>', ExperienceUpdateView.as_view(), name='update_experience'),
 
 # delete views

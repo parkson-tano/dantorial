@@ -15,14 +15,14 @@ login
                         </a>
                         <a href="{% url 'dantorial:profile-info' %}"
                             class="list-group-item list-group-item-action">Profile Information</a>
-                        <a href="{% url 'dantorial:my-subject' %}"
-                            class="list-group-item list-group-item-action">My Subjects</a>
-                                                    {% if user.profilepersonal.account_type == 'tutor' %}
-                            <a href="{% url 'dantorial:my-experience'%}"
-                                class="list-group-item list-group-item-action">My Experience</a>
-                            <a href="{% url 'dantorial:my-qualification'%}"
-                                class="list-group-item list-group-item-action active">My Qualification</a>
-                            {% endif %}
+                        <a href="{% url 'dantorial:my-subject' %}" class="list-group-item list-group-item-action">My
+                            Subjects</a>
+                        {% if user.profilepersonal.account_type == 'tutor' %}
+                        <a href="{% url 'dantorial:my-experience'%}" class="list-group-item list-group-item-action">My
+                            Experience</a>
+                        <a href="{% url 'dantorial:my-qualification'%}"
+                            class="list-group-item list-group-item-action active">My Qualification</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -51,11 +51,15 @@ login
                                 <td> {{ ord.start_year }} </td>
                                 <td> {{ ord.end_year }} </td>
                                 <td>
-                                    <form id='subject-delete' method="POST" action="{% url 'dantorial:delete_qualification' ord.id %}">
+                                    <form id='subject-delete' method="POST"
+                                        action="{% url 'dantorial:delete_qualification' ord.id %}">
                                         {% csrf_token %}
                                         <a href="{% url 'dantorial:delete_qualification' ord.id %}">
                                             <button class="btn btn-danger"
                                                 onClick="deleteFunction()">Delete</button></a>
+
+                                        <a href="{% url 'dantorial:update_qualification' ord.id %}"
+                                            class="btn btn-success">Update</a>
                                     </form>
                                 </td>
 

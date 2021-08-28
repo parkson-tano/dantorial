@@ -70,7 +70,7 @@ profile
 <div class="row">
   <div class="col-md-10 mb-5">
     <section id="components">
-      <h2 class="sticky-xl-top fw-bold pt-3 pt-xl-5 pb-2 pb-xl-3">Professional Information</h2>
+      <h2 class="fw-bold pt-3 pt-xl-5 pb-2 pb-xl-3">Professional Information</h2>
       <article class="my-3" id="accordion">
         <div>
           <div class="bd-example">
@@ -105,7 +105,6 @@ profile
                           <td> {{ experience.position }}</td>
                           <td> {{ experience.start_year }} </td>
                           <td> {{ experience.end_year }}</td>
-
                           {% endfor %}
                       </tbody>
                     </table>
@@ -154,14 +153,14 @@ profile
                   <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
                     aria-expanded="True" aria-controls="collapseOne">
                     <h4>
-                      About {{userprofile.first_name|capfirst}} {{userprofile.last_name|capfirst}}
+                      About {{userprofile.first_name|default:''}} {{userprofile.last_name|default:''}}
                     </h4>
                   </button>
                 </h4>
                 <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
                   data-bs-parent="#accordionExample">
                   <div class="accordion-body">
-                    <strong> {{userprofile.user.profileinfo.bio}}</strong>
+                    <strong> {{userprofile.user.profileinfo.bio|default:''}}</strong>
                   </div>
                 </div>
               </div>
@@ -178,7 +177,7 @@ profile
                 <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
                   data-bs-parent="#accordionExample">
                   <div class="accordion-body">
-                    <strong> {{ userprofile.user.profileinfo.experience }} </strong>
+                    <strong> {{ userprofile.user.profileinfo.experience|default:'' }} </strong>
                   </div>
                 </div>
               </div>
@@ -188,23 +187,22 @@ profile
         </div>
   </div>
   </article>
-        <div class="row">
-        <div class="col-lg-12 mb-3">
+        <div class="row m p-5">
+        <div class="col-lg-8 mb-3 me-5">
           <!-- Blog post-->
-          <h2>Leave your comment!</h2>
+          <h2>Leave A Review About {{user.profilepersonal.first_name}} !</h2>
           <div id="comments_section">
             <form method="POST" class='needs-validation'>
               {% csrf_token %}
               <div class="form-group">
                 {{ comment_form|crispy }}
-
                 <button class="btn btn-info" type="submit">Add comment <i class="fas fa-comments"></i></button>
               </div>
             </form>
 
             {% if comments %}
             <strong class="text-secondary">{{ user.profilepersonal.review_set.all.count }}
-              Comment{{ user.profilepersonal.comment_set.all.count|pluralize }}</strong>
+              Comment{{ user.profilepersonal.review_set.all.count|pluralize }}</strong>
             <hr>
             <ul class="list-group">
               {% for comment in comments %}
