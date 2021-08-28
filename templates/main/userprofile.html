@@ -10,11 +10,11 @@ profile
   {% for s in userprofile.user.subject_set.all %}
   {{s.amount}}
   {% endfor %} -->
-<h3>{{userprofile.user}}</h3>
+<!-- <h3>{{userprofile.user}}</h3> -->
 <hr>
 <div class="row">
   <div class="col-md-7">
-    <img src=" {{userprofile.profile_pic.url}} " alt="" style="width:100%; object-fit: contain;" class="rounded">
+    <img src=" {{userprofile.profile_pic.url}} " alt="" style="width:; object-fit: contain;" class="rounded-circle">
     <div class='row mt-3 me0'>
       <h3 class='text-center'>Subjects</h3>
       <hr>
