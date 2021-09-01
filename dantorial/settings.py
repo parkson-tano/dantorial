@@ -211,7 +211,7 @@ CITIES_LIGHT_INCLUDE_CITY_TYPES = ['PPL', 'PPLA', 'PPLA2', 'PPLA3', 'PPLA4', 'PP
 SITE_ID = 2
 
 LOGIN_URL = '/accounts/login/'
-LOGIN_REDIRECT_URL = '//accounts/login/'
+LOGIN_REDIRECT_URL = '/accounts/login/'
 LOGOUT_URL = '/logout'
 
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
