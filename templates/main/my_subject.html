@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 {% block title %}
-login
+subject
 {% endblock title %}
 {% block content %}
 <div class="container-fluid p-0">
@@ -29,9 +29,9 @@ login
         </div>
         <div class="col-sm-12 col-md-12 col-lg-7 mx-auto">
             <div class="card border-0 shadow rounded-3 my-0 my-lg-5">
-                <div class="card-body p-2 p-sm-5">
-                    <h5 class="card-title text-center mb-3 fw-light fs-5">Profile Information</h5>
-                    <table class="table">
+                <div class="card-body p-2 p-sm-5 table-responsive">
+                    <h5 class="card-title text-center mb-3 fw-light fs-5">Subjects Information</h5>
+                    <table class="table table-striped table-hover">
                         <thead>
                             <tr>
                                 <th>SN</th>
@@ -84,7 +84,7 @@ login
                             {% endfor %}
                         </tbody>
                     </table>
-
+        
                     <hr class="my-4">
                     <div class="d-grid">
                         <a href="{% url 'dantorial:add-subject'%}"
