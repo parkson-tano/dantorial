@@ -27,6 +27,7 @@ from location.models import Country, Region, SubRegion, City
 from itertools import chain
 from review.models import Review
 from review.forms import ReviewForm
+from allauth.account.admin import EmailAddress
 # Create your views here.
 
 class IndexView(TemplateView):
@@ -40,6 +41,17 @@ class IndexView(TemplateView):
         context['category'] = category
         context['pro'] = pro
         return context
+
+class MyAccount(TemplateView):
+    template_name = 'main/my_account.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        prof = ProfilePersonal.objects.get(user = self.request.user)
+        userEmail = EmailAddress.objects.get(user=self.request.user)
+        context['auth'] = userEmail
+        context['prof'] = prof
+        return context  
 
 class UserProfileView(DetailView):
     template_name = 'main/userprofile.html'

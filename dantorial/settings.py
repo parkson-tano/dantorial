@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'crispy_tailwind',
     'dani',
     'smart_selects',
+    'chat',
 
 ]
 
@@ -191,9 +192,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 ASGI_APPLICATION = 'dantorial.asgi.application'
 
-ACCOUNT_FORMS = {
-    'login': 'mainapp.forms.UserLoginForm'
-}
+# ACCOUNT_FORMS = {
+#     'login': 'mainapp.forms.UserLoginForm'
+# }
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -209,40 +210,28 @@ CITIES_LIGHT_INCLUDE_CITY_TYPES = ['PPL', 'PPLA', 'PPLA2', 'PPLA3', 'PPLA4', 'PP
 
 SITE_ID = 2
 
-LOGIN_URL = '/login'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '//accounts/login/'
 LOGOUT_URL = '/logout'
 
-ACCOUNT_AUTHENTICATION_METHOD = "username_email"
-ACCOUNT_CONFIRM_EMAIL_ON_GET = False
-ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = LOGIN_URL
-ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = None
-
-ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 3
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = None
-ACCOUNT_EMAIL_SUBJECT_PREFIX = 'My subject: '
-ACCOUNT_DEFAULT_HTTP_PROTOCOL = "http"
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 
-ACCOUNT_LOGOUT_ON_GET = True
-ACCOUNT_LOGOUT_REDIRECT_URL = '/'
-# ACCOUNT_SIGNUP_FORM_CLASS = None
-ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
-ACCOUNT_UNIQUE_EMAIL = True
-ACCOUNT_USER_MODEL_USERNAME_FIELD = "username"
-ACCOUNT_USER_MODEL_EMAIL_FIELD = "email"
+# SOCIALACCOUNT_AUTO_SIGNUP = True
+# SOCIALACCOUNT_EMAIL_REQUIRED = False
+# ACCOUNT_ADAPTER = "dantorial.adapter.MyLoginAccountAdapter"
+# SOCIALACCOUNT_ADAPTER = 'dantorial.adapter.MySocialAccountAdapter'
+# LOGIN_URL = "/"
+# LOGIN_REDIRECT_URL = "/users/{id}/mytags"
 
-ACCOUNT_USERNAME_MIN_LENGTH = 5
-ACCOUNT_USERNAME_BLACKLIST = []
-ACCOUNT_USERNAME_REQUIRED = True
-ACCOUNT_PASSWORD_INPUT_RENDER_VALUE = False
-ACCOUNT_PASSWORD_MIN_LENGTH = 6
-ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
-
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST='smtp.gmail.com'
-EMAIL_HOST_USER='put your email here'
-EMAIL_HOST_PASSWORD='put your email password here'
+EMAIL_HOST_USER='tanoparksonsilencer@gmail.com'
+EMAIL_HOST_PASSWORD='P@$$w04dD@n!3l'
 EMAIL_PORT = 587 
 
 SOCIALACCOUNT_PROVIDERS = {
@@ -274,7 +263,7 @@ SOCIALACCOUNT_PROVIDERS = {
         ],
         'EXCHANGE_TOKEN': True,
         # 'LOCALE_FUNC': 'path.to.callable',
-        'VERIFIED_EMAIL': False,
+        'VERIFIED_EMAIL': True,
         'VERSION': 'v7.0',
     }
         }

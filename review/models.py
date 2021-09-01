@@ -14,4 +14,4 @@ class Review(models.Model):
         ordering = ['-date_created']
 
     def __str__(self):
-        return self.profile
+        return self.user.username

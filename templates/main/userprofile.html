@@ -14,7 +14,7 @@ profile
 <hr>
 <div class="row">
   <div class="col-md-7">
-    <img src=" {{userprofile.profile_pic.url}} " alt="" style="width:; object-fit: contain;" class="rounded-circle">
+    <img src=" {{userprofile.profile_pic.url}} " alt="" style="width:100%; object-fit: contain;" class="rounded-circle">
     <div class='row mt-3 me0'>
       <h3 class='text-center'>Subjects</h3>
       <hr>
@@ -192,11 +192,11 @@ profile
           <!-- Blog post-->
           <h2>Leave A Review About {{user.profilepersonal.first_name}} !</h2>
           <div id="comments_section">
-            <form method="POST" class='needs-validation'>
+            <form method="POST" class='needs-validation' novalidate id='comment'>
               {% csrf_token %}
               <div class="form-group">
                 {{ comment_form|crispy }}
-                <button class="btn btn-info" type="submit">Add comment <i class="fas fa-comments"></i></button>
+                <button class="btn btn-info" type="submit" name='post_comment'>Add comment <i class="fas fa-comments"></i></button>
               </div>
             </form>
 
@@ -209,7 +209,7 @@ profile
               <li class="list-group-item">
                 <div>
                   <span>
-                    <strong class="text-info">{{ comment.user }} </strong>
+                    <strong class="text-info">{{ comment.user.profilepersonal.first_name }} </strong>
                     <small class="text-muted">{{ comment.date_created }}</small>
                   </span>
                   <p>
@@ -227,5 +227,12 @@ profile
         </div>
 </div>
 
-
+<script>
+  if ( window.history.replaceState ) {
+  window.history.replaceState( null, null, window.location.href );
+}
+</script>
 {% endblock content %}
+{% block extra_body %}
+
+{% endblock %}

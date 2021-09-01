@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% load account socialaccount %}
+{% block title %}{% trans "Signup" %}{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+      <div class="card border-0 shadow rounded-3 my-5">
+        <div class="card-body p-2 p-sm-4">
+          <h5 class="card-title text-center mb-3 fw-light fs-5">Login to Dantorial</h5>
+          <form class="needs-validation" method="post" action="{% url 'account_signup' %}" novalidate>
+
+            <div class="form-floating mb-3">
+              {% csrf_token %}
+              <!-- <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"> -->
+              {{form|crispy}}
+              {% if redirect_field_value %}
+              <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+              {% endif %}
+            </div>
+            <div class="d-grid">
+              <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">Create Account
+                &raquo;</button>
+            </div>
+            <hr class="my-4">
+
+            <div>
+              <a href="{{ login_url }}">Already have an Account?</a>
+            </div>
+            <hr class="my-4">
+            <!-- <p class='text-center display-6'>OR</p> -->
+          </form>
+          <div class="d-grid mb-2">
+            <a href="{% provider_login_url 'google' %}" class="btn btn-google btn-login text-uppercase fw-bold"
+              type="submit">
+              <i class="fab fa-google me-2"></i> Register with Google
+            </a>
+          </div>
+          <div class="d-grid">
+            <a href="{% provider_login_url 'facebook' method='oauth2' %}"
+              class="btn btn-facebook btn-login text-uppercase fw-bold" type="submit">
+              <i class="fab fa-facebook-f "></i> Register with Facebook
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+
+{% endblock %}

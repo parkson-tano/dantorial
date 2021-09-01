@@ -24,6 +24,7 @@ urlpatterns = [
     path('my-experience', ProfileExperienceView.as_view(), name='my-experience'),
     path('my-qualification', ProfileQualificationView.as_view(), name='my-qualification'),
 
+    path('myaccount/', MyAccount.as_view(), name='my-account'),
 
 # add view
 
