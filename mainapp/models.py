@@ -60,6 +60,8 @@ GENDER = (
     ('female', 'Female')
 )
 
+User._meta.get_field('username')._unique = False
+
 class ProfilePersonal(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)
     account_type = models.CharField(max_length=10, choices=ACC, null=True, blank=True)
