@@ -70,11 +70,14 @@ subject
                                     <form id='subject-delete' method="POST"
                                         action="{% url 'dantorial:delete_subject' ord.id %}">
                                         {% csrf_token %}
-                                        <a href="{% url 'dantorial:delete_subject' ord.id %}">
                                             <button class="btn btn-danger"
-                                                onClick="deleteFunction()">Delete</button></a>
+                                                onClick="deleteFunction()">
+                                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                            </button>
                                         <a href="{% url 'dantorial:update_subject' ord.id %}"
-                                            class="btn btn-success">Update</a>
+                                            class="btn btn-success">
+                                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                                        </a>
                                     </form>
 
                                 </td>

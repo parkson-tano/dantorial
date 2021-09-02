@@ -58,7 +58,20 @@ profile
         <li class="list-group-item"><strong>Level of Education:</strong> {{userprofile.level_of_education}} </li>
         <li class="list-group-item"><strong>Address: </strong> {{userprofile.address_1|capfirst}},
           {{userprofile.address_2|capfirst}}</li>
-        <li class="list-group-item"><strong>contact:</strong> {{userprofile.phone_number}}</li>
+        <li class="list-group-item"><strong>contact:</strong>
+          <a href='tel:{{userprofile.phone_number}}' class='btn btn-default'>
+            {{userprofile.phone_number}}
+            <span>
+              <i class="fa fa-lg fa-phone" aria-hidden="true"></i>
+            </span>
+            
+          </a>
+          <span>
+            <a href="https://wa.me/{{userprofiles.phonenumber}}" target="_blank">
+              <i class="fa fa-lg fa-whatsapp" style='color:rgb(5, 59, 41)'></i>
+            </a>
+          </span>
+        </li>
       </ul>
       <div class="card-body">
         <a href="#" class="btn btn-primary">Send a message</a>
@@ -187,52 +200,53 @@ profile
         </div>
   </div>
   </article>
-        <div class="row m p-5">
-        <div class="col-lg-8 mb-3 me-5">
-          <!-- Blog post-->
-          <h2>Leave A Review About {{user.profilepersonal.first_name}} !</h2>
-          <div id="comments_section">
-            <form method="POST" class='needs-validation' novalidate id='comment'>
-              {% csrf_token %}
-              <div class="form-group">
-                {{ comment_form|crispy }}
-                <button class="btn btn-info" type="submit" name='post_comment'>Add comment <i class="fas fa-comments"></i></button>
-              </div>
-            </form>
-
-            {% if comments %}
-            <strong class="text-secondary">{{ user.profilepersonal.review_set.all.count }}
-              Comment{{ user.profilepersonal.review_set.all.count|pluralize }}</strong>
-            <hr>
-            <ul class="list-group">
-              {% for comment in comments %}
-              <li class="list-group-item">
-                <div>
-                  <span>
-                    <strong class="text-info">{{ comment.user.profilepersonal.first_name }} </strong>
-                    <small class="text-muted">{{ comment.date_created }}</small>
-                  </span>
-                  <p>
-                    {{ comment.content|safe }}
-                  </p>
-                </div>
-              </li>
-              {% endfor %}
-            </ul>
-            {% else %}
-            <strong class="text-secondary">No comments yet...</strong>
-            {% endif %}
-
+  <div class="row m p-5">
+    <div class="col-lg-8 mb-3 me-5">
+      <!-- Blog post-->
+      <h2>Leave A Review About {{user.profilepersonal.first_name}} !</h2>
+      <div id="comments_section">
+        <form method="POST" class='needs-validation' novalidate id='comment'>
+          {% csrf_token %}
+          <div class="form-group">
+            {{ comment_form|crispy }}
+            <button class="btn btn-info" type="submit" name='post_comment'>Add comment <i
+                class="fas fa-comments"></i></button>
           </div>
-        </div>
-</div>
+        </form>
 
-<script>
-  if ( window.history.replaceState ) {
-  window.history.replaceState( null, null, window.location.href );
-}
-</script>
-{% endblock content %}
-{% block extra_body %}
+        {% if comments %}
+        <strong class="text-secondary">{{ user.profilepersonal.review_set.all.count }}
+          Comment{{ user.profilepersonal.review_set.all.count|pluralize }}</strong>
+        <hr>
+        <ul class="list-group">
+          {% for comment in comments %}
+          <li class="list-group-item">
+            <div>
+              <span>
+                <strong class="text-info">{{ comment.user.profilepersonal.first_name }} </strong>
+                <small class="text-muted">{{ comment.date_created }}</small>
+              </span>
+              <p>
+                {{ comment.content|safe }}
+              </p>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <strong class="text-secondary">No comments yet...</strong>
+        {% endif %}
 
-{% endblock %}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    if (window.history.replaceState) {
+      window.history.replaceState(null, null, window.location.href);
+    }
+  </script>
+  {% endblock content %}
+  {% block extra_body %}
+
+  {% endblock %}
