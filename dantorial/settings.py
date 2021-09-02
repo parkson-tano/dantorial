@@ -95,6 +95,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'dantorial.wsgi.application'
 
+ASGI_APPLICATION = 'dantorial.routing.application'
+
 AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
     'django.contrib.auth.backends.ModelBackend',
@@ -142,19 +144,12 @@ REST_FRAMEWORK = {
 MESSAGES_TO_LOAD = 15
 
 # In settings.py
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "asgiref.inmemory.ChannelLayer",
-        "ROUTING": "messaging.routing.channel_routing",
-    },
-}
 
 try:
     from local_settings import *
 except ImportError:
     pass
 
-ASGI_APPLICATION = 'messaging.routing.application'
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
