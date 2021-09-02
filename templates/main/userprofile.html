@@ -59,8 +59,8 @@ profile
         <li class="list-group-item"><strong>Address: </strong> {{userprofile.address_1|capfirst}},
           {{userprofile.address_2|capfirst}}</li>
         <li class="list-group-item"><strong>contact:</strong>
-          <a href='tel:{{userprofile.phone_number}}' class='btn btn-default'>
-            {{userprofile.phone_number}}
+          <a href='tel:{{userprofile.country.phone}}{{userprofile.phone_number}}' class='btn btn-default'>
+            {{userprofile.country.phone}}{{userprofile.phone_number}}
             <span>
               <i class="fa fa-lg fa-phone" aria-hidden="true"></i>
             </span>
