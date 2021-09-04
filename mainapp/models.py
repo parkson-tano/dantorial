@@ -68,7 +68,7 @@ DOC = (
     ('others', 'Others')
 )
 
-User._meta.get_field('username')._unique = False
+# User._meta.get_field('username')._unique = False
 
 # day = (
 #     ('monday','monday'),

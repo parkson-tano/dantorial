@@ -60,7 +60,7 @@ class UserProfileView(DetailView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # url_id = kwargs['id']
+        # url_id = kwargs['pk']
         # profile = ProfilePersonal.objects.get(self.get_object())
         # profile.view_count += 1
         # profile.save()
@@ -262,7 +262,41 @@ class ProfileSubjectView(TemplateView):
         subject = Subject.objects.filter(user = account).order_by('-id')
         context['subject'] = subject
         return context
-    
+
+class VerificationEditView(CreateView):
+    template_name   = 'main/add_verification.html'
+    model = Verification
+    form_class  = VerificationForm
+    success_url  = reverse_lazy('dantorial:my-verification')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.save()
+        return super().form_valid(form)
+
+class VerificationDeleteView(DeleteView):
+    # @method_decorator(csrf_exempt)
+    model = Verification    
+    success_url = reverse_lazy('dantorial:my-verification')
+
+class VerificationUpdateView(UpdateView):
+    template_name = 'main/update_verification.html'
+    form_class = VerificationForm   
+    model = Verification
+    success_url = reverse_lazy('dantorial:my-verification')
+
+class ProfileVerificationView(TemplateView):
+    template_name = 'main/my_verification.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        account = self.request.user
+        context["account"] = account
+
+        verification    = Verification.objects.filter(user = account).order_by('-id')
+        context['verify'] = verification    
+        return context
+
 # class SubjectView(DetailView):
 #     template_name = 'main/my_subject.html'
 #     model = Subject

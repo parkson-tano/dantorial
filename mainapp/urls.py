@@ -23,6 +23,7 @@ urlpatterns = [
     path('my-subject', ProfileSubjectView.as_view(), name='my-subject'),
     path('my-experience', ProfileExperienceView.as_view(), name='my-experience'),
     path('my-qualification', ProfileQualificationView.as_view(), name='my-qualification'),
+    path('my-verification', ProfileVerificationView.as_view(), name='my-verification'),
 
     path('myaccount/', MyAccount.as_view(), name='my-account'),
 
@@ -31,13 +32,14 @@ urlpatterns = [
     path('add-qualification', QualificationEditView.as_view(), name='add-qualification'),
     path('add-experience', ExperienceEditView.as_view(), name='add-experience'),
     path('add-subject', SubjectEditView.as_view(), name='add-subject'),
-
+    path('add-verification', VerificationEditView.as_view(), name='add-verification'),
 
 # update view
 
     path('update/subject-<int:pk>', SubjectUpdateView.as_view(), name='update_subject'),
     path('update/qualification-<int:pk>', QualificationUpdateView.as_view(), name='update_qualification'),
     path('update/experience-<int:pk>', ExperienceUpdateView.as_view(), name='update_experience'),
+    path('update/verification-<int:pk>', VerificationUpdateView.as_view(), name='update_verification'),
 
 # delete views
 
@@ -45,6 +47,7 @@ urlpatterns = [
     path('delete/profile-<int:pk>', ProfileDeleteView.as_view(), name='delete_profile'),
     path('delete/experience-<int:pk>', ExperienceDeleteView.as_view(), name='delete_experience'),
     path('delete/qualification-<int:pk>', QualificationDeleteView.as_view(), name='delete_qualification'),
+    path('delete/verification-<int:pk>', VerificationDeleteView.as_view(), name='delete_verification'),
 
 # serach view
     path('search/', SearchView.as_view(), name='search'),
