@@ -14,8 +14,8 @@ profile
 <hr>
 <div class="row">
   <div class="col-md-7">
-    <img src=" {{userprofile.profile_pic.url}} " alt="" style="width:100%; object-fit: contain;" class="rounded-circle">
-    <div class='row mt-3 me0'>
+    <img src=" {{userprofile.profile_pic.url}} " alt="" style="width:100%; object-fit: contain;" class="rounded-circle" />
+    <div class='row mt-3'>
       <h3 class='text-center'>Subjects</h3>
       <hr>
       <table class="table">
@@ -47,7 +47,7 @@ profile
       <hr>
       <div class="card-body">
         <h2 class="card-subtitle">{{userprofile.first_name}} {{userprofile.last_name}}</h2>
-       mm {{userprofile.user.}}
+       
 
       </div>
       <ul class="list-group list-group-flush">
@@ -85,7 +85,7 @@ profile
   <div class="col-md-12 mb-5">
     <section id="components">
       <h2 class="fw-bold pt-3 pt-xl-5 pb-2 pb-xl-3">Professional Information</h2>
-      <article class="my-3" id="accordion">
+      <article class="mb-0" id="accordion">
         <div>
           <div class="bd-example">
             <div class="accordion" id="accordionExample">
@@ -201,7 +201,7 @@ profile
         </div>
   </div>
   </article>
-  <div class="row m p-5">
+  <div class="row mt-0 p-3">
     <div class="col-lg-8 mb-3 me-5">
       <!-- Blog post-->
       <h2>Leave A Review About {{user.profilepersonal.first_name}} !</h2>
@@ -210,7 +210,7 @@ profile
           {% csrf_token %}
           <div class="form-group">
             {{ comment_form|crispy }}
-            <button class="btn btn-info" type="submit" name='post_comment'>Add comment <i
+            <button class="btn btn-info mt-2" type="submit" name='post_comment'>Add comment <i
                 class="fas fa-comments"></i></button>
           </div>
         </form>
@@ -224,7 +224,11 @@ profile
           <li class="list-group-item">
             <div>
               <span>
-                <strong class="text-info">{{ comment.user.profilepersonal.first_name }} </strong>
+                <strong class="text-info">
+                <a href="{% url 'dantorial:userprofile' comment.user.profilepersonal.id %}">
+                  {{ comment.user.profilepersonal.first_name }} 
+                </a>
+                </strong>
                 <small class="text-muted">{{ comment.date_created }}</small>
               </span>
               <p>

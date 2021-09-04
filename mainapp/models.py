@@ -68,6 +68,12 @@ DOC = (
     ('others', 'Others')
 )
 
+STA = (
+    ('complete', 'complete'),
+    ('in progress', 'in progress'),
+    ('canceled', 'canceled')
+    )
+
 # User._meta.get_field('username')._unique = False
 
 # day = (
@@ -127,7 +133,7 @@ class ProfilePersonal(models.Model):
 
         img = Image.open(self.profile_pic.path)
         if img.height >200 or img.width>200:
-            output_size = (500,500)
+            output_size = (300,300)
             img.thumbnail(output_size)
             img.save(self.profile_pic.path)
 
@@ -235,10 +241,14 @@ class Verification(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     document_type = models.CharField(max_length=50, choices = DOC, default='national ID')
     number = models.CharField(max_length=50)
-    photo_back = models.ImageField(upload_to = 'verification')
-    photo_front = models.ImageField(upload_to='verification')
+    photo_back = models.ImageField(upload_to = 'verifi', default='media/default.png')
+    photo_front = models.ImageField(upload_to='verifi', default='media/default.png')
     is_verified = models.BooleanField(default=False)
+    status = models.CharField(max_length=50, choices=STA)
     date_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.user) + ' verification'
 
 class Booked(models.Model):
     user_1 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='student')

@@ -8,7 +8,8 @@ from django.utils.decorators import method_decorator
 from django.http import Http404
 from location.models import Country, City, Region, SubRegion
 from category.models import Category, SubCategory
-from .forms import AddSubjectForm, UserLoginForm, UserRegistrationForm, PersonalProfileForm, ProfileInfoForm, AddExperienceForm, AddQualificationForm
+from .forms import (AddSubjectForm, UserLoginForm, UserRegistrationForm, VerificationForm,
+PersonalProfileForm, ProfileInfoForm, AddExperienceForm, AddQualificationForm)
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy, reverse
@@ -293,7 +294,7 @@ class ProfileVerificationView(TemplateView):
         account = self.request.user
         context["account"] = account
 
-        verification    = Verification.objects.filter(user = account).order_by('-id')
+        verification    = Verification.objects.get(user = account)
         context['verify'] = verification    
         return context
 

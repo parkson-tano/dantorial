@@ -4,9 +4,10 @@
 login
 {% endblock title %}
 {% block content %}
-<div class="row gx-4 gx-lg-5 justify-content p-2 mt-5 mb-3">
+<div class="row justify-content p-2 mt-5 mb-3">
+    <div class="col col-sm-4">
     {% for p in pro %}
-          <div class="col col-md-4 col-sm-4 col-lg-4 col-12 mb-3">
+     
             <div class="card">
                 <div class="card-header">
                     <a href="{{p.profile_pic.url}}"><img class="card-img" src="{{p.profile_pic.url}}" alt="..."
@@ -15,7 +16,7 @@ login
               <div class="card-body">
                 <h5 class="card-title">{{ p.first_name|default:'' }} {{ p.last_name|default:'' }} </h5>
                 <p class="card-text">
-                    {{p.user.profileinfo.bio|default:''|truncatechars:7|safe}}
+                    {{p.user.profileinfo.bio|safe}}
                 </p>
               </div>
               <ul class="list-group list-group-flush">
@@ -33,8 +34,10 @@ login
                 </a>   
               </div>
             </div>
-        </div>
+    
     {% endfor %}
+</div>
+</div>
     <div class="col-3">
         <!-- Search widget-->
         <div class="card mb-4">
@@ -47,6 +50,8 @@ login
                 </div>
             </div>
         </div>
+    </div>
+
         <!-- Categories widget-->
         <div class="card mb-4">
             <div class="card-header">SubCategories</div>
