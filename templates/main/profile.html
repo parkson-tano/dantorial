@@ -41,28 +41,28 @@ login
                         </div>
                         <hr>
                         <h5>
-                            Account Type: {{profile.account_type|capfirst}}
+                            Account Type: {{profile.account_type|default:''|capfirst}}
                         </h5>
                         <h5>
                             Username: {{profile.user.username}}
                         </h5>
                         <h5>
-                            Account Name: {{profile.first_name}} {{profile.last_name}}
+                            Account Name: {{profile.first_name|default:''|capfirst}} {{profile.last_name|default:''|capfirst}}
                         </h5>
                         <h5>
-                            Title: {{profile.title|capfirst}}
+                            Title: {{profile.title|default:''|capfirst}}
                         </h5>
                         <h5>
-                            Gender: {{profile.gender|capfirst}}
+                            Gender: {{profile.gender|default:''|capfirst}}
                         </h5>
                         <h5>
-                            Phone_Number: {{profile.phone_number}}
+                            Phone_Number: {{profile.phone_number|default:''}}
                         </h5>
-                        <!-- <h5>
-                            Country: {{profile.country|capfirst}}
-                        </h5> -->
                         <h5>
-                            Region: {{profile.region|capfirst}}
+                            Country: {{profile.country|default:''}}
+                        </h5>
+                        <h5>
+                            Region: {{profile.region|default:''}}
                         </h5>
                         <h5>
                             Level of education: {{profile.level_of_education|capfirst}}
@@ -71,10 +71,10 @@ login
                             Date of Birth: {{profile.date_of_birth}}
                         </h5>
                         <h5>
-                            Address: {{profile.address_1|capfirst}}
+                            Address: {{profile.address_1|default:''|capfirst}}
                         </h5>
                         <h5>
-                            Address#2: {{profile.address_2|capfirst}}
+                            Address#2: {{profile.address_2|default:''|capfirst}}
                         </h5>
 
                         <hr class="my-4">

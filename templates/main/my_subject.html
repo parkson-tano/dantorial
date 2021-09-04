@@ -67,36 +67,52 @@ subject
                                     <div class='row'>
 
                                     </div>
-                                    <form id='subject-delete' method="POST"
-                                        action="{% url 'dantorial:delete_subject' ord.id %}">
-                                        {% csrf_token %}
-                                            <button class="btn btn-danger"
-                                                onClick="deleteFunction()">
-                                                <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                            </button>
-                                        <a href="{% url 'dantorial:update_subject' ord.id %}"
-                                            class="btn btn-success">
+                                    
+                                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModalDefault">
+                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                        </button>
+                                        <a href="{% url 'dantorial:update_subject' ord.id %}" class="btn btn-success">
                                             <i class="fa fa-pencil" aria-hidden="true"></i>
                                         </a>
-                                    </form>
+                                    
 
                                 </td>
 
                                 <!-- <td> <a href="#" class="btn btn-danger"> Remove</a> </td> -->
                             </tr>
+                                    <div class="modal fade" id="exampleModalDefault" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center" id="exampleModalLabel">Delete Subject</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        Are You sure you want to remove this subject?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+        <form id='subject-delete' method="POST" action="{% url 'dantorial:delete_subject' ord.id %}">
+                                        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Yes</button>
+    </form>
+      </div>
+    </div>
+  </div>
+
                             {% endfor %}
                         </tbody>
                     </table>
-        
+
                     <hr class="my-4">
                     <div class="d-grid">
                         <a href="{% url 'dantorial:add-subject'%}"
                             class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">Add Subject</a>
                     </div>
                 </div>
-
             </div>
         </div>
+</div>
     </div>
 </div>
 <!-- <script src="/static/smart-selects/admin/js/chainedfk.js"></script>

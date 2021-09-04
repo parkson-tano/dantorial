@@ -17,3 +17,11 @@ class MyAccountAdapter(DefaultAccountAdapter):
     def get_signup_redirect_url(self, request):
         path = "/profile-edit/{user}"
         return path.format(user=request.user.profilepersonal.id)
+
+    def get_login_redirect_url(self, request):
+        user =request.user.profilepersonal
+        if (user.account_type == 'tutor' or user.account_type == 'student' or user.account_type == 'parent'):
+            path = "/"
+            return path
+        path = '/profile-edit/{user}'
+        return path.format(user=request.user.profilepersonal.id)

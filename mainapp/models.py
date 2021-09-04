@@ -6,7 +6,9 @@ from location.models import *
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from smart_selects.db_fields import ChainedForeignKey
+from ckeditor.fields import RichTextField
 # Create your models here.
 
 EL = (
@@ -60,7 +62,22 @@ GENDER = (
     ('female', 'Female')
 )
 
+DOC = (
+    ('passport', 'Passport'),
+    ('national ID', 'National ID Card'),
+    ('others', 'Others')
+)
+
 User._meta.get_field('username')._unique = False
+
+# day = (
+#     ('monday','monday'),
+#     ('tuesday', 'tuesday'),
+#     ('wednesday', 'wednesday'),
+#     ('thursday', 'thursday'),
+#     ('friday', 'friday'),
+#     ('sat')
+# )
 
 class ProfilePersonal(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)
@@ -98,6 +115,7 @@ class ProfilePersonal(models.Model):
     address_2 = models.CharField(max_length=50, null=True, blank=True)
     level_of_education = models.CharField(max_length=50, choices=EL, null=True, blank=True)
     date_of_birth = models.DateField(default=timezone.now)
+    view_count = models.PositiveIntegerField(default=0)
     profile_pic = models.ImageField(upload_to='profile_img', default='media/default.png')
     
 
@@ -123,10 +141,10 @@ def save_profile(sender,instance,**kwargs):
     instance.profilepersonal.save()
 
 class ProfileInfo(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
-    language = models.CharField(max_length=30, choices=LANG, default=1)
-    bio = models.TextField(blank=True, null=True)
-    experience = models.TextField(blank=True, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    language = models.CharField(max_length=30, choices=LANG)
+    bio = RichTextField(blank=True, null=True)
+    experience = RichTextField(blank=True, null=True)
 
     def __str__(self):
         return f'{self.user} profile information'
@@ -180,3 +198,50 @@ class Qualification(models.Model):
 
     def __str__(self):
         return self.user + ' qualification'
+
+class SocialMedia(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    facebook = models.CharField(max_length=256, null=True, blank=True)
+    instagram = models.CharField(max_length=256, null=True, blank=True)
+    linkedin = models.CharField(max_length=256, null=True, blank=True)
+    website = models.CharField(max_length=256, null=True, blank=True)
+    youtube = models.CharField(max_length=256, null=True, blank=True)
+
+    def __str__(self):
+        return str(self.user) + ' social media'
+
+class Day(models.Model):
+    day = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.day
+
+class Hour(models.Model):
+    hour = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.hour
+
+class Availability(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    day = models.ForeignKey(Day, on_delete=models.PROTECT)
+    hour = models.ManyToManyField(Hour)
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.user) + ' available'
+
+class Verification(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    document_type = models.CharField(max_length=50, choices = DOC, default='national ID')
+    number = models.CharField(max_length=50)
+    photo_back = models.ImageField(upload_to = 'verification')
+    photo_front = models.ImageField(upload_to='verification')
+    is_verified = models.BooleanField(default=False)
+    date_created = models.DateTimeField(auto_now_add=True)
+
+class Booked(models.Model):
+    user_1 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='student')
+    user_2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tutor') 
+    amount = models.IntegerField()
+    is_confirm = models.BooleanField(default=False)

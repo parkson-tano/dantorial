@@ -62,16 +62,14 @@ class UserRegistrationForm(forms.ModelForm):
         return pass2
 
 class PersonalProfileForm(forms.ModelForm):
-    class Meta:
-        model = ProfilePersonal
-        fields = ['account_type', 'title', 'gender','first_name', 'last_name', 
+	class Meta:
+		model = ProfilePersonal
+		fields = ['account_type','title', 'gender','first_name', 'last_name', 
         'phone_number','country', 'region','city','date_of_birth', 'address_1', 'address_2', 'level_of_education', 'profile_pic']
 		
-
-
-        widgets = {
+		widgets = {
 			'date_of_birth': DateSelectorWidget(attrs = {
-				'class': 'date-picker'
+				'class': 'form-control'
 			})
 		}
             # "account_type": forms.CharField(attrs= { 
@@ -168,30 +166,22 @@ class  ProfileInfoForm(forms.ModelForm):
     class Meta:
         model = ProfileInfo
         fields = ['language', 'bio', 'experience']
-#         widgets = {
-#             "language": forms.ChoiceField(attrs= { 
-# 				'name' : 'language',
-# 				'class': 'form-control',
-# 				'id': 'floatingInput',
-# 				'required' : True
-# 			}), 
-#             "bio": forms.Textarea(attrs= { 
-# 				'name' : 'bio',
-# 				'class': 'form-control',
-# 				'id': 'floatingInput',
-#                 'rows': 8,
-#                 'columns': 8,
-# 				'required' : True
-# 			}), 
-#             "experience": forms.Textarea(attrs= { 
-# 				'name' : 'experience',
-# 				'class': 'form-control',
-# 				'id': 'floatingInput',
-#                 'rows': 8,
-#                 'columns': 8,
-# 				'required' : True
-# 			}), 
-#         }
+        widgets = { 
+            "bio": forms.Textarea(attrs= { 
+				'name' : 'bio',
+				'class': 'form-control',
+                'rows': 8,
+                'columns': 8,
+				'required' : True
+			}), 
+            "experience": forms.Textarea(attrs= { 
+				'name' : 'experience',
+				'class': 'form-control',
+                'rows': 8,
+                'columns': 8,
+				'required' : True
+			}), 
+        }
 
 class UserLoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput)
@@ -227,3 +217,18 @@ class AddQualificationForm(forms.ModelForm):
 	class Meta:
 		model = Qualification
 		fields = ('school','certificate','start_year','end_year')
+
+class VerificationForm(forms.ModelForm):
+	class Meta:
+		model = Verification
+		fields = ('document_type', 'number', 'photo_back', 'photo_front')
+
+class AvailabilityForm(forms.ModelForm):
+	class Meta:
+		model = Availability
+		fields = ('day', 'hour')
+
+class SocialMediaForm(forms.ModelForm):
+	class Meta:
+		model = SocialMedia
+		fields = ('facebook','instagram','linkedin', 'website', 'youtube')

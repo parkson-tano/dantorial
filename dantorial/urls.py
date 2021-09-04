@@ -24,7 +24,6 @@ urlpatterns = [
     path('', include('mainapp.urls')),
     # path("accounts/email/", page_not_found,{'exception': Exception('Not Found')}, name="account_email"),
     path('accounts/', include('allauth.urls')),
-    path('chat/', include('chat.urls', namespace='chat')),
     path('chaining/', include('smart_selects.urls')),
 ]
 

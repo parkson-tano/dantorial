@@ -60,7 +60,12 @@ class UserProfileView(DetailView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        # url_id = kwargs['id']
+        # profile = ProfilePersonal.objects.get(self.get_object())
+        # profile.view_count += 1
+        # profile.save()
         comments_connected = Review.objects.filter(profile=self.get_object()).order_by('-date_created')
+        # context['userprofile'] = userprofile
         context["comments"] = comments_connected
         context['comment_form'] = ReviewForm
         return context
@@ -315,9 +320,9 @@ class SearchView(TemplateView):
         city = self.request.GET['city']
         quater = self.request.GET['quater']
         user_obj = User.objects.all()
-        profile_result = ProfilePersonal.objects.filter(Q(account_type = acc_type) & (Q(city_id = city) | Q(address_1__icontains = quater) | Q(address_2__icontains = quater)))
+        profile_result = ProfilePersonal.objects.filter(Q(account_type = acc_type)).filter(Q(city_id = city) | Q(address_1__icontains = quater) | Q(address_2__icontains = quater))
         subject = Subject.objects.filter(subject = subject).order_by('user')
-        final = list(chain(subject, profile_result))
+        final = list(set(list(chain(subject, profile_result))))
         # finals = list(set(final))
 
         print(profile_result)

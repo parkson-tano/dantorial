@@ -34,15 +34,15 @@ login
                 <div class="card border-0 shadow rounded-3 my-5">
                     <div class="card-body p-2 p-sm-5">
                         <h5 class="card-title text-center mb-3 fw-light fs-5">Profile Information</h5>
-                        <h5>
+                        <p class="mb-2 fw-light fs-5">
                             Language: {{profile_info.language|capfirst}}
-                        </h5>
-                        <h5>
-                            Bio: {{profile_info.bio}}
-                        </h5>
-                        <h5>
-                            Experience: {{profile_info.experience|capfirst}}
-                        </h5>
+                        </p>
+                        <p class="mb-2 fw-light fs-5">
+                            Bio: {{profile_info.bio|safe|default:''}}
+                        </p>
+                        <p class="mb-2 fw-light fs-5">
+                            Experience: {{profile_info.experience|safe|default:''}}
+                        </p>
 
                         <hr class="my-4">
                         <div class="d-grid">

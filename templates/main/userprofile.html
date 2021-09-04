@@ -47,6 +47,7 @@ profile
       <hr>
       <div class="card-body">
         <h2 class="card-subtitle">{{userprofile.first_name}} {{userprofile.last_name}}</h2>
+       mm {{userprofile.user.}}
 
       </div>
       <ul class="list-group list-group-flush">
@@ -81,7 +82,7 @@ profile
   </div>
 </div>
 <div class="row">
-  <div class="col-md-10 mb-5">
+  <div class="col-md-12 mb-5">
     <section id="components">
       <h2 class="fw-bold pt-3 pt-xl-5 pb-2 pb-xl-3">Professional Information</h2>
       <article class="my-3" id="accordion">
@@ -173,7 +174,7 @@ profile
                 <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
                   data-bs-parent="#accordionExample">
                   <div class="accordion-body">
-                    <strong> {{userprofile.user.profileinfo.bio|default:''}}</strong>
+                    <strong> {{userprofile.user.profileinfo.bio|default:''|safe}}</strong>
                   </div>
                 </div>
               </div>
@@ -190,7 +191,7 @@ profile
                 <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
                   data-bs-parent="#accordionExample">
                   <div class="accordion-body">
-                    <strong> {{ userprofile.user.profileinfo.experience|default:'' }} </strong>
+                    <strong> {{ userprofile.user.profileinfo.experience|default:''|safe }} </strong>
                   </div>
                 </div>
               </div>

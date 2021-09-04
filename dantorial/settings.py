@@ -56,7 +56,7 @@ INSTALLED_APPS = [
     'crispy_tailwind',
     'dani',
     'smart_selects',
-    'chat',
+    'ckeditor',
 
 ]
 
@@ -159,6 +159,19 @@ CHANNEL_LAYERS = {
     },
 }
 
+CKEDITOR_CONFIGS = {
+'default': {
+    'toolbar': 'Custom', #You can change this based on your requirements.
+    'toolbar_Custom': [
+        ['Bold', 'Italic', 'Underline'],
+        ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+        ['Link', 'Unlink'],
+        ['RemoveFormat']
+        ],
+    'width': 'auto !important'
+          },
+    }
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -209,7 +222,8 @@ LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_URL = '/logout'
 
-ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_USER_MODEL_USERNAME_FIELD = 'username'
+ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
@@ -223,7 +237,7 @@ ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
 
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 ACCOUNT_LOGIN_ON_PASSWORD_RESET = True
-# SOCIALACCOUNT_AUTO_SIGNUP = True
+SOCIALACCOUNT_AUTO_SIGNUP = True
 # SOCIALACCOUNT_EMAIL_REQUIRED = False
 ACCOUNT_ADAPTER = "dantorial.adapter.MyAccountAdapter"
 # SOCIALACCOUNT_ADAPTER = 'dantorial.adapter.MySocialAccountAdapter'

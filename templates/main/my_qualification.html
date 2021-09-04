@@ -51,20 +51,42 @@ login
                                 <td> {{ ord.start_year }} </td>
                                 <td> {{ ord.end_year }} </td>
                                 <td>
-                                    <form id='subject-delete' method="POST"
+                                    <!-- <form id='subject-delete' method="POST"
                                         action="{% url 'dantorial:delete_qualification' ord.id %}">
                                         {% csrf_token %}
-                                        <a href="{% url 'dantorial:delete_qualification' ord.id %}">
-                                            <button class="btn btn-danger"
-                                                onClick="deleteFunction()">Delete</button></a>
+                                        <a href="{% url 'dantorial:delete_qualification' ord.id %}"> -->
+                                            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModalDefault">
+                                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                            </button>
 
                                         <a href="{% url 'dantorial:update_qualification' ord.id %}"
-                                            class="btn btn-success">Update</a>
-                                    </form>
+                                            class="btn btn-success">
+                                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                                            </a>
+                                    <!-- </form> -->
                                 </td>
 
                                 <!-- <td> <a href="#" class="btn btn-danger"> Remove</a> </td> -->
                             </tr>
+                            <div class="modal fade" id="exampleModalDefault" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center" id="exampleModalLabel">Delete Qualification</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        Are You sure you want to remove this Qualification?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+        <form id='subject-delete' method="POST" action="{% url 'dantorial:delete_qualification' ord.id %}">
+                                        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Yes</button>
+    </form>
+      </div>
+    </div>
+  </div>
                             {% endfor %}
                         </tbody>
                     </table>
