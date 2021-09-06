@@ -59,14 +59,17 @@ class UserProfileView(DetailView):
     context_object_name = 'userprofile'
     model = ProfilePersonal
     
+    # def dispatch(self, request, *args, **kwargs):
+    #     if request.user.is_authenticated:
+    #         pass
+    #     else:
+    #         return redirect('/login/?next=/userprofile/')
+            
+    #     return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # url_id = kwargs['pk']
-        # profile = ProfilePersonal.objects.get(self.get_object())
-        # profile.view_count += 1
-        # profile.save()
         comments_connected = Review.objects.filter(profile=self.get_object()).order_by('-date_created')
-        # context['userprofile'] = userprofile
         context["comments"] = comments_connected
         context['comment_form'] = ReviewForm
         return context
@@ -366,3 +369,15 @@ class SearchView(TemplateView):
         context['profile_result'] = final
         # print(f'{acc_type} {subject} {city} {quater}')
         return context
+
+
+class SearchAllView(TemplateView):
+    template_name = 'main/search_all.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        kw = self.request.GET['kw']
+        result = ProfilePersonal.objects.filter(Q(user__icontain = kw) | Q(address_1__icontain = kw) | Q(address_2__icontain = kw) | Q(region__icontain = kw) | Q(city__icontain = kw))
+        context["result"] = result
+        return context
+    

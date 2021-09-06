@@ -46,12 +46,19 @@ profile
       <h4 class="text-center">Personal Information</h4>
       <hr>
       <div class="card-body">
-        <h2 class="card-subtitle">{{userprofile.first_name}} {{userprofile.last_name}}</h2>
+        <h2 class="card-subtitle">{{userprofile.first_name}} {{userprofile.last_name}}
+          
+          <span>
+            {% if userprofile.user.verification.is_verified %}
+            <i class='fas fa-check' style="color:blue;"></i>
+            {% endif %}
+          </span>
+        </h2>
        
-
       </div>
       <ul class="list-group list-group-flush">
-        <li class="list-group-item"><strong>Account: </strong> <em>{{ userprofile.account_type|capfirst}}</em> </li>
+        <li class="list-group-item"><strong>Account: </strong> <em>{{ userprofile.account_type|capfirst}}</em> 
+        </li>
         <li class="list-group-item"><strong>Age:</strong> <em>{{userprofile.date_of_birth|timesince}}</em> </li>
         <li class="list-group-item"><strong>Gender:</strong> <em>{{userprofile.gender|capfirst}}</em> </li>
         <li class="list-group-item"><strong>Location:</strong> {{userprofile.region}}</li>
@@ -59,6 +66,7 @@ profile
         <li class="list-group-item"><strong>Level of Education:</strong> {{userprofile.level_of_education}} </li>
         <li class="list-group-item"><strong>Address: </strong> {{userprofile.address_1|capfirst}},
           {{userprofile.address_2|capfirst}}</li>
+        <li class="list-group-item"><strong>Email:</strong> {{userprofile.user.email}} </li>
         <li class="list-group-item"><strong>contact:</strong>
           <a href='tel:{{userprofile.country.phone}}{{userprofile.phone_number}}' class='btn btn-default'>
             {{userprofile.country.phone}}{{userprofile.phone_number}}
@@ -168,6 +176,7 @@ profile
                     aria-expanded="True" aria-controls="collapseOne">
                     <h4>
                       About {{userprofile.first_name|default:''}} {{userprofile.last_name|default:''}}
+
                     </h4>
                   </button>
                 </h4>

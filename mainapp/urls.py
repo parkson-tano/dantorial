@@ -54,7 +54,7 @@ urlpatterns = [
 
 # category urls
 
-    path('category/<slug:slug>', CategoryView.as_view(), name='category'),
-    path('subcategory/<slug:slug>', SubcategoryView.as_view(), name='subcategory'),
-    path('subject/<slug:slug>', SubjectView.as_view(), name='subject'),
+    path('<slug:slug>/', CategoryView.as_view(), name='category'),
+    path('<slug:slug>/', SubcategoryView.as_view(), name='subcategory'),
+    path('<slug:slug>/', SubjectView.as_view(), name='subject'),
 ]

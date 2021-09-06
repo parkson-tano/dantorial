@@ -149,8 +149,8 @@ def save_profile(sender,instance,**kwargs):
 class ProfileInfo(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     language = models.CharField(max_length=30, choices=LANG)
-    bio = RichTextField(blank=True, null=True)
-    experience = RichTextField(blank=True, null=True)
+    bio = models.TextField(blank=True, null=True)
+    experience = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return f'{self.user} profile information'

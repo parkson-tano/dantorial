@@ -10,9 +10,12 @@ class CategoryView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        category = Category.objects.all().order_by('name')
-        context["category"] = category
-        
+        url_slug = kwargs['slug']
+        category = Category.objects.get(slug=url_slug)
+        subcat = SubCategory.objects.filter(category=category)
+        pro = ProfilePersonal.objects.all()
+        context["subcat"] = subcat
+        context['pro'] = pro
         return context
 
 class SubcategoryView(TemplateView):
@@ -21,10 +24,11 @@ class SubcategoryView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         url_slug = kwargs['slug']
-        category = Category.objects.get(slug=url_slug)
-        subcat = SubCategory.objects.filter(category=category)
+        subcat = SubCategory.objects.filter(slug=url_slug)
+        subject = Subject.objects.filter(subcategory = subcat)
         pro = ProfilePersonal.objects.all()
         context["subcat"] = subcat
+        context['subject'] = subject
         context['pro'] = pro
         return context
     
@@ -34,8 +38,48 @@ class SubjectView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         url_slug = kwargs['slug']
-        subcat = SubCategory.objects.get(slug=url_slug)
-        subject = Subject.objects.filter(subcategory=subcat)
+        subject = Subject.objects.filter(slug = url_slug)
         context["subject"] = subject
         return context
     
+class AllCategoryView(TemplateView):
+    template_name = 'main/all_category.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category = Category.objects.all()
+        pro = ProfilePersonal.objects.all()
+        context["pro"] = pro
+        context['cat'] = category 
+        return context
+    
+class AllSubCategoryView(TemplateView):
+    template_name = 'main/all_subcategory.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        subcategory = SubCategory.objects.all()
+        pro = ProfilePersonal.objects.all()
+        context["pro"] = pro
+        context['subcat'] = subcategory 
+        return context
+
+class AllCategoryView(TemplateView):
+    template_name = 'main/all_category.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category = Category.objects.all()
+        pro = ProfilePersonal.objects.all()
+        context["pro"] = pro
+        context['cat'] = category 
+        return context
+
+class AllCategoryView(TemplateView):
+    template_name = 'main/all.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pro = ProfilePersonal.objects.all()
+        context["pro"] = pro
+        return context
