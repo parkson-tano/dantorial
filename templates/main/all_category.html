@@ -54,17 +54,17 @@ login
         </div>
         <!-- Categories widget-->
         <div class="card mb-4">
-            <div class="card-header">Subjects</div>
+            <div class="card-header">Category</div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12 col-12">
                         <ul class="list-unstyled mb-0">
                             <div class='row'>
-                                {% for sub in subject%}
+                                {% for cat in all_cat %}
                                 <div class="col-6 col-sm-4 col-md-6 my-2">
                                     <li>
-                                        <a href="" class='btn btn-info'>
-                                            {{ sub|capfirst}}
+                                        <a href="{% url 'dantorial:category' cat.slug %}" class='btn btn-info'>
+                                            {{ cat|capfirst}}
                                         </a>
 
                                     </li>

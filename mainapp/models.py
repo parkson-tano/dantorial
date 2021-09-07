@@ -74,6 +74,13 @@ STA = (
     ('canceled', 'canceled')
     )
 
+PAYMENT = (
+    ('MTN Mobile Momey', 'mtn'),
+    ('Orange Money', 'orange money'),
+    ('YUP', 'yup'),
+    ('VISA', 'visa'),
+    )
+
 # User._meta.get_field('username')._unique = False
 
 # day = (
@@ -122,6 +129,7 @@ class ProfilePersonal(models.Model):
     level_of_education = models.CharField(max_length=50, choices=EL, null=True, blank=True)
     date_of_birth = models.DateField(default=timezone.now)
     view_count = models.PositiveIntegerField(default=0)
+    paid = models.BooleanField(default = False)
     profile_pic = models.ImageField(upload_to='profile_img', default='media/default.png')
     
 
@@ -151,6 +159,20 @@ class ProfileInfo(models.Model):
     language = models.CharField(max_length=30, choices=LANG)
     bio = models.TextField(blank=True, null=True)
     experience = models.TextField(blank=True, null=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True, related_name ='main_category')
+    subcategory = ChainedForeignKey(SubCategory, chained_field="category",
+        chained_model_field="category",
+        show_all=False,
+        auto_choose=True,
+        sort=True, null=True, blank=True, related_name="main_subcategory")    
+    subject = ChainedForeignKey(Subject, chained_field="subcategory",
+        chained_model_field="subcategory",
+        show_all=False,
+        auto_choose=True,
+        sort=True, null=True, blank=True, related_name="main_subject")
+    level = models.CharField(max_length=30, choices=TAG, null=True, blank=True)
+    charge = models.CharField(max_length=30, choices=CHARGE, null=True, blank=True)
+    amount = models.FloatField(null=True, blank=True)
 
     def __str__(self):
         return f'{self.user} profile information'
@@ -255,3 +277,16 @@ class Booked(models.Model):
     user_2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tutor') 
     amount = models.IntegerField()
     is_confirm = models.BooleanField(default=False)
+    date_created = models.DateTimeField(default=timezone.now)
+
+class Subscription(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    amount = models.IntegerField()
+    start_date = models.DateTimeField(auto_now_add=True)
+    end_date =models.DateTimeField()
+    is_active = models.BooleanField(default=False)
+    payment_method = models.CharField(max_length=40, choices=PAYMENT)
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.user) + ' subscription'

@@ -99,7 +99,7 @@
                     <div class="card" style="width: 100%">
                         <img src="{{cat.image.url}}" class="card-img-top" alt="..." />
                         <div class="card-body">
-                            <a href="{% url 'dantorial:subcategory' cat.slug %}">
+                            <a href="{% url 'dantorial:category' cat.slug %}">
                                  <h3 class="card-title"> {{cat.name}} </h3>
                             </a>
                            
@@ -109,7 +109,7 @@
                 {% endfor %}
             </div>
             <div class="d-grid gap-2 col-sm-6 col-lg-3 mx-auto mt-2">
-                <button class="btn btn-primary" type="button">See All Category</button>
+                <a href="{% url 'dantorial:allcategory' %}" class="btn btn-primary" type="button">See All Category</a>
             </div>
             <div class="row mb-4">
                 <div class="d-lg-flex flex-md-equal w-100 my-md-3 ps-md-3 mb-3">

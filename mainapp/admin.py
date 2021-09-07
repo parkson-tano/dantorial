@@ -26,6 +26,9 @@ class ExperienceAdmin(admin.ModelAdmin):
 class QualificationAdmin(admin.ModelAdmin):
     list_display = ['user', 'school', 'certificate', 'start_year', 'end_year']
 
+class SubscriptionAdmin(admin.ModelAdmin):
+    list_display = ['user', 'start_date', 'end_date', 'amount']
+
 admin.site.register(ProfilePersonal, ProfileAdmin)
 admin.site.register(ProfileInfo, TutorProfileAdmin)
 admin.site.register(Subject, SubjectAdmin)
@@ -37,3 +40,4 @@ admin.site.register(Availability, AvailabilityAdmin)
 admin.site.register(SocialMedia)
 admin.site.register(Booked)
 admin.site.register(Verification)
+admin.site.register(Subscription, SubscriptionAdmin)

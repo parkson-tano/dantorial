@@ -24,7 +24,7 @@ class SubcategoryView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         url_slug = kwargs['slug']
-        subcat = SubCategory.objects.filter(slug=url_slug)
+        subcat = SubCategory.objects.get(slug=url_slug)
         subject = Subject.objects.filter(subcategory = subcat)
         pro = ProfilePersonal.objects.all()
         context["subcat"] = subcat
@@ -50,7 +50,7 @@ class AllCategoryView(TemplateView):
         category = Category.objects.all()
         pro = ProfilePersonal.objects.all()
         context["pro"] = pro
-        context['cat'] = category 
+        context['category'] = category 
         return context
     
 class AllSubCategoryView(TemplateView):
@@ -75,11 +75,11 @@ class AllCategoryView(TemplateView):
         context['cat'] = category 
         return context
 
-class AllCategoryView(TemplateView):
-    template_name = 'main/all.html'
+# class AllCategoryView(TemplateView):
+#     template_name = 'main/all.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        pro = ProfilePersonal.objects.all()
-        context["pro"] = pro
-        return context
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         pro = ProfilePersonal.objects.all()
+#         context["pro"] = pro
+#         return context

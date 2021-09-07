@@ -359,7 +359,7 @@ class SearchView(TemplateView):
         quater = self.request.GET['quater']
         user_obj = User.objects.all()
         profile_result = ProfilePersonal.objects.filter(Q(account_type = acc_type)).filter(Q(city_id = city) | Q(address_1__icontains = quater) | Q(address_2__icontains = quater))
-        subject = Subject.objects.filter(subject = subject).order_by('user')
+        subject = ProfileInfo.objects.filter(subject = subject).order_by('user')
         final = list(set(list(chain(subject, profile_result))))
         # finals = list(set(final))
 
@@ -378,6 +378,8 @@ class SearchAllView(TemplateView):
         context = super().get_context_data(**kwargs)
         kw = self.request.GET['kw']
         result = ProfilePersonal.objects.filter(Q(user__icontain = kw) | Q(address_1__icontain = kw) | Q(address_2__icontain = kw) | Q(region__icontain = kw) | Q(city__icontain = kw))
-        context["result"] = result
+        subject = ProfileInfo.objects.filter(subject = subject).order_by('user')
+        final = list(set(list(chain(subject, profile_result))))       
+        context["result"] = final
         return context
     
