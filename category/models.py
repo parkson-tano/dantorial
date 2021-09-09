@@ -26,7 +26,7 @@ class Category(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse("dantorial:category_detail", kwargs={"slug": self.slug})
+        return reverse("dantorial:category", kwargs={"slug": self.slug})
 
 class SubCategory(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)

@@ -21,10 +21,11 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('mainapp.urls')),
-    # path("accounts/email/", page_not_found,{'exception': Exception('Not Found')}, name="account_email"),
     path('accounts/', include('allauth.urls')),
     path('chaining/', include('smart_selects.urls')),
+    path('', include('mainapp.urls')),
+    path("accounts/email/", page_not_found,{'exception': Exception('Not Found')}, name="account_email"),
+
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
