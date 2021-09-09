@@ -29,13 +29,19 @@ profile
           </tr>
         </thead>
         <tbody>
+          <tr>
+            <td> {{ userprofile.user.profileinfo.category }}</td>
+            <td> {{ userprofile.user.profileinfo.subject }}</td>
+            <td> {{ userprofile.user.profileinfo.level }} </td>
+            <td> {{ userprofile.user.profileinfo.amount}}FCFA</td>
+          </tr>
           {% for subject in userprofile.user.subject_set.all %}
           <tr>
             <td> {{ subject.category }}</td>
             <td> {{ subject.subject }}</td>
             <td> {{ subject.level }} </td>
             <td> {{ subject.amount}}FCFA</td>
-
+          </tr>
             {% endfor %}
         </tbody>
       </table>

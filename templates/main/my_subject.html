@@ -49,6 +49,33 @@ subject
                             </tr>
                         </thead>
                         <tbody>
+                            <tr>
+                                <td> 1 </td>
+                                <td> {{ user.profileinfo.category }}</td>
+                                <td> {{ user.profileinfo.subcategory }} </td>
+                                <td> {{ user.profileinfo.subject }} </td>
+                                <td> {{ user.profileinfo.level }} </td>
+                                {% if user.profilepersonal.account_type == 'tutor'%}
+                                <!-- <td> {{ forloop.counter }} </td>
+                    <td> {{ ord.category }}</td>
+                    <td> {{ ord.subcategory }} </td>
+                    <td> {{ ord.subject }} </td>
+                    <td> {{ ord.level }} </td> -->
+                                <td> {{ user.profileinfo.charge }} </td>
+                                <td> {{ user.profileinfo.amount }} </td>
+                                {% endif %}
+                                <td>
+                                    <div class='row'>
+
+                                    </div>
+                                    
+                                        
+                                    
+
+                                </td>
+
+                                <!-- <td> <a href="#" class="btn btn-danger"> Remove</a> </td> -->
+                            </tr>
                             {% for ord in subject %}
                             <tr>
                                 <td> {{ forloop.counter }} </td>
