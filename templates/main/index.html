@@ -65,9 +65,9 @@
         </div>
         <div class="col-sm-3 col-lg-2">
             <div class="input-group mb-3">
-                <select name = 'city' class="form-select select-picker" id="inputGroupSelect02" data-live-search="true">
-                    {% for cit in city_cmr %}
-                    <option value="{{cit.id}}">{{ cit.name }}</option>
+                <select name = 'region' class="form-select select-picker" id="inputGroupSelect02" data-live-search="true">
+                    {% for reg in region %}
+                    <option value="{{reg.id}}">{{ reg.name }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -140,14 +140,21 @@
                         <div class="card" style="width: 100%">
                             <img src="{{subcat.image.url}}" class="card-img-top rounded" alt="..." />
                             <div class="card-body">
-                                <h3 class="card-title"> {{subcat.name}} </h3>
+                                <h3 class="card-title"> 
+                                <a href="{% url 'dantorial:subcategory' subcat.category.slug subcat.id %}">
+                                  {{subcat.name}} 
+                                </a>
+                                </h3>  
+                                <p class='text-mute'>
+                                    {{subcat.category.name}}
+                                </p>
                             </div>
                         </div>
                     </div>
                     {% endfor %}
                 </div>
                 <div class="d-grid gap-2 col-sm-6 col-lg-4 mx-auto mt-2">
-                    <button class="btn btn-primary" type="button">See All SubCategory</button>
+                    <a href="{% url 'dantorial:allsubcategory' %}" class="btn btn-primary">See All SubCategory</a>
                 </div>
             </div>
             <div class="mb-5">
@@ -158,14 +165,17 @@
                         <div class="card" style="width: 100%">
                             <img src="{{ sub.image.url }}" class="card-img-top rounded" alt="..." />
                             <div class="card-body">
-                                <h3 class="card-title"> {{sub.name}} </h3>
+                                <a href="{% url 'dantorial:subject' sub.subcategory.category.slug sub.subcategory.id sub.slug %}">
+                                  <h3 class="card-title"> {{sub.name}} </h3>  
+                                </a>
+                                
                             </div>
                         </div>
                     </div>
                     {% endfor %}
                 </div>
                 <div class="d-grid gap-2 col-sm-6 col-lg-4 mx-auto mt-2">
-                    <button class="btn btn-primary" type="button">See All Subject</button>
+                    <a href="{% url 'dantorial:allsubject' %}" class="btn btn-primary">See All Subject</a>
                 </div>
             </div>
             <div class="row align-items-md-stretch mb-3">

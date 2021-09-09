@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.shortcuts import render, get_object_or_404, redirect
+from django.views.generic import TemplateView, View
 from .models import Category, SubCategory, Subject
 from mainapp.models import ProfilePersonal
 from django.contrib.auth.models import User
@@ -18,30 +18,54 @@ class CategoryView(TemplateView):
         context['pro'] = pro
         return context
 
-class SubcategoryView(TemplateView):
-    template_name = 'main/subcategory.html'
+class SubcategoryView(View):
+    # template_name = 'main/subcategory.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        url_slug = kwargs['slug']
-        subcat = SubCategory.objects.get(slug=url_slug)
-        subject = Subject.objects.filter(subcategory = subcat)
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     url_slug = kwargs['slug']
+    #     subcat = SubCategory.objects.get(slug=url_slug)
+    #     subject = Subject.objects.filter(subcategory = subcat)
+    #     pro = ProfilePersonal.objects.all()
+    #     context["subcat"] = subcat
+    #     context['subject'] = subject
+    #     context['pro'] = pro
+    #     return context
+
+    def get(self, request, category_slug, subcat_slug, *args, **kwargs):
+        category = get_object_or_404(Category, slug=category_slug)
+        subcate = get_object_or_404(SubCategory, pk=subcat_slug) 
+        context = {}
+        subject = Subject.objects.filter(subcategory = subcate)
         pro = ProfilePersonal.objects.all()
-        context["subcat"] = subcat
+        # context["subcat"] = subcat
         context['subject'] = subject
-        context['pro'] = pro
-        return context
-    
-class SubjectView(TemplateView):
-    template_name = 'main/subject.html'
+        context['pro'] = pro        
+        return render(request, 'main/subcategory.html', context)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        url_slug = kwargs['slug']
-        subject = Subject.objects.filter(slug = url_slug)
-        context["subject"] = subject
-        return context
+
+class SubjectView(View):
+    # template_name = 'main/subject.html'
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     url_slug = kwargs['slug']
+    #     subject = Subject.objects.filter(slug = url_slug)
+    #     context["subject"] = subject
+    #     return context
     
+    def get(self, request, category_slug, subcat_slug, subject_slug, *args, **kwargs):
+        category = get_object_or_404(Category, slug=category_slug)
+        subcate = get_object_or_404(SubCategory, pk=subcat_slug) 
+        subject = get_object_or_404(Subject, slug=subject_slug)  
+        context = {}
+        subject = Subject.objects.filter(subcategory = subcate)
+        pro = ProfilePersonal.objects.all()
+        context['subject'] = subject
+        context['pro'] = pro        
+        return render(request, 'main/subject.html', context)    
+
+
 class AllCategoryView(TemplateView):
     template_name = 'main/all_category.html'
 
@@ -64,15 +88,15 @@ class AllSubCategoryView(TemplateView):
         context['subcat'] = subcategory 
         return context
 
-class AllCategoryView(TemplateView):
-    template_name = 'main/all_category.html'
+class AllSubjectView(TemplateView):
+    template_name = 'main/all_subject.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        category = Category.objects.all()
+        subject = Subject.objects.all()
         pro = ProfilePersonal.objects.all()
         context["pro"] = pro
-        context['cat'] = category 
+        context['sub'] = subject
         return context
 
 # class AllCategoryView(TemplateView):

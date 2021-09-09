@@ -22,17 +22,19 @@ login
                         </p>
                     </div>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item"> {{p.level_of_education|default:''}} </li>
-                        <li class="list-group-item">{{p.gender|default:''}}</li>
-                        <li class="list-group-item">{{p.city|default:''}}</li>
-                        <li class="list-group-item">{{p.address_1|default:''}}</li>
+                        <li class="list-group-item">{{p.city|default:''}} {{p.address_1|default:''}}</li>
+                        <li class="list-group-item">
+                        {{p.user.profileinfo.subject|default:''}}
+                        {{p.user.profileinfo.amount|default:''}} per {{p.user.profileinfo.charge}}</li>
                     </ul>
                     <div class="card-body">
                         <a class="btn btn-danger card-link d-grid" href="{% url 'dantorial:userprofile' p.id %}">Read
                             more →</a><br>
                         <a href="tel:{{p.country.phone}}{{p.phone_number}}" class="btn btn-success card-link d-grid ">
-                            Get Contact
-                            <i class="fa fa-phone"></i>
+                            <span>Get Contact 
+                                <i class="fa fa-phone"></i>
+                            </span>
+                            
                         </a>
                     </div>
                 </div>
@@ -63,7 +65,7 @@ login
                                 {% for sub in subcat %}
                                 <div class="col-6 col-sm-4 col-md-6 my-2">
                                     <li>
-                                        <a href="{% url 'dantorial:subcategory' sub.slug %}" class='btn btn-info'>
+                                        <a href="{% url 'dantorial:subcategory' sub.category.slug sub.id %}" class='btn btn-info'>
                                             {{ sub|capfirst}}
                                         </a>
 

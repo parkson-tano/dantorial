@@ -355,10 +355,10 @@ class SearchView(TemplateView):
         context = super().get_context_data(**kwargs)
         acc_type = self.request.GET['typ']
         subject = self.request.GET['subject']
-        city = self.request.GET['city']
+        region = self.request.GET['region']
         quater = self.request.GET['quater']
         user_obj = User.objects.all()
-        profile_result = ProfilePersonal.objects.filter(Q(account_type = acc_type)).filter(Q(city_id = city) | Q(address_1__icontains = quater) | Q(address_2__icontains = quater))
+        profile_result = ProfilePersonal.objects.filter(Q(account_type = acc_type)).filter(Q(region = region) | Q(address_1__icontains = quater) | Q(address_2__icontains = quater))
         subject = ProfileInfo.objects.filter(subject = subject).order_by('user')
         final = list(set(list(chain(subject, profile_result))))
         # finals = list(set(final))
@@ -369,7 +369,7 @@ class SearchView(TemplateView):
         context['profile_result'] = final
         # print(f'{acc_type} {subject} {city} {quater}')
         return context
-
+   
 
 class SearchAllView(TemplateView):
     template_name = 'main/search_all.html'

@@ -39,10 +39,10 @@ class SubCategory(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse("dantorial:subcategory_detail", kwargs={"category_slug": self.category.slug, 'subcat_slug': self.slug})
+        return reverse("dantorial:subcategory", kwargs={"category_slug": self.category.slug, 'subcat_slug': self.id})
 
 class Subject(models.Model):
-    subcategory = models.ForeignKey(SubCategory, on_delete=models.PROTECT)
+    subcategory = models.ForeignKey(SubCategory, on_delete=models.CASCADE)
     name = models.CharField(max_length = 40)
     slug = AutoSlugField(populate_from='name')
     image = models.ImageField(upload_to='subject_image', default='default.png')
@@ -52,4 +52,4 @@ class Subject(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse("dantorial:subject_detail", kwargs={"slug": self.slug})
+        return reverse("dantorial:subject", kwargs={"category_slug": self.subcategory.category.slug, 'subcat_slug': self.subcategory.id, "subject_slug": self.slug})

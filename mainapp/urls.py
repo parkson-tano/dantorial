@@ -56,7 +56,9 @@ urlpatterns = [
 # category urls
 
     path('<slug:slug>/', CategoryView.as_view(), name='category'),
-    path('sub/<slug:slug>/', SubcategoryView.as_view(), name='subcategory'),
-    path('<slug:slug>/', SubjectView.as_view(), name='subject'),
-    path('all/category/', AllCategoryView.as_view(), name='allcategory'),
+    path('<category_slug>/<subcat_slug>/', SubcategoryView.as_view(), name='subcategory'),
+    path('<category_slug>/<subcat_slug>/<subject_slug>/', SubjectView.as_view(), name='subject'),
+    path('allcategory', AllCategoryView.as_view(), name='allcategory'),
+    path('allsubcategory', AllSubCategoryView.as_view(), name='allsubcategory'),
+    path('allsubject', AllSubjectView.as_view(), name='allsubject'),
 ]

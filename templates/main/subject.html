@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+login
+{% endblock title %}
+{% block content %}
+<div class="row justify-content p-2 mt-5 my-5 mb-3">
+    <div class='col-sm-12 col-md-9'>
+        <div class='row'>
+            {% for p in pro %}
+
+            <div class="col-12 col-sm-6 col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-header">
+                        <a href="{{p.profile_pic.url}}"><img class="card-img" src="{{p.profile_pic.url}}" alt="..."
+                                style='height:15rem; width:100%' /></a>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ p.first_name|default:'' }} {{ p.last_name|default:'' }} </h5>
+                        <p class="card-text">
+                            {{p.user.profileinfo.bio|default:''}}
+                        </p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"> {{p.level_of_education|default:''}} </li>
+                        <li class="list-group-item">{{p.gender|default:''}}</li>
+                        <li class="list-group-item">{{p.city|default:''}}</li>
+                        <li class="list-group-item">{{p.address_1|default:''}}</li>
+                    </ul>
+                    <div class="card-body">
+                        <a class="btn btn-danger card-link d-grid" href="{% url 'dantorial:userprofile' p.id %}">Read
+                            more →</a><br>
+                        <a href="tel:{{p.country.phone}}{{p.phone_number}}" class="btn btn-success card-link d-grid ">
+                            Get Contact
+                            <i class="fa fa-phone"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-3">
+        <!-- Search widget-->
+        <div class="card mb-4">
+            <div class="card-header">Search</div>
+            <div class="card-body">
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Enter search term..."
+                        aria-label="Enter search term..." aria-describedby="button-search" />
+                    <button class="btn btn-primary" id="button-search" type="button">Go!</button>
+                </div>
+            </div>
+        </div>
+        <!-- Categories widget-->
+        <div class="card mb-4">
+            <div class="card-header">Subjects</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-12">
+                        <ul class="list-unstyled mb-0">
+                            <div class='row'>
+                                {% for sub in subject %}
+                                <div class="col-6 col-sm-4 col-md-6 my-2">
+                                    <li>
+                                        <a href="{% url 'dantorial:subject' sub.subcategory.category.slug sub.subcategory.id sub.slug %}" class='btn btn-info'>
+                                            {{ sub|capfirst}}
+                                        </a>
+
+                                    </li>
+                                </div>
+
+
+                                {% endfor %}
+                            </div>
+
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Side widget-->
+        <div class="card mb-4">
+            <div class="card-header">
+                {% if user.profilepersonal == 'tutor' %}
+                Suggested Students
+                {% else %}
+                Suggested Tutors
+                {% endif %}
+            </div>
+            <div class="card-body">
+                Sugestions will appear here
+            </div>
+        </div>
+    </div>
+    {% endblock content %}
