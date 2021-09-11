@@ -57,6 +57,9 @@ INSTALLED_APPS = [
     'dani',
     'smart_selects',
     'ckeditor',
+    'flatpickr',
+    'bootstrap4',
+    'bootstrap_datepicker_plus',
 
 ]
 
@@ -171,6 +174,10 @@ CKEDITOR_CONFIGS = {
     'width': 'auto !important'
           },
     }
+
+BOOTSTRAP4 = {
+    'include_jquery': True,
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/

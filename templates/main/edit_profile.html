@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load crispy_forms_tags %}
+{% load crispy_forms_tags %}  
 {% block title %}
 login
 {% endblock title %}
@@ -34,8 +34,7 @@ login
             <h5 class="card-title text-center mb-3 fw-light fs-5">Edit Personal Information</h5>
             <form class="needs-validation" method="post" action="{% url 'dantorial:profile-edit' user.profilepersonal.id %}" enctype="multipart/form-data" novalidate>
               {% csrf_token %}
-              {{form.media.js}}
-              
+              {{ form.media }}
               {{form|crispy}}
               <div class="d-grid mt-3">
                 <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">submit</button>

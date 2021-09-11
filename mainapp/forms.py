@@ -2,8 +2,10 @@ from django import forms
 from django.contrib.auth.models import User
 from .models import *
 
+from flatpickr import DatePickerInput, TimePickerInput, DateTimePickerInput
 from category.models import Category
 from datetime import date
+# from bootstrap_datepicker_plus import DatePickerInput
 
 
 class DateSelectorWidget(forms.MultiWidget):
@@ -68,9 +70,8 @@ class PersonalProfileForm(forms.ModelForm):
         'phone_number','country', 'region','city','date_of_birth', 'address_1', 'address_2', 'level_of_education', 'profile_pic']
 		
 		widgets = {
-			'date_of_birth': DateSelectorWidget(attrs = {
-				'class': 'form-control'
-			})
+			'date_of_birth': DatePickerInput()
+    
 		}
             # "account_type": forms.CharField(attrs= { 
 			# 	'name' : 'account_type',

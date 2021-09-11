@@ -3,11 +3,19 @@ from django.contrib.auth.models import User
 from mainapp.models import ProfilePersonal
 # Create your models here.
 
+RATING = (
+    (1, '1'),
+    (2, '2'),
+    (3, '3'),
+    (4, '4'),
+    (5, '5')
+    )
+
 class Review(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE,  null=True, blank=True)
     profile = models.ForeignKey(ProfilePersonal, on_delete=models.PROTECT, related_name='user_profile')
     content = models.TextField()
-    rating = models.IntegerField(null=True, blank=True)
+    rating = models.CharField(max_length=2,null=True, blank=True, choices=RATING)
     date_created = models.DateTimeField(auto_now_add=True)
 
     class Meta:

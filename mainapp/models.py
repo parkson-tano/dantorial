@@ -9,6 +9,7 @@ from django.utils import timezone
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from smart_selects.db_fields import ChainedForeignKey
 from ckeditor.fields import RichTextField
+import numpy as np
 # Create your models here.
 
 EL = (
@@ -144,6 +145,11 @@ class ProfilePersonal(models.Model):
             output_size = (300,300)
             img.thumbnail(output_size)
             img.save(self.profile_pic.path)
+
+    def average_rating(self):
+        all_rating = list(map(lambda x: x.rating, self.review_set.all()))
+        return np.mean(all_rating)
+
 
 @receiver(post_save,sender=User)
 def create_profile(sender,instance,created,**kwargs):
