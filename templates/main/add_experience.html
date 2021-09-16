@@ -35,9 +35,22 @@ login
             <h5 class="card-title text-center mb-3 fw-light fs-5">Edit Work Experience</h5>
             <form class="needs-validation" method="post" action="" novalidate>
               {% csrf_token %}
-              {{form.media.js}}
+              {{form.media}}
     
-                {{form|crispy}}
+                 <div class="row">
+                <div class='col-md-6'>
+                {{form.work_post|as_crispy_field}}
+                </div>
+                <div class='col-md-6'>
+                  {{form.position|as_crispy_field}}
+                </div>
+                <div class='col-md-6'>
+                 {{form.start_date|as_crispy_field}} 
+                </div>
+                <div class='col-md-6'>
+                  {{form.end_date|as_crispy_field}}
+                </div>   
+                </div>
               <div class="d-grid">
                 <button class="btn btn-primary btn-login text-uppercase fw-bold mt-3" type="submit">Add Experience</button>
               </div>

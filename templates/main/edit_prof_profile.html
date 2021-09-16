@@ -8,6 +8,17 @@ login
 {% endblock title %}
 {% block content %}
 
+<style>
+  .bio {
+    padding: 10px;
+    max-width: 100%;
+    line-height: 1.5;
+    border-radius: 5px;
+    border: 1px #ccc;
+    /*box-shadow: 1px 1px 1px #999;*/
+}
+</style>
+
 <body>
   <div class="container-fluid p-0">
     <div class="row mt-5">
@@ -38,7 +49,35 @@ login
             <form class="needs-validation" method="post" action="" novalidate>
               {% csrf_token %}
               {{form.media}}
-              {{form|crispy}}
+              <div class="row">
+              <div class="col-sm-6">
+                {{form.language|as_crispy_field}}
+                </div>
+                <div>
+                  {{form.bio|as_crispy_field}}
+                </div>
+                <div>
+                 {{form.experience|as_crispy_field}} 
+                </div>
+                <div class="col-md-4">
+                  {{form.category|as_crispy_field}}
+                </div> 
+                <div class="col-md-4">
+                {{form.subcategory|as_crispy_field}}
+                </div>
+                <div class="col-md-4">
+                 {{form.subject|as_crispy_field}} 
+                </div>
+                <div class="col-md-4">
+                  {{form.level|as_crispy_field}}
+                </div> 
+                <div class="col-md-4">
+                {{form.charge|as_crispy_field}}
+                </div>
+                <div class="col-md-4">
+                 {{form.amount|as_crispy_field}} 
+                </div>
+                </div>
               <div class="d-grid mt-3">
                 <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">submit</button>
               </div>

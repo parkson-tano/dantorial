@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'flatpickr',
     'bootstrap4',
     'bootstrap_datepicker_plus',
+    "django_notification_system",
 
 ]
 
@@ -294,3 +295,19 @@ SOCIALACCOUNT_PROVIDERS = {
 
 SOCIAL_AUTH_FACEBOOK_KEY = 873796066573023
 SOCIAL_AUTH_FACEBOOK_SECRET = 'f0e01f2dc96c9699429d9ca1592c05a1'
+
+
+# Twilio Required settings, if you're not planning on using Twilio
+# these can be set to empty strings
+NOTIFICATION_SYSTEM_TARGETS={
+  # Twilio Required settings, if you're not planning on using Twilio these can be set
+  # to empty strings
+  "twilio_sms": {
+      'account_sid': '',
+      'auth_token': '',
+      'sender': '' # This is the phone number associated with the Twilio account
+  },
+  "email": {
+      'from_email': '' # Sending email address
+  }
+}

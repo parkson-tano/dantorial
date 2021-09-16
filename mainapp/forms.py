@@ -172,14 +172,14 @@ class  ProfileInfoForm(forms.ModelForm):
 				'name' : 'bio',
 				'class': 'form-control',
                 'rows': 8,
-                'columns': 8,
+                'cols': 20,
 				'required' : True
 			}), 
             "experience": forms.Textarea(attrs= { 
 				'name' : 'experience',
 				'class': 'form-control',
                 'rows': 8,
-                'columns': 8,
+                'columns': 25,
 				'required' : True
 			}), 
         }
@@ -213,7 +213,11 @@ class AddExperienceForm(forms.ModelForm):
 	class Meta:
 		model = Experience
 		fields = ('work_post','position','start_date','end_date')
-
+		widgets = {
+			'start_date': DatePickerInput(),
+			'end_date': DatePickerInput()
+    
+		}
 class AddQualificationForm(forms.ModelForm):
 	class Meta:
 		model = Qualification

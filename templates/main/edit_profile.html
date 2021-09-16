@@ -35,7 +35,68 @@ login
             <form class="needs-validation" method="post" action="{% url 'dantorial:profile-edit' user.profilepersonal.id %}" enctype="multipart/form-data" novalidate>
               {% csrf_token %}
               {{ form.media }}
-              {{form|crispy}}
+              <div class="row">
+              
+              <div class="col-sm-6">
+                {{form.account_type|as_crispy_field}}
+                </div>
+                
+                <div class="col-sm-3">
+                  {{form.title|as_crispy_field}}
+                </div>
+                <div class="col-sm-3">
+                 {{form.gender|as_crispy_field}} 
+                </div>
+                <div class="col-md-6">
+                  {{form.first_name|as_crispy_field}}
+                </div> 
+                <div class="col-md-6">
+                {{form.last_name|as_crispy_field}}
+                </div>
+                
+                <div class="row">
+                  <div class="col-md-3">
+                 {{form.country|as_crispy_field}} 
+                </div>
+                  <div class="col-3 form-group">
+                  <label>Code</label>
+                            <select class='form-control'>
+                            {% for c in country %}
+                            <option value='{{c.code}}'>
+                                +{{c.phone}}
+                            </option>
+                            {% endfor %}
+                        </select>
+                        </div>
+                <div class="col-6 col-sm-8 col-md-6">
+                  {{form.phone_number|as_crispy_field}}
+                </div>
+                </div>
+                <div class="col-md-3">
+                  {{form.region|as_crispy_field}}
+                </div> 
+                <div class="col-md-3">
+                  {{form.city|as_crispy_field}}
+                </div>
+                <div class="col-md-5">
+                  {{form.address_1|as_crispy_field}}
+                </div> 
+                <div class="col-md-4">
+                  {{form.address_2|as_crispy_field}}
+                </div>
+                
+                <div class="col-md-6">
+                 {{form.date_of_birth|as_crispy_field}} 
+                </div>
+              
+                <div class="col-md-6">
+                 {{form.level_of_education|as_crispy_field}} 
+                </div>
+                <div>
+                 {{form.profile_pic|as_crispy_field}} 
+                </div>
+
+                </div>
               <div class="d-grid mt-3">
                 <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">submit</button>
               </div>

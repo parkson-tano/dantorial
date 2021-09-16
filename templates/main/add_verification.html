@@ -37,7 +37,20 @@ login
               {% csrf_token %}
               {{form.media.js}}
   
-                {{form|crispy}}
+                 <div class="row">
+                <div class='col-md-3'>
+                {{form.document_type|as_crispy_field}}
+                </div>
+                <div class='col-md-9'>
+                  {{form.number|as_crispy_field}}
+                </div>
+                <div class='col-md-6'>
+                 {{form.photo_front|as_crispy_field}} 
+                </div>
+                <div class='col-md-6'>
+                  {{form.photo_back|as_crispy_field}}
+                </div>   
+                </div>
 
 
               <div class="d-grid">

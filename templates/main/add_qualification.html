@@ -37,7 +37,20 @@ login
               {% csrf_token %}
               {{form.media.js}}
     
-                {{form|crispy}}
+                 <div class="row">
+                <div class='col-md-6'>
+                {{form.school|as_crispy_field}}
+                </div>
+                <div class='col-md-6'>
+                  {{form.certificate|as_crispy_field}}
+                </div>
+                <div class='col-md-6'>
+                 {{form.start_year|as_crispy_field}} 
+                </div>
+                <div class='col-md-6'>
+                  {{form.end_year|as_crispy_field}}
+                </div>   
+                </div>
         
               <div class="d-grid">
                 <button class="btn btn-primary btn-login text-uppercase fw-bold mt-3" type="submit">Add Qualification</button>
