@@ -176,7 +176,7 @@ class ProfileInfo(models.Model):
         show_all=False,
         auto_choose=True,
         sort=True, null=True, blank=True, related_name="main_subject")
-    level = models.CharField(max_length=30, choices=TAG, null=True, blank=True)
+    # level = models.CharField(max_length=30, choices=TAG, null=True, blank=True)
     charge = models.CharField(max_length=30, choices=CHARGE, null=True, blank=True)
     amount = models.FloatField(null=True, blank=True)
 
@@ -205,13 +205,12 @@ class Subject(models.Model):
         show_all=False,
         auto_choose=True,
         sort=True, related_name="user_subject")
-    level = models.CharField(max_length=30, choices=TAG, null=True, blank=True)
+    # level = models.CharField(max_length=30, choices=TAG, null=True, blank=True)
     charge = models.CharField(max_length=30, choices=CHARGE, null=True, blank=True)
     amount = models.FloatField(null=True, blank=True)
 
     def __str__(self):
         return self.user.username
- 
 
 class Experience(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)

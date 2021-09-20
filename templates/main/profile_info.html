@@ -45,7 +45,15 @@ login
                         <p class="mb-2 fw-light fs-5">
                             Experience: {{profile_info.experience|safe|default:''}}
                         </p>
-
+                        <ul class="list-group list-group-flush ml-0">
+  <li class="list-group-item">{{profile_info.category|default:''}}</li>
+  <li class="list-group-item">{{profile_info.subcategory|default:''}}</li>
+  <li class="list-group-item">{{profile_info.subject|default:''}}</li>
+  {% if user.profilepersonal.account_type == 'tutor' %}
+  <li class="list-group-item">{{profile_info.charge|default:''}}</li>
+  <li class="list-group-item">{{profile_info.amount|default:''}}</li>
+  {% endif %}
+</ul>
                         <hr class="my-4">
                         <div class="d-grid">
                             <a href="{% url 'dantorial:profile-info-edit' request.user.profileinfo.id%}"

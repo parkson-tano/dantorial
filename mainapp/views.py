@@ -71,7 +71,7 @@ class UserProfileView(DetailView):
         context = super().get_context_data(**kwargs)
         comments_connected = Review.objects.filter(profile=self.get_object()).order_by('-date_created')
         context["comments"] = comments_connected
-        context['comment_form'] = ReviewForm
+        context['comment_form'] = ReviewForm 
         return context
 
     def post(self, request, *args, **kwargs):
@@ -79,6 +79,7 @@ class UserProfileView(DetailView):
                                   rating=request.POST.get('rating'),
                                   profile=self.get_object(),
 									user = self.request.user)
+        
         new_comment.save()
         return self.get(self, request, *args, **kwargs)
     # def get(self, request, *args, **kwargs):
@@ -355,11 +356,11 @@ class SearchView(TemplateView):
         context = super().get_context_data(**kwargs)
         acc_type = self.request.GET['typ']
         subject = self.request.GET['subject']
-        region = self.request.GET['region']
+        city = self.request.GET['city']
         quater = self.request.GET['quater']
         user_obj = User.objects.all()
-        profile_result = ProfilePersonal.objects.filter(Q(account_type = acc_type)).filter(Q(region = region) | Q(address_1__icontains = quater) | Q(address_2__icontains = quater))
-        subject = ProfileInfo.objects.filter(subject = subject).order_by('user')
+        profile_result = ProfilePersonal.objects.filter(Q(account_type = acc_type)).filter(Q(city_id = city) | Q(address_1__icontains = quater) | Q(address_2__icontains = quater))
+        subject = Subject.objects.filter(subject = subject).order_by('user')
         final = list(set(list(chain(subject, profile_result))))
         # finals = list(set(final))
 
@@ -369,7 +370,7 @@ class SearchView(TemplateView):
         context['profile_result'] = final
         # print(f'{acc_type} {subject} {city} {quater}')
         return context
-   
+
 
 class SearchAllView(TemplateView):
     template_name = 'main/search_all.html'
@@ -378,8 +379,6 @@ class SearchAllView(TemplateView):
         context = super().get_context_data(**kwargs)
         kw = self.request.GET['kw']
         result = ProfilePersonal.objects.filter(Q(user__icontain = kw) | Q(address_1__icontain = kw) | Q(address_2__icontain = kw) | Q(region__icontain = kw) | Q(city__icontain = kw))
-        subject = ProfileInfo.objects.filter(subject = subject).order_by('user')
-        final = list(set(list(chain(subject, profile_result))))       
-        context["result"] = final
+        context["result"] = result
         return context
     

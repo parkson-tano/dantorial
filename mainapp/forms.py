@@ -166,7 +166,7 @@ class PersonalProfileForm(forms.ModelForm):
 class  ProfileInfoForm(forms.ModelForm):
     class Meta:
         model = ProfileInfo
-        fields = ['language', 'bio', 'experience', 'category','subcategory','subject','level','charge', 'amount']
+        fields = ['language', 'bio', 'experience', 'category','subcategory','subject','charge', 'amount']
         widgets = { 
             "bio": forms.Textarea(attrs= { 
 				'name' : 'bio',
@@ -207,7 +207,7 @@ class UserLoginForm(forms.Form):
 class AddSubjectForm(forms.ModelForm):
 	class Meta:
 		model = Subject
-		fields = ('category','subcategory','subject','level','charge', 'amount')
+		fields = ('category','subcategory','subject','charge', 'amount')
 
 class AddExperienceForm(forms.ModelForm):
 	class Meta:

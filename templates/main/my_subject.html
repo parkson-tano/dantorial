@@ -36,11 +36,11 @@ subject
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th>SN</th>
+                                <!-- <th>SN</th> -->
                                 <th>Category</th>
                                 <th>SubCategory</th>
                                 <th>subject</th>
-                                <th>Level</th>
+                                
                                 {% if user.profilepersonal.account_type == 'tutor'%}
                                 <th>Charge</th>
                                 <th>Amount</th>
@@ -50,11 +50,11 @@ subject
                         </thead>
                         <tbody>
                             <tr>
-                                <td> 1 </td>
+                                <!-- <td> 1 </td> -->
                                 <td> {{ user.profileinfo.category }}</td>
                                 <td> {{ user.profileinfo.subcategory }} </td>
                                 <td> {{ user.profileinfo.subject }} </td>
-                                <td> {{ user.profileinfo.level }} </td>
+                                
                                 {% if user.profilepersonal.account_type == 'tutor'%}
                                 <!-- <td> {{ forloop.counter }} </td>
                     <td> {{ ord.category }}</td>
@@ -78,19 +78,19 @@ subject
                             </tr>
                             {% for ord in subject %}
                             <tr>
-                                <td> {{ forloop.counter }} </td>
+                                <!-- <td> {{ forloop.counter }} </td> -->
                                 <td> {{ ord.category }}</td>
                                 <td> {{ ord.subcategory }} </td>
                                 <td> {{ ord.subject }} </td>
-                                <td> {{ ord.level }} </td>
+                                <!-- <td> {{ ord.level }} </td> -->
                                 {% if user.profilepersonal.account_type == 'tutor'%}
                                 <!-- <td> {{ forloop.counter }} </td>
                     <td> {{ ord.category }}</td>
                     <td> {{ ord.subcategory }} </td>
                     <td> {{ ord.subject }} </td>
                     <td> {{ ord.level }} </td> -->
-                                <td> {{ ord.charge }} </td>
-                                <td> {{ ord.amount }} </td>
+                                <td> {{ ord.charge|default:"***"  }} </td>
+                                <td> {{ ord.amount|default:"***"  }} </td>
                                 {% endif %}
                                 <td>
                                     <div class='row'>

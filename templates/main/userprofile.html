@@ -62,24 +62,24 @@ profile
           <tr>
             <th>Category</th>
             <th>Subject</th>
-            <th>Level</th>
+            <!-- <th>Level</th> -->
             <th>Fee</th>
             <!-- <th>Action</th> -->
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td> {{ userprofile.user.profileinfo.category }}</td>
-            <td> {{ userprofile.user.profileinfo.subject }}</td>
-            <td> {{ userprofile.user.profileinfo.level }} </td>
-            <td> {{ userprofile.user.profileinfo.amount}}FCFA</td>
+            <td> {{ userprofile.user.profileinfo.category|default:"" }}</td>
+            <td> {{ userprofile.user.profileinfo.subject|default:""  }}</td>
+            <!-- <td> {{ userprofile.user.profileinfo.level }} </td> -->
+            <td> {{ userprofile.user.profileinfo.amount|default:"" }}FCFA</td>
           </tr>
           {% for subject in userprofile.user.subject_set.all %}
           <tr>
-            <td> {{ subject.category }}</td>
+            <td> {{ subject.category}}</td>
             <td> {{ subject.subject }}</td>
-            <td> {{ subject.level }} </td>
-            <td> {{ subject.amount}}FCFA</td>
+            <!-- <td> {{ subject.level }} </td> -->
+            <td> {{ subject.amount|default:"***" }}FCFA</td>
           </tr>
             {% endfor %}
         </tbody>
