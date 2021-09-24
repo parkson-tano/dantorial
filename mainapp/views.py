@@ -29,6 +29,8 @@ from itertools import chain
 from review.models import Review
 from review.forms import ReviewForm
 from allauth.account.admin import EmailAddress
+from messaging.models import Message
+from messaging.forms import MessageForm
 # Create your views here.
 
 class IndexView(TemplateView):
@@ -58,12 +60,13 @@ class UserProfileView(DetailView):
     template_name = 'main/userprofile.html'
     context_object_name = 'userprofile'
     model = ProfilePersonal
+    form = MessageForm
     
     # def dispatch(self, request, *args, **kwargs):
     #     if request.user.is_authenticated:
     #         pass
     #     else:
-    #         return redirect('/login/?next=/userprofile/')
+    #         return redirect('/accounts/login/?next=userprofile/6')
             
     #     return super().dispatch(request, *args, **kwargs)
 
@@ -72,16 +75,49 @@ class UserProfileView(DetailView):
         comments_connected = Review.objects.filter(profile=self.get_object()).order_by('-date_created')
         context["comments"] = comments_connected
         context['comment_form'] = ReviewForm 
+        context['message'] = self.form
         return context
 
     def post(self, request, *args, **kwargs):
-        new_comment = Review(content=request.POST.get('content'),
-                                  rating=request.POST.get('rating'),
+        # form = MessageForm(request.GET)
+        # if form.is_valid():
+        #     form.instance.sender_user = self.request.user
+        #     form.instance.receiver_user = self.get_object().user,
+        #     form.instance.name = request.GET.get('name'),
+        #     form.instance.email = request.GET.get('email'),
+        #     form.instance.phone_number = request.GET.get('phone_number'),
+        #     form.instance.message = request.GET.get('message'),
+        #     form.save()
+        if request.user.is_authenticated:
+            new_comment = Review(content=request.POST.get('content'),
+                                  rating=request.POST.get('rate'),
                                   profile=self.get_object(),
 									user = self.request.user)
+            new_comment.save()
+            return self.get(self, request, *args, **kwargs)
+
+        else:
+            return redirect(f'/accounts/login/?next=/userprofile/{self.get_object().id}')
         
-        new_comment.save()
-        return self.get(self, request, *args, **kwargs)
+        if request.user.is_authenticated:
+            new_message = Message(sender_user = self.request.user,
+                receiver_user = self.get_object().user,
+                message = request.POST.get('message'),
+                )
+            new_message.save()
+            return self.get(self, request, *args, **kwargs)
+        else:
+            new_message = Message(
+                receiver_user = self.get_object().user,
+                name = request.POST.get('name'),
+                email = request.POST.get('email'),
+                phone_number = request.POST.get('phone_number'),
+                message = request.POST.get('message'),
+                )
+            new_message.save()
+            return self.get(self, request, *args, **kwargs)
+        
+        
     # def get(self, request, *args, **kwargs):
     #     form = self.form_class
     #     return render(request, self.template_name, {'form':form})
@@ -90,6 +126,25 @@ class UserProfileView(DetailView):
 # 		form.instance.user = self.request.user
 #         form.save()
 #         return super().form_valid(form)
+
+# class MessageView(View):
+#     def post(self, request, pk, *args, **kwargs):
+#         form = MessageForm(request.POST)
+#         if request.user.is_authenticated:
+#             new_message = Message(sender_user = self.request.user,
+#                     receiver_user = self.get_object().user,
+#                     message = request.POST.get('message'),
+#                     )
+#         else:
+#             new_message = Message(
+#                     receiver_user = self.get_object().user,
+#                     name = request.POST.get('name'),
+#                     email = request.POST.get('email'),
+#                     phone_number = request.POST.get('phone_number'),
+#                     message = request.POST.get('message'),
+#                     )
+#         new_message.save()
+#         return self.get(self, request, *args, **kwargs)
 
 class AboutView(TemplateView):
     template_name = 'main/about_us.html'

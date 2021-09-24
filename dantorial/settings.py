@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'channels',
+    # 'channels',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -99,7 +99,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'dantorial.wsgi.application'
 
-ASGI_APPLICATION = 'dantorial.routing.application'
+# ASGI_APPLICATION = 'dantorial.routing.application'
 
 AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
@@ -154,14 +154,14 @@ try:
 except ImportError:
     pass
 
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
-        },
-    },
-}
+# CHANNEL_LAYERS = {
+#     'default': {
+#         'BACKEND': 'channels_redis.core.RedisChannelLayer',
+#         'CONFIG': {
+#             "hosts": [('127.0.0.1', 6379)],
+#         },
+#     },
+# }
 
 CKEDITOR_CONFIGS = {
 'default': {
