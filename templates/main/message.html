@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} message {%endblock title %}
+	{% block content %}
+		<div class="container-fluid p-0">
+			<div class="row mt-5">
+				<div class="col-sm-4 col-md-4 col-lg-3 mx-auto">
+					<div class="card border-0 shadow rounded-3 my-5">
+						<div class="card-body p-0 p-sm-0">
+							<div class="list-group mx-auto">
+								<a href="#"
+								class="list-group-item list-group-item-action active">Star</a>
+								
+							
+						</div>
+						<ul>
+						{% for m in message %}
+						<li>
+						{{m.sender_user}}	
+						r: {{m.receiver_user}}
+						{{m.message}}
+						{{m.date_created|timesince}}
+						</li>
+						
+						{% endfor %}
+						</ul>
+						
+					</div>
+					<ul>
+						{% for o in out %}
+						<li>
+						{{o.sender_user}}	
+						r: {{o.receiver_user}}
+						{{o.message}}
+						{{o.date_created|timesince}}
+						</li>
+						
+						{% endfor %}
+						</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

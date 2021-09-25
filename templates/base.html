@@ -1,161 +1,153 @@
 {% load static %}
 <!doctype html>
 <html lang="en">
-
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Font Awesome -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="{% static 'styles.css' %}">
-  <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/navbar-fixed/">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-  <!-- Google Fonts -->
-  <!-- <link
-  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-  rel="stylesheet"
-/> -->
-  <!-- MDB -->
-  <!-- <link
-  href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css"
-  rel="stylesheet"
-/> -->
-  <title>
-    {% block title %}
-
-    {% endblock title %}
-  </title>
-  <script data-ad-client="ca-pub-2235358777308916" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-
-
-{% load bootstrap4 %} 
-{% bootstrap_css %}
-{% bootstrap_javascript jquery='full' %}  
-
-</head>
-
-<header>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="{% url 'dantorial:index' %}">Dantorial</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse justify-content-end " id="navbarNav">
-        <ul class="navbar-nav me-5 mb-0 mb-lg-0">
-          {% if user.is_authenticated %}
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Notifications
-              <span class="badge rounded-pill badge-notification bg-danger">1</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Message
-              <span class="badge rounded-pill badge-notification bg-danger">1</span>
-            </a>
-
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-white">{{user.profilepersonal.title|capfirst}} {{user.profilepersonal.first_name}}</a>
-          </li>
-          <li>
-            {% if user.profilepersonal.account_type == 'tutor' %}
-            <a class="nav-link text-white">Tutor Account</a>
-            {% else %}
-            <a class="nav-link text-white">Student Account</a>
-            {% endif %}
-          </li>
-
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-              data-bs-toggle="dropdown" aria-expanded="false">
-              <span><i class="fa fa-user" aria-hidden="true"></i></span> Account
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <li><a class="dropdown-item" href="{% url 'dantorial:profile' %}">Profile</a></li>
-              <li><a class="dropdown-item" href="{% url 'dantorial:my-subject' %}">My Subject</a></li>
-              <li><a class="dropdown-item" href="{% url 'dantorial:my-account'%}">My Account</a></li>
-              <li><a class="dropdown-item" href="{% url 'dantorial:logout'%}">Logout</a></li>
-            </ul>
-          </li>
-          {% else %}
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url 'account_login' %}">Login</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'account_signup' %}">Register</a>
-          </li>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/navbar-fixed/">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- Google Fonts -->
+    <!-- <link
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+      rel="stylesheet"
+      /> -->
+      <!-- MDB -->
+      <!-- <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css"
+        rel="stylesheet"
+        /> -->
+        <title>
+        {% block title %}
+        {% endblock title %}
+        </title>
+        <!--   <script data-ad-client="ca-pub-2235358777308916" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
+        {% load bootstrap4 %}
+        {% bootstrap_css %}
+        {% bootstrap_javascript jquery='full' %}
+      </head>
+      <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'dantorial:index' %}">Dantorial</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end " id="navbarNav">
+              <ul class="navbar-nav me-5 mb-0 mb-lg-0">
+                {% if user.is_authenticated %}
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Notifications
+                      <span class="badge rounded-pill badge-notification bg-danger">1</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'dantorial_message:message' user.id %}">Message
+                      <span class="badge rounded-pill badge-notification bg-danger">1</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white">{{user.profilepersonal.title|capfirst}} {{user.profilepersonal.first_name}}</a>
+                  </li>
+                  <li>
+                    {% if user.profilepersonal.account_type == 'tutor' %}
+                      <a class="nav-link text-white">Tutor Account</a>
+                    {% else %}
+                      <a class="nav-link text-white">Student Account</a>
+                    {% endif %}
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                      data-bs-toggle="dropdown" aria-expanded="false">
+                      <span><i class="fa fa-user" aria-hidden="true"></i></span> Account
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                      <li><a class="dropdown-item" href="{% url 'dantorial:profile' %}">Profile</a></li>
+                      <li><a class="dropdown-item" href="{% url 'dantorial:my-subject' %}">My Subject</a></li>
+                      <li><a class="dropdown-item" href="{% url 'dantorial:my-account'%}">My Account</a></li>
+                      <li><a class="dropdown-item" href="{% url 'dantorial:logout'%}">Logout</a></li>
+                    </ul>
+                  </li>
+                {% else %}
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'account_login' %}">Login</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'account_signup' %}">Register</a>
+                  </li>
+                {% endif %}
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
+      <body>
+        {% block carousel %}
+        {% endblock carousel %}
+        <div class="container-fluid mt-5">
+          {% if messages %}
+            <div>
+              <!-- <div class='alert alert-success alert-dismissible fade show' role='alert'>
+                {% for message in messages %}
+                  {{message}}
+                {% endfor %}
+              </div> -->
+              <div class="row">
+                
+                  <div class="col-6 ml-2 alert alert-success alert-dismissible fade show" role="alert">
+                    {% for message in messages %}
+                      {{message}}
+                    {% endfor %}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                
+              </div>
+              
+            </div>
           {% endif %}
-        </ul>
-      </div>
-    </div>
-  </nav>
-</header>
-
-<body>
-  {% block carousel %}
-
-  {% endblock carousel %}
-  <div class="container-fluid mt-5">
-    {% if messages %}
-    <div>
-      <!-- <div class='alert alert-success alert-dismissible fade show' role='alert'>
-        {% for message in messages %}
-        {{message}}
-        {% endfor %}
-      </div> -->
-      <div class="alert alert-primary alert-dismissible fade show" role="alert">
-        {% for message in messages %}
-        {{message}}
-        {% endfor %}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-
-    </div>
-    {% endif %}
-    {% block content %}
-    {% endblock content %}
-    {% block extra_body %}
-    {% endblock %}
-  </div>
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="{% static 'styles.js' %}"></script>
-  <script>
-    function deleteFunction(e) {
-      if (!confirm("Are you sure you want to delete?")) {
+          {% block content %}
+          {% endblock content %}
+          {% block extra_body %}
+          {% endblock %}
+        </div>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="{% static 'styles.js' %}"></script>
+        <script>
+        function deleteFunction(e) {
+        if (!confirm("Are you sure you want to delete?")) {
         e.preventDefault();
-      } else {
+        } else {
         $('#subject-delete').submit();
-      }
-    }
-    function deleteProfileFunction(e) {
-      if (!confirm("Are you sure you want to delete?")) {
+        }
+        }
+        function deleteProfileFunction(e) {
+        if (!confirm("Are you sure you want to delete?")) {
         e.preventDefault();
-      } else {
+        } else {
         $('#delete-profile').submit();
-      }
-    }
-  </script>
-  <script>
-    window.fbAsyncInit = function () {
-      FB.init({
+        }
+        }
+        </script>
+        <script>
+        window.fbAsyncInit = function () {
+        FB.init({
         appId: '873796066573023',
         xfbml: true,
         version: 'v11.0'
-      });
-      FB.AppEvents.logPageView();
-    };
-
-    (function (d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) { return; }
-      js = d.createElement(s); js.id = id;
-      js.src = "https://connect.facebook.net/en_US/sdk.js";
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-<script type="text/javascript" src="https://www.monetbil.com/widget/v2/monetbil.min.js"></script>
-</body>
-
-</html>
+        });
+        FB.AppEvents.logPageView();
+        };
+        (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) { return; }
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+        <script type="text/javascript" src="https://www.monetbil.com/widget/v2/monetbil.min.js"></script>
+      </body>
+    </html>

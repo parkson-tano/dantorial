@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from review.models import Review
+from django.contrib.sessions.models import Session
 # Create your models here.
 
 # class ThreadModel(models.Model):
@@ -34,7 +35,9 @@ class Message(models.Model):
 	receiver_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+')
 	name = models.CharField(max_length=256, null=True, blank=True)
 	email =models.EmailField(null=True, blank=True)
-	phone_number = models.CharField(max_length=12, null=True, blank=True)
+	phone_number = models.IntegerField()
 	message = models.TextField()
 	is_read = models.BooleanField(default=False)
+
+
 	date_created = models.DateTimeField(auto_now_add=True)

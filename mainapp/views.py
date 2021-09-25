@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView, DetailView, View, ListView, FormView, CreateView
 from django.views.generic.edit import UpdateView, DeleteView
 from django.db.models import Q
+from django.contrib import messages
 from django.shortcuts import  redirect, get_object_or_404
 from .models import *
 from django.utils.decorators import method_decorator
@@ -60,7 +61,7 @@ class UserProfileView(DetailView):
     template_name = 'main/userprofile.html'
     context_object_name = 'userprofile'
     model = ProfilePersonal
-    form = MessageForm
+
     
     # def dispatch(self, request, *args, **kwargs):
     #     if request.user.is_authenticated:
@@ -75,47 +76,32 @@ class UserProfileView(DetailView):
         comments_connected = Review.objects.filter(profile=self.get_object()).order_by('-date_created')
         context["comments"] = comments_connected
         context['comment_form'] = ReviewForm 
-        context['message'] = self.form
+        context['message'] = MessageForm
         return context
 
     def post(self, request, *args, **kwargs):
-        # form = MessageForm(request.GET)
-        # if form.is_valid():
-        #     form.instance.sender_user = self.request.user
-        #     form.instance.receiver_user = self.get_object().user,
-        #     form.instance.name = request.GET.get('name'),
-        #     form.instance.email = request.GET.get('email'),
-        #     form.instance.phone_number = request.GET.get('phone_number'),
-        #     form.instance.message = request.GET.get('message'),
-        #     form.save()
+
         if request.user.is_authenticated:
             new_comment = Review(content=request.POST.get('content'),
                                   rating=request.POST.get('rate'),
                                   profile=self.get_object(),
 									user = self.request.user)
-            new_comment.save()
-            return self.get(self, request, *args, **kwargs)
 
-        else:
-            return redirect(f'/accounts/login/?next=/userprofile/{self.get_object().id}')
-        
-        if request.user.is_authenticated:
             new_message = Message(sender_user = self.request.user,
                 receiver_user = self.get_object().user,
                 message = request.POST.get('message'),
                 )
-            new_message.save()
-            return self.get(self, request, *args, **kwargs)
         else:
-            new_message = Message(
-                receiver_user = self.get_object().user,
-                name = request.POST.get('name'),
-                email = request.POST.get('email'),
-                phone_number = request.POST.get('phone_number'),
-                message = request.POST.get('message'),
-                )
+            return redirect(f'/accounts/login/?next=/userprofile/{self.get_object().id}')
+
+        if 'post_comment' in request.POST:
+            new_comment.save()
+
+        elif 'send_message' in request.POST:
             new_message.save()
-            return self.get(self, request, *args, **kwargs)
+            messages.success(self.request, 'message sucessfully sent')
+
+        return self.get(self, request, *args, **kwargs)
         
         
     # def get(self, request, *args, **kwargs):
@@ -170,6 +156,12 @@ class PersonalProfileEditView(UpdateView):
 
     def get_object(self):
         return self.request.user.profilepersonal
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        messages.success(self.request, "Successful")
+        form.save()
+        return super().form_valid(form)
     
     # def dispatch(self, request, *args, **kwargs):
     #     if request.user.is_authenticated and ProfilePersonal.objects.get(user=request.user):
@@ -240,6 +232,11 @@ class ProfileInfoEditView(UpdateView):
     def get_object(self):
         return self.request.user.profileinfo
     
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        messages.success(self.request, "Successful")
+        form.save()
+        return super().form_valid(form)
     # def get(request, *args, **kwargs):
     #     return super().get(request, *args, **kwargs)
 
@@ -250,6 +247,7 @@ class SubjectEditView(CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
+        messages.success(self.request, "Subject Added Successfully")
         form.save()
         return super().form_valid(form)
 
@@ -258,6 +256,10 @@ class SubjectDeleteView(DeleteView):
     model = Subject
     success_url = reverse_lazy('dantorial:my-subject')
 
+    def delete(self, request, *args, **kwargs):
+        messages.error(self.request, 'sucessfully removed subject')
+        return super().delete(request, *args, **kwargs)
+
 class ExperienceEditView(CreateView):
     template_name = 'main/add_experience.html'
     form_class = AddExperienceForm
@@ -265,6 +267,7 @@ class ExperienceEditView(CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
+        messages.success(self.request, "Successful")
         form.save()
         return super().form_valid(form)
 
@@ -272,6 +275,9 @@ class ExperienceDeleteView(DeleteView):
     # @method_decorator(csrf_exempt)
     model = Experience
     success_url = reverse_lazy('dantorial:my-experience')
+    def delete(self, request, *args, **kwargs):
+        messages.error(self.request, 'sucessfully removed experience')
+        return super().delete(request, *args, **kwargs)
 
 class QualificationEditView(CreateView):
     template_name = 'main/add_qualification.html'
@@ -280,6 +286,7 @@ class QualificationEditView(CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
+        messages.success(self.request, "Successful")
         form.save()
         return super().form_valid(form)
 
@@ -288,9 +295,17 @@ class QualificationDeleteView(DeleteView):
     model = Qualification
     success_url = reverse_lazy('dantorial:my-qualification')
 
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, 'sucessfully removed Qualification')
+        return super().delete(request, *args, **kwargs)
+
 class ProfileDeleteView(DeleteView):
     model = User
     success_url = reverse_lazy('dantorial:index')
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, 'sucessfully removed Profile')
+        return super().delete(request, *args, **kwargs)
 
 class QualificationUpdateView(UpdateView):
     # @method_decorator(csrf_exempt)
@@ -299,17 +314,35 @@ class QualificationUpdateView(UpdateView):
     model = Qualification
     success_url = reverse_lazy('dantorial:my-qualification')
 
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        messages.success(self.request, "Successful")
+        form.save()
+        return super().form_valid(form)
+
 class ExperienceUpdateView(UpdateView):
     template_name = 'main/update_experience.html'
     form_class = AddExperienceForm
     model = Experience
     success_url = reverse_lazy('dantorial:my-experience')
 
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        messages.success(self.request, "Successful")
+        form.save()
+        return super().form_valid(form)
+
 class SubjectUpdateView(UpdateView):
     template_name = 'main/update_subject.html'
     form_class = AddSubjectForm
     model = Subject
     success_url = reverse_lazy('dantorial:my-subject')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        messages.success(self.request, "Successful")
+        form.save()
+        return super().form_valid(form)
 
 class ProfileSubjectView(TemplateView):
     template_name = 'main/my_subject.html'
@@ -331,6 +364,7 @@ class VerificationEditView(CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
+        messages.success(self.request, "Successful")
         form.save()
         return super().form_valid(form)
 
@@ -344,6 +378,12 @@ class VerificationUpdateView(UpdateView):
     form_class = VerificationForm   
     model = Verification
     success_url = reverse_lazy('dantorial:my-verification')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        messages.success(self.request, "Successful")
+        form.save()
+        return super().form_valid(form)
 
 class ProfileVerificationView(TemplateView):
     template_name = 'main/my_verification.html'
