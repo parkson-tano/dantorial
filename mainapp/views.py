@@ -30,8 +30,8 @@ from itertools import chain
 from review.models import Review
 from review.forms import ReviewForm
 from allauth.account.admin import EmailAddress
-from messaging.models import Message
-from messaging.forms import MessageForm
+from messaging.models import Message, Contact
+from messaging.forms import MessageForm, ContactForm
 # Create your views here.
 
 class IndexView(TemplateView):
@@ -134,6 +134,19 @@ class UserProfileView(DetailView):
 
 class AboutView(TemplateView):
     template_name = 'main/about_us.html'
+
+class ContactView(CreateView):
+    template_name = 'main/contact_us.html'
+    form_class = ContactForm
+    success_url = reverse_lazy('dantorial:index')
+
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        messages.success(self.request, "We will get back to you shortly")
+        form.save()
+        return super().form_valid(form)
+
 
 class UserRegistrationView(CreateView):
     template_name = 'main/signup.html'

@@ -5,4 +5,9 @@ from .models import *
 class MessageAdmin(admin.ModelAdmin):
     list_display = ['sender_user','name', 'receiver_user', 'date_created' ]
 
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ['first_name','email','date_created' ]
+
+
 admin.site.register(Message, MessageAdmin)
+admin.site.register(Contact, ContactAdmin)

@@ -6,3 +6,9 @@ class MessageForm(forms.ModelForm):
 	class Meta:
 		model = Message
 		fields = ('name', 'email', 'phone_number', 'message')
+
+
+class ContactForm(forms.ModelForm):
+	class Meta:
+		model = Contact
+		fields = "__all__"

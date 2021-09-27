@@ -62,5 +62,8 @@ urlpatterns = [
     path('allsubcategory', AllSubCategoryView.as_view(), name='allsubcategory'),
     path('allsubject', AllSubjectView.as_view(), name='allsubject'),
 
+# contact us
+
+    path('contact-us', ContactView.as_view(), name='contactus'),  
 
 ]
