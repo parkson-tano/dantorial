@@ -295,3 +295,20 @@ class Subscription(models.Model):
 
     def __str__(self):
         return str(self.user) + ' subscription'
+
+class About(models.Model):
+    about = RichTextField()
+    mission = RichTextField()
+    vision = RichTextField()
+    goal = RichTextField()
+
+    bg = models.ImageField(upload_to='bg_img', null=True, blank=True)
+
+class OurTeam(models.Model):
+    name = models.CharField(max_length=256)
+    title = models.CharField(max_length=256)
+    pic = models.ImageField(upload_to='tram_img', null=True, blank=True)
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
