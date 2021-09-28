@@ -308,6 +308,10 @@ class OurTeam(models.Model):
     name = models.CharField(max_length=256)
     title = models.CharField(max_length=256)
     pic = models.ImageField(upload_to='tram_img', null=True, blank=True)
+    facebook = models.CharField(max_length=256, null=True, blank=True)
+    twitter = models.CharField(max_length=256, null=True, blank=True)
+    linkedin = models.CharField(max_length=256, null=True, blank=True)
+    instagram = models.CharField(max_length=256, null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
