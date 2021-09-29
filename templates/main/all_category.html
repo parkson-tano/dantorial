@@ -4,7 +4,42 @@
 login
 {% endblock title %}
 {% block content %}
-<div class="row justify-content p-2 mt-5 my-5 mb-3">
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas" data-bs-keyboard="false" data-bs-backdrop="false">
+    <div class="offcanvas-header">
+        <h6 class="offcanvas-title d-none d-sm-block" id="offcanvas">Categories</h6>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body px-3">
+        <ul class="list-group list-group-flush flex-column align-items-start" id="menu">
+            {% for cat in all_cat %}
+                                <div class="col-12 col-sm-12 col-md-12">
+                                    <li class="list-group-item">
+                                        <a href="{% url 'dantorial:category' cat.slug %}">
+                                            {{ cat|capfirst}}
+                                        </a>
+
+                                    </li>
+                                </div>
+
+
+                                {% endfor %}
+                            </div>
+        </ul>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col py-0">
+            <!-- toggler -->
+            <button class="btn float-start" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" role="button">
+                <i class="fa fa-bars bi-arrow-right-square-fill fs-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvas"></i>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+<div class="row justify-content">
+    
     <div class='col-sm-12 col-md-9'>
         <div class='row'>
             {% for p in pro %}
@@ -40,9 +75,10 @@ login
             {% endfor %}
         </div>
     </div>
+
     <div class="col-sm-12 col-md-3">
         <!-- Search widget-->
-        <div class="card mb-4">
+<!--         <div class="card mb-4">
             <div class="card-header">Search</div>
             <div class="card-body">
                 <div class="input-group">
@@ -51,9 +87,9 @@ login
                     <button class="btn btn-primary" id="button-search" type="button">Go!</button>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- Categories widget-->
-        <div class="card mb-4">
+        <!-- <div class="card mb-4">
             <div class="card-header">Category</div>
             <div class="card-body">
                 <div class="row">
@@ -79,7 +115,7 @@ login
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- Side widget-->
         <div class="card mb-4">
             <div class="card-header">

@@ -12,7 +12,7 @@
     <div class="carousel-inner">
         {% for caro in carousel|slice:":3" %} {% if forloop.first %}
         <div class="carousel-item active" data-bs-interval="4000">
-            {% else %}5
+            {% else %}
             <div class="carousel-item" data-bs-interval="4000">
                 {% endif %}
                 <img class="bd-placeholder-img" src="{{ caro.image.url }}" alt="" style="
@@ -43,7 +43,7 @@
 </div>
 {% endblock carousel %} 
 {% block content %}
-<form action="{% url 'dantorial:search' %}" class="h-500 p-sm-5 mx-auto text-dark bg-dark rounded-1 ">
+<form action="{% url 'dantorial:search' %}" class="h-500 p-sm-5 mx-auto text-dark bg-dark rounded-5 mt-3">
     <div class="row align-items-md-stretch mx-3">
         <div class="col-sm-4 col-lg-1 col-12">
             <div class="input-group mb-3">
@@ -54,7 +54,7 @@
                 </select>
             </div>
         </div>
-        <div class="col-sm-4 col-lg-2SSS">
+        <div class="col-sm-4 col-lg-2">
             <div class="input-group mb-3">
                 <select name='subject' class="form-select select-picker" id="inputGroupSelect02" data-live-search="true">
                     {% for cat in all_cat %}
