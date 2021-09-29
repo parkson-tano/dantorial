@@ -2,6 +2,20 @@
 {% load static %}
 {% block title %} dantorial {%endblock title %}
 {% block carousel %}
+
+<style>
+    .carousel-item {
+/*        -webkit-transition: 0s !important;
+        -o-transition: 0s !important;
+        transition: 0s !important;*/
+        transition: -webkit-transform 0.5s ease;
+        transition: transform 0.5s ease;
+        transition: transform 0.5s ease, -webkit-transform 0.5s ease;
+        -webkit-backface-visibility:  visible;
+        backface-visibility: visible;
+    }
+</style>
+
 <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
         <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true"
@@ -123,8 +137,8 @@
             <div class="row mb-4">
                 <div class="d-lg-flex flex-md-equal w-100 my-md-3 ps-md-3 mb-3">
                     <div class="col-lg-6 col-md-12 bg-success mt-2 mb-2 me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
-                        <div class="my-3 p-3">
-                            <h2 class="display-3">Looking for Professional Home Lesson Teacher?</h2>
+                        <div class="my-3 p-1">
+                            <h2 class="display-5">Looking for Professional Home Lesson Teacher?</h2>
                             <p class="lead">Study their profile and get in touch with the best for your children</p>
                         </div>
                         <div class="bg-dark shadow-sm mx-auto"

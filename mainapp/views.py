@@ -485,8 +485,8 @@ class SearchAllView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        kw = self.request.GET['kw']
-        result = ProfilePersonal.objects.filter(Q(user__icontain = kw) | Q(address_1__icontain = kw) | Q(address_2__icontain = kw) | Q(region__icontain = kw) | Q(city__icontain = kw))
+        kw = self.request.GET['keywords']
+        result = ProfileInfo.objects.filter(Q(user__username__icontains=kw) | Q(bio__icontains=kw) | Q(experience__icontains=kw))
         context["result"] = result
         return context
     
