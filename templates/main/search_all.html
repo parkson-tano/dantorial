@@ -1,70 +1,95 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 {% block title %}
-login
+    login
 {% endblock title %}
 {% block content %}
-<div class="row gx-4 gx-lg-5 justify-content-center p-2 mt-5">
-    {% for p in result %}
-    <div class="col-12 col-sm-6 col-md-4 mb-3">
-        <div class="card">
-            <div class="card-header">
-                <a href="{{p.profile_pic.url}}"><img class="card-img" src="{{p.user.profilepersonal.profile_pic.url}}" alt="..."
-                        style='height:15rem; width:100%' /></a>
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">{{ p.user.profilepersonal.first_name|default:'' }} {{ p.user.profilepersonal.last_name|default:'' }} </h5>
-                <p class="card-text">
-                    {{p.bio|default:''}}
-                </p>
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item"> {{p.user.profilepersonal.level_of_education|default:''}} </li>
-                <li class="list-group-item">{{p.user.profilepersonal.gender|default:''}}</li>
-                <li class="list-group-item">{{p.city|default:''}}</li>
-                <li class="list-group-item">{{p.user.profilepersonal.address_1|default:''}}</li>
-            </ul>
-            <div class="card-body">
-                <a class="btn btn-danger card-link d-grid" href="{% url 'dantorial:userprofile' p.user.profilepersonal.id %}">Read
-                    more →</a><br>
-                <a href="tel:{{p.user.profilepersonal.country.phone}}{{p.user.profilepersonal.phone_number}}" class="btn btn-success card-link d-grid ">
-                    Get Contact
-                    <i class="fa fa-phone"></i>
-                </a>
-            </div>
-        </div>
-    </div>
-    {% endfor %}
-
-</div>
-<div class="col-lg-4">
-    <!-- Search widget-->
-    <!-- Categories widget-->
-    <div class="card mb-4">
-        <div class="card-header">Suggestion</div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-sm-6 col-lg-12">
-                    <ul class="list-unstyled mb-0">
-                        <ul>
-                            {% for sub in subcat %}
-                            <li>
-                                {{ sub|capfirst}}
-                            </li>
-
-                            {% endfor %}
-                        </ul>
+    <div class="container-fluid">
+        <div class="row gx-4 gx-lg-5 justify-content-center p-2 mt-5">
+            
+            <div class='col-sm-12 col-md-9'>
+                <div class='row'>
+                    {% for p in result %}
+                        {% if p.first_name != None %}
+                            <div class="col-12 col-sm-6 col-md-4 mb-3">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <a href="{{p.profile_pic.url}}"><img class="card-img" src="{{p.user.profilepersonal.profile_pic.url}}" alt="..."
+                                        style='height:15rem; width:100%' /></a>
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ p.user.profilepersonal.first_name|default:'' }} {{ p.user.profilepersonal.last_name|default:'' }} </h5>
+                                        <p class="card-text">
+                                            {{p.bio|default:''}}
+                                        </p>
+                                    </div>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item"> {{p.user.profilepersonal.level_of_education|default:''}} </li>
+                                        <li class="list-group-item">{{p.user.profilepersonal.gender|default:''}}</li>
+                                        <!--                 <li class="list-group-item">{{p.city|default:''}}</li> -->
+                                        <li class="list-group-item">{{p.user.profilepersonal.address_1|default:''}}</li>
+                                    </ul>
+                                    <div class="card-body">
+                                        <a class="btn btn-danger card-link d-grid" href="{% url 'dantorial:userprofile' p.user.profilepersonal.id %}">Read
+                                        more →</a><br>
+                                        <a href="tel:{{p.user.profilepersonal.country.phone}}{{p.user.profilepersonal.phone_number}}" class="btn btn-success card-link d-grid ">
+                                            Get Contact
+                                            <i class="fa fa-phone"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
                 </div>
             </div>
-        </div>
-    </div>
-</div>
-<!-- Side widget-->
-<div class="card mb-4">
-    <div class="card-header">Recommended</div>
-    <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use,
-        and feature the Bootstrap 5 card component!</div>
-</div>
-
-</div>
-{% endblock content %}
+            <div class="col-sm-12 col-md-3">
+                <!-- Search widget-->
+                <!--         <div class="card mb-4">
+                    <div class="card-header">Search</div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <input class="form-control" type="text" placeholder="Enter search term..."
+                            aria-label="Enter search term..." aria-describedby="button-search" />
+                            <button class="btn btn-primary" id="button-search" type="button">Go!</button>
+                        </div>
+                    </div>
+                </div> -->
+                <!-- Categories widget-->
+                <!-- <div class="card mb-4">
+                    <div class="card-header">Category</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-12">
+                                <ul class="list-unstyled mb-0">
+                                    <div class='row'>
+                                        {% for cat in all_cat %}
+                                            <div class="col-6 col-sm-4 col-md-6 my-2">
+                                                <li>
+                                                    <a href="{% url 'dantorial:category' cat.slug %}" class='btn btn-info'>
+                                                        {{ cat|capfirst}}
+                                                    </a>
+                                                </li>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <!-- Side widget-->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        {% if user.profilepersonal == 'tutor' %}
+                            Suggested Students
+                        {% else %}
+                            Suggested Tutors
+                        {% endif %}
+                    </div>
+                    <div class="card-body">
+                        Sugestions will appear here
+                    </div>
+                </div>
+            </div>
+        {% endblock content %}

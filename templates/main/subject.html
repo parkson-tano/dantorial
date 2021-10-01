@@ -41,7 +41,7 @@ login
     <div class='col-sm-12 col-md-9'>
         <div class='row'>
             {% for p in pro %}
-
+            {% if p.first_name != None %}
             <div class="col-12 col-sm-6 col-md-4 mb-3">
                 <div class="card">
                     <div class="card-header">
@@ -70,6 +70,7 @@ login
                     </div>
                 </div>
             </div>
+            {% endif %}
             {% endfor %}
         </div>
     </div>

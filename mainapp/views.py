@@ -464,18 +464,18 @@ class SearchView(TemplateView):
         context = super().get_context_data(**kwargs)
         acc_type = self.request.GET['typ']
         subject = self.request.GET['subject']
-        city = self.request.GET['city']
+        category = self.request.GET['category']
         quater = self.request.GET['quater']
         user_obj = User.objects.all()
-        profile_result = ProfilePersonal.objects.filter(Q(account_type = acc_type)).filter(Q(city_id = city) | Q(address_1__icontains = quater) | Q(address_2__icontains = quater))
-        subject = Subject.objects.filter(subject = subject).order_by('user')
-        final = list(set(list(chain(subject, profile_result))))
+        profile_result = ProfilePersonal.objects.filter(Q(account_type = acc_type)).filter(Q(address_1__icontains = quater) | Q(address_2__icontains = quater) & Q(user__profileinfo__category = category) & Q(user__profileinfo__subject = subject))
+        # subject = Subject.objects.filter(subject = subject).order_by('user')
+        # final = list(set(list(chain(subject, profile_result))))
         # finals = list(set(final))
 
         print(profile_result)
-        print(subject)
-        print(f'final: {final}')
-        context['profile_result'] = final
+        # print(subject)
+        # print(f'final: {final}')
+        context['profile_result'] = profile_result
         # print(f'{acc_type} {subject} {city} {quater}')
         return context
 
@@ -486,7 +486,7 @@ class SearchAllView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         kw = self.request.GET['keywords']
-        result = ProfileInfo.objects.filter(Q(user__username__icontains=kw) | Q(bio__icontains=kw) | Q(experience__icontains=kw))
+        result = ProfileInfo.objects.filter(Q(user__profilepersonal__first_name__icontains=kw) | Q(user__profilepersonal__last_name__icontains=kw) | Q(bio__icontains=kw) | Q(experience__icontains=kw))
         context["result"] = result
         return context
     
