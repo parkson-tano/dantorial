@@ -1,9 +1,4 @@
-{% extends "base.html" %}
-{% load crispy_forms_tags %}
-{% block title %}
-login
-{% endblock title %}
-{% block content %}
+{% extends "base.html" %} {% load crispy_forms_tags %} {% block title %} login {% endblock title %} {% block content %}
 
 <body>
     <div class="container-fluid p-0">
@@ -12,22 +7,14 @@ login
                 <div class="card border-0 shadow rounded-3 my-5">
                     <div class="card-body p-0 p-sm-0">
                         <div class="list-group mx-auto">
-                            <a href="{% url 'dantorial:profile' %}"
-                                class="list-group-item list-group-item-action">
+                            <a href="{% url 'dantorial:profile' %}" class="list-group-item list-group-item-action">
                                 Personal Information
                             </a>
-                            <a href="{% url 'dantorial:profile-info' %}"
-                                class="list-group-item list-group-item-action active">Profile Information</a>
-                            <a href="{% url 'dantorial:my-subject' %}"
-                                class="list-group-item list-group-item-action">My Subjects</a>
-                            {% if user.profilepersonal.account_type == 'tutor' %}
-                            <a href="{% url 'dantorial:my-experience'%}"
-                                class="list-group-item list-group-item-action">My Experience</a>
-                            <a href="{% url 'dantorial:my-qualification'%}"
-                                class="list-group-item list-group-item-action">My Qualification</a>
-                            <a href="{% url 'dantorial:my-verification'%}"
-                            class="list-group-item list-group-item-action">My Verification</a>
-                            {% endif %}
+                            <a href="{% url 'dantorial:profile-info' %}" class="list-group-item list-group-item-action active">Profile Information</a>
+                            <a href="{% url 'dantorial:my-subject' %}" class="list-group-item list-group-item-action">My Subjects</a> {% if user.profilepersonal.account_type == 'tutor' %}
+                            <a href="{% url 'dantorial:my-experience'%}" class="list-group-item list-group-item-action">My Experience</a>
+                            <a href="{% url 'dantorial:my-qualification'%}" class="list-group-item list-group-item-action">My Qualification</a>
+                            <a href="{% url 'dantorial:my-verification'%}" class="list-group-item list-group-item-action">My Verification</a> {% endif %}
                         </div>
                     </div>
                 </div>
@@ -46,21 +33,20 @@ login
                             Experience: {{profile_info.experience|safe|default:''}}
                         </p>
                         <ul class="list-group list-group-flush ml-0">
-  <li class="list-group-item">{{profile_info.category|default:''}}</li>
-  <li class="list-group-item">{{profile_info.subcategory|default:''}}</li>
-  <li class="list-group-item">{{profile_info.subject|default:''}}</li>
-  {% if user.profilepersonal.account_type == 'tutor' %}
-  <li class="list-group-item">{{profile_info.charge|default:''}}</li>
-  <li class="list-group-item">{{profile_info.amount|default:''}}</li>
-  {% endif %}
-</ul>
+                            <li class="list-group-item">{{profile_info.category|default:''}}</li>
+                            <li class="list-group-item">{{profile_info.subcategory|default:''}}</li>
+                            <li class="list-group-item">{{profile_info.subject|default:''}}</li>
+                            {% if user.profilepersonal.account_type == 'tutor' %}
+                            <li class="list-group-item">{{profile_info.charge|default:''}}</li>
+                            <li class="list-group-item">{{profile_info.amount|default:''}}</li>
+                            {% endif %}
+                        </ul>
                         <hr class="my-4">
                         <div class="d-grid">
-                            <a href="{% url 'dantorial:profile-info-edit' request.user.profileinfo.id%}"
-                                class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">Edit Profile</a>
+                            <a href="{% url 'dantorial:profile-info-edit' request.user.profileinfo.id%}" class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">Edit Profile</a>
                         </div>
                     </div>
-                   
+
                 </div>
             </div>
         </div>

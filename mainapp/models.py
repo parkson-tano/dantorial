@@ -1,4 +1,5 @@
 from django.db import models
+from django.views.generic.edit import CreateView
 from category.models import *
 from django.contrib.auth.models import User
 from PIL import Image
@@ -76,10 +77,10 @@ STA = (
     )
 
 PAYMENT = (
-    ('MTN Mobile Momey', 'mtn'),
-    ('Orange Money', 'orange money'),
-    ('YUP', 'yup'),
-    ('VISA', 'visa'),
+    ('MTN Mobile Money', 'MTN Mobile Money'),
+    ('Orange Money', 'Orange Money'),
+    # ('YUP', 'yup'),
+    # ('VISA', 'visa'),
     )
 
 # User._meta.get_field('username')._unique = False
@@ -284,17 +285,18 @@ class Booked(models.Model):
     is_confirm = models.BooleanField(default=False)
     date_created = models.DateTimeField(default=timezone.now)
 
-class Subscription(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    amount = models.IntegerField()
-    start_date = models.DateTimeField(auto_now_add=True)
-    end_date =models.DateTimeField()
-    is_active = models.BooleanField(default=False)
+class Upgrade(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    amount = models.IntegerField(null=True, blank=True)
+    # start_date = models.DateTimeField(auto_now_add=True)
+    # end_date =models.DateTimeField(null=True, blank=True)
+    is_complete = models.BooleanField(default=False)
     payment_method = models.CharField(max_length=40, choices=PAYMENT)
+    phone_number = models.CharField(max_length=15)
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.user) + ' subscription'
+        return str(self.user) + ' upgrade'
 
 class About(models.Model):
     about = RichTextField()

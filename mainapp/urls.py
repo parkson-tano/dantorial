@@ -20,10 +20,10 @@ urlpatterns = [
     path('userprofile/<int:pk>', UserProfileView.as_view(), name='userprofile'),
     path('profile/', ProfileView.as_view(), name='profile'),
     path('profile-info/', ProfileInfoView.as_view(), name='profile-info'),
-    path('my-subject', ProfileSubjectView.as_view(), name='my-subject'),
-    path('my-experience', ProfileExperienceView.as_view(), name='my-experience'),
-    path('my-qualification', ProfileQualificationView.as_view(), name='my-qualification'),
-    path('my-verification', ProfileVerificationView.as_view(), name='my-verification'),
+    path('my-subject/', ProfileSubjectView.as_view(), name='my-subject'),
+    path('my-experience/', ProfileExperienceView.as_view(), name='my-experience'),
+    path('my-qualification/', ProfileQualificationView.as_view(), name='my-qualification'),
+    path('my-verification/', ProfileVerificationView.as_view(), name='my-verification'),
 
     path('myaccount/', MyAccount.as_view(), name='my-account'),
 
@@ -66,4 +66,8 @@ urlpatterns = [
 
     path('contact-us', ContactView.as_view(), name='contactus'),  
     path('about-us', AboutView.as_view(), name='aboutus'),
+
+# payment and support
+    path('upgrade', UpgradeAccountView.as_view(), name='upgrade_profile'),
+
 ]

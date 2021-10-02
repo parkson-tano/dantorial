@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from django.db.models import fields
 from .models import *
 
 from flatpickr import DatePickerInput, TimePickerInput, DateTimePickerInput
@@ -237,3 +238,8 @@ class SocialMediaForm(forms.ModelForm):
 	class Meta:
 		model = SocialMedia
 		fields = ('facebook','instagram','linkedin', 'website', 'youtube')
+
+class UpgradeForm(forms.ModelForm):
+	class Meta:
+		model = Upgrade
+		fields = ('payment_method','phone_number')

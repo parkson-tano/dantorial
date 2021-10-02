@@ -1,107 +1,100 @@
-{% extends "base.html" %}
-{% load crispy_forms_tags %}
-{% block title %}
-login
-{% endblock title %}
-{% block content %}
+{% extends "base.html" %} {% load crispy_forms_tags %} {% block title %} login {% endblock title %} {% block content %}
 
-    <div class="container-fluid p-0">
-        <div class="row mt-5">
-            <div class="col-sm-4 col-md-4 col-lg-3 mx-auto">
-                <div class="card border-0 shadow rounded-3 my-5">
-                    <div class="card-body p-0 p-sm-0">
-                        <div class="list-group mx-auto">
-                            <a href="{% url 'dantorial:profile'  %}"
-                                class="list-group-item list-group-item-action active">
+<div class="container-fluid p-0">
+    <div class="row mt-5">
+        <div class="col-sm-4 col-md-4 col-lg-3 mx-auto">
+            <div class="card border-0 shadow rounded-3 my-5">
+                <div class="card-body p-0 p-sm-0">
+                    <div class="list-group mx-auto">
+                        <a href="{% url 'dantorial:profile'  %}" class="list-group-item list-group-item-action active">
                                 Personal Information
                             </a>
-                            <a href="{% url 'dantorial:profile-info' %}"
-                                class="list-group-item list-group-item-action">Profile Information</a>
-                            <a href="{% url 'dantorial:my-subject'%}"
-                                class="list-group-item list-group-item-action">My Subjects</a>
-                            
-                            {% if user.profilepersonal.account_type == 'tutor' %}
-                            <a href="{% url 'dantorial:my-experience'%}"
-                                class="list-group-item list-group-item-action">My Experience</a>
-                            <a href="{% url 'dantorial:my-qualification'%}"
-                                class="list-group-item list-group-item-action">My Qualification</a>
-                            <a href="{% url 'dantorial:my-verification'%}"
-                            class="list-group-item list-group-item-action">My Verification</a>
-                            {% endif %}
-                            
-                        </div>
+                        <a href="{% url 'dantorial:profile-info' %}" class="list-group-item list-group-item-action">Profile Information</a>
+                        <a href="{% url 'dantorial:my-subject'%}" class="list-group-item list-group-item-action">My Subjects</a> {% if user.profilepersonal.account_type == 'tutor' %}
+                        <a href="{% url 'dantorial:my-experience'%}" class="list-group-item list-group-item-action">My Experience</a>
+                        <a href="{% url 'dantorial:my-qualification'%}" class="list-group-item list-group-item-action">My Qualification</a>
+                        <a href="{% url 'dantorial:my-verification'%}" class="list-group-item list-group-item-action">My Verification</a> {% endif %}
+
                     </div>
-                </div>
-            </div>
-            <div class="col-sm-8 col-md-8 col-lg-7 mx-auto">
-                <div class="card border-0 shadow rounded-3 my-5">
-                    <div class="card-body p-2 p-sm-5">
-                        <h5 class="card-title text-center mb-3 fw-light fs-5">Personal Information</h5>
-                        <div class="text-center">
-                            <img src="{{profile.profile_pic.url}}" class="rounded-circle" alt="..." style="width:80%;">
-                        </div>
-                        <hr>
-                        <h5>
-                            Account Type: {{profile.account_type|default:''|capfirst}}
-                        </h5>
-                        <h5>
-                            Username: {{profile.user.username}}
-                        </h5>
-                        <h5>
-                            Account Name: {{profile.first_name|default:''|capfirst}} {{profile.last_name|default:''|capfirst}}
-                        </h5>
-                        <h5>
-                            Title: {{profile.title|default:''|capfirst}}
-                        </h5>
-                        <h5>
-                            Gender: {{profile.gender|default:''|capfirst}}
-                        </h5>
-                        
-                        
-                        <h5>
-                            Phone_Number: {{profile.phone_number|default:''}}
-                        </h5>
-                        <h5>
-                            Country: {{profile.country|default:''}}
-                        </h5>
-                        <h5>
-                            Region: {{profile.region|default:''}}
-                        </h5>
-                        <h5>
-                            Level of education: {{profile.level_of_education|capfirst}}
-                        </h5>
-                        <h5>
-                            Date of Birth: {{profile.date_of_birth}}
-                        </h5>
-                        <h5>
-                            Address: {{profile.address_1|default:''|capfirst}}
-                        </h5>
-                        <h5>
-                            Address#2: {{profile.address_2|default:''|capfirst}}
-                        </h5>
-
-                        <hr class="my-4">
-                        <div class="d-grid">
-                            <a href="{% url 'dantorial:profile-edit' user.profilepersonal.id%}"
-                                class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">Edit Profile</a>
-                        </div>
-                        <div class='my-2'>
-                             <form id='delete-profile' method="POST" action="{% url 'dantorial:delete_profile' profile.user.id %}">
-                                        {% csrf_token %}
-                                        <a href="{% url 'dantorial:delete_profile' profile.user.id %}">
-                                            <button class="btn btn-danger btn-login text-uppercase fw-bold"
-                                                onClick="deleteProfileFunction()">Delete Profile</button></a>
-                                    </form>
-                        </div>
-                        <form action="" method="get" data-monetbil="form"><button class="btn btn-success" type="submit">Upgrade Account</button></form>
-                    </div>
-
-
                 </div>
             </div>
         </div>
+        <div class="col-sm-8 col-md-8 col-lg-7 mx-auto">
+            <div class="card border-0 shadow rounded-3 my-5">
+                <div class="card-body p-2 p-sm-5">
+                    <h5 class="card-title text-center mb-3 fw-light fs-5">Personal Information</h5>
+                    <div class="text-center">
+                        <img src="{{profile.profile_pic.url}}" class="rounded-circle" alt="..." style="width:80%;">
+                    </div>
+                    <hr>
+                    <h5>
+                        Account Type: {{profile.account_type|default:''|capfirst}}
+                    </h5>
+                    <h5>
+                        Username: {{profile.user.username}}
+                    </h5>
+                    <h5>
+                        Account Name: {{profile.first_name|default:''|capfirst}} {{profile.last_name|default:''|capfirst}}
+                    </h5>
+                    <h5>
+                        Title: {{profile.title|default:''|capfirst}}
+                    </h5>
+                    <h5>
+                        Gender: {{profile.gender|default:''|capfirst}}
+                    </h5>
+
+
+                    <h5>
+                        Phone_Number: {{profile.phone_number|default:''}}
+                    </h5>
+                    <h5>
+                        Country: {{profile.country|default:''}}
+                    </h5>
+                    <h5>
+                        Region: {{profile.region|default:''}}
+                    </h5>
+                    <h5>
+                        Level of education: {{profile.level_of_education|capfirst}}
+                    </h5>
+                    <h5>
+                        Date of Birth: {{profile.date_of_birth}}
+                    </h5>
+                    <h5>
+                        Address: {{profile.address_1|default:''|capfirst}}
+                    </h5>
+                    <h5>
+                        Address#2: {{profile.address_2|default:''|capfirst}}
+                    </h5>
+
+                    <hr class="my-4">
+                    <div class="d-grid">
+                        <a href="{% url 'dantorial:profile-edit' user.profilepersonal.id%}" class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">Edit Profile</a>
+                    </div>
+                    <div class='my-2'>
+                        <form id='delete-profile' method="POST" action="{% url 'dantorial:delete_profile' profile.user.id %}">
+                            {% csrf_token %}
+                            <a href="{% url 'dantorial:delete_profile' profile.user.id %}">
+                                <button class="btn btn-danger btn-login text-uppercase fw-bold" onClick="deleteProfileFunction()">Delete Profile</button></a>
+                        </form>
+                    </div>
+                    {% if profile.paid == False %}
+                    <div class='my-2'>
+                        <a href="{% url 'dantorial:upgrade_profile' %}">
+                            <button class="btn btn-secondary btn-login text-uppercase fw-bold">Get Premium Account</button></a>
+                    </div>
+                    {% else %}
+                    <div class='my-2'>
+                        <button class="btn btn-success text-uppercase fw-bold">You are using a Premium Account</button>
+                    </div>
+                    {% endif %}
+                </div>
+
+
+            </div>
+        </div>
     </div>
-    <!-- <script src="/static/smart-selects/admin/js/chainedfk.js"></script>
+</div>
+<!-- <script src="/static/smart-selects/admin/js/chainedfk.js"></script>
 <script src="/static/smart-selects/admin/js/bindfields.js"></script> -->
 
 

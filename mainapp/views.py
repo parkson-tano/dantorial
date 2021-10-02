@@ -1,3 +1,4 @@
+from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.views.generic import TemplateView, DetailView, View, ListView, FormView, CreateView
 from django.views.generic.edit import UpdateView, DeleteView
@@ -10,7 +11,7 @@ from django.http import Http404
 from location.models import Country, City, Region, SubRegion
 from category.models import Category, SubCategory
 from .forms import (AddSubjectForm, UserLoginForm, UserRegistrationForm, VerificationForm,
-PersonalProfileForm, ProfileInfoForm, AddExperienceForm, AddQualificationForm)
+PersonalProfileForm, ProfileInfoForm, AddExperienceForm, AddQualificationForm, UpgradeForm)
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy, reverse
@@ -34,6 +35,10 @@ from messaging.models import Message, Contact
 from messaging.forms import MessageForm, ContactForm
 # Create your views here.
 
+from campay.sdk import Client
+
+
+
 class IndexView(TemplateView):
     template_name = 'main/index.html'
 
@@ -48,6 +53,14 @@ class IndexView(TemplateView):
 
 class MyAccount(TemplateView):
     template_name = 'main/my_account.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            pass
+        else:
+            return redirect('/accounts/login/?next=/myaccount/')
+            
+        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -139,7 +152,6 @@ class ContactView(CreateView):
     template_name = 'main/contact_us.html'
     form_class = ContactForm
     success_url = reverse_lazy('dantorial:index')
-
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -360,6 +372,13 @@ class SubjectUpdateView(UpdateView):
 class ProfileSubjectView(TemplateView):
     template_name = 'main/my_subject.html'
 
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            pass
+        else:
+            return redirect('/accounts/login/?next=/my-subject/')
+            
+        return super().dispatch(request, *args, **kwargs)
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         account = self.request.user
@@ -489,4 +508,45 @@ class SearchAllView(TemplateView):
         result = ProfileInfo.objects.filter(Q(user__profilepersonal__first_name__icontains=kw) | Q(user__profilepersonal__last_name__icontains=kw) | Q(bio__icontains=kw) | Q(experience__icontains=kw))
         context["result"] = result
         return context
+
+def subscribe(amount, number):
+    campay = Client({
+        "app_username" : "3_4hXF79S-PPnrduRjwCqu10EOjm6nXHezUaE76Gv-ZGuCa8qQxV-GwQP-xiaVQ_oFg4FqrduN33Od_Mi7FUmw",
+        "app_password" : "ICqt9K5kx-GdFfPP52Z3apDwS0LJChjSs0h1SYZ4yDAuTAXDGxgsVZ8h_Ihk9j8kxqOsQGXqj6TurNnMNwDxLw",
+        "environment" : "DEV" #use "DEV" for demo mode or "PROD" for live mode
+    })
+    collect = campay.collect({
+         "amount": amount, #The amount you want to collect
+         "currency": "XAF",
+         "from": number, #Phone number to request amount from. Must include country code
+         "description": "some description"
+      })
+    print(collect)
+
+class UpgradeAccountView(FormView):
+    template_name = 'main/upgrade.html'
+    form_class = UpgradeForm
+    success_url = reverse_lazy('dantorial:index')
     
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.instance.amount = 2
+        pay = form.save(commit=False)
+        profile = ProfilePersonal.objects.get(user = self.request.user)
+        subscribe(form.instance.amount, form.instance.phone_number)
+        if form.instance.payment_method == 'MTN Mobile Money':
+            messages.success(self.request, "Dial *126# to complete payment")
+        else:
+            messages.success(self.request, "Dial #150*50# to complete payment")
+        # if collect.status == 'SUCCESSFUL':
+        # if Upgrade.objects.filter(user=self.request.user).exists():
+        #     redirect('dantorial:index')
+        if collect.status == 'SUCCESSFUL':
+            profile.paid = True
+            profile.save()
+            pay.save()
+
+        
+        return super().form_valid(form)
+
+

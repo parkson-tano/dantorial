@@ -1,9 +1,4 @@
-{% extends "base.html" %}
-{% load crispy_forms_tags %}
-{% block title %}
-login
-{% endblock title %}
-{% block content %}
+{% extends "base.html" %} {% load crispy_forms_tags %} {% block title %} login {% endblock title %} {% block content %}
 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas" data-bs-keyboard="false" data-bs-backdrop="false">
     <div class="offcanvas-header">
         <h6 class="offcanvas-title d-sm-block text-center" id="offcanvas">Sub Categories</h6>
@@ -12,22 +7,22 @@ login
     <div class="offcanvas-body px-3">
         <ul class="list-group list-group-flush flex-column align-items-start" id="menu">
             {% for sub in all_subcat %}
-                                <div class="col-12 col-sm-12 col-4">
-                                    <li class="list-group-item">
-                                        <a href="{% url 'dantorial:subcategory' sub.category.slug sub.id %}" class='btn btn-default'>
+            <div class="col-12 col-sm-12 col-4">
+                <li class="list-group-item">
+                    <a href="{% url 'dantorial:subcategory' sub.category.slug sub.id %}" class='btn btn-default'>
                                             {{ sub|capfirst}}
                                             <span class="text-mute">({{sub.category}})</span>
                                             
                                         </a>
 
-                                    </li>
-                                </div>
+                </li>
+            </div>
 
 
-                                {% endfor %}
-                            </div>
-        </ul>
+            {% endfor %}
     </div>
+    </ul>
+</div>
 </div>
 <div class="container-fluid">
     <div class="row">
@@ -42,38 +37,37 @@ login
 <div class="row justify-content p-2">
     <div class='col-sm-12 col-md-9'>
         <div class='row'>
-            {% for p in pro %}
-            {% if p.first_name != None %}
+            {% for p in pro %} {% if p.first_name is not None %}
             <div class="col-12 col-sm-6 col-md-4 mb-3">
                 <div class="card">
                     <div class="card-header">
-                        <a href="{{p.profile_pic.url}}"><img class="card-img" src="{{p.profile_pic.url}}" alt="..."
-                                style='height:15rem; width:100%' /></a>
+                        <a href="{{p.profile_pic.url}}"><img class="card-img" src="{{p.profile_pic.url}}" alt="..." style='height:15rem; width:100%' /></a>
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title">{{ p.first_name|default:'' }} {{ p.last_name|default:'' }} </h5>
+                        <h5 class="card-title">{{ p.first_name }} {{ p.last_name|default:'' }} </h5>
                         <p class="card-text">
-                            {{p.user.profileinfo.bio|default:''}}
+                            {{p.user.profileinfo.bio|default:''|slice:'100'}}...
                         </p>
                     </div>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item"> {{p.level_of_education|default:''}} </li>
-                        <li class="list-group-item">{{p.gender|default:''}}</li>
-                        <li class="list-group-item">{{p.city|default:''}}</li>
-                        <li class="list-group-item">{{p.address_1|default:''}}</li>
+                        <!-- <li class="list-group-item"> {{p.level_of_education|default:''}} </li>
+                    <li class="list-group-item">{{p.gender|default:''}}</li> -->
+                        <li class="list-group-item">
+                            {{p.region}}
+                        </li>
+                        <!-- <li class="list-group-item">{{p.address_1|default:''}}</li> -->
                     </ul>
                     <div class="card-body">
                         <a class="btn btn-danger card-link d-grid" href="{% url 'dantorial:userprofile' p.id %}">Read
-                            more →</a><br>
-                        <a href="tel:{{p.country.phone}}{{p.phone_number}}" class="btn btn-success card-link d-grid ">
-                            Get Contact
-                            <i class="fa fa-phone"></i>
-                        </a>
+                        more →</a><br>
+                        <a href="tel:{{'+'}}{{p.country.phone}}{{p.phone_number}}" class="btn btn-success card-link d-grid ">
+                        Get Contact
+                        <i class="fa fa-phone"></i>
+                    </a>
                     </div>
                 </div>
             </div>
-            {% endif %}
-            {% endfor %}
+            {% endif %} {% endfor %}
         </div>
     </div>
     <div class="col-sm-12 col-md-3">
@@ -119,11 +113,7 @@ login
         <!-- Side widget-->
         <div class="card mb-4">
             <div class="card-header">
-                {% if user.profilepersonal == 'tutor' %}
-                Suggested Students
-                {% else %}
-                Suggested Tutors
-                {% endif %}
+                {% if user.profilepersonal == 'tutor' %} Suggested Students {% else %} Suggested Tutors {% endif %}
             </div>
             <div class="card-body">
                 Sugestions will appear here
