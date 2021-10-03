@@ -1,5 +1,5 @@
 from .models import Country, Region,SubRegion, City
-from mainapp.models import About, OurTeam
+from mainapp.models import About, OurTeam,  HowToUse
 
 def location_renderer(request):
     return {
@@ -10,5 +10,6 @@ def location_renderer(request):
         'city_cmr': City.objects.filter(country = 1),
         'about': About.objects.get(id=1),
         'team': OurTeam.objects.all(),
+        'how':  HowToUse.objects.all(),
 
     }

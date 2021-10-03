@@ -252,6 +252,8 @@ ACCOUNT_ADAPTER = "dantorial.adapter.MyAccountAdapter"
 # LOGIN_URL = "/"
 # LOGIN_REDIRECT_URL = "/users/{id}/mytags"
 
+DEFAULT_FROM_EMAIL = 'tanoparksonsilencer@gmail.com'
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST='smtp.gmail.com'

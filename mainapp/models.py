@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.base import Model
 from django.views.generic.edit import CreateView
 from category.models import *
 from django.contrib.auth.models import User
@@ -318,3 +319,17 @@ class OurTeam(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class HowToUse(models.Model):
+    image = models.ImageField(upload_to='how_img')
+    how_text = models.TextField()
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        img = Image.open(self.image.path)
+        if img.height >200 or img.width>200:
+            output_size = (150,150)
+            img.thumbnail(output_size)
+            img.save(self.profile_pic.path)

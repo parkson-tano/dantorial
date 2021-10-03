@@ -5,6 +5,7 @@ from django.views.generic.edit import UpdateView, DeleteView
 from django.db.models import Q
 from django.contrib import messages
 from django.shortcuts import  redirect, get_object_or_404
+from requests.api import request
 from .models import *
 from django.utils.decorators import method_decorator
 from django.http import Http404
@@ -34,7 +35,8 @@ from allauth.account.admin import EmailAddress
 from messaging.models import Message, Contact
 from messaging.forms import MessageForm, ContactForm
 # Create your views here.
-
+from django.core.mail import send_mail
+from django.conf import settings
 from campay.sdk import Client
 
 
@@ -526,14 +528,37 @@ def subscribe(amount, number):
 class UpgradeAccountView(FormView):
     template_name = 'main/upgrade.html'
     form_class = UpgradeForm
-    success_url = reverse_lazy('dantorial:index')
+    success_url = reverse_lazy('dantorial:profile')
     
     def form_valid(self, form):
         form.instance.user = self.request.user
         form.instance.amount = 2
+        form.instance.phone_number = form.cleaned_data.get('phone_number')
+        form.instance.is_complete = True
         pay = form.save(commit=False)
         profile = ProfilePersonal.objects.get(user = self.request.user)
-        subscribe(form.instance.amount, form.instance.phone_number)
+        # subscribe(form.instance.amount, form.instance.phone_number)
+        campay = Client({
+        "app_username" : "3_4hXF79S-PPnrduRjwCqu10EOjm6nXHezUaE76Gv-ZGuCa8qQxV-GwQP-xiaVQ_oFg4FqrduN33Od_Mi7FUmw",
+        "app_password" : "ICqt9K5kx-GdFfPP52Z3apDwS0LJChjSs0h1SYZ4yDAuTAXDGxgsVZ8h_Ihk9j8kxqOsQGXqj6TurNnMNwDxLw",
+        "environment" : "DEV" #use "DEV" for demo mode or "PROD" for live mode
+        })
+        collect = campay.collect({
+         "amount": 2, #The amount you want to collect
+         "currency": "XAF",
+         "from": form.instance.phone_number, #Phone number to request amount from. Must include country code
+         "description": "Tantorial Premium Account",
+         "first_name": self.request.user.profilepersonal.first_name
+         })
+        print(collect)
+        # disburse = campay.disburse({
+        #  "amount": "5", #The amount you want to disburse
+        #  "currency": "XAF",
+        #  "to": form.instance.phone_number, #Phone number to disburse amount to. Must include country code
+        #  "description": "Withdrwal from tantorial"
+        # })
+
+        # print(disburse)
         if form.instance.payment_method == 'MTN Mobile Money':
             messages.success(self.request, "Dial *126# to complete payment")
         else:
@@ -541,10 +566,18 @@ class UpgradeAccountView(FormView):
         # if collect.status == 'SUCCESSFUL':
         # if Upgrade.objects.filter(user=self.request.user).exists():
         #     redirect('dantorial:index')
-        if collect.status == 'SUCCESSFUL':
+        if collect['status'] == 'SUCCESSFUL':
             profile.paid = True
             profile.save()
             pay.save()
+            send_mail('hey thanks ', 'here is the message', settings.DEFAULT_FROM_EMAIL, (self.request.user.email,))
+            messages.success(self.request, "Successful")
+        else:
+            form.instance.is_complete = False
+            messages.success(self.request, "Failed")
+            send_mail('hey thanks for nothing', 'here is the message', settings.DEFAULT_FROM_EMAIL, (self.request.user.email,))
+            pay.save()
+
 
         
         return super().form_valid(form)

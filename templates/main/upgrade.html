@@ -9,7 +9,7 @@
                     <form class="needs-validation" method="post" action="" novalidate>
                         {% csrf_token %} {{form.media.js}} {{form|crispy}}
                         <div class="d-grid">
-                            <button class="btn btn-primary btn-login text-uppercase fw-bold mt-3" type="submit">Complete Payment</button>
+                            <button class="btn btn-primary btn-login text-uppercase fw-bold mt-3" id='btnFetch' type="submit">Complete Payment</button>
                         </div>
                         <hr class="my-4">
                 </div>
@@ -24,6 +24,18 @@
     if (window.history.replaceState) {
         window.history.replaceState(null, null, window.location.href);
     }
+    $(document).ready(function() {
+        $("#btnFetch").click(function() {
+            // disable button
+            $(this).prop("disabled", false);
+            // add spinner to button
+            $(this).html(
+                `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...`
+            );
+            alert('hellow')
+        });
+    });
 </script>
+
 
 {% endblock %}

@@ -1,25 +1,21 @@
-{% extends "base.html" %}
-{% load static %}
-{% block title %} dantorial {%endblock title %}
-{% block carousel %}
+{% extends "base.html" %} {% load static %} {% block title %} dantorial {%endblock title %} {% block carousel %}
 
 <style>
     .carousel-item {
-/*        -webkit-transition: 0s !important;
+        /*        -webkit-transition: 0s !important;
         -o-transition: 0s !important;
         transition: 0s !important;*/
         transition: -webkit-transform 0.5s ease;
         transition: transform 0.5s ease;
         transition: transform 0.5s ease, -webkit-transform 0.5s ease;
-        -webkit-backface-visibility:  visible;
+        -webkit-backface-visibility: visible;
         backface-visibility: visible;
     }
 </style>
 
 <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
-        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true"
-            aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
         <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
         <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
     </div>
@@ -55,9 +51,8 @@
         </button>
     </div>
 </div>
-{% endblock carousel %} 
-{% block content %}
-<form action="{% url 'dantorial:search' %}" class="h-500 p-sm-5 mx-auto text-dark bg-dark rounded-5 mt-3">
+{% endblock carousel %} {% block content %}
+<form action="{% url 'dantorial:search' %}" class="h-500 p-sm-5 mx-auto text-dark bg-dark rounded-5 mt-auto">
     <div class="row align-items-md-stretch mx-3">
         <div class="col-sm-4 col-lg-1 col-12">
             <div class="input-group mb-3">
@@ -88,7 +83,7 @@
         </div>
         <div class="col-sm-5 col-lg-2">
             <div class="input-group mb-3">
-                <select name = 'region' class="form-select select-picker" id="inputGroupSelect02" data-live-search="true">
+                <select name='region' class="form-select select-picker" id="inputGroupSelect02" data-live-search="true">
                     {% for reg in region %}
                     <option value="{{reg.id}}">{{ reg.name }}</option>
                     {% endfor %}
@@ -97,8 +92,7 @@
         </div>
         <div class="col-sm-5 col-lg-2">
             <div class="input-group mb-3">
-                <input name = 'quater' type="text" class="form-control" placeholder="Quater" aria-label="Quater"
-                    aria-describedby="basic-addon1" />
+                <input name='quater' type="text" class="form-control" placeholder="Quater" aria-label="Quater" aria-describedby="basic-addon1" />
             </div>
         </div>
         <div class="col-sm-2 col-lg-1">
@@ -115,7 +109,7 @@
 </div> -->
     <div class="row mb-5">
         <div class="col-lg-12">
-            <h3 class="text-center">Browse By Category</h3>
+            <h3 class="text-center mb-3 fw-dark fs-3">Browse By Category</h3>
             <div class="row">
                 {% for cat in all_cat_ind %}
                 <div class="col-sm-6 col-lg-3 mt-2">
@@ -123,9 +117,9 @@
                         <img src="{{cat.image.url}}" class="card-img-top" alt="..." />
                         <div class="card-body">
                             <a href="{% url 'dantorial:category' cat.slug %}">
-                                 <h3 class="card-title"> {{cat.name}} </h3>
+                                <h3 class="card-title text-center mb-3 fw-dark fs-3"> {{cat.name}} </h3>
                             </a>
-                           
+
                         </div>
                     </div>
                 </div>
@@ -134,41 +128,41 @@
             <div class="d-grid gap-2 col-sm-6 col-lg-3 mx-auto mt-2">
                 <a href="{% url 'dantorial:allcategory' %}" class="btn btn-primary" type="button">See All Category</a>
             </div>
-            <div class="row mb-4">
+            <div class="row mb-4 mt-3">
                 <div class="d-lg-flex flex-md-equal w-100 my-md-3 ps-md-3 mb-3">
-                    <div class="col-lg-6 col-md-12 bg-success mt-2 mb-2 me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
-                        <div class="my-3 p-1">
-                            <h2 class="display-5">Looking for Professional Home Lesson Teacher?</h2>
-                            <p class="lead">Study their profile and get in touch with the best for your children</p>
-                        </div>
-                        <div class="bg-dark shadow-sm mx-auto"
-                            style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
-                    </div>
-                    <div class="col-lg-6 col-md-12 bg-primary me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+                    <div class="col-lg-6 col-md-12 bg-success me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden mb-3">
                         <div class="my-3 py-3">
-                            <h2 class="display-5">Are you a skill student or teacher?</h2>
-                            <p class="lead">Find students in need of your help around you</p>
+                            <h2 class="display-5 text-center">Looking for Professional Private Tutors?</h2>
+                            <!-- <p class="lead mb-auto fw-dark fs-3">Study profile and get in touch with the best for your children</p> -->
                         </div>
-                        <div class="bg-light shadow-sm mx-auto"
-                            style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+                        <div class="bg-dark shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;">
+                        </div>
+                        
+                    </div>
+                    <div class="col-lg-6 col-md-12 bg-primary me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden mb-3">
+                        <div class="my-3 py-3">
+                            <h2 class="display-5 text-center">Are you a skill student or teacher?</h2>
+                            <!-- <p class="lead mb-auto fw-dark fs-3">Find students in need of your help around you</p> -->
+                        </div>
+                        <div class="bg-light shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
                     </div>
                 </div>
             </div>
 
             <div class="mb-5">
-                <h3 class="text-center">Browse By SubCategory</h3>
+                <h3 class="text-center mb-3 fw-dark fs-3">Browse By SubCategory</h3>
                 <div class="row">
                     {% for subcat in all_subcat_ind %}
                     <div class="col-sm-6 col-lg-3 mt-2">
                         <div class="card" style="width: 100%">
                             <img src="{{subcat.image.url}}" class="card-img-top rounded" alt="..." />
                             <div class="card-body">
-                                <h3 class="card-title"> 
-                                <a href="{% url 'dantorial:subcategory' subcat.category.slug subcat.id %}">
+                                <h3 class="card-title text-center mb-3 fw-dark fs-3">
+                                    <a href="{% url 'dantorial:subcategory' subcat.category.slug subcat.id %}">
                                   {{subcat.name}} 
                                 </a>
-                                </h3>  
-                                <p class='text-mute'>
+                                </h3>
+                                <p class='text-mute text-center fw-light'>
                                     {{subcat.category.name}}
                                 </p>
                             </div>
@@ -180,7 +174,7 @@
                     <a href="{% url 'dantorial:allsubcategory' %}" class="btn btn-primary">See All SubCategory</a>
                 </div>
             </div>
-            <div class="mb-5">
+            <div class="mb-3">
                 <h3 class="text-center">Browse By Subject</h3>
                 <div class="row">
                     {% for sub in all_sub_ind %}
@@ -189,9 +183,9 @@
                             <img src="{{ sub.image.url }}" class="card-img-top rounded" alt="..." />
                             <div class="card-body">
                                 <a href="{% url 'dantorial:subject' sub.subcategory.category.slug sub.subcategory.id sub.slug %}">
-                                  <h3 class="card-title"> {{sub.name}} </h3>  
+                                    <h3 class="card-title text-center mb-3 fw-dark fs-4"> {{sub.name}} </h3>
                                 </a>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -201,13 +195,14 @@
                     <a href="{% url 'dantorial:allsubject' %}" class="btn btn-primary">See All Subject</a>
                 </div>
             </div>
-            <div class="row align-items-md-stretch mb-3">
-                {% for caro in carousel %}
-                <div class="col-lg-3 col-sm-6 me-0 ml-0 mb-2 p-1">
+            <div class="row align-items-md-stretch mb-auto">
+                <h5 class="text-center mb-3 fw-dark fs-3">How to use Tantorial</h5>
+                {% for caro in how %}
+                <div class="col-lg-4 col-md-4 col-sm-4 me-0 ml-0 mb-2 p-2">
                     <div class="card y-0 mr-auto ml-auto me-0" style="width: 100%">
-                        <img src="{{caro.image.url}}" class="card-img-top rounded-circle" alt="..." />
+                        <img src="{{caro.image.url}}" class="card-img-top rounded-circle mr-auto ml-auto" alt="..." style="width: 150px" />
                         <div class="card-body">
-                            <h3 class="card-text text-center">connect and search for tutors and students</h3>
+                            <h3 class="card-text text-center mb-3 fw-dark fs-5">{{caro.how_text}}</h3>
                         </div>
                     </div>
                 </div>

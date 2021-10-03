@@ -1,289 +1,283 @@
-{% extends "base.html" %}
-{% load crispy_forms_tags %}
-{% block title %}
-	profile
-{% endblock title %}
-{% block content %}
-	<style>
-	.rating {
-	float: left;
-	height: 46px;
-	padding: 0 10px;
-	}
-	.rating:not(:checked) > input {
-	/*    position:absolute;
+{% extends "base.html" %} {% load crispy_forms_tags %} {% block title %} profile {% endblock title %} {% block content %}
+<style>
+    .rating {
+        float: left;
+        height: 46px;
+        padding: 0 10px;
+    }
+    
+    .rating:not(:checked)>input {
+        /*    position:absolute;
 	top:-9999px;*/
-	position:absolute;
-	left: -9999px;
-	}
-	.rating:not(:checked) > label {
-	float:right;
-	width:1em;
-	overflow:hidden;
-	white-space:nowrap;
-	cursor:pointer;
-	font-size:30px;
-	color:#ccc;
-	}
-	.rating:not(:checked) > label:before {
-	content: '★ ';
-	}
-	.rating > input:checked ~ label {
-	color: #ffc700;
-	}
-	.rating:not(:checked) > label:hover,
-	.rating:not(:checked) > label:hover ~ label {
-	color: #deb217;
-	}
-	.rating > input:checked + label:hover,
-	.rating > input:checked + label:hover ~ label,
-	.rating > input:checked ~ label:hover,
-	.rating > input:checked ~ label:hover ~ label,
-	.rating > label:hover ~ input:checked ~ label {
-	color: #c59b08;
-	}
-	</style>
-	<hr>
-	<div class="row">
-		<div class="col-md-7">
-			<img src=" {{userprofile.profile_pic.url}} " alt="" style="width:100%; object-fit: contain;" class="rounded-circle" />
-			<div class='row mt-3'>
-				<h3 class='text-center'>Subjects</h3>
-				<hr>
-				<table class="table">
-					<thead>
-						<tr>
-							<th>Category</th>
-							<th>Subject</th>
-							<!-- <th>Level</th> -->
-							<th>Fee</th>
-							<!-- <th>Action</th> -->
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td> {{ userprofile.user.profileinfo.category|default:"" }}</td>
-							<td> {{ userprofile.user.profileinfo.subject|default:""  }}</td>
-							<!-- <td> {{ userprofile.user.profileinfo.level }} </td> -->
-							<td> {{ userprofile.user.profileinfo.amount|default:"" }}FCFA</td>
-						</tr>
-						{% for subject in userprofile.user.subject_set.all %}
-							<tr>
-								<td> {{ subject.category}}</td>
-								<td> {{ subject.subject }}</td>
-								<!-- <td> {{ subject.level }} </td> -->
-								<td> {{ subject.amount|default:"***" }}FCFA</td>
-							</tr>
-						{% endfor %}
-					</tbody>
-				</table>
-			</div>
-		</div>
-		<div class="col-md-5">
-			<div class="card" style="width: 100%;">
-				<h4 class="text-center">Personal Information</h4>
-				<hr>
-				<div class="card-body">
-					<h2 class="card-subtitle">{{userprofile.first_name}} {{userprofile.last_name}}
-					
-					<span>
+        position: absolute;
+        left: -9999px;
+    }
+    
+    .rating:not(:checked)>label {
+        float: right;
+        width: 1em;
+        overflow: hidden;
+        white-space: nowrap;
+        cursor: pointer;
+        font-size: 30px;
+        color: #ccc;
+    }
+    
+    .rating:not(:checked)>label:before {
+        content: '★ ';
+    }
+    
+    .rating>input:checked~label {
+        color: #ffc700;
+    }
+    
+    .rating:not(:checked)>label:hover,
+    .rating:not(:checked)>label:hover~label {
+        color: #deb217;
+    }
+    
+    .rating>input:checked+label:hover,
+    .rating>input:checked+label:hover~label,
+    .rating>input:checked~label:hover,
+    .rating>input:checked~label:hover~label,
+    .rating>label:hover~input:checked~label {
+        color: #c59b08;
+    }
+</style>
+<hr>
+<div class="row container">
+    <div class="col-md-7">
+        <img src=" {{userprofile.profile_pic.url}} " alt="" style="width:100%; object-fit: contain;" class="rounded-circle" />
+        <div class='row mt-3'>
+            <h3 class='text-center'>Subjects</h3>
+            <hr>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Subject</th>
+                        <!-- <th>Level</th> -->
+                        <th>Fee</th>
+                        <!-- <th>Action</th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td> {{ userprofile.user.profileinfo.category|default:"" }}</td>
+                        <td> {{ userprofile.user.profileinfo.subject|default:"" }}</td>
+                        <!-- <td> {{ userprofile.user.profileinfo.level }} </td> -->
+                        <td> {{ userprofile.user.profileinfo.amount|default:"" }}FCFA</td>
+                    </tr>
+                    {% for subject in userprofile.user.subject_set.all %}
+                    <tr>
+                        <td> {{ subject.category}}</td>
+                        <td> {{ subject.subject }}</td>
+                        <!-- <td> {{ subject.level }} </td> -->
+                        <td> {{ subject.amount|default:"***" }}FCFA</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-5 ">
+        <div class="card" style="width: 400px;">
+            <h4 class="text-center">Personal Information</h4>
+            <hr>
+            <div class="card-body">
+                <h2 class="card-subtitle">{{userprofile.first_name}} {{userprofile.last_name}}
+
+                    <span>
 						{% if userprofile.user.verification.is_verified %}
 							<i class='fas fa-check' style="color:blue;"></i>
 						{% endif %}
 					</span>
-					</h2>
-					
-				</div>
-				<ul class="list-group list-group-flush">
-					<li class="list-group-item"><strong>Account: </strong> <em>{{ userprofile.account_type|capfirst}}</em>
-					</li>
-					<li class="list-group-item"><strong>Age:</strong> <em>{{userprofile.date_of_birth|timesince}}</em> </li>
-					<li class="list-group-item"><strong>Gender:</strong> <em>{{userprofile.gender|capfirst}}</em> </li>
-					<li class="list-group-item"><strong>Location:</strong> {{userprofile.region}}</li>
-					<li class="list-group-item"><strong>Language:</strong> {{userprofile.user.profileinfo.language}}</li>
-					<li class="list-group-item"><strong>Level of Education:</strong> {{userprofile.level_of_education}} </li>
-					<li class="list-group-item"><strong>Address: </strong> {{userprofile.address_1|capfirst}},
-					{{userprofile.address_2|capfirst}}</li>
-					<li class="list-group-item"><strong>Email:</strong> {{userprofile.user.email}} </li>
-					<li class="list-group-item"><strong>contact:</strong>
-						<a href='tel:{{userprofile.country.phone}}{{userprofile.phone_number}}' class='btn btn-default'>
+                </h2>
+
+            </div>
+
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>Account: </strong> <em>{{ userprofile.account_type|capfirst}}</em>
+                </li>
+                <li class="list-group-item"><strong>Age:</strong> <em>{{userprofile.date_of_birth|timesince}}</em> </li>
+                <li class="list-group-item"><strong>Gender:</strong> <em>{{userprofile.gender|capfirst}}</em> </li>
+                <li class="list-group-item"><strong>Location:</strong> {{userprofile.region}}</li>
+                <li class="list-group-item"><strong>Language:</strong> {{userprofile.user.profileinfo.language}}</li>
+                <li class="list-group-item"><strong>Level of Education:</strong> {{userprofile.level_of_education}} </li>
+                <li class="list-group-item"><strong>Address: </strong> {{userprofile.address_1|capfirst}}, {{userprofile.address_2|capfirst}}
+                </li>
+                <li class="list-group-item"><strong>Email:</strong> {{userprofile.user.email}} </li>
+                <li class="list-group-item"><strong>contact:</strong>
+                    <a href='tel:{{userprofile.country.phone}}{{userprofile.phone_number}}' class='btn btn-default'>
 							{{userprofile.country.phone}}{{userprofile.phone_number}}
 							<span>
 								<i class="fa fa-lg fa-phone" aria-hidden="true"></i>
 							</span>
 							
 						</a>
-						<span>
+                    <span>
 							<a href="https://wa.me/{{userprofiles.phonenumber}}" target="_blank">
 								<i class="fa fa-lg fa-whatsapp" style='color:rgb(5, 59, 41)'></i>
 							</a>
 						</span>
-					</li>
-				</ul>
-				<div class="card-body">
-					<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Send a message</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-12 mb-auto">
-			<section id="components">
-				<h2 class="fw-bold pt-3 pt-xl-5 pb-2 pb-xl-3">Professional Information</h2>
-				<article class="mb-0" id="accordion">
-					<div>
-						<div class="bd-example">
-							<div class="accordion" id="accordionExample">
-								<div class="accordion-item">
-									<h4 class="accordion-header" id="headingThree">
-									<button class="accordion-button" type="button" data-bs-toggle="collapse"
-									data-bs-target="#collapseexperience" aria-expanded="true" aria-controls="collapseThree">
+                </li>
+            </ul>
+            <div class="card-body">
+                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Send a message</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 mb-auto">
+        <section id="components">
+            <h2 class="fw-bold pt-2 pt-xl-5 pb-2 pb-xl-3">Professional Information</h2>
+            <article class="mb-0" id="accordion">
+                <div>
+                    <div class="bd-example">
+                        <div class="accordion" id="accordionExample">
+                            <div class="accordion-item">
+                                <h4 class="accordion-header" id="headingThree">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseexperience" aria-expanded="true" aria-controls="collapseThree">
 									<h4>
 									Professional Experience
 									</h4>
 									</button>
-									</h4>
-									<div id="collapseexperience" class="accordion-collapse collapse" aria-labelledby="headingThree"
-										data-bs-parent="#accordionExample">
-										<div class="accordion-body">
-											<table class="table">
-												<thead>
-													<tr>
-														<th>Work Post</th>
-														<th>Position</th>
-														<th>Start</th>
-														<th>End</th>
-														<!-- <th>Action</th> -->
-													</tr>
-												</thead>
-												<tbody>
-													{% for experience in userprofile.user.experience_set.all %}
-														<tr>
-															<td> {{ experience.work_post }}</td>
-															<td> {{ experience.position }}</td>
-															<td> {{ experience.start_year }} </td>
-															<td> {{ experience.end_year }}</td>
-														</tr>
-													{% endfor %}
-												</tbody>
-											</table>
-										</div>
-									</div>
-								</div>
-								<div class="accordion-item">
-									<h4 class="accordion-header" id="headingOne">
-									<button class="accordion-button" type="button" data-bs-toggle="collapse"
-									data-bs-target="#collapsequalification" aria-expanded="true" aria-controls="collapseOne">
+                                </h4>
+                                <div id="collapseexperience" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Work Post</th>
+                                                    <th>Position</th>
+                                                    <th>Start</th>
+                                                    <th>End</th>
+                                                    <!-- <th>Action</th> -->
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for experience in userprofile.user.experience_set.all %}
+                                                <tr>
+                                                    <td> {{ experience.work_post }}</td>
+                                                    <td> {{ experience.position }}</td>
+                                                    <td> {{ experience.start_year }} </td>
+                                                    <td> {{ experience.end_year }}</td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h4 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsequalification" aria-expanded="true" aria-controls="collapseOne">
 									<h4>
 									Educational Qualification
 									</h4>
 									</button>
-									</h4>
-									<div id="collapsequalification" class="accordion-collapse collapse" aria-labelledby="headingFour"
-										data-bs-parent="#accordionExample">
-										<div class="accordion-body">
-											<table class="table">
-												<thead>
-													<tr>
-														<th>School</th>
-														<th>Certificate</th>
-														<th>Start</th>
-														<th>End</th>
-														<!-- <th>Action</th> -->
-													</tr>
-												</thead>
-												<tbody>
-													{% for qualification in userprofile.user.qualification_set.all %}
-														<tr>
-															<td> {{ qualification.school }}</td>
-															<td> {{ qualification.certificate }}</td>
-															<td> {{ qualification.start_date }} </td>
-															<td> {{ qualification.end_date }}</td>
-														</tr>
-													{% endfor %}
-												</tbody>
-											</table>
-										</div>
-									</div>
-								</div>
-								<div class="accordion-item">
-									<h4 class="accordion-header" id="headingOne">
-									<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
-									aria-expanded="True" aria-controls="collapseOne">
+                                </h4>
+                                <div id="collapsequalification" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>School</th>
+                                                    <th>Certificate</th>
+                                                    <th>Start</th>
+                                                    <th>End</th>
+                                                    <!-- <th>Action</th> -->
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for qualification in userprofile.user.qualification_set.all %}
+                                                <tr>
+                                                    <td> {{ qualification.school }}</td>
+                                                    <td> {{ qualification.certificate }}</td>
+                                                    <td> {{ qualification.start_date }} </td>
+                                                    <td> {{ qualification.end_date }}</td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h4 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="True" aria-controls="collapseOne">
 									<h4>
 									About {{userprofile.first_name|default:''}} {{userprofile.last_name|default:''}}
 									</h4>
 									</button>
-									</h4>
-									<div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
-										data-bs-parent="#accordionExample">
-										<div class="accordion-body">
-											<strong> {{userprofile.user.profileinfo.bio|default:''|safe}}</strong>
-										</div>
-									</div>
-								</div>
-								<div class="accordion-item">
-									<h4 class="accordion-header" id="headingTwo">
-									<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-									data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                </h4>
+                                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <strong> {{userprofile.user.profileinfo.bio|default:''|safe}}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h4 class="accordion-header" id="headingTwo">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
 									<h4>
 									Experience
 									</h4>
 									</button>
-									</h4>
-									<div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-										data-bs-parent="#accordionExample">
-										<div class="accordion-body">
-											<strong> {{ userprofile.user.profileinfo.experience|default:''|safe }} </strong>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</article>
-		</section>
-	</div>
-	
-			
-			
-			<div class="row mt-0 p-5">
-				<div class="col-lg-8 mb-3 me-5">
-					<fieldset>
-						<legend>Leave a comment for {{user.profilepersonal.first_name}}</legend>
-						<div id="comments_section">
-							<form method="POST" class='needs-validation' novalidate id='comment' action="">
-								{% csrf_token %}
-								<div class="form-group">
-									{{ comment_form|crispy }}
-								</div>
-								<div class="rating">
-									<input type="radio" id="star5" name="rate" value="5" />
-									<label for="star5" title="text">5 stars</label>
-									<input type="radio" id="star4" name="rate" value="4" />
-									<label for="star4" title="text">4 stars</label>
-									<input type="radio" id="star3" name="rate" value="3" />
-									<label for="star3" title="text">3 stars</label>
-									<input type="radio" id="star2" name="rate" value="2" />
-									<label for="star2" title="text">2 stars</label>
-									<input type="radio" id="star1" name="rate" value="1" />
-									<label for="star1" title="text">1 star</label>
-								</div>
-								<button class="btn btn-info mt-2" type="submit" name='post_comment'>Add comment <i
+                                </h4>
+                                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <strong> {{ userprofile.user.profileinfo.experience|default:''|safe }} </strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    </div>
+    </article>
+    </section>
+</div>
+
+
+
+<div class="row mt-0">
+    <div class="col-lg-8 mb-3 me-5">
+        <fieldset>
+            <legend>Leave a comment for {{user.profilepersonal.first_name}}</legend>
+            <div id="comments_section">
+                <form method="POST" class='needs-validation' novalidate id='comment' action="">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        {{ comment_form|crispy }}
+                    </div>
+                    <div class="rating">
+                        <input type="radio" id="star5" name="rate" value="5" />
+                        <label for="star5" title="text">5 stars</label>
+                        <input type="radio" id="star4" name="rate" value="4" />
+                        <label for="star4" title="text">4 stars</label>
+                        <input type="radio" id="star3" name="rate" value="3" />
+                        <label for="star3" title="text">3 stars</label>
+                        <input type="radio" id="star2" name="rate" value="2" />
+                        <label for="star2" title="text">2 stars</label>
+                        <input type="radio" id="star1" name="rate" value="1" />
+                        <label for="star1" title="text">1 star</label>
+                    </div>
+                    <button class="btn btn-info mt-2" type="submit" name='post_comment'>Add comment <i
 								class="fas fa-comments"></i></button>
-							</div>
-						</form>
-					</fieldset>
-					{% if comments %}
-						<strong class="text-secondary">{{ user.profilepersonal.review_set.all.count }}
+            </div>
+            </form>
+        </fieldset>
+        {% if comments %}
+        <strong class="text-secondary">{{ user.profilepersonal.review_set.all.count }}
 						Comment{{ user.profilepersonal.review_set.all.count|pluralize }}</strong>
-						<hr>
-						<ul class="list-group">
-							{% for comment in comments %}
-								<li class="list-group-item">
-									<div>
-										<span>
+        <hr>
+        <ul class="list-group">
+            {% for comment in comments %}
+            <li class="list-group-item">
+                <div>
+                    <span>
 											<strong class="text-info">
 											<a href="{% url 'dantorial:userprofile' comment.user.profilepersonal.id %}">
 												{{ comment.user.profilepersonal.first_name }}
@@ -291,109 +285,101 @@
 											</strong>
 											<small class="text-muted">{{ comment.date_created }}</small>
 										</span>
-										<p>
-											{{ comment.content|safe }}
-											{% if comment.rating == '5' %}
-												<span>
+                    <p>
+                        {{ comment.content|safe }} {% if comment.rating == '5' %}
+                        <span>
 													<i class="fas fa-star" style='color: #c59b08;'></i>
 													<i class="fas fa-star" style='color: #c59b08;'></i>
 													<i class="fas fa-star" style='color: #c59b08;'></i>
 													<i class="fas fa-star" style='color: #c59b08;'></i>
 													<i class="fas fa-star" style='color: #c59b08;'></i>
 													
-												</span>
-												{% elif comment.rating == '4'  %}
-												<span>
+												</span> {% elif comment.rating == '4' %}
+                        <span>
 													<i class="fas fa-star" style='color: #c59b08;'></i>
 													<i class="fas fa-star" style='color: #c59b08;'></i>
 													<i class="fas fa-star" style='color: #c59b08;'></i>
 													<i class="fas fa-star" style='color: #c59b08;'></i>
-												</span>
-												{% elif comment.rating == '3'  %}
-												<span>
+												</span> {% elif comment.rating == '3' %}
+                        <span>
 													
 													<i class="fas fa-star" style='color: #c59b08;'></i>
 													<i class="fas fa-star" style='color: #c59b08;'></i>
 													<i class="fas fa-star" style='color: #c59b08;'></i>
-												</span>
-												{% elif comment.rating == '2'  %}
-												<span>
+												</span> {% elif comment.rating == '2' %}
+                        <span>
 													
 													<i class="fas fa-star" style='color: #c59b08;'></i>
 													<i class="fas fa-star" style='color: #c59b08;'></i>
-												</span>
-												{% elif comment.rating == '1'  %}
-												<span>
+												</span> {% elif comment.rating == '1' %}
+                        <span>
 													<i class="fas fa-star" style='color: #c59b08;'></i>
-												</span>
-											{% endif %}
-										</p>
-									</div>
-								</li>
-							{% endfor %}
-						</ul>
-					{% else %}
-						<strong class="text-secondary">No comments yet...</strong>
-					{% endif %}
-				</div>
-			</div>
-		</div>
-		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Send a message to {{userprofile.first_name}} </h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												</span> {% endif %}
+                    </p>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <strong class="text-secondary">No comments yet...</strong> {% endif %}
+    </div>
+</div>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Send a message to {{userprofile.first_name}} </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 						</button>
-					</div>
-					<div class="modal-body">
-						<fieldset>
-							<form method="POST" class='needs-validation' novalidate>
-								{% csrf_token %}
-																		{% if not user.is_authenticated %}
-									<div class="form-group">
-										
-										{{message.name|as_crispy_field}}
-									</div>
-									
-									<div class="form-group">
-										
-										{{message.phone_number|as_crispy_field}}
-									</div>
-									
-									<div class="form-group">
-										
-										{{message.email|as_crispy_field}}
-									</div>
-									
-								{% endif %}
-								<div class="form-group">
-										
-										{{message.phone_number|as_crispy_field}}
-									</div>
-								<div class="form-group">
-									
-									{{message.message|as_crispy_field}}
-									
-								</div>
-							</div>
-							<div class="modal-footer">
-								<button  class="btn btn-default" data-dismiss="modal">Cancel</button>
-								<button type="submit" class="btn btn-success" name='send_message'>Send Message</button>
-							</div>
-						</div>
-					</form>
-				</fieldset>
-			</div>
-		</div>
-	</div>
+            </div>
+            <div class="modal-body">
+                <fieldset>
+                    <form method="POST" class='needs-validation' novalidate>
+                        {% csrf_token %} {% if not user.is_authenticated %}
+                        <div class="form-group">
+
+                            {{message.name|as_crispy_field}}
+                        </div>
+
+                        <div class="form-group">
+
+                            {{message.phone_number|as_crispy_field}}
+                        </div>
+
+                        <div class="form-group">
+
+                            {{message.email|as_crispy_field}}
+                        </div>
+
+                        {% endif %}
+                        <div class="form-group">
+
+                            {{message.phone_number|as_crispy_field}}
+                        </div>
+                        <div class="form-group">
+
+                            {{message.message|as_crispy_field}}
+
+                        </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-success" name='send_message'>Send Message</button>
+            </div>
+        </div>
+        </form>
+        </fieldset>
+    </div>
+</div>
+</div>
 </div>
 
 <script>
-if (window.history.replaceState) {
-window.history.replaceState(null, null, window.location.href);
-}
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
 </script>
 <!-- <script>
 $(document).ready(function() {
@@ -403,6 +389,4 @@ return false;
 });
 });
 </script> -->
-{% endblock content %}
-{% block extra_body %}
-{% endblock %}
+{% endblock content %} {% block extra_body %} {% endblock %}

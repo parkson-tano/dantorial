@@ -96,21 +96,28 @@
 
 <body>
     {% block carousel %} {% endblock carousel %}
-    <div class="container-fluid mt-5">
+    <div class="container-fluid">
         {% if messages %}
-
-        <!-- <div class='alert alert-success alert-dismissible fade show' role='alert'>
+        <div>
+            <!-- <div class='alert alert-success alert-dismissible fade show' role='alert'>
                 {% for message in messages %}
                   {{message}}
                 {% endfor %}
               </div> -->
+            <div class="row">
 
-        <div class="col-12  col-md-6 col-sm-6 alert alert-success alert-dismissible fade show ml-auto mr-auto" role="alert">
-            {% for message in messages %} {{message}} {% endfor %}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <div class="col-12 col-md-6 col-sm-6 ml-auto mr-auto alert alert-success alert-dismissible fade show" role="alert">
+                    {% for message in messages %} {{message}} {% endfor %}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+            </div>
+
         </div>
+        {% endif %}
+            {% block content %} {% endblock content %}
 
-        {% endif %} {% block content %} {% endblock content %} {% block extra_body %} {% endblock %}
+        {% block extra_body %} {% endblock %}
     </div>
     <!-- Footer -->
     <footer class="text-center text-lg-start bg-secondary">

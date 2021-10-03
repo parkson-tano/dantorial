@@ -20,7 +20,7 @@
     </ul>
 </div>
 </div>
-<div class="container-fluid">
+<div class="container-fluid mt-5">
     <div class="row">
         <div class="col py-0">
             <!-- toggler -->
@@ -51,7 +51,7 @@
                             <!-- <li class="list-group-item"> {{p.level_of_education|default:''}} </li>
                         <li class="list-group-item">{{p.gender|default:''}}</li> -->
                             <li class="list-group-item">
-                                {{p.region}}
+                                {{p.region}} {{p.user.profileinfo.subject}}
                             </li>
                             <!-- <li class="list-group-item">{{p.address_1|default:''}}</li> -->
                         </ul>
@@ -119,4 +119,7 @@
                 </div>
             </div>
         </div>
+        </div>
+        </div>
+    
         {% endblock content %}
