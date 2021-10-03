@@ -528,7 +528,7 @@ def subscribe(amount, number):
 class UpgradeAccountView(FormView):
     template_name = 'main/upgrade.html'
     form_class = UpgradeForm
-    success_url = reverse_lazy('dantorial:profile')
+    success_url = reverse_lazy('dantorial:upgrade_profile')
     
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -557,8 +557,15 @@ class UpgradeAccountView(FormView):
         #  "to": form.instance.phone_number, #Phone number to disburse amount to. Must include country code
         #  "description": "Withdrwal from tantorial"
         # })
-
+        form.instance.reference = collect['reference']
+        form.instance.status = collect['status']
+        form.instance.reason = collect['reason']
+        form.instance.code = collect['code']
+        form.instance.operator = collect['operator']
+        form.instance.operator_ref = collect['operator_reference']
+        form.instance.external_ref = collect['external_reference']
         # print(disburse)
+        pay = form.save(commit=False)
         if form.instance.payment_method == 'MTN Mobile Money':
             messages.success(self.request, "Dial *126# to complete payment")
         else:
@@ -567,19 +574,25 @@ class UpgradeAccountView(FormView):
         # if Upgrade.objects.filter(user=self.request.user).exists():
         #     redirect('dantorial:index')
         if collect['status'] == 'SUCCESSFUL':
+            form.instance.is_complete = True
             profile.paid = True
             profile.save()
             pay.save()
+            self.success_url = reverse_lazy('dantorial:pay-success')
             send_mail('hey thanks ', 'here is the message', settings.DEFAULT_FROM_EMAIL, (self.request.user.email,))
-            messages.success(self.request, "Successful")
+            # messages.success(self.request, "Successful")
         else:
             form.instance.is_complete = False
-            messages.success(self.request, "Failed")
+            self.success_url = reverse_lazy('dantorial:pay-fail')
+            # messages.success(self.request, "Failed")
             send_mail('hey thanks for nothing', 'here is the message', settings.DEFAULT_FROM_EMAIL, (self.request.user.email,))
             pay.save()
-
-
         
         return super().form_valid(form)
 
 
+class PaymentSuccessView(TemplateView):
+    template_name = 'main/payment-successful.html'
+
+class PaymentFailView(TemplateView):
+    template_name = 'main/payment-fail.html'

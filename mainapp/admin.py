@@ -27,7 +27,9 @@ class QualificationAdmin(admin.ModelAdmin):
     list_display = ['user', 'school', 'certificate', 'start_year', 'end_year']
 
 class UpgradeAdmin(admin.ModelAdmin):
-    list_display = ['user', 'amount', 'date_created']
+    search_fields = ['user__username', 'operator', 'status']
+    list_filter = ['user', 'operator', 'status', 'date_created']
+    list_display = ['user', 'amount','operator','status', 'date_created']
 
 admin.site.register(ProfilePersonal, ProfileAdmin)
 admin.site.register(ProfileInfo, TutorProfileAdmin)

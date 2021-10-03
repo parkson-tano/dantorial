@@ -55,7 +55,7 @@ urlpatterns = [
 
 # category urls
 
-    path('<slug:slug>/', CategoryView.as_view(), name='category'),
+    path('category/<slug:slug>/', CategoryView.as_view(), name='category'),
     path('<category_slug>/<subcat_slug>/', SubcategoryView.as_view(), name='subcategory'),
     path('<category_slug>/<subcat_slug>/<subject_slug>/', SubjectView.as_view(), name='subject'),
     path('allcategory', AllCategoryView.as_view(), name='allcategory'),
@@ -69,5 +69,7 @@ urlpatterns = [
 
 # payment and support
     path('upgrade', UpgradeAccountView.as_view(), name='upgrade_profile'),
+    path('payment-success/', PaymentSuccessView.as_view(), name='pay-success'),
+    path('payment-fail/', PaymentFailView.as_view(), name='pay-fail'),
 
 ]

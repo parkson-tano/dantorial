@@ -213,7 +213,7 @@ class AddSubjectForm(forms.ModelForm):
 class AddExperienceForm(forms.ModelForm):
 	class Meta:
 		model = Experience
-		fields = ('work_post','position','start_date','end_date')
+		fields = ('work_post','position','description','start_date','end_date','current_job')
 		widgets = {
 			'start_date': DatePickerInput(),
 			'end_date': DatePickerInput()
@@ -222,7 +222,7 @@ class AddExperienceForm(forms.ModelForm):
 class AddQualificationForm(forms.ModelForm):
 	class Meta:
 		model = Qualification
-		fields = ('school','certificate','start_year','end_year')
+		fields = ('school','certificate','start_year','end_year', 'still_studying')
 
 class VerificationForm(forms.ModelForm):
 	class Meta:

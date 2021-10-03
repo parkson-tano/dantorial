@@ -218,8 +218,10 @@ class Experience(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)
     work_post = models.CharField(max_length=500)
     position = models.CharField(max_length=500)
+    description = models.TextField(null=True, blank=True)
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
+    current_job = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user + ' experience'
@@ -230,6 +232,8 @@ class Qualification(models.Model):
     certificate = models.CharField(max_length=200)
     start_year = models.IntegerField()
     end_year = models.IntegerField()
+    still_studying = models.BooleanField(default=False)
+    # image = models.ImageField(upload_to='qua_img', null=True, blank=True)
 
     def __str__(self):
         return self.user + ' qualification'
@@ -287,13 +291,20 @@ class Booked(models.Model):
     date_created = models.DateTimeField(default=timezone.now)
 
 class Upgrade(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     amount = models.IntegerField(null=True, blank=True)
     # start_date = models.DateTimeField(auto_now_add=True)
     # end_date =models.DateTimeField(null=True, blank=True)
     is_complete = models.BooleanField(default=False)
     payment_method = models.CharField(max_length=40, choices=PAYMENT)
     phone_number = models.CharField(max_length=15)
+    reference = models.CharField(null=True, blank=True, max_length=100)
+    status = models.CharField(null=True, blank=True, max_length=100)
+    reason = models.CharField(null=True, blank=True, max_length=100)
+    code = models.CharField(null=True, blank=True, max_length=100)
+    operator = models.CharField(null=True, blank=True, max_length=100)
+    operator_ref = models.CharField(null=True, blank=True, max_length=100)
+    external_ref = models.CharField(null=True, blank=True, max_length=100)
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
