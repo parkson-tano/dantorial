@@ -96,9 +96,8 @@
 
 <body>
     {% block carousel %} {% endblock carousel %}
-    <div class="container-fluid">
+    <div class="container-fluid bg-info">
         {% if messages %}
-        <div>
             <!-- <div class='alert alert-success alert-dismissible fade show' role='alert'>
                 {% for message in messages %}
                   {{message}}
@@ -113,16 +112,15 @@
 
             </div>
 
-        </div>
         {% endif %}
-            {% block content %} {% endblock content %}
-
-        {% block extra_body %} {% endblock %}
+        <div class="bg-info">
+           {% block content %} {% endblock content %} 
+        </div>
     </div>
     <!-- Footer -->
     <footer class="text-center text-lg-start bg-secondary">
         <!-- Section: Social media -->
-        <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+        <section class="d-flex justify-content-center justify-content-lg-between p-4">
             <!-- Left -->
             <div class="me-5 d-none d-lg-block">
                 <span>Get connected with us on social networks:</span>
@@ -154,7 +152,7 @@
         <!-- Section: Social media -->
         <!-- Section: Links  -->
         <section class="">
-            <div class="container-fluid text-md-start mt-5">
+            <div class="container-fluid text-md-start mt-auto">
                 <!-- Grid row -->
                 <div class="row mt-3">
                     <!-- Grid column -->

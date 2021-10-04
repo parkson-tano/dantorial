@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% load crispy_forms_tags %} {% block title %} login {% endblock title %} {% block content %}
+{% extends "base.html" %} {% load crispy_forms_tags %} {% block title %} info {% endblock title %} {% block content %}
 
 <body>
     <div class="container-fluid p-0">
@@ -27,18 +27,40 @@
                             Language: {{profile_info.language|capfirst}}
                         </p>
                         <p class="mb-2 fw-light fs-5">
-                            Bio: {{profile_info.bio|safe|default:''}}
+                            Bio: 
                         </p>
+                            <p class='fw-dark fs-5'>
+                                {{profile_info.bio|safe|default:''}}
+                            </p>
+                            
+                        
                         <p class="mb-2 fw-light fs-5">
-                            Experience: {{profile_info.experience|safe|default:''}}
+                            Experience: 
                         </p>
+                            <p class='fw-dark fs-5'>
+                             {{profile_info.experience|safe|default:''}}   
+                            </p>
+                            
+                            <p class="mb-2 fw-light fs-5">
+                            Subject: 
+                            </p>
                         <ul class="list-group list-group-flush ml-0">
-                            <li class="list-group-item">{{profile_info.category|default:''}}</li>
-                            <li class="list-group-item">{{profile_info.subcategory|default:''}}</li>
-                            <li class="list-group-item">{{profile_info.subject|default:''}}</li>
+                            <li class="list-group-item fw-dark">
+                                <b>Category:</b>
+                                {{profile_info.category|default:''}}</li>
+                            <li class="list-group-item fw-dark">
+                                <b>SubCategory:</b>
+                                {{profile_info.subcategory|default:''}}</li>
+                            <li class="list-group-item fw-dark">
+                                <b>Subject:</b>
+                                {{profile_info.subject|default:''}}</li>
                             {% if user.profilepersonal.account_type == 'tutor' %}
-                            <li class="list-group-item">{{profile_info.charge|default:''}}</li>
-                            <li class="list-group-item">{{profile_info.amount|default:''}}</li>
+                            <li class="list-group-item fw-dark">
+                                <b>Charges:</b>
+                                {{profile_info.charge|default:''}}</li>
+                            <li class="list-group-item fw-dark">
+                                <b>Rate:</b>
+                                {{profile_info.amount|default:''}}</li>
                             {% endif %}
                         </ul>
                         <hr class="my-4">

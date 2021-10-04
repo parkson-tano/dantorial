@@ -3,6 +3,7 @@ from django.views.generic import TemplateView, View
 from .models import Category, SubCategory, Subject
 from mainapp.models import ProfilePersonal
 from django.contrib.auth.models import User
+import random
 # Create your views here.
 
 class CategoryView(TemplateView):
@@ -14,8 +15,10 @@ class CategoryView(TemplateView):
         category = Category.objects.get(slug=url_slug)
         subcat = SubCategory.objects.filter(category=category)
         pro = ProfilePersonal.objects.all()
+        # pro = random.shuffle(list(pro))
         context["subcat"] = subcat
         context['pro'] = pro
+        print(pro)
         return context
 
 class SubcategoryView(View):
