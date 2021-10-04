@@ -45,7 +45,8 @@ color: #c59b08;
 }
 </style>
 <hr>
-<div class="row container">
+
+<div class="row mt-5 container">
 <div class="col-md-7">
  <img src=" {{userprofile.profile_pic.url}} " alt="" style="width:100%; object-fit: contain;" class="rounded-circle" />
  <div class='row mt-3'>
@@ -80,9 +81,10 @@ color: #c59b08;
   </table>
  </div>
 </div>
-<div class="col-md-5 ">
- <div class="card" style="width: 400px;">
-  <h4 class="text-center">Personal Information</h4>
+</div>
+<div class="col-md-5">
+ <div class="card" style="width: 100%">
+  <h3 class="text-center">Personal Information</h4>
   <hr>
   <div class="card-body">
    <h2 class="card-subtitle">{{userprofile.first_name}} {{userprofile.last_name}}
@@ -107,18 +109,18 @@ color: #c59b08;
    <li class="list-group-item">
     <div>
      <span>
-     <a data-toggle="modal" data-target="#exampleModal" class="btn btn-success card-link"><i class="fa fa-lg fa-phone" style='color:rgb(5, 59, 41)'>Call</i>
+     <a data-toggle="modal" data-target="#exampleModal" class="btn btn-success card-link mt-2"><i class="fa fa-lg fa-phone" style='color:rgb(5, 59, 41)'>Call</i>
     </a>      
      </span>
 
      
     <span>
-     <a href="https://wa.me/{{userprofiles.phonenumber}}" target="_blank" class="btn btn-success card-link ">
+     <a href="https://wa.me/{{userprofiles.phonenumber}}" target="_blank" class="btn btn-success card-link mt-2">
       <i class="fa  fa-lg fa-whatsapp" style='color:rgb(5, 59, 41)'>Whatsapp</i>
      </a>
     </span>
     <span>
-         <a href="#" class="btn btn-primary card-link " data-toggle="modal" data-target="#messageModal"><i class="fa fa-lg fa-envelope-o" style='color:rgb(5, 59, 41)'>Message</i></a>
+         <a href="#" class="btn btn-primary card-link mt-2" data-toggle="modal" data-target="#messageModal"><i class="fa fa-lg fa-envelope-o" style='color:rgb(5, 59, 41)'>Message</i></a>
 
     </span>
     </div>
@@ -169,7 +171,7 @@ color: #c59b08;
 <div class="row">
 <div class="col-md-12 mb-auto">
  <section id="components">
-  <h2 class="fw-bold pt-2 pt-xl-5 pb-2 pb-xl-3">Professional Information</h2>
+  <h2 class="fw-light pt-2 pt-xl-5 pb-2 pb-xl-3">Professional Information</h2>
   <article class="mb-0" id="accordion">
    <div>
     <div class="bd-example">
@@ -209,13 +211,13 @@ color: #c59b08;
        </div>
       </div>
       <div class="accordion-item">
-       <h4 class="accordion-header" id="headingOne">
+       <h5 class="accordion-header" id="headingOne">
        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsequalification" aria-expanded="true" aria-controls="collapseOne">
-       <h4>
+       <h5>
        Educational Qualification
-       </h4>
+       </h5>
        </button>
-       </h4>
+       </h5>
        <div id="collapsequalification" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
         <div class="accordion-body">
          <table class="table">
@@ -401,6 +403,7 @@ color: #c59b08;
 </div>
 </div>
 </div>
+
 <script>
 if (window.history.replaceState) {
 window.history.replaceState(null, null, window.location.href);
