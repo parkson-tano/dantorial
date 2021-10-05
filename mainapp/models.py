@@ -245,6 +245,8 @@ class SocialMedia(models.Model):
     linkedin = models.CharField(max_length=256, null=True, blank=True)
     website = models.CharField(max_length=256, null=True, blank=True)
     youtube = models.CharField(max_length=256, null=True, blank=True)
+    github = models.CharField(max_length=256, null=True, blank=True)
+    twitter = models.CharField(max_length=256, null=True, blank=True)
 
     def __str__(self):
         return str(self.user) + ' social media'
@@ -344,3 +346,5 @@ class HowToUse(models.Model):
             output_size = (150,150)
             img.thumbnail(output_size)
             img.save(self.profile_pic.path)
+
+

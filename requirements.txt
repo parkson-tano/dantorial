@@ -5,6 +5,7 @@ asyncio==3.4.3
 attrs==21.2.0
 autobahn==21.3.1
 Automat==20.2.0
+autopep8==1.5.7
 backcall==0.2.0
 beautifulsoup4==4.10.0
 bleach==3.1.0
@@ -60,12 +61,14 @@ nest-asyncio==1.5.1
 numpy==1.21.2
 oauthlib==3.1.1
 parso==0.8.2
+payUnit==0.2.4
 pickleshare==0.7.5
 Pillow==8.3.1
 progressbar2==3.53.1
 prompt-toolkit==3.0.20
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
+pycodestyle==2.7.0
 pycparser==2.20
 Pygments==2.10.0
 PyJWT==1.7.1
@@ -82,7 +85,9 @@ service-identity==21.1.0
 six==1.16.0
 soupsieve==2.2.1
 sqlparse==0.4.1
+stripe==2.60.0
 swapper==1.1.2.post1
+toml==0.10.2
 tornado==6.1
 tqdm==4.62.0
 traitlets==5.1.0
@@ -93,6 +98,7 @@ txaio==21.2.1
 typing-extensions==3.10.0.0
 Unidecode==1.2.0
 urllib3==1.26.6
+uuid==1.30
 wcwidth==0.2.5
 webencodings==0.5.1
 zope.interface==5.4.0
