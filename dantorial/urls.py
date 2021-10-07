@@ -26,6 +26,7 @@ urlpatterns = [
     path('', include('mainapp.urls')),
     path('message/', include('messaging.urls')),
     path("accounts/email/", page_not_found,{'exception': Exception('Not Found')}, name="account_email"),
+    path("api/", include('api.urls')),
 
 ]
 

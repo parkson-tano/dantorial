@@ -61,6 +61,8 @@ INSTALLED_APPS = [
     'bootstrap4',
     'bootstrap_datepicker_plus',
     "django_notification_system",
+    'api',
+    'rest_framework'
 
 ]
 

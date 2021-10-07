@@ -92,6 +92,9 @@ class UserProfileView(DetailView):
         context["comments"] = comments_connected
         context['comment_form'] = ReviewForm 
         context['message'] = MessageForm
+        prof = ProfilePersonal.objects.get(user__username=self.get_object())
+        prof.view_count += 1
+        prof.save()
         return context
 
     def post(self, request, *args, **kwargs):
@@ -507,7 +510,7 @@ class SearchAllView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         kw = self.request.GET['keywords']
-        result = ProfileInfo.objects.filter(Q(user__profilepersonal__first_name__icontains=kw) | Q(user__profilepersonal__last_name__icontains=kw) | Q(bio__icontains=kw) | Q(experience__icontains=kw))
+        result = ProfilePersonal.objects.filter(Q(first_name__icontains=kw) | Q(last_name__icontains=kw) | Q(user__profileinfo__bio__icontains=kw) | Q(user__profileinfo__experience__icontains=kw))
         context["result"] = result
         return context
 

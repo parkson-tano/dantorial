@@ -12,16 +12,16 @@
 		<form class="needs-validation" method="post" action="" novalidate>
 			{% csrf_token %}
 			<div class="row align-items-center">
-				<div class='col-6'>
+				<div class='col-sm-6'>
 					{{form.first_name|as_crispy_field}}
 				</div>
-				<div class='col-6'>
+				<div class='col-sm-6'>
 					{{form.last_name|as_crispy_field}}
 				</div>
-				<div class='col-6'>
+				<div class='col-sm-6'>
 					{{form.phone_number|as_crispy_field}}
 				</div>
-				<div class='col-6'>
+				<div class='col-sm-6'>
 					{{form.email|as_crispy_field}}
 				</div>
 				<div class='col-12'>

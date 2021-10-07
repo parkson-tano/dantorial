@@ -38,7 +38,7 @@ color: #deb217;
 color: #c59b08;
 }
 </style>
-<div class="container mt-5">
+<div class="container">
 <div class="main-body">
  <!-- Breadcrumb -->
  <!-- /Breadcrumb -->
@@ -105,11 +105,11 @@ color: #c59b08;
 </ul>
 </div> -->
 </div>
-<div class="col-md-8">
+<div class="col-md-8 mt-5">
 <div class="card mb-3">
 <div class="card-body">
 <div class="row">
-<div class="col-sm-auto">
+<div class="col-sm-4">
  <h6 class="mb-0">Level of Education</h6>
 </div>
 <div class="col-sm-8 text-secondary">
@@ -174,11 +174,11 @@ color: #c59b08;
     <div id="collapseOne{{forloop.counter}}" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
      <div class="accordion-body">
       <ul class="list-group list-group-flush">
-       <li class="list-group-item d-flex fw-dark">Category: {{subject.category}}</li>
-       <li class="list-group-item d-flex fw-dark">Subcategory: {{subject.subcategory}}</li>
-       <li class="list-group-item d-flex fw-dark">Subject: {{subject.subject}}</li>
-       <li class="list-group-item d-flex fw-dark">Charge: Per {{subject.charge}}</li>
-       <li class="list-group-item d-flex fw-dark">Amount: {{subject.amount}} FCFA</li>
+       <p class="d-flex fw-dark">Category: {{subject.category}}</p>
+       <p class="d-flex fw-dark">Subcategory: {{subject.subcategory}}</p>
+       <p class="d-flex fw-dark">Subject: {{subject.subject}}</p>
+       <p class="d-flex fw-dark">Charge: Per {{subject.charge}}</p>
+       <p class="d-flex fw-dark">Amount: {{subject.amount}} FCFA</p>
       </ul>
      </div>
     </div>

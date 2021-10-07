@@ -14,7 +14,7 @@ class CategoryView(TemplateView):
         url_slug = kwargs['slug']
         category = Category.objects.get(slug=url_slug)
         subcat = SubCategory.objects.filter(category=category)
-        pro = ProfilePersonal.objects.all()
+        pro = ProfilePersonal.objects.filter(user__profileinfo__category__slug=url_slug)
         # pro = random.shuffle(list(pro))
         context["subcat"] = subcat
         context['pro'] = pro
@@ -40,7 +40,7 @@ class SubcategoryView(View):
         subcate = get_object_or_404(SubCategory, pk=subcat_slug) 
         context = {}
         subject = Subject.objects.filter(subcategory = subcate)
-        pro = ProfilePersonal.objects.all()
+        pro = ProfilePersonal.objects.filter(user__profileinfo__subcategory=subcat_slug)
         # context["subcat"] = subcat
         context['subject'] = subject
         context['pro'] = pro        
@@ -63,7 +63,7 @@ class SubjectView(View):
         subject = get_object_or_404(Subject, slug=subject_slug)  
         context = {}
         subject = Subject.objects.filter(subcategory = subcate)
-        pro = ProfilePersonal.objects.all()
+        pro = ProfilePersonal.objects.filter(user__profileinfo__subject__slug=subject_slug)
         context['subject'] = subject
         context['pro'] = pro        
         return render(request, 'main/subject.html', context)    

@@ -224,7 +224,7 @@ class Experience(models.Model):
     current_job = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.user + ' experience'
+        return str(self.user) + ' experience'
 
 class Qualification(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)
@@ -236,7 +236,7 @@ class Qualification(models.Model):
     # image = models.ImageField(upload_to='qua_img', null=True, blank=True)
 
     def __str__(self):
-        return self.user + ' qualification'
+        return str(self.user) + ' qualification'
 
 class SocialMedia(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
