@@ -133,6 +133,7 @@ class ProfilePersonal(models.Model):
     date_of_birth = models.DateField(default=timezone.now)
     view_count = models.PositiveIntegerField(default=0)
     paid = models.BooleanField(default = False)
+    favourite = models.ManyToManyField(User, null=True, blank=True, related_name='saved_user' )
     profile_pic = models.ImageField(upload_to='profile_img', default='media/default.png')
     
 
@@ -347,4 +348,10 @@ class HowToUse(models.Model):
             img.thumbnail(output_size)
             img.save(self.profile_pic.path)
 
+class ProfileViewed(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user', null=True, blank=True)
+    viewed_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_view', null=True, blank=True)
+    date_created = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return str(self.user.username)

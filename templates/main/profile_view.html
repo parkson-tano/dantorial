@@ -1,0 +1,47 @@
+{% extends "base.html" %} {% load crispy_forms_tags %} {% block title %} login {% endblock title %} {% block content %}
+
+    <div class="row mt-5">
+        <div class="col-sm-8 col-md-8 col-lg-8 mx-auto">
+            <div class="card border-0 shadow rounded-3 my-5">
+            	<div class="card-title mb-0">
+            		<p class="fw-light fw-bold text-center fs-5">
+            			{{ profile.count }} Profile{{ profile.count|pluralize }} View
+            		</p>
+            		
+            	</div>
+                <div class="card-body p-0 p-sm-0">
+                    <div class="list-group">
+                    	
+                    	<ul class="list-group list-group-flush">
+                    		{% if profile %}
+                    	{% for pro in profile %}
+                    	{% if pro.viewed_by is not None or pro.viewed_by.profilepersonal.account_type == 'tutor' %}
+                        <li class="list-group-item list-group-item-action">
+                        <div class="d-inline">
+                        <img src="{{pro.viewed_by.profilepersonal.profile_pic.url}}" class="rounded-circle" width="50px">
+                        <a href="{% url 'dantorial:userprofile' pro.viewed_by.profilepersonal.id %}" style="text-decoration: none;">
+                        	{{pro.viewed_by.profilepersonal.first_name}} {{pro.viewed_by.profilepersonal.last_name}}
+                        </a>
+                        <span class="text-muted ml-5 d-none d-sm-block">
+                        		{{pro.date_created|timesince}} ago
+                        	</span>	
+                        
+                        	
+                        </div>
+                        	
+            
+                        </li>
+                       
+                        {% endif %}
+
+                        {% endfor %}
+
+                        {% endif %}	
+                    	</ul>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

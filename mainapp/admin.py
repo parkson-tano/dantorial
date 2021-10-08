@@ -31,6 +31,11 @@ class UpgradeAdmin(admin.ModelAdmin):
     list_filter = ['user', 'operator', 'status', 'date_created']
     list_display = ['user', 'amount','operator','status', 'date_created']
 
+class ProfileViewedAdmin(admin.ModelAdmin):
+    search_fields = ['user__username', 'user_by__username']
+    list_filter = ['user', 'viewed_by', 'date_created']
+    list_display = ['user', 'viewed_by', 'date_created']
+
 admin.site.register(ProfilePersonal, ProfileAdmin)
 admin.site.register(ProfileInfo, TutorProfileAdmin)
 admin.site.register(Subject, SubjectAdmin)
@@ -43,4 +48,5 @@ admin.site.register(SocialMedia)
 admin.site.register(Booked)
 admin.site.register(Verification)
 admin.site.register(Upgrade, UpgradeAdmin)
+admin.site.register(ProfileViewed, ProfileViewedAdmin)
 admin.site.register([About, OurTeam,  HowToUse])

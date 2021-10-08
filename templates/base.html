@@ -39,12 +39,21 @@
                 <ul class="navbar-nav me-5 mb-0 mb-lg-0">
                     {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Notifications
+                        <a class="nav-link active" aria-current="page" href="#">
+                            <i class='fa fa-bell'></i>
+                            Notifications
                       <span class="badge rounded-pill badge-notification bg-danger">1</span>
                     </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'dantorial_message:message' user.id %}">Message
+                        <a class="nav-link" href="{% url 'dantorial_message:message' user.id %}"><i class='fa fa-envelope-o'></i>
+                            Message
+                      <span class="badge rounded-pill badge-notification bg-danger">1</span>
+                    </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dantorial_message:message' user.id %}">
+                            <i class='fa fa-heart'></i>Save
                       <span class="badge rounded-pill badge-notification bg-danger">1</span>
                     </a>
                     </li>
@@ -53,8 +62,12 @@
                     </li>
                     <li>
                         {% if user.profilepersonal.account_type == 'tutor' %}
-                        <a class="nav-link text-white">Tutor Account</a> {% else %}
-                        <a class="nav-link text-white">Student Account</a> {% endif %}
+                        <a class="nav-link text-white">
+                            <i class="fa fa-book"></i>
+                        Tutor Account</a> {% else %}
+                        <a class="nav-link text-white">
+                            <i class="fas fa-book-reader"></i>
+                        Student Account</a> {% endif %}
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">

@@ -171,7 +171,7 @@
                             <div class="row mb-auto">
                                 <div class="col-sm-12">
                                     <div class="alert alert-primary text-center">
-                                        Your Profile has been viewed {{profile.view_count}} times
+                                        Your Profile has been viewed <a href="{% url 'dantorial:profview' %}" class="btn btn-default">{{profile.view_count}} times</a> 
                                     </div>
                                 </div>
                                 

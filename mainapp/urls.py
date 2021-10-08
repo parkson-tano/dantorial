@@ -72,4 +72,7 @@ urlpatterns = [
     path('payment-success/', PaymentSuccessView.as_view(), name='pay-success'),
     path('payment-fail/', PaymentFailView.as_view(), name='pay-fail'),
 
+# profile viewed
+    path('profview/', ProfileViewList.as_view(), name='profview'),
+
 ]

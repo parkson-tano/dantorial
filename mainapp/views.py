@@ -92,9 +92,31 @@ class UserProfileView(DetailView):
         context["comments"] = comments_connected
         context['comment_form'] = ReviewForm 
         context['message'] = MessageForm
+
+        
         prof = ProfilePersonal.objects.get(user__username=self.get_object())
-        prof.view_count += 1
-        prof.save()
+        if self.request.user.is_authenticated:
+            current = ProfilePersonal.objects.get(user=self.request.user)
+            if (self.request.user != self.get_object().user):
+                new_view = ProfileViewed.objects.create(user=self.get_object().user, viewed_by =self.request.user )
+                prof.view_count += 1
+                current.favourite.add(self.get_object().user)
+                current.save()
+                prof.save()
+
+                # send_mail('profile viewed', f'{self.request.user.profilepersonal.first_name} viewed your profile', settings.DEFAULT_FROM_EMAIL, (self.get_object().user.email,))
+            else:
+                pass
+        # new_view.save()
+        else:
+            if (self.request.user != self.get_object().user):
+                new_view = ProfileViewed.objects.create(user=self.get_object().user,)
+                prof.view_count += 1
+                prof.favourite.add(self.get_object().user)
+                prof.save()
+            else:
+                pass
+
         return context
 
     def post(self, request, *args, **kwargs):
@@ -599,3 +621,17 @@ class PaymentSuccessView(TemplateView):
 
 class PaymentFailView(TemplateView):
     template_name = 'main/payment-fail.html'
+
+
+class ProfileViewList(TemplateView):
+    template_name = "main/profile_view.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        profile = self.request.user
+        profile_info = ProfileViewed.objects.filter(user=profile)
+        context["profile"] = profile_info
+        return context
+
+class FavouriteAddView():
+    pass
