@@ -53,7 +53,7 @@
 </div>
 {% endblock carousel %} {% block content %}
 <form action="{% url 'dantorial:search' %}" class="h-500 p-sm-5 mx-auto text-dark bg-dark rounded-5 mt-auto">
-    <div class="row align-items-md-stretch mx-3 p-3">
+    <div class="row align-items-md-stretch mx-0 p-3">
         <div class="col-sm-3 col-lg-2 col-12">
             <div class="input-group mb-3">
                 <select name='typ' class="form-select" id="inputGroupSelect02">
@@ -65,7 +65,7 @@
         </div>
         <div class="col-sm-5 col-lg-2">
             <div class="input-group mb-3">
-                <select name='category' class="form-select select-picker" id="inputGroupSelect02" data-live-search="true">
+                <select name='category' class="form-select select-picker" id="inputGroupSelect02" data-live-search="true" data-placeholder="Select an option" data-allow-clear="true">
                     {% for cat in all_cat %}
                     <option value="{{cat.id}}">{{ cat.name }}</option>
                     {% endfor %}
@@ -74,7 +74,7 @@
         </div>
         <div class="col-sm-4 col-lg-3">
             <div class="input-group mb-3">
-                <select name='subject' class="form-select select-picker" id="inputGroupSelect02" data-live-search="true">
+                <select name='subject' class="form-select form-select-solid" data-live-search="true">
                     {% for sub in all_sub %}
                     <option value="{{sub.id}}">{{ sub.name }}</option>
                     {% endfor %}
@@ -95,7 +95,8 @@
                 <input name='quater' type="text" class="form-control" placeholder="Quater" aria-label="Quater" aria-describedby="basic-addon1" />
             </div>
         </div>
-        <div class="col-sm-4 col-lg-1">
+
+        <div class="col-sm-4 col-lg-1 d-block">
             <button class="btn btn-primary" type="submit">Search</button>
         </div>
     </div>

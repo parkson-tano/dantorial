@@ -9,12 +9,13 @@
             
             <div class='col-sm-12 col-md-9'>
                 <div class='row'>
-                    {% for p in result %}
-                        {% if p.first_name != None %}
-                            <div class="col-12 col-sm-6 col-md-4 mb-3">
-                                <div class="card">
-                                    <div class="card-header">
-                                                                    <div>
+                    {% for p in result %} {% if p.first_name is not None %}
+                <div class="col-12 col-sm-6 col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-header" style="  position: relative;
+                            text-align: center;
+                            ">
+                            <div>
                                 <a href="{{p.profile_pic.url}}"><img class="card-img" src="{{p.profile_pic.url}}" alt="..." style='height:15rem; width:100%;'>
                                 </a>
                                 <button class="border-0 m-0 p-0 likebtn" type="button" id="{{p.id}}" data-url="{% url 'dantorial:favourite' %}" style="  position: absolute;
@@ -25,32 +26,43 @@
                                     color:blue">
                                    <i class="fa fa-heart-o mr-0 ml-0"></i> 
                                 </button>   
-                           </div> 
-                                    </div>
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{ p.user.profilepersonal.first_name|default:'' }} {{ p.user.profilepersonal.last_name|default:'' }} </h5>
-                                        <p class="card-text">
-                                            {{p.bio|default:''}}
-                                        </p>
-                                    </div>
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item"> {{p.user.profilepersonal.level_of_education|default:''}} </li>
-                                        <li class="list-group-item">{{p.user.profilepersonal.gender|default:''}}</li>
-                                        <!--                 <li class="list-group-item">{{p.city|default:''}}</li> -->
-                                        <li class="list-group-item">{{p.user.profilepersonal.address_1|default:''}}</li>
-                                    </ul>
-                                    <div class="card-body">
-                                        <a class="btn btn-danger card-link d-grid" href="{% url 'dantorial:userprofile' p.user.profilepersonal.id %}">Read
-                                        more →</a><br>
-                                        <a href="tel:{{p.user.profilepersonal.country.phone}}{{p.user.profilepersonal.phone_number}}" class="btn btn-success card-link d-grid ">
-                                            Get Contact
-                                            <i class="fa fa-phone"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
+                           </div>    
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ p.first_name }} {{ p.last_name|default:'' }} </h5>
+                            <p class="card-text">
+                                {{p.user.profileinfo.bio|default:''|slice:'100'}}...
+                            </p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <!-- <li class="list-group-item"> {{p.level_of_education|default:''}} </li>
+                            <li class="list-group-item">{{p.gender|default:''}}</li> -->
+                            <li class="list-group-item">
+                                {{p.region}} {{p.user.profileinfo.subject}}
+                                {{p.}}
+                            </li>
+                            <!-- <li class="list-group-item">{{p.address_1|default:''}}</li> -->
+                        </ul>
+                        <div class="card-body">
+                            <a class="btn btn-danger card-link d-grid mb-2" href="{% url 'dantorial:userprofile' p.id %}">Read
+                            more →</a>
+                            <!--                         <span>
+                                <a data-toggle="modal" data-target="#exampleModal" class="btn btn-success card-link d-grid ">
+                                    Get Contact
+                                </a>
+                            </span>
+                            -->
+                            
+                            <!-- <a href="tel:{{'+'}}{{p.country.phone}}{{p.phone_number}}" class="btn btn-success card-link d-grid ">
+                                Get Contact
+                            </a> -->
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
                 </div>
             </div>
             <div class="col-sm-12 col-md-3">

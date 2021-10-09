@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="{% static 'styles.css' %}">
     <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/navbar-fixed/">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
     <!-- Google Fonts -->
     <!-- <link
       href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
@@ -54,7 +56,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'dantorial:myfavourites' %}">
                             <i class='fa fa-heart'></i>Save
-                      <span class="badge rounded-pill badge-notification bg-danger like_count" id = 'like_count{{user.profilepersonal.id}}'>{{ user.profilepersonal.total_favourites }}</span>
+                      <span class="badge rounded-pill badge-notification bg-danger like_count" id = 'like_count'>
+
+                      {{ user.profilepersonal.total_favourites }}</span>
                     </a>
                     </li>
                     <li class="nav-item">
@@ -305,7 +309,8 @@
                         'action': 'post'
                     },
                     success: function (response) {
-                        $('#like_count' + ansid).text(response['total_favourites']);
+                        $('#like_count' ).text(response['total_favourites']);
+                        console.log("clicked:" + ansid)
                         console.log(response)
                         if (response['flag']) {
                             $('#'+ansid).addClass('text-success');
@@ -323,6 +328,20 @@
             });
         });
     </script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+$(document).ready(function() {
+$('.subjectselect').select2(
+{
+theme: "bootstrap4",
+placeholder: "Buscar y Selecionar",
+width: 'auto',
+dropdownAutoWidth: true,
+allowClear: true,
+});
+
+});
+</script>
 </body>
 
 </html>
