@@ -23,3 +23,7 @@ class Review(models.Model):
 
     def __str__(self):
         return self.user.username
+
+    # def average_rating(self):
+    #     all_rating = list(map(lambda x: x.rating, self.review_set.all()))
+    #     return np.mean(all_rating)

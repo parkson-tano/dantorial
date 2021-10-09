@@ -38,7 +38,7 @@ from messaging.forms import MessageForm, ContactForm
 from django.core.mail import send_mail
 from django.conf import settings
 from campay.sdk import Client
-
+from django.http import JsonResponse
 
 
 class IndexView(TemplateView):
@@ -92,16 +92,14 @@ class UserProfileView(DetailView):
         context["comments"] = comments_connected
         context['comment_form'] = ReviewForm 
         context['message'] = MessageForm
-
-        
-        prof = ProfilePersonal.objects.get(user__username=self.get_object())
+        prof = ProfilePersonal.objects.get(user__username=self.get_object().user)
         if self.request.user.is_authenticated:
-            current = ProfilePersonal.objects.get(user=self.request.user)
+            # current = ProfilePersonal.objects.get(user=self.request.user)
             if (self.request.user != self.get_object().user):
                 new_view = ProfileViewed.objects.create(user=self.get_object().user, viewed_by =self.request.user )
                 prof.view_count += 1
-                current.favourite.add(self.get_object().user)
-                current.save()
+                # current.favourite.add(self.get_object().user)
+                # current.save()
                 prof.save()
 
                 # send_mail('profile viewed', f'{self.request.user.profilepersonal.first_name} viewed your profile', settings.DEFAULT_FROM_EMAIL, (self.get_object().user.email,))
@@ -112,7 +110,7 @@ class UserProfileView(DetailView):
             if (self.request.user != self.get_object().user):
                 new_view = ProfileViewed.objects.create(user=self.get_object().user,)
                 prof.view_count += 1
-                prof.favourite.add(self.get_object().user)
+                # prof.favourite.add(self.get_object().user)
                 prof.save()
             else:
                 pass
@@ -633,5 +631,34 @@ class ProfileViewList(TemplateView):
         context["profile"] = profile_info
         return context
 
-class FavouriteAddView():
-    pass
+@login_required
+def profile_like(request):
+    if request.POST.get('action') == 'post':
+
+        flag = None
+        profileid = int(request.POST.get('profile_id'))
+        u = ProfilePersonal.objects.get(id=profileid)
+        print(f'prof id {profileid}')
+        profile_obj = ProfilePersonal.objects.get(user=request.user)
+        print(f"prof obj {profile_obj} ")
+        
+        if profile_obj.favourite.filter(profilepersonal__favourite=u.user).exists():
+            profile_obj.favourite.remove(u.user)
+            profile_obj.save()
+            flag = False
+        else:
+            profile_obj.favourite.add(u.user)
+            profile_obj.save()
+            flag = True
+        return JsonResponse({'total_favourites': profile_obj.total_favourites, 'flag':flag})
+    return HttpResponse("Error access Denied")
+
+class FavouriteView(TemplateView):
+    template_name = "main/favourite.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        profile = self.request.user
+        profile_info = ProfilePersonal.objects.get(user=profile)
+        context["favourite"] = profile_info
+        return context

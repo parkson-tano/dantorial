@@ -41,8 +41,18 @@
             <div class="col-12 col-sm-6 col-md-4 mb-3">
                 <div class="card">
                     <div class="card-header">
-                        <a href="{{p.profile_pic.url}}"><img class="card-img" src="{{p.profile_pic.url}}" alt="..." style='height:15rem; width:100%' /></a>
-                    </div>
+                                                    <div>
+                                <a href="{{p.profile_pic.url}}"><img class="card-img" src="{{p.profile_pic.url}}" alt="..." style='height:15rem; width:100%;'>
+                                </a>
+                                <button class="btn btn-danger border-0 m-0 p-0 likebtn" type="button" id="{{p.id}}" data-url="{% url 'dantorial:favourite' %}" style="  position: absolute;
+                                         background: transparent;
+                                    top: 100;
+                                    right:  1.5rem;
+                                    font-size:200%;
+                                    color:blue">
+                                   <i class="fa fa-heart-o mr-0 ml-0"></i> 
+                                </button>   
+                           </div>                     </div>
                     <div class="card-body">
                         <h5 class="card-title">{{ p.first_name }} {{ p.last_name|default:'' }} </h5>
                         <p class="card-text">

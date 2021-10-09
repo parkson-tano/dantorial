@@ -137,8 +137,13 @@ class ProfilePersonal(models.Model):
     profile_pic = models.ImageField(upload_to='profile_img', default='media/default.png')
     
 
+    @property
+    def total_favourites(self):
+        return self.favourite.count()
+    
+
     def __str__(self):
-        return self.user.username
+        return self.user.username + " profile"
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -149,9 +154,6 @@ class ProfilePersonal(models.Model):
             img.thumbnail(output_size)
             img.save(self.profile_pic.path)
 
-    def average_rating(self):
-        all_rating = list(map(lambda x: x.rating, self.review_set.all()))
-        return np.mean(all_rating)
 
 
 @receiver(post_save,sender=User)

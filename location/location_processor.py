@@ -1,5 +1,5 @@
 from .models import Country, Region,SubRegion, City
-from mainapp.models import About, OurTeam,  HowToUse
+from mainapp.models import About, OurTeam,  HowToUse, ProfilePersonal
 
 def location_renderer(request):
     return {
@@ -11,5 +11,6 @@ def location_renderer(request):
         'about': About.objects.get(id=1),
         'team': OurTeam.objects.all(),
         'how':  HowToUse.objects.all(),
+        # 'favourite': ProfilePersonal.objects.get(user=request.user),
 
     }

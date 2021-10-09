@@ -26,7 +26,7 @@ urlpatterns = [
     path('my-verification/', ProfileVerificationView.as_view(), name='my-verification'),
 
     path('myaccount/', MyAccount.as_view(), name='my-account'),
-
+    path('favourites/', FavouriteView.as_view(), name='myfavourites'),
 # add view
 
     path('add-qualification', QualificationEditView.as_view(), name='add-qualification'),
@@ -74,5 +74,5 @@ urlpatterns = [
 
 # profile viewed
     path('profview/', ProfileViewList.as_view(), name='profview'),
-
+    path('like/', profile_like, name='favourite'),
 ]
