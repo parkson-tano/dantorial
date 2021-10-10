@@ -133,7 +133,7 @@ class ProfilePersonal(models.Model):
     date_of_birth = models.DateField(default=timezone.now)
     view_count = models.PositiveIntegerField(default=0)
     paid = models.BooleanField(default = False)
-    favourite = models.ManyToManyField(User, null=True, blank=True, related_name='saved_user' )
+    favourite = models.ManyToManyField(User,related_name='saved_user' )
     profile_pic = models.ImageField(upload_to='profile_img', default='media/default.png')
     
 

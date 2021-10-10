@@ -1,31 +1,32 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %} message {%endblock title %}
+{% block title %} favourite {%endblock title %}
 	{% block content %}
-		<div class="container-fluid p-0">
-			<div class="row mt-5">
-				<div class="col-sm-4 col-md-4 col-lg-3 mx-auto">
-					<div class="card border-0 shadow rounded-3 my-5">
-						<div class="card-body p-0 p-sm-0">
-							<div class="list-group mx-auto">
-								<a href="#"
-								class="list-group-item list-group-item-action active">Star</a>
-								
+		<div class="col-md-8 col-sm-8 ml-auto mr-auto mt-5">
+			<div class="card mb-3">
+				<div class="card-body">
+					<h5 class="card-title text-center mb-3 fw-bold fs-5">Favourite</h5>
+					{% for fav in favourite.favourite.all %}
+						<div class="row">
 							
+                        
+                        	<div class="col-sm-8">
+                        		<img src="{{fav.profilepersonal.profile_pic.url}}" class="rounded-circle" alt="..." style="width:50px"/>
+                        	
+                        		<a  href="{% url 'dantorial:userprofile' fav.profilepersonal.id %}" style="text-decoration:none">
+									{{ fav.profilepersonal.first_name }} {{ fav.profilepersonal.last_name }}			
+                        		
+								</a>
+								
+								
+							</div>
+
+							
+
 						</div>
-						<ul>
-							{% for fav in favourite.favourite.all %}
-						<li>
-						{{fav}}
-						
-						</li>
-						{% endfor %}
-						</ul>
-						
-					</div>
-	
+						<hr>
+					{% endfor %}
 				</div>
 			</div>
 		</div>
-	</div>
-{% endblock %}
+	{% endblock %}

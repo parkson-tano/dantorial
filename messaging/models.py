@@ -29,7 +29,6 @@ from django.contrib.sessions.models import Session
 # 	date_created = models.DateTimeField(auto_now_add=True)
 # 	is_read = models.BooleanField(default=False)
 
-
 class Message(models.Model):
 	sender_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+', null=True, blank=True)
 	receiver_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+')
@@ -38,8 +37,6 @@ class Message(models.Model):
 	phone_number = models.IntegerField(null=True, blank=True)
 	message = models.TextField()
 	is_read = models.BooleanField(default=False)
-
-
 	date_created = models.DateTimeField(auto_now_add=True)
 
 class Contact(models.Model):

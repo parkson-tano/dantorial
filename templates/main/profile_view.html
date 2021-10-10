@@ -1,11 +1,11 @@
-{% extends "base.html" %} {% load crispy_forms_tags %} {% block title %} login {% endblock title %} {% block content %}
+{% extends "base.html" %} {% load crispy_forms_tags %} {% block title %} viwed_profile {% endblock title %} {% block content %}
 
     <div class="row mt-5">
         <div class="col-sm-8 col-md-8 col-lg-8 mx-auto">
             <div class="card border-0 shadow rounded-3 my-5">
             	<div class="card-title mb-0">
             		<p class="fw-light fw-bold text-center fs-5">
-            			{{ profile.count }} Profile{{ profile.count|pluralize }} View
+            			{{ profile.count }} Profile View{{ profile.count|pluralize }} 
             		</p>
             		
             	</div>

@@ -102,7 +102,7 @@ class UserProfileView(DetailView):
                 # current.save()
                 prof.save()
 
-                # send_mail('profile viewed', f'{self.request.user.profilepersonal.first_name} viewed your profile', settings.DEFAULT_FROM_EMAIL, (self.get_object().user.email,))
+                send_mail('profile viewed', f'{self.request.user.profilepersonal.first_name} viewed your profile', settings.DEFAULT_FROM_EMAIL, (self.get_object().user.email,))
             else:
                 pass
         # new_view.save()
@@ -135,8 +135,10 @@ class UserProfileView(DetailView):
         if 'post_comment' in request.POST:
             new_comment.save()
 
+
         elif 'send_message' in request.POST:
             new_message.save()
+            send_mail('Message from tantorial user', f'{self.request.user.profilepersonal.first_name} sent you a messages', settings.DEFAULT_FROM_EMAIL, (self.get_object().user.email,))
             messages.success(self.request, 'message sucessfully sent')
 
         return self.get(self, request, *args, **kwargs)
@@ -181,6 +183,7 @@ class ContactView(CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         messages.success(self.request, "We will get back to you shortly")
+        send_mail('Thanks for Contacting us', f'{form.instance.user.profilepersonal.first_name} thanks for contacting us', settings.DEFAULT_FROM_EMAIL, (form.instance.user.email,))
         form.save()
         return super().form_valid(form)
 
