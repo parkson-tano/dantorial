@@ -50,15 +50,16 @@ color: #c59b08;
                         <a href="{{userprofile.profile_pic.url}}">
                             <img src="{{userprofile.profile_pic.url}}" alt="{{userprofile.first_name}}" class="rounded-circle" width="200">
                         </a>
-                        <button class="border-0 m-0 p-0 likebtn" type="button" id="{{p.id}}" data-url="{% url 'dantorial:favourite' %}" style="  position: absolute;
-                                         background: transparent;
-                                    top: 100;
-                                    right:  1.5rem;
-                                    font-size:200%;
-                                    color:blue">
-                                   <i class="fa fa-heart-o mr-0 ml-0"></i> 
-                                </button>
+                        <button class="border-0 m-0 p-0 likebtn" type="button" id="{{userprofile.id}}" data-url="{% url 'dantorial:favourite' %}" style="  position: absolute;
+                        background: transparent;
+                        top: 100;
+                        right:  1.5rem;
+                        font-size:200%;
+                        color:blue">
+                        <i class="fa fa-heart-o mr-0 ml-0"></i>
+                        </button>
                         <div class="mt-3">
+
                             <h4>{{userprofile.first_name|capfirst}} {{userprofile.last_name|capfirst}}
                             <span>
                                 {% if userprofile.user.verification.is_verified %}
@@ -66,7 +67,8 @@ color: #c59b08;
                                 {% endif %}
                             </span>
                             </h4>
-                            <p class="text-secondary mb-1">{{userprofile.account_type|capfirst}}</p>
+                            <p class="text-secondary mb-1">{{userprofile.account_type|capfirst}}
+                            ({{ comments.count }} Reviews) {{ur|default:""}}</p>
                             <p class="text-muted font-size-md">{{userprofile.region}}</p>
                             <p class="fw-bold">{{userprofile.user.profileinfo.subject|default:""}}
                                 <span class="fw-light">
@@ -483,8 +485,8 @@ dddd
 </form>
 </fieldset>
 {% if comments %}
-<strong class="text-secondary">{{ user.profilepersonal.review_set.all.count }}
-Comment{{ user.profilepersonal.review_set.all.count|pluralize }}</strong>
+<strong class="text-secondary">{{ comments.count }}
+Comment{{ comments.count|pluralize }}</strong>
 <hr>
 <ul class="list-group">
     {% for comment in comments %}

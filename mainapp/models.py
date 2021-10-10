@@ -33,9 +33,9 @@ TAG = (
 )
 
 CHARGE = (
-    ('Weekly', 'Weekly'),
-    ('Monthly', 'Monthly'),
-    ('Hourly', 'Hourly')
+    ('Week', 'Weekly'),
+    ('Month', 'Monthly'),
+    ('Hour', 'Hourly')
 )
 
 LANG = (

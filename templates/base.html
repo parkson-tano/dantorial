@@ -314,11 +314,13 @@
                         console.log(response)
                         if (response['flag']) {
                             $('#'+ansid).addClass('text-success');
+                            // alert('you like this profile')
 
                             console.log('successfully  added to favorites');
                         } else {
                             $("#"+ansid).removeClass('text-danger');
                             console.log('successfully removed to favorites');
+                            // alert('u dislike this')
                         }
                     },
                     error: function(rs, e) {

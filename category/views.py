@@ -4,6 +4,7 @@ from .models import Category, SubCategory, Subject
 from mainapp.models import ProfilePersonal
 from django.contrib.auth.models import User
 import random
+from review.models import Review
 # Create your views here.
 
 class CategoryView(TemplateView):
@@ -15,6 +16,7 @@ class CategoryView(TemplateView):
         category = Category.objects.get(slug=url_slug)
         subcat = SubCategory.objects.filter(category=category)
         pro = ProfilePersonal.objects.filter(user__profileinfo__category__slug=url_slug)
+        # user_rating = Review.objects.filter(profile=self.get_object()).aggregate(Avg('rating'))
         # pro = random.shuffle(list(pro))
         context['category'] = category
         context["subcat"] = subcat
@@ -81,6 +83,8 @@ class AllCategoryView(TemplateView):
         context = super().get_context_data(**kwargs)
         category = Category.objects.all()
         pro = ProfilePersonal.objects.all()
+        rating = Review.objects.all()
+        context['rating'] = rating
         context["pro"] = pro
         context['category'] = category 
         return context

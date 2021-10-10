@@ -21,9 +21,9 @@
     </div>
     <div class="carousel-inner">
         {% for caro in carousel|slice:":3" %} {% if forloop.first %}
-        <div class="carousel-item active" data-bs-interval="4000">
+        <div class="carousel-item active" data-bs-interval="30000">
             {% else %}
-            <div class="carousel-item" data-bs-interval="4000">
+            <div class="carousel-item" data-bs-interval="30000">
                 {% endif %}
                 <img class="bd-placeholder-img" src="{{ caro.image.url }}" alt="" style="
             max-height: 100vh;
@@ -36,7 +36,9 @@
                     <div class="carousel-caption text-center mb-5">
                         <div style="margin-bottom:10rem;">
                           <h5>{{ caro.title }}</h5>
-                        <p class="mb-5">{{ caro.text }}</p> 
+                        <p class="mb-5 fs-1 fw-bold text-center">
+                            WELCOME TO TANTORIAL
+                        </p> 
                         <a href="{% url 'account_signup' %}" class='btn btn-primary mt-3 mb-3 text-center' style="border-radius:20px; width:80%">Register Now</a>  
                         </div>
                         

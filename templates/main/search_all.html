@@ -10,59 +10,85 @@
             <div class='col-sm-12 col-md-9'>
                 <div class='row'>
                     {% for p in result %} {% if p.first_name is not None %}
-                <div class="col-12 col-sm-6 col-md-4 mb-3">
-                    <div class="card">
-                        <div class="card-header" style="  position: relative;
-                            text-align: center;
-                            ">
-                            <div>
-                                <a href="{{p.profile_pic.url}}"><img class="card-img" src="{{p.profile_pic.url}}" alt="..." style='height:15rem; width:100%;'>
-                                </a>
-                                <button class="border-0 m-0 p-0 likebtn" type="button" id="{{p.id}}" data-url="{% url 'dantorial:favourite' %}" style="  position: absolute;
-                                         background: transparent;
-                                    top: 100;
-                                    right:  1.5rem;
-                                    font-size:200%;
-                                    color:blue">
-                                   <i class="fa fa-heart-o mr-0 ml-0"></i> 
-                                </button>   
-                           </div>    
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">{{ p.first_name }} {{ p.last_name|default:'' }} </h5>
-                            <p class="card-text">
-                                {{p.user.profileinfo.bio|default:''|slice:'100'}}...
-                            </p>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            <!-- <li class="list-group-item"> {{p.level_of_education|default:''}} </li>
-                            <li class="list-group-item">{{p.gender|default:''}}</li> -->
-                            <li class="list-group-item">
-                                {{p.region}} {{p.user.profileinfo.subject}}
-                                {{p.}}
-                            </li>
-                            <!-- <li class="list-group-item">{{p.address_1|default:''}}</li> -->
-                        </ul>
-                        <div class="card-body">
-                            <a class="btn btn-danger card-link d-grid mb-2" href="{% url 'dantorial:userprofile' p.id %}">Read
-                            more →</a>
-                            <!--                         <span>
-                                <a data-toggle="modal" data-target="#exampleModal" class="btn btn-success card-link d-grid ">
-                                    Get Contact
-                                </a>
-                            </span>
-                            -->
-                            
-                            <!-- <a href="tel:{{'+'}}{{p.country.phone}}{{p.phone_number}}" class="btn btn-success card-link d-grid ">
-                                Get Contact
-                            </a> -->
-                            
-                        </div>
-                        
-                    </div>
-                </div>
-            {% endif %}
-        {% endfor %}
+    <div class="col-12 col-sm-6 col-md-4 mb-3">
+     <div class="card">
+      <div class="card-header" style="  position: relative;
+       text-align: center;
+       ">
+       <div>
+        <a href="{{p.profile_pic.url}}"><img class="card-img" src="{{p.profile_pic.url}}" alt="..." style='height:15rem; width:100%;'>
+        </a>
+        <button class="border-0 m-0 p-0 likebtn" type="button" id="{{p.id}}" data-url="{% url 'dantorial:favourite' %}" style="  position: absolute;
+        background: transparent;
+        top: 100;
+        right:  1.5rem;
+        font-size:200%;
+        color:blue">
+        <i class="fa fa-heart-o mr-0 ml-0" id='fa{{p.id}}'></i>
+        </button>
+        <div class="btn btn-outline-default"  style="  position: absolute;
+         bottom: 0;
+         left:  0.5rem;
+         opacity: 0.7;
+         ">
+         {% if p.user.profileinfo.subject %}
+          <p class="font-weight-bold bg-light">
+           {{p.user.profileinfo.category}} <br>
+           {{p.user.profileinfo.subcategory}} <br>
+           {{p.user.profileinfo.subject|default:""}}
+          </p>
+         {% endif %}
+        </div>
+        <div class="btn btn-outline-default"  style="  position: absolute;
+         top: 0.5rem;
+         left:  0.5rem;
+         opacity:  0.6;
+         ">
+         {% if p.user.profileinfo.amount %}
+          <p class="font-weight-bold text-white bg-dark">
+           {{p.user.profileinfo.amount}}FRS per {{p.user.profileinfo.charge}} <br>
+          </p>
+         {% endif %}
+        </div>
+       </div>
+      </div>
+      <div class="card-body">
+       <h5 class="card-title">{{ p.first_name }} {{ p.last_name|default:'' }}  ({{p.account_type|capfirst}})</h5>
+       <p class="card-text">
+        {{p.user.profileinfo.bio|default:''|slice:'100'}}...
+       </p>
+      </div>
+      <ul class="list-group list-group-flush">
+       <!-- <li class="list-group-item"> {{p.level_of_education|default:''}} </li>
+       <li class="list-group-item">{{p.gender|default:''}}</li> -->
+       <li class="list-group-item p-0 mx-4">
+        <p class="font-weight-italic">
+         {{p.address_1}}, {{p.region}}
+        </p>
+       </li>
+       
+       <!-- <li class="list-group-item">{{p.address_1|default:''}}</li> -->
+      </ul>
+      <div class="card-body">
+       <a class="btn btn-danger card-link d-grid mb-2" href="{% url 'dantorial:userprofile' p.id %}">Read
+       more →</a>
+       <!--                         <span>
+        <a data-toggle="modal" data-target="#exampleModal" class="btn btn-success card-link d-grid ">
+         Get Contact
+        </a>
+       </span>
+       -->
+       
+       <!-- <a href="tel:{{'+'}}{{p.country.phone}}{{p.phone_number}}" class="btn btn-success card-link d-grid ">
+        Get Contact
+       </a> -->
+       
+      </div>
+      
+     </div>
+    </div>
+   {% endif %}
+  {% endfor %}
                 </div>
             </div>
             <div class="col-sm-12 col-md-3">

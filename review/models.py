@@ -12,7 +12,7 @@ RATING = (
     )
 
 class Review(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE,  null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     profile = models.ForeignKey(ProfilePersonal, on_delete=models.CASCADE, related_name='user_profile')
     content = models.TextField()
     rating = models.CharField(max_length=2,null=True, blank=True, choices=RATING)
