@@ -20,6 +20,9 @@ class MessageView(TemplateView):
 			if self.request.user != mess.sender_user:
 				mess.is_read = True
 				mess.save()
+			else:
+				mess.is_read = False
+				mess.save()
 		context["message"] = message
 		context['out'] = out
 		return context
