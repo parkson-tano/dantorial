@@ -652,6 +652,7 @@ def profile_like(request):
         else:
             profile_obj.favourite.add(u.user)
             profile_obj.save()
+            send_mail('hey thanks ', f'{profile_obj.first_name} likes your profile', settings.DEFAULT_FROM_EMAIL, (u.user.email,))
             flag = True
         return JsonResponse({'total_favourites': profile_obj.total_favourites, 'flag':flag})
     return HttpResponse("Error access Denied")

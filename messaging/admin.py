@@ -3,7 +3,7 @@ from .models import *
 # Register your models here.
 
 class MessageAdmin(admin.ModelAdmin):
-    list_display = ['sender_user','name', 'receiver_user', 'date_created' ]
+    list_display = ['sender_user','is_read', 'receiver_user', 'date_created' ]
 
 class ContactAdmin(admin.ModelAdmin):
     list_display = ['first_name','email','date_created' ]
