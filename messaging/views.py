@@ -15,7 +15,7 @@ class MessageView(TemplateView):
 		context = super().get_context_data(**kwargs)
 		profile = self.request.user
 		message = Message.objects.filter(sender_user=profile).order_by('-date_created')
-		out = Message.objects.filter(receiver_user=profile)
+		out = Message.objects.filter(receiver_user=profile).order_by('-date_created')
 		for mess in message:
 			if self.request.user != mess.sender_user:
 				mess.is_read = True
