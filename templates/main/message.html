@@ -58,9 +58,9 @@
 						{% for m in out %}
 							<div class="row">
 								<div class="col-sm-8">
-									<img src="{{m.receiver_user.profilepersonal.profile_pic.url}}" class="rounded-circle" alt="..." style="width:50px"/>
+									<img src="{{m.sender_user.profilepersonal.profile_pic.url}}" class="rounded-circle" alt="..." style="width:50px"/>
 									
-									<a href="{% url 'dantorial:userprofile' m.receiver_user.profilepersonal.id %}" style="text-decoration:none">
+									<a href="{% url 'dantorial:userprofile' m.sender_user.profilepersonal.id %}" style="text-decoration:none">
 										{{m.sender_user.profilepersonal.first_name}} {{m.receiver_user.profilepersonal.sent_name}}
 									</a>
 									<div class="alert alert-success ml-5 " style="width: 90%; border-radius: 20px;">
