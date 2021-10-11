@@ -68,7 +68,7 @@ urlpatterns = [
     path('about-us', AboutView.as_view(), name='aboutus'),
 
 # payment and support
-    path('upgrade', UpgradeAccountView.as_view(), name='upgrade_profile'),
+    path('upgrade/', UpgradeAccountView.as_view(), name='upgrade_profile'),
     path('payment-success/', PaymentSuccessView.as_view(), name='pay-success'),
     path('payment-fail/', PaymentFailView.as_view(), name='pay-fail'),
 
