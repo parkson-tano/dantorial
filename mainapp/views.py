@@ -210,7 +210,10 @@ class PersonalProfileEditView(UpdateView):
     model = ProfilePersonal
 
     def get_object(self):
-        return self.request.user.profilepersonal
+        if self.request.user.is_authenticated:
+            return self.request.user.profilepersonal
+        else:
+            pass
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -557,7 +560,15 @@ class UpgradeAccountView(FormView):
     template_name = 'main/upgrade.html'
     form_class = UpgradeForm
     success_url = reverse_lazy('dantorial:upgrade_profile')
-    
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            pass
+        else:
+            return redirect('/accounts/login/?next=/upgrade/')
+            
+        return super().dispatch(request, *args, **kwargs)
+
     def form_valid(self, form):
         form.instance.user = self.request.user
         form.instance.amount = 2
