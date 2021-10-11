@@ -1,12 +1,99 @@
-{% extends "base.html" %} {% load crispy_forms_tags %} {% block title %} upgrade {% endblock title %} {% block content %}
+{% extends "base.html" %} {% load crispy_forms_tags %} {% block title %} upgrade {% endblock title %} 
+
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  -webkit-animation-name: fadeIn; /* Fade in the background */
+  -webkit-animation-duration: 0.4s;
+  animation-name: fadeIn;
+  animation-duration: 0.4s
+}
+
+/* Modal Content */
+.modal-content {
+  position: fixed;
+  bottom: 0;
+  background-color: #fefefe;
+  width: 100%;
+  -webkit-animation-name: slideIn;
+  -webkit-animation-duration: 0.4s;
+  animation-name: slideIn;
+  animation-duration: 0.4s
+}
+
+/* The Close Button */
+.close {
+  color: white;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-header {
+  padding: 2px 16px;
+  background-color: #5cb85c;
+  color: white;
+}
+
+.modal-body {padding: 2px 16px;}
+
+.modal-footer {
+  padding: 2px 16px;
+  background-color: #5cb85c;
+  color: white;
+}
+
+/* Add Animation */
+@-webkit-keyframes slideIn {
+  from {bottom: -300px; opacity: 0} 
+  to {bottom: 0; opacity: 1}
+}
+
+@keyframes slideIn {
+  from {bottom: -300px; opacity: 0}
+  to {bottom: 0; opacity: 1}
+}
+
+@-webkit-keyframes fadeIn {
+  from {opacity: 0} 
+  to {opacity: 1}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0} 
+  to {opacity: 1}
+}
+</style>
+
+{% block content %}
 <div class="container-fluid p-0">
 <div class="row mt-5">
     <div class="col-sm-8 col-md-4 col-lg-4 mx-auto">
         <div class="card border-0 shadow rounded-3 my-5">
             <div class="card-body p-2 p-sm-5">
-                <h5 class="card-title text-center mb-3 fw-light fs-5">Upgrade Account</h5>
+                <h5 class="card-title text-center mb-0 fw-light fs-5">Upgrade Account</h5>
                 <h5 class="card-title mb-3 fw-dark fs-5">Amount: FCFA 2000</h5>
-                <form class="needs-validation" method="post" action="" novalidate>
+                <form class="needs-validation" method="post" action="" onsubmit="return validate();" novalidate>
+                    
                     {% csrf_token %} {{form.media.js}}
                     {{form.payment_method|as_crispy_field}}
                     {{form.phone_number|as_crispy_field}}   
@@ -15,10 +102,31 @@
                     </div>
                     <hr class="my-4">
                 </div>
+
             </form>
+
         </div>
     </div>
 </div>
+<!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="warn"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div> -->
 <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -57,4 +165,15 @@ console.log(document.getElementsByTagName('forms'))
 });
 });
 </script>
+<script>function validate() {
+ // check if input is bigger than 3
+ var value = document.getElementById('phone').value;
+ if (value.length != 12) {
+alert('Please Enter a Valid phone number');
+   return false; // keep form from submitting
+   
+ }
+alert('Please confirm on your phone');
+ return true;
+}</script>
 {% endblock %}
