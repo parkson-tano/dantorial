@@ -8,11 +8,8 @@
                 <h5 class="card-title mb-3 fw-dark fs-5">Amount: FCFA 2000</h5>
                 <form class="needs-validation" method="post" action="" novalidate>
                     {% csrf_token %} {{form.media.js}}
-    
                     {{form.payment_method|as_crispy_field}}
                     {{form.phone_number|as_crispy_field}}   
-
-
                     <div class="d-grid">
                         <button class="btn btn-primary btn-login text-uppercase fw-bold mt-3" id='btnSubmit' type="submit">Complete Payment</button>
                     </div>

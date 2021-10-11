@@ -164,6 +164,8 @@ class PersonalProfileForm(forms.ModelForm):
 
 		# }
 
+
+
 class  ProfileInfoForm(forms.ModelForm):
     class Meta:
         model = ProfileInfo
@@ -243,3 +245,19 @@ class UpgradeForm(forms.ModelForm):
 	class Meta:
 		model = Upgrade
 		fields = ('payment_method','phone_number')
+
+		widgets = {
+			"phone_number": forms.TextInput(attrs= { 
+				'class': 'form-control',
+				'id' : "phone",
+				'required' : True,
+                'value':"237",
+                'min': 15,
+			}),
+			}
+	def clean_phone(self):
+		phone = self.cleaned_data.get('phone')
+		if len(phone) < 15:
+			raise forms.ValidationError('this email is already in use')
+		return phone
+
