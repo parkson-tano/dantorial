@@ -9,6 +9,8 @@ from review.models import Review
 
 class CategoryView(TemplateView):
     template_name = 'main/category.html'
+    # def get_pro(self):
+    #     return self.request.user.profilepersonal
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -16,11 +18,13 @@ class CategoryView(TemplateView):
         category = Category.objects.get(slug=url_slug)
         subcat = SubCategory.objects.filter(category=category)
         pro = ProfilePersonal.objects.filter(user__profileinfo__category__slug=url_slug)
+        # rating = Review.objects.filter(profile=get_pro())
         # user_rating = Review.objects.filter(profile=self.get_object()).aggregate(Avg('rating'))
         # pro = random.shuffle(list(pro))
         context['category'] = category
-        context["subcat"] = subcat
+        context['subcat'] = subcat
         context['pro'] = pro
+        # context['rating'] = rating
         print(pro)
         return context
 
@@ -78,13 +82,15 @@ class SubjectView(View):
 
 class AllCategoryView(TemplateView):
     template_name = 'main/all_category.html'
+    def get_object(self):
+        return self.request.user.profilepersonal
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         category = Category.objects.all()
         pro = ProfilePersonal.objects.all()
-        rating = Review.objects.all()
-        context['rating'] = rating
+        # rating = Review.objects.filter(profile=get_object())
+        # context['rating'] = rating
         context["pro"] = pro
         context['category'] = category 
         return context

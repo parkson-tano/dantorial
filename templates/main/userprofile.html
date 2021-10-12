@@ -68,7 +68,8 @@ color: #c59b08;
                             </span>
                             </h4>
                             <p class="text-secondary mb-1">{{userprofile.account_type|capfirst}}
-                            ({{ comments.count }} Reviews) {{ur|default:""}}</p>
+                            ({{ comments.count }} Reviews) 
+                            <br>{{ur|default:""}} Stars </p>
                             <p class="text-muted font-size-md">{{userprofile.region}}</p>
                             <p class="fw-bold">{{userprofile.user.profileinfo.subject|default:""}}
                                 <span class="fw-light">

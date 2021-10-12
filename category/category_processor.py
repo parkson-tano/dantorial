@@ -1,5 +1,6 @@
 from .models import  *
 from review.models import Review
+from mainapp.models import ProfilePersonal
 import random
 def category_list(request):
     return {
@@ -10,4 +11,6 @@ def category_list(request):
         'all_subcat': SubCategory.objects.all().order_by('name'),
         'all_sub': Subject.objects.all().order_by('subcategory'),
         'review' : Review.objects.all(),
+        # 'suggest_tutor': random.sample(list(ProfilePersonal.objects.filter(account_type='tutor')),25),
+         
     }

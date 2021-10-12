@@ -93,7 +93,9 @@ class UserProfileView(DetailView):
         context["comments"] = comments_connected
         context['comment_form'] = ReviewForm 
         context['message'] = MessageForm
-        context['ur'] = user_rating['rating__avg']
+        ur = user_rating['rating__avg']
+        urr = str(ur)
+        context['ur'] = urr[:3]
         prof = ProfilePersonal.objects.get(user__username=self.get_object().user)
         if self.request.user.is_authenticated:
             # current = ProfilePersonal.objects.get(user=self.request.user)
