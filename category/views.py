@@ -91,10 +91,12 @@ class AllCategoryView(TemplateView):
         context = super().get_context_data(**kwargs)
         category = Category.objects.all()
         pro = ProfilePersonal.objects.all()
-        fav = ProfilePersonal.objects.get(id=self.request.user.profilepersonal.id)
+        if self.request.user.is_authenticated:
+            fav = ProfilePersonal.objects.get(id=self.request.user.profilepersonal.id)
+            context['fav'] = fav
         # rating = Review.objects.filter(profile=get_object())
         # context['rating'] = rating
-        context['fav'] = fav
+        
         context["pro"] = pro
         context['category'] = category 
         return context
