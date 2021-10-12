@@ -22,7 +22,7 @@ class Review(models.Model):
         ordering = ['-date_created']
 
     def __str__(self):
-        return self.user.username
+        return str(self.profile)
 
     # def average_rating(self):
     #     all_rating = list(map(lambda x: x.rating, self.review_set.all()))

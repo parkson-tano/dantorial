@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+from django.utils.translation import gettext_lazy as _
 from pathlib import Path
 import os
 from os import path
@@ -62,7 +62,8 @@ INSTALLED_APPS = [
     'bootstrap_datepicker_plus',
     "django_notification_system",
     'api',
-    'rest_framework'
+    'rest_framework',
+    "translation_manager",
 
 ]
 
@@ -71,6 +72,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -187,6 +189,11 @@ BOOTSTRAP4 = {
 
 LANGUAGE_CODE = 'en-us'
 
+LANGUAGES = (
+    ('en', _('English')),
+    ('fr', _('French')),
+    )
+
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
@@ -194,6 +201,13 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+)
+
+
+
 
 USE_DJANGO_JQUERY = True
 

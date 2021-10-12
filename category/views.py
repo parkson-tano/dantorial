@@ -2,10 +2,12 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import TemplateView, View
 from .models import Category, SubCategory, Subject
 from mainapp.models import ProfilePersonal
+from mainapp.views import UserProfileView
 from django.contrib.auth.models import User
 import random
 from review.models import Review
 # Create your views here.
+
 
 class CategoryView(TemplateView):
     template_name = 'main/category.html'
@@ -89,8 +91,10 @@ class AllCategoryView(TemplateView):
         context = super().get_context_data(**kwargs)
         category = Category.objects.all()
         pro = ProfilePersonal.objects.all()
+        fav = ProfilePersonal.objects.get(id=self.request.user.profilepersonal.id)
         # rating = Review.objects.filter(profile=get_object())
         # context['rating'] = rating
+        context['fav'] = fav
         context["pro"] = pro
         context['category'] = category 
         return context
