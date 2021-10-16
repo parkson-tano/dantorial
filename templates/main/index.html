@@ -1,4 +1,6 @@
-{% extends "base.html" %} {% load static %} {% block title %} dantorial {%endblock title %} {% block carousel %}
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %} {% block title %} dantorial {%endblock title %} {% block carousel %}
 
 <!-- <style>
 .select2-container--default .select2-selection--single {
@@ -45,8 +47,8 @@
                         <div style="margin-bottom:10rem;">
                           <h5>{{ caro.title }}</h5>
                         <p class="mb-5 fs-1 fw-bold text-center">
-                            WELCOME TO TANTORIAL
-                        </p> 
+                            {% trans "WELCOME TO TANTORIAL" %} </p>  
+
                         <a href="{% url 'account_signup' %}" class='btn btn-primary mt-3 mb-3 text-center' style="border-radius:20px; width:80%">Register Now</a>  
                         </div>
                         

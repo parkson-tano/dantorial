@@ -40,6 +40,7 @@ from django.conf import settings
 from campay.sdk import Client
 from django.http import JsonResponse
 from django.db.models import Avg
+from django.utils.translation import gettext as _
 
 class IndexView(TemplateView):
     template_name = 'main/index.html'
@@ -51,6 +52,8 @@ class IndexView(TemplateView):
         category = Category.objects.all()
         context['category'] = category
         context['pro'] = pro
+        # a = _("hello how are you")
+        # print(a)
         return context
 
 class MyAccount(TemplateView):
