@@ -1,36 +1,130 @@
 {% extends "base.html" %} {% load crispy_forms_tags %} {% block title %} {{sub}} {% endblock title %} {% block content %}
 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas" data-bs-keyboard="false" data-bs-backdrop="false">
-    <div class="offcanvas-header">
-        <h6 class="offcanvas-title d-sm-block text-center" id="offcanvas">Subjects</h6>
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body px-3">
-        <ul class="list-group list-group-flush flex-column align-items-start" id="menu">
-            {% for sub in subject %}
-            <div class="col-12 col-sm-12 col-4">
-                <li class="list-group-item">
-                    <a href="{% url 'dantorial:subject' sub.subcategory.category.slug sub.subcategory.id sub.slug %}" class='btn btn-default'>
-                                            {{ sub|capfirst}}
-                                        </a>
-
-                </li>
-            </div>
-
-
-            {% endfor %}
-    </div>
-    </ul>
-</div>
-</div>
-<div class="container-fluid mt-5">
-    <div class="row">
-        <div class="col py-0">
-            <!-- toggler -->
-            <button class="btn float-start" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" role="button">
-                <i class="fa fa-bars bi-arrow-right-square-fill fs-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvas"></i>
-            </button>
+  <div class="offcanvas-header">
+    <h6 class="offcanvas-title d-sm-block mr-auto ml-auto" id="offcanvas">
+        Subjects
+    </h6>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body px-3">
+    <ul class="list-group list-group-flush flex-column align-items-start" id="menu">
+      {% for sub in subject %}
+        <div class="col-12 col-sm-12 col-md-12">
+          <li class="list-group-item">
+            <a href="{% url 'dantorial:subject' sub.subcategory.category.slug sub.subcategory.id sub.slug %}" class="card-link">
+              {{ sub|capfirst}}
+            </a>
+          </li>
         </div>
+      {% endfor %}
     </div>
+  </ul>
+</div>
+</div>
+<!-- filter -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="filter" data-bs-keyboard="false" data-bs-backdrop="false">
+<div class="offcanvas-header">
+  <h6 class="offcanvas-title d-sm-block ml-auto mr-auto">Filter Search</h6>
+  <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+</div>
+<div class="offcanvas-body px-3">
+  <form action="{% url 'dantorial:filter' %}" class="mx-auto text-dark rounded-5 mt-auto">
+    <div class="row align-items-md-stretch mx-0 p-3">
+      <div class="col-12">
+        <div class="input-group mb-3">
+          <select name='typ' class="form-select" id="inputGroupSelect02">
+            <!-- <option selected>Who are you?</option> -->
+            <option value="tutor" selected>Teacher</option>
+            <option value="student">Student</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-12 ">
+        <div class="input-group mb-3">
+          <select name='gender' class="form-select select-picker" id="inputGroupSelect02" data-live-search="true">
+            <option >Gender</option>
+            <option value="female">Female</option>
+            <option value="male">Male</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="input-group mb-3">
+          <select name='category' class="form-select select-picker" id="inputGroupSelect02" data-live-search="true" data-placeholder="Select an option" data-allow-clear="true">
+            {% for cat in all_cat %}
+              <option value="{{cat.id}}">{{ cat.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="col-12 padding-minimum">
+        <select name='subject' id="select2-multiple-input" class=" select2 form-control select2-container input-lg step2-select">
+          {% for sub in all_sub %}
+            <option value="{{sub.id}}">{{ sub.name }}</option>
+          {% endfor %}
+        </select>
+        
+      </div>
+      <div class="col-12 ">
+        <div class="input-group mb-3">
+          <select name='education' class="form-select select-picker" id="inputGroupSelect02" data-live-search="true">
+            <option disabled>Level of Education</option>
+            <option value="Advanced Level">Advanced Level</option>
+            <option value="HND">HND</option>
+            <option value="Bachelor Degree">Bachelor Degree</option>
+            <option value="Master Degree">Master Degree</option>
+            <option value="Doctorate">PHD</option>
+            <option value="Others">Others</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-12 ">
+        <div class="input-group mb-3">
+          <select name='charge' class="form-select select-picker" id="inputGroupSelect02" data-live-search="true">
+            <option disabled>Charge</option>
+            <option value="daily">Daily</option>
+            <option value="weekly">Weekly</option>
+            <option value="monthly">Monthly</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-12 ">
+        <div class="input-group mb-3">
+          <select name='region' class="form-select select-picker" id="inputGroupSelect02" data-live-search="true">
+            <option disabled>Select Region</option>
+            {% for reg in region %}
+              <option value="{{reg.id}}">{{ reg.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="input-group mb-3">
+          <input name='quater' type="text" class="form-control" placeholder="Quater" aria-label="Quater" aria-describedby="basic-addon1" />
+        </div>
+      </div>
+      <div class="col-12 d-grid">
+        <button class="btn btn-primary" type="submit">Filter</button>
+      </div>
+    </div>
+  </form>
+</div>
+</ul>
+</div>
+</div>
+<!-- end -->
+<div class="container-fluid">
+<div class="row">
+<div class="col py-0">
+<!-- toggler -->
+<button class="btn float-start" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" role="button">
+<i class="fa fa-bars bi-arrow-right-square-fill fs-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvas"></i>
+</button>
+<button class="btn float-end" data-bs-toggle="filter" data-bs-target="#filter" role="button">
+<i class="fa fa-filter fs-3" data-bs-toggle="offcanvas" data-bs-target="#filter"></i>
+</button>
+</div>
+</div>
 </div>
 <div class="row justify-content p-2 ">
     <div class='col-sm-12 col-md-9'>

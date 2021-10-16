@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} chat {%endblock title %}
+	{% block content %}
+		<div class="col-md-10 col-sm-10 ml-auto mr-auto mt-5">
+			<div class="card mb-3">
+				<div class="card-body">
+					<h5 class="card-title text-center mb-3 fw-bold fs-5">
+						chats
+					</h5>
+					{% for chat in chats %}
+						{{chat.receiver.profilepersonal.first_name}}
+					{% endfor %}
+					
+					
+				
+			</div>
+		</div>
+	</div>
+{% endblock %}

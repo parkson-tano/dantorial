@@ -51,6 +51,7 @@ urlpatterns = [
 
 # serach view
     path('search/', SearchView.as_view(), name='search'),
+    path('filter/', FilterView.as_view(), name='filter'),
     path('search/all/', SearchAllView.as_view(), name='allsearch'),
 
 # category urls

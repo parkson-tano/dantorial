@@ -1,17 +1,25 @@
 {% extends "base.html" %} {% load static %} {% block title %} dantorial {%endblock title %} {% block carousel %}
 
-<style>
-    .carousel-item {
-        /*        -webkit-transition: 0s !important;
-        -o-transition: 0s !important;
-        transition: 0s !important;*/
-        transition: -webkit-transform 0.5s ease;
-        transition: transform 0.5s ease;
-        transition: transform 0.5s ease, -webkit-transform 0.5s ease;
-        -webkit-backface-visibility: visible;
-        backface-visibility: visible;
-    }
-</style>
+<!-- <style>
+.select2-container--default .select2-selection--single {
+    height: 37px !important;
+    padding-top: 5px;
+    font-size: 1rem;
+    line-height: 1.33;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+    top: 85% !important;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 26px !important;
+}
+.select2-container--default .select2-selection--single {
+    border: 1px solid #CCC !important;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+}</style> -->
 
 <div id="myCarousel" class="carousel slide mt-5" data-bs-ride="carousel">
     <div class="carousel-indicators">
@@ -79,18 +87,18 @@
                 </select>
             </div>
         </div>
-        <div class="col-sm-4 col-lg-3">
-            <div class="input-group mb-3">
-                <select name='subject' class="form-select form-select-solid" data-live-search="true">
+        <div class="col-sm-4 col-xs-12 col-lg-3 padding-minimum">
+                <select name="subject" id="select2-multiple-input" class=" select2 form-control select2-container input-lg step2-select">
                     {% for sub in all_sub %}
                     <option value="{{sub.id}}">{{ sub.name }}</option>
                     {% endfor %}
                 </select>
-            </div>
+            
         </div>
-        <div class="col-sm-3 col-lg-2">
+        <div class="col-sm-3 col-lg-2 ">
             <div class="input-group mb-3">
                 <select name='region' class="form-select select-picker" id="inputGroupSelect02" data-live-search="true">
+                    <option>Select Region</option>
                     {% for reg in region %}
                     <option value="{{reg.id}}">{{ reg.name }}</option>
                     {% endfor %}
@@ -124,7 +132,7 @@
                     <div class="card" style="width: 100%">
                         <img src="{{cat.image.url}}" class="card-img-top" alt="..." />
                         <div class="card-body">
-                            <a href="{% url 'dantorial:category' cat.slug %}">
+                            <a href="{% url 'dantorial:category' cat.slug %}" class="card-link">
                                 <h3 class="card-title text-center mb-3 fw-dark fs-3"> {{cat.name}} </h3>
                             </a>
 
@@ -201,7 +209,7 @@
                             <img src="{{subcat.image.url}}" class="card-img-top rounded" alt="..." />
                             <div class="card-body">
                                 <h3 class="card-title text-center mb-3 fw-dark fs-3">
-                                    <a href="{% url 'dantorial:subcategory' subcat.category.slug subcat.id %}">
+                                    <a href="{% url 'dantorial:subcategory' subcat.category.slug subcat.id %}" class="card-link">
                                   {{subcat.name}} 
                                 </a>
                                 </h3>
@@ -225,7 +233,7 @@
                         <div class="card" style="width: 100%">
                             <img src="{{ sub.image.url }}" class="card-img-top rounded" alt="..." />
                             <div class="card-body">
-                                <a href="{% url 'dantorial:subject' sub.subcategory.category.slug sub.subcategory.id sub.slug %}">
+                                <a href="{% url 'dantorial:subject' sub.subcategory.category.slug sub.subcategory.id sub.slug %}" class="card-link">
                                     <h3 class="card-title text-center mb-3 fw-dark fs-4"> {{sub.name}} </h3>
                                 </a>
 

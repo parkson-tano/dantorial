@@ -2,13 +2,23 @@ from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.views import View
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 from django.contrib import messages
 from .forms import MessageForm
-from .models import Message
+from .models import Message, Chat
 from django.db.models import Count
 from django.core.mail import send_mail
 from django.conf import settings
+from django.db.models import Q
+class ChatView(TemplateView):
+	template_name = 'main/chat.html'
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		profile = self.request.user
+		chat = Chat.objects.filter(Q(user=profile) | Q(receiver=profile))
+		context['chats'] = chat
+		return context
 class MessageView(TemplateView):
 	template_name = 'main/message.html'
 	def dispatch(self, request, *args, **kwargs):

@@ -11,3 +11,4 @@ class ContactAdmin(admin.ModelAdmin):
 
 admin.site.register(Message, MessageAdmin)
 admin.site.register(Contact, ContactAdmin)
+admin.site.register(Chat)

@@ -32,7 +32,7 @@ from itertools import chain
 from review.models import Review
 from review.forms import ReviewForm
 from allauth.account.admin import EmailAddress
-from messaging.models import Message, Contact
+from messaging.models import Message, Contact, Chat
 from messaging.forms import MessageForm, ContactForm
 # Create your views here.
 from django.core.mail import send_mail
@@ -128,7 +128,7 @@ class UserProfileView(DetailView):
                                   rating=request.POST.get('rate'),
                                   profile=self.get_object(),
 									user = self.request.user)
-
+            new_chat = Chat(user=self.request.user, receiver=self.get_object().user)
             new_message = Message(sender_user = self.request.user,
                 receiver_user = self.get_object().user,
                 message = request.POST.get('message'),
@@ -142,6 +142,7 @@ class UserProfileView(DetailView):
 
         elif 'send_message' in request.POST:
             new_message.save()
+            new_chat.save()
             send_mail('Message from tantorial user', f'{self.request.user.profilepersonal.first_name} sent you a messages', settings.DEFAULT_FROM_EMAIL, (self.get_object().user.email,))
             messages.success(self.request, 'message sucessfully sent')
 
@@ -533,6 +534,32 @@ class SearchView(TemplateView):
         # print(f'{acc_type} {subject} {city} {quater}')
         return context
 
+class FilterView(TemplateView):
+    template_name = 'main/search_result.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        acc_type = self.request.GET['typ']
+        subject = self.request.GET['subject']
+        category = self.request.GET['category']
+        quater = self.request.GET['quater']
+        charge = self.request.GET['charge']
+        gender = self.request.GET['gender']
+        education = self.request.GET['education']
+        user_obj = User.objects.all()
+        profile_result = ProfilePersonal.objects.filter(Q(account_type = acc_type)).filter(Q(address_1__icontains = quater) 
+            | Q(address_2__icontains = quater) & Q(gender = gender) & Q(level_of_education = education) & Q(user__profileinfo__category = category) 
+            & Q(user__profileinfo__subject = subject) & Q(user__profileinfo__charge = charge))
+        # subject = Subject.objects.filter(subject = subject).order_by('user')
+        # final = list(set(list(chain(subject, profile_result))))
+        # finals = list(set(final))
+
+        print(profile_result)
+        # print(subject)
+        # print(f'final: {final}')
+        context['profile_result'] = profile_result
+        # print(f'{acc_type} {subject} {city} {quater}')
+        return context
 
 class SearchAllView(TemplateView):
     template_name = 'main/search_all.html'
