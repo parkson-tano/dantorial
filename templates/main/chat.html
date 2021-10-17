@@ -6,15 +6,34 @@
 			<div class="card mb-3">
 				<div class="card-body">
 					<h5 class="card-title text-center mb-3 fw-bold fs-5">
-						chats
+					chats
 					</h5>
 					{% for chat in chats %}
-						{{chat.receiver.profilepersonal.first_name}}
+					<div class="row">
+							
+                        
+                        	<div class="col-sm-8">
+                        		<img src="{{chat.receiver.profilepersonal.profile_pic.url}}" class="rounded-circle" alt="..." style="width:50px"/>
+                        	
+                        		<a  href="{% url 'dantorial_message:message' chat.id %}" style="text-decoration:none">
+									{{ chat.receiver.profilepersonal.first_name }} {{ chat.receiver.profilepersonal.last_name }}			
+                        		
+								</a>
+								
+								
+							</div>
+
+							
+
+						</div>
+						<hr>
+                        
+						
 					{% endfor %}
 					
 					
-				
+					
+				</div>
 			</div>
 		</div>
-	</div>
-{% endblock %}
+	{% endblock %}

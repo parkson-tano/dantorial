@@ -53,14 +53,14 @@
                     </a>
                     </li> -->
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'dantorial_message:message' %}"><i class='fa fa-envelope-o'></i>
+                        <a class="nav-link" href="{% url 'dantorial_message:chat' %}"><i class='fa fa-envelope-o'></i>
                             Message
                       <span class="badge rounded-pill badge-notification bg-danger">{{ messags.count}}</span>
                     </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'dantorial:myfavourites' %}">
-                            <i class='fa fa-heart'></i>Save
+                            <i class='fa fa-heart'></i>Favourite
                       <span class="badge rounded-pill badge-notification bg-danger like_count" id = 'like_count'>
 
                       {{ user.profilepersonal.total_favourites }}</span>
@@ -117,6 +117,18 @@
     </nav>
 </header>
 <style>
+body{ 
+  min-height: 100vh; 
+  margin: 0; 
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+footer{ 
+  min-height:50px; 
+  margin-top: auto;
+
+}
 .select2-container--default .select2-selection--single {
     height: 37px !important;
     padding-top: 5px;
@@ -136,7 +148,8 @@
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
     transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
 }</style>
-<body>
+<body class="d-flex flex-column h-100">
+<main class="flex-shrink-0">
     {% block carousel %} {% endblock carousel %}
     <div class="container-fluid mt-5">
         {% if messages %}
@@ -155,12 +168,12 @@
             </div>
 
         {% endif %}
-        <div class="">
            {% block content %} {% endblock content %} 
-        </div>
     </div>
+</main>
     <!-- Footer -->
-    <footer class="text-center text-lg-start bg-secondary mb-0">
+    <footer class="footer text-center text-lg-start bg-secondary">
+        <div class="container-fluid">
         <!-- Section: Social media -->
         <section class="d-flex justify-content-center justify-content-lg-between p-4">
             <!-- Left -->
@@ -201,7 +214,7 @@
                     <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-auto">
                         <!-- Content -->
                         <h6 class="text-uppercase fw-bold mb-4">
-                            <i class="fas fa-gem me-3"></i>Tantorial
+                            <img src="{% static 'final.png' %}" alt="" style="width: 25px; height: 25px"> Tantorial
                         </h6>
                     </div>
                     <!-- Grid column -->
@@ -275,6 +288,7 @@
           </span>
         </div>
         <!-- Copyright -->
+    </div>
     </footer>
     <!-- Footer -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>

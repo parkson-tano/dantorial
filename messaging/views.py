@@ -29,10 +29,11 @@ class MessageView(TemplateView):
 		return super().dispatch(request, *args, **kwargs)
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
+		url_id = kwargs['pk']
 		profile = self.request.user
-		message = Message.objects.filter(sender_user=profile).order_by('-date_created')
-		out = Message.objects.filter(receiver_user=profile).order_by('-date_created')
-		for mess in out:
+		message = Message.objects.filter(Q(chat=url_id) & (Q(sender_user=profile) | Q(receiver_user=profile))).order_by('-date_created')
+		# out = Message.objects.filter(receiver_user=profile).order_by('-date_created')
+		for mess in message:
 			if self.request.user == mess.receiver_user:
 				if self.request.user != mess.sender_user:
 					mess.is_read = True
@@ -40,7 +41,7 @@ class MessageView(TemplateView):
 				else:
 					pass
 		context["message"] = message
-		context['out'] = out
+		# context['out'] = out
 		return context
 
 # def contactView(request):
