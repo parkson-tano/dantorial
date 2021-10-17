@@ -109,7 +109,7 @@ class UserProfileView(DetailView):
                 # current.save()
                 prof.save()
 
-                # send_mail('profile viewed', f'{self.request.user.profilepersonal.first_name} viewed your profile', settings.DEFAULT_FROM_EMAIL, (self.get_object().user.email,))
+                send_mail('profile viewed', f'{self.request.user.profilepersonal.first_name} viewed your profile', settings.DEFAULT_FROM_EMAIL, (self.get_object().user.email,))
             else:
                 pass
         # new_view.save()
@@ -131,11 +131,19 @@ class UserProfileView(DetailView):
                                   rating=request.POST.get('rate'),
                                   profile=self.get_object(),
 									user = self.request.user)
-            new_chat = Chat(user=self.request.user, receiver=self.get_object().user)
-            new_message = Message(sender_user = self.request.user,
+            if Chat.objects.filter(user=self.request.user, receiver=self.get_object().user).exists():
+                ch = Chat.objects.get(user=self.request.user, receiver=self.get_object().user)
+                new_message = Message(chat = ch, sender_user = self.request.user,
                 receiver_user = self.get_object().user,
                 message = request.POST.get('message'),
                 )
+            else:
+                new_chat = Chat(user=self.request.user, receiver=self.get_object().user)
+                new_message = Message(chat = new_chat, sender_user = self.request.user,
+                receiver_user = self.get_object().user,
+                message = request.POST.get('message'),
+                )
+                new_chat.save()
         else:
             return redirect(f'/accounts/login/?next=/userprofile/{self.get_object().id}')
 
@@ -144,11 +152,17 @@ class UserProfileView(DetailView):
 
 
         elif 'send_message' in request.POST:
+
             new_message.save()
-            new_chat.save()
+            # new_chat.save()
             send_mail('Message from tantorial user', f'{self.request.user.profilepersonal.first_name} sent you a messages', settings.DEFAULT_FROM_EMAIL, (self.get_object().user.email,))
             messages.success(self.request, 'message sucessfully sent')
-
+        elif 'send_message' in request.GET:
+            
+            new_message.save()
+            # new_chat.save()
+            send_mail('Message from tantorial user', f'{self.request.user.profilepersonal.first_name} sent you a messages', settings.DEFAULT_FROM_EMAIL, (self.get_object().user.email,))
+            mess
         return self.get(self, request, *args, **kwargs)
         
         

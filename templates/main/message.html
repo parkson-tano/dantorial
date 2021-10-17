@@ -2,44 +2,6 @@
 {% load static %}
 {% block title %} message {%endblock title %}
 	{% block content %}
-		<!-- 		<div class="container-fluid p-0">
-			<div class="row mt-5">
-						<div class="col-sm-4 col-md-4 col-lg-3 mx-auto">
-												<div class="card border-0 shadow rounded-3 my-5">
-																		<div class="card-body p-0 p-sm-0">
-																								<div class="list-group mx-auto">
-																														<a href="#"
-																																class="list-group-item list-group-item-action active">Star</a>
-																							</div>
-																							<ul>
-																												{% for m in message %}
-																																	<li>
-																																							{{m.sender_user}}
-																																						r: {{m.receiver_user}}
-																																						{{m.message}}
-																																						{{m.date_created|timesince}}
-																																	</li>
-																																	
-																												{% endfor %}
-																							</ul>
-																							
-																	</div>
-																	<ul>
-																							{% for o in out %}
-																												<li>
-																																		{{o.sender_user}}
-																																	r: {{o.receiver_user}}
-																																	{{o.message}}
-																																	{{o.date_created|timesince}}
-																												</li>
-																												
-																							{% endfor %}
-																		</ul>
-											</div>
-					</div>
-			</div>
-		</div> -->
-		<!--  -->
 		<div class="col-md-10 col-sm-10 ml-auto mr-auto mt-5">
 			<div class="card mb-3">
 				<div class="card-body">
@@ -47,48 +9,65 @@
 						<div class="row">
 							{% if m.sender_user == request.user %}
 								<div class="col-sm-12 text-right">
-									<a href="{% url 'dantorial:userprofile' m.receiver_user.profilepersonal.id %}" style="text-decoration:none">
+<!-- 									<a href="{% url 'dantorial:userprofile' m.receiver_user.profilepersonal.id %}" style="text-decoration:none">
 										{{m.sender_user.profilepersonal.first_name}} {{m.sender_user.profilepersonal.last_name}}
-									</a>
-									<img src="{{m.receiver_user.profilepersonal.profile_pic.url}}" class="rounded-circle" alt="..." style="width:50px"/>
-									<div class="alert alert-success text-right" style="width: 90%; border-radius: 20px;">
-										{{m.message}}
+									</a> -->
+									<!-- <img src="{{m.receiver_user.profilepersonal.profile_pic.url}}" class="rounded-circle" alt="..." style="width:50px"/> -->
+									<div class="justify-content-end">
+										<div class="alert alert-success text-justify" style="width: 90%; border-radius: 20px; 		margin-top: auto;
+										margin-left: 4rem;">
+										{{m.message}}	
 										<p class="text-right">
 											{{m.date_created|timesince}}
 										</p>
 										
 									</div>
+									</div>
+									
 									
 									
 								</div>
 								
 							</div>
-							{% else %}
-								<div class="col-sm-8">
-									<img src="{{m.receiver_user.profilepersonal.profile_pic.url}}" class="rounded-circle" alt="..." style="width:50px"/>
-									
-									<a href="{% url 'dantorial:userprofile' m.receiver_user.profilepersonal.id %}" style="text-decoration:none">
-										{{m.receiver_user.profilepersonal.first_name}} {{m.receiver_user.profilepersonal.last_name}}
-									</a>
-									<div class="alert alert-warning ml-5 " style="width: 90%; border-radius: 20px;">
-										{{m.message}}
-										<p class="text-right">
-											{{m.date_created|timesince}}
-										</p>
-										
-									</div>
-									
+						{% else %}
+
+							<div class="col-sm-8">
+								<img src="{{m.receiver_user.profilepersonal.profile_pic.url}}" class="rounded-circle" alt="..." style="width:50px"/>
+								
+								<a href="{% url 'dantorial:userprofile' m.receiver_user.profilepersonal.id %}" style="text-decoration:none">
+									{{m.receiver_user.profilepersonal.first_name}} {{m.receiver_user.profilepersonal.last_name}}
+								</a>
+								<div class="alert alert-warning" style="width: 90%; border-radius: 20px;">
+									{{m.message}}
+									<p class="text-right">
+										{{m.date_created|timesince}}
+									</p>
 									
 								</div>
-								
 							</div>
 						{% endif %}
 					{% endfor %}
 				</div>
-				
+			<div class="card-footer">
+				<form method="GET" class='needs-validation' novalidate>
+            {% csrf_token %}
+							<div class="input-group">
+								<!-- <div class="input-group-append">
+									<span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
+								</div> -->
+								<textarea name="message" class="form-control type_msg" placeholder="Type your message..."></textarea>
+								<div class="input-group-append">
+									
+										<span class="input-group-text send_btn">
+											<button type="submit" class="btn btn-success" name='send_message'>
+												<i class="fas fa-location-arrow"></i>
+											</button></span>
+								
+									
+								</div>
+							</div>
+						</div>
+					</form>
 			</div>
-			
 		</div>
-	</div>
-</div>
-{% endblock %}
+	{% endblock %}

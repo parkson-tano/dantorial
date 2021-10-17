@@ -2,7 +2,7 @@ from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.views import View
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, CreateView
 from django.contrib import messages
 from .forms import MessageForm
 from .models import Message, Chat
@@ -10,6 +10,8 @@ from django.db.models import Count
 from django.core.mail import send_mail
 from django.conf import settings
 from django.db.models import Q
+from messaging.forms import MessageForm
+from django.urls import reverse_lazy, reverse
 class ChatView(TemplateView):
 	template_name = 'main/chat.html'
 
@@ -59,4 +61,19 @@ class MessageView(TemplateView):
 #             return redirect('success')
 #     return render(request, "userprofile.html", {'message': form})
 
-	
+class SendView(View):
+    def post(self, request, pk, *args, **kwargs):
+        form = MessageForm(request.POST)
+        thread = Chat.objects.get(pk=pk)
+        if thread.receiver == request.user:
+            receiver = thread.user
+        else:
+            receiver = thread.receiver
+
+        if form.is_valid():
+            message = form.save(commit=False)
+            message.chat = thread
+            message.sender_user = request.user
+            message.receiver_user = receiver
+            message.save()
+        return redirect('thread', pk=pk)
