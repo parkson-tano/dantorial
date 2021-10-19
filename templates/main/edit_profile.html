@@ -41,10 +41,16 @@
                   <!--                   <div class="col-sm-6">
                     {{form.account_type|as_crispy_field}}
                   </div> -->
+                  {% if request.user.profilepersonal.account_type is not None  %}
                   <div class="form-group col-sm-6">
                     <label for="inputEmail4">Account Type</label>
                     <input type="email" class="form-control" id="inputEmail4" placeholder="{{user.profilepersonal.account_type|capfirst}} account" disabled>
-                  </div>  
+                  </div>
+                  {% else %}
+                  <div class="col-sm-6">
+                      {{form.account_type|as_crispy_field}}
+                    </div>
+                    {% endif %}
                     <div class="col-sm-3">
                       {{form.title|as_crispy_field}}
                     </div>
