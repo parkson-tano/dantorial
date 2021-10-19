@@ -7,6 +7,11 @@ class MessageForm(forms.ModelForm):
 		model = Message
 		fields = ('name', 'email', 'phone_number', 'message')
 
+# class SendForm(forms.ModelForm):
+# 	class Meta:
+# 		model = Message
+# 		fields = ('message',)
+
 
 class ContactForm(forms.ModelForm):
 	class Meta:

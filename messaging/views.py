@@ -2,7 +2,7 @@ from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.views import View
-from django.views.generic import TemplateView, ListView, CreateView
+from django.views.generic import TemplateView, ListView
 from django.contrib import messages
 from .forms import MessageForm
 from .models import Message, Chat
@@ -42,38 +42,16 @@ class MessageView(TemplateView):
 					mess.save()
 				else:
 					pass
+			chats_id = mess.chat.id
 		context["message"] = message
 		# context['out'] = out
 		return context
+		
+# class SendView(FormView):
+# 	template_name = 'main/message.html'
+# 	form_class = MessageForm
+# 	success_url = '/'
 
-# def contactView(request):
-#     if request.method == 'GET':
-#         form = MessageForm()
-#     else:
-#         form = MessageForm(request.POST)
-#         if form.is_valid():
-#             if (user.is_authenticated):
-#                 sender_user = request.user
-#                 receiver_user = self.get_object().user
- 
-#             message = form.cleaned_data['message']
-     
-#             return redirect('success')
-#     return render(request, "userprofile.html", {'message': form})
-
-class SendView(View):
-    def post(self, request, pk, *args, **kwargs):
-        form = MessageForm(request.POST)
-        thread = Chat.objects.get(pk=pk)
-        if thread.receiver == request.user:
-            receiver = thread.user
-        else:
-            receiver = thread.receiver
-
-        if form.is_valid():
-            message = form.save(commit=False)
-            message.chat = thread
-            message.sender_user = request.user
-            message.receiver_user = receiver
-            message.save()
-        return redirect('thread', pk=pk)
+# 	def form_valid(self, form):
+# 		print(f'ffss {form.cleaned_data}')
+# 		return super().form_valid(form)

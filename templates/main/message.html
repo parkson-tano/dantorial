@@ -49,20 +49,19 @@
 					{% endfor %}
 				</div>
 			<div class="card-footer">
-				<form method="GET" class='needs-validation' novalidate>
-            {% csrf_token %}
+				ass{{chat_id}}
+				<form method="GET" class='needs-validation' id='send_message' novalidate>
 							<div class="input-group">
 								<!-- <div class="input-group-append">
 									<span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
 								</div> -->
-								<textarea name="message" class="form-control type_msg" placeholder="Type your message..."></textarea>
+								<textarea name="message" class="form-control type_msg" id = 'msg' placeholder="Type your message..."></textarea>
 								<div class="input-group-append">
 									
 										<span class="input-group-text send_btn">
-											<button type="submit" class="btn btn-success" name='send_message'>
+											<button type="submit" class="btn btn-success" onclick="show()">
 												<i class="fas fa-location-arrow"></i>
 											</button></span>
-								
 									
 								</div>
 							</div>
@@ -70,4 +69,11 @@
 					</form>
 			</div>
 		</div>
+<script>
+
+function show() {
+	let nam =  document.getElementById('msg').value;
+	alert(nam)
+}
+</script>
 	{% endblock %}
