@@ -11,13 +11,21 @@
 					{% for chat in chats %}
 					<div class="row">
                         	<div class="col-sm-8">
+                        		{% if chat.user == request.user %}
                         		<img src="{{chat.receiver.profilepersonal.profile_pic.url}}" class="rounded-circle" alt="..." style="width:50px"/>
                         	
                         		<a  href="{% url 'dantorial_message:message' chat.id %}" style="text-decoration:none">
 									{{ chat.receiver.profilepersonal.first_name }} {{ chat.receiver.profilepersonal.last_name }}			
                         		
 								</a>
-								
+								{% else %}
+								<img src="{{chat.user.profilepersonal.profile_pic.url}}" class="rounded-circle" alt="..." style="width:50px"/>
+                        	
+                        		<a  href="{% url 'dantorial_message:message' chat.id %}" style="text-decoration:none">
+									{{ chat.user.profilepersonal.first_name }} {{ chat.user.profilepersonal.last_name }}			
+                        		
+								</a>
+								{% endif %}
 								
 							</div>
 

@@ -131,10 +131,14 @@ class UserProfileView(DetailView):
                                   rating=request.POST.get('rate'),
                                   profile=self.get_object(),
 									user = self.request.user)
-            if Chat.objects.filter(user=self.request.user, receiver=self.get_object().user).exists():
-                ch = Chat.objects.get(user=self.request.user, receiver=self.get_object().user)
+            if (Chat.objects.filter(user=self.request.user, receiver=self.get_object().user).exists()) or (Chat.objects.filter(receiver=self.request.user, user=self.get_object().user).exists()):
+                ch = Chat.objects.get(Q(user=self.request.user, receiver=self.get_object().user) | Q(receiver=self.request.user, user=self.get_object().user))
+                if ch.receiver == request.user:
+                    receiver = ch.user
+                else:
+                    receiver = ch.receiver
                 new_message = Message(chat = ch, sender_user = self.request.user,
-                receiver_user = self.get_object().user,
+                receiver_user = receiver,
                 message = request.POST.get('message'),
                 )
             else:

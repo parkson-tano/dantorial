@@ -72,8 +72,12 @@ class SendView(View):
     	print(url_id)
     	print('helloooooo')
     	c = Chat.objects.get(id=url_id)
+    	if c.receiver == request.user:
+    		receiver = c.user
+    	else:
+    		receiver = c.receiver
     	new_message = Message(chat = c, sender_user = self.request.user,
-                receiver_user = c.receiver,
+                receiver_user = receiver,
                 message = msg,
                 )
     	new_message.save()
