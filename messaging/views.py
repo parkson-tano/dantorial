@@ -14,7 +14,12 @@ from messaging.forms import MessageForm
 from django.urls import reverse_lazy, reverse
 class ChatView(TemplateView):
 	template_name = 'main/chat.html'
-
+	def dispatch(self, request, *args, **kwargs):
+		if request.user.is_authenticated:
+			pass
+		else:
+			return redirect('/accounts/login/?next=/message/')
+		return super().dispatch(request, *args, **kwargs)
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		profile = self.request.user
@@ -25,16 +30,22 @@ class MessageView(TemplateView):
 	template_name = 'main/message.html'
 	# context_object_name = 'mess'
 	# model = Message
+
 	def dispatch(self, request, *args, **kwargs):
-		if request.user.is_authenticated:
+		url_id = kwargs['pk']
+		profile = self.request.user
+		chat = Chat.objects.get(id=url_id)
+		if request.user.is_authenticated and (chat.user == profile or chat.receiver == profile):
 			pass
 		else:
 			return redirect('/accounts/login/?next=/message/')
 		return super().dispatch(request, *args, **kwargs)
+
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		url_id = kwargs['pk']
 		profile = self.request.user
+		chat = Chat.objects.get(id=url_id)
 		message = Message.objects.filter(Q(chat=url_id) & (Q(sender_user=profile) | Q(receiver_user=profile))).order_by('-date_created')
 		# out = Message.objects.filter(receiver_user=profile).order_by('-date_created')
 		for mess in message:
@@ -47,8 +58,9 @@ class MessageView(TemplateView):
 			chats_id = mess.chat.id
 		context['chat'] = url_id
 		context["message"] = message
-		# context['out'] = out
 		return context
+		# context['out'] = out
+		
 		
 class SendView(View):
     def post(self, request, *args, **kwargs):
