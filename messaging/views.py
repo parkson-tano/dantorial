@@ -1,8 +1,8 @@
 from django.core.mail import send_mail, BadHeaderError
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.views import View
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, View
 from django.contrib import messages
 from .forms import MessageForm
 from .models import Message, Chat
@@ -23,6 +23,8 @@ class ChatView(TemplateView):
 		return context
 class MessageView(TemplateView):
 	template_name = 'main/message.html'
+	# context_object_name = 'mess'
+	# model = Message
 	def dispatch(self, request, *args, **kwargs):
 		if request.user.is_authenticated:
 			pass
@@ -43,15 +45,25 @@ class MessageView(TemplateView):
 				else:
 					pass
 			chats_id = mess.chat.id
+		context['chat'] = url_id
 		context["message"] = message
 		# context['out'] = out
 		return context
 		
-# class SendView(FormView):
-# 	template_name = 'main/message.html'
-# 	form_class = MessageForm
-# 	success_url = '/'
-
-# 	def form_valid(self, form):
-# 		print(f'ffss {form.cleaned_data}')
-# 		return super().form_valid(form)
+class SendView(View):
+    def post(self, request, *args, **kwargs):
+    	url_id = self.kwargs['pk']
+    	msg = request.POST.get('message')
+    	user = request.user
+    	print(msg)
+    	print(user)
+    	print(url_id)
+    	print('helloooooo')
+    	c = Chat.objects.get(id=url_id)
+    	new_message = Message(chat = c, sender_user = self.request.user,
+                receiver_user = c.receiver,
+                message = msg,
+                )
+    	new_message.save()
+    	print('saved')
+    	return redirect(f'/message/chat/{url_id}')

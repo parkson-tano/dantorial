@@ -38,14 +38,14 @@
 
             </form>
             <p class='text-center display-6'>OR</p>
-            <div class="d-grid mb-2" style = 'background-color: #ea4335'>
-              <a href="{% provider_login_url 'google' %}" class="btn btn-google btn-login text-uppercase fw-bold">
+            <div class="d-grid mb-2">
+              <a href="{% provider_login_url 'google' %}" class="btn-google btn-login text-uppercase fw-bold text-center card-link">
                 <i class="fab fa-google me-2"></i> Sign in with Google
               </a>
             </div>
-            <div class="d-grid" style = 'background-color: #3b5998'>
+            <div class="d-grid">
               <a href="{% provider_login_url 'facebook' method='oauth2' %}"
-                class="btn btn-facebook btn-login text-uppercase fw-bold" type="submit">
+                class="btn-facebook btn-login text-uppercase text-center fw-bold card-link" type="submit">
                 <i class="fab fa-facebook-f me-2"></i> Sign in with Facebook
               </a>
             </div>

@@ -9,19 +9,19 @@
 						<div class="row">
 							{% if m.sender_user == request.user %}
 								<div class="col-sm-12 text-right">
-<!-- 									<a href="{% url 'dantorial:userprofile' m.receiver_user.profilepersonal.id %}" style="text-decoration:none">
-										{{m.sender_user.profilepersonal.first_name}} {{m.sender_user.profilepersonal.last_name}}
+									<!-- 									<a href="{% url 'dantorial:userprofile' m.receiver_user.profilepersonal.id %}" style="text-decoration:none">
+											{{m.sender_user.profilepersonal.first_name}} {{m.sender_user.profilepersonal.last_name}}
 									</a> -->
 									<!-- <img src="{{m.receiver_user.profilepersonal.profile_pic.url}}" class="rounded-circle" alt="..." style="width:50px"/> -->
 									<div class="justify-content-end">
 										<div class="alert alert-success text-justify" style="width: 90%; border-radius: 20px; 		margin-top: auto;
-										margin-left: 4rem;">
-										{{m.message}}	
-										<p class="text-right">
-											{{m.date_created|timesince}}
-										</p>
-										
-									</div>
+											margin-left: 4rem;">
+											{{m.message}}
+											<p class="text-right">
+												{{m.date_created|timesince}}
+											</p>
+											
+										</div>
 									</div>
 									
 									
@@ -30,12 +30,11 @@
 								
 							</div>
 						{% else %}
-
 							<div class="col-sm-8">
-								<img src="{{m.receiver_user.profilepersonal.profile_pic.url}}" class="rounded-circle" alt="..." style="width:50px"/>
+								<img src="{{m.sender_user.profilepersonal.profile_pic.url}}" class="rounded-circle" alt="..." style="width:50px"/>
 								
-								<a href="{% url 'dantorial:userprofile' m.receiver_user.profilepersonal.id %}" style="text-decoration:none">
-									{{m.receiver_user.profilepersonal.first_name}} {{m.receiver_user.profilepersonal.last_name}}
+								<a href="{% url 'dantorial:userprofile' m.sender_user.profilepersonal.id %}" style="text-decoration:none">
+									{{m.sender_user.profilepersonal.first_name}} {{m.sender_user.profilepersonal.last_name}}
 								</a>
 								<div class="alert alert-warning" style="width: 90%; border-radius: 20px;">
 									{{m.message}}
@@ -48,32 +47,29 @@
 						{% endif %}
 					{% endfor %}
 				</div>
-			<div class="card-footer">
-				ass{{chat_id}}
-				<form method="GET" class='needs-validation' id='send_message' novalidate>
-							<div class="input-group">
-								<!-- <div class="input-group-append">
+
+				<div class="card-footer">
+					
+
+					<form method="POST" class='needs-validation' id='send_message' action="{% url 'dantorial_message:send' chat  %}" novalidate>
+						{% csrf_token %}
+
+						<div class="input-group">
+							<!-- <div class="input-group-append">
 									<span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
-								</div> -->
-								<textarea name="message" class="form-control type_msg" id = 'msg' placeholder="Type your message..."></textarea>
-								<div class="input-group-append">
-									
-										<span class="input-group-text send_btn">
-											<button type="submit" class="btn btn-success" onclick="show()">
-												<i class="fas fa-location-arrow"></i>
-											</button></span>
-									
-								</div>
+							</div> -->
+							<textarea name="message" class="form-control type_msg" id = 'msg' placeholder="Type your message..."></textarea>
+							<div class="input-group-append">
+								
+								<span class="input-group-text send_btn">
+									<button type="submit" class="btn btn-success">
+									<i class="fas fa-location-arrow"></i>
+								</button></span>
+								
 							</div>
 						</div>
-					</form>
+					</div>
+				</form>
+				
 			</div>
-		</div>
-<script>
-
-function show() {
-	let nam =  document.getElementById('msg').value;
-	alert(nam)
-}
-</script>
 	{% endblock %}
