@@ -2,26 +2,6 @@
 {% load i18n %}
 {% load static %} {% block title %} dantorial {%endblock title %} {% block carousel %}
 
-<!-- <style>
-.select2-container--default .select2-selection--single {
-    height: 37px !important;
-    padding-top: 5px;
-    font-size: 1rem;
-    line-height: 1.33;
-    border-radius: 6px;
-    margin-bottom: 1rem;
-}
-.select2-container--default .select2-selection--single .select2-selection__arrow b {
-    top: 85% !important;
-}
-.select2-container--default .select2-selection--single .select2-selection__rendered {
-    line-height: 26px !important;
-}
-.select2-container--default .select2-selection--single {
-    border: 1px solid #CCC !important;
-    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
-    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
-}</style> -->
 
 <div id="myCarousel" class="carousel slide mt-5" data-bs-ride="carousel">
     <div class="carousel-indicators">
@@ -46,8 +26,15 @@
                     <div class="carousel-caption text-center mb-5">
                         <div style="margin-bottom:10rem;">
                           <h5>{{ caro.title }}</h5>
-                        <p class="mb-5 fs-1 fw-bold text-center">
-                            {% trans "WELCOME TO TANTORIAL" %} </p>  
+                        <p class="mb-2 fs-1 fw-bold text-center">
+                            {% trans "Find Your Perfect Tutor" %} <br>
+
+                            </p>  
+                            <p class="mb-5 fs-3 fw-bold text-center">
+                            Book one-on-one lessons with verified instructors close to you.
+
+                            </p>  
+                            
 
                         <a href="{% url 'account_signup' %}" class='btn btn-primary mt-3 mb-3 text-center' style="border-radius:20px; width:80%">Register Now</a>  
                         </div>

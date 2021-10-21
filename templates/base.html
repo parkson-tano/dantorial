@@ -347,44 +347,12 @@ $( ".select2" ).select2({
   // theme: "classic"
 });
 </script>
-
+<script type="text/javascript" src="https://cdn.weglot.com/weglot.min.js"></script>
 <script>
-        $(document).ready(function() {
-            $(".send_btn").click(function (event) {
-                event.preventDefault()
-                var ansid = $(this).attr('id');
-                console.log(ansid)
-                $.ajax({
-                    url: $(this).data('url'),
-                    type: 'POST',
-                    data: {
-                        'chat_id':ansid,
-                        'csrfmiddlewaretoken': "{{csrf_token}}",
-                        'action': 'post'
-                    },
-                    success: function (response) {
-                        console.log("clicked:" + ansid)
-                        console.log(response)
-                        if (response['flag']) {
-                        
-                            // alert('you like this profile')
-
-                            console.log('successfully  added to favorites');
-                        } else {
-                        
-                            console.log('successfully removed to favorites');
-                            // alert('u dislike this')
-                        }
-                    },
-                    error: function(rs, e) {
-                        alert()
-                        console.log(rs.response, ansid)
-                    }
-                });
-            });
-        });
-    </script>
-
+    Weglot.initialize({
+        api_key: 'wg_88fbc822cd20082772de32d3eca0aa5b5'
+    });
+</script>
 </body>
 
 </html>
