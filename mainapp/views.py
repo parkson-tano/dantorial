@@ -41,7 +41,7 @@ from campay.sdk import Client
 from django.http import JsonResponse
 from django.db.models import Avg
 from django.utils.translation import gettext as _
-
+import random
 class IndexView(TemplateView):
     template_name = 'main/index.html'
 
@@ -93,9 +93,12 @@ class UserProfileView(DetailView):
         context = super().get_context_data(**kwargs)
         comments_connected = Review.objects.filter(profile=self.get_object()).order_by('-date_created')
         user_rating = Review.objects.filter(profile=self.get_object()).aggregate(Avg('rating'))
+        similar = random.sample(list(ProfilePersonal.objects.filter(Q(user__profileinfo__subject=self.get_object().user.profileinfo.subject)
+         | Q(user__profileinfo__subcategory=self.get_object().user.profileinfo.subcategory) | Q(user__profileinfo__category=self.get_object().user.profileinfo.category))), 4)
         context["comments"] = comments_connected
         context['comment_form'] = ReviewForm 
         context['message'] = MessageForm
+        context['similar'] = similar
         ur = user_rating['rating__avg']
         urr = str(ur)
         context['ur'] = urr[:3]
@@ -534,7 +537,7 @@ class LogoutView(View):
         return redirect('dantorial:index')
  
 class SearchView(TemplateView):
-    template_name = 'main/search_result.html'
+    template_name = 'main/search_all.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -551,12 +554,12 @@ class SearchView(TemplateView):
         print(profile_result)
         # print(subject)
         # print(f'final: {final}')
-        context['profile_result'] = profile_result
+        context['result'] = profile_result
         # print(f'{acc_type} {subject} {city} {quater}')
         return context
 
 class FilterView(TemplateView):
-    template_name = 'main/search_result.html'
+    template_name = 'main/search_all.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -578,7 +581,7 @@ class FilterView(TemplateView):
         print(profile_result)
         # print(subject)
         # print(f'final: {final}')
-        context['profile_result'] = profile_result
+        context['result'] = profile_result
         # print(f'{acc_type} {subject} {city} {quater}')
         return context
 

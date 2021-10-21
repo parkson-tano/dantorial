@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     'api',
     'rest_framework',
     "translation_manager",
+    'django.contrib.humanize',
 
 ]
 

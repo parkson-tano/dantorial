@@ -1,8 +1,10 @@
-{% extends "base.html" %} {% load crispy_forms_tags %} {% block title %} {{category.name}} {% endblock title %} {% block content %}
+{% extends "base.html" %} 
+{% load humanize %}
+{% load crispy_forms_tags %} {% block title %} {{category.name}} {% endblock title %} {% block content %}
 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas" data-bs-keyboard="false" data-bs-backdrop="false">
   <div class="offcanvas-header">
     <h6 class="offcanvas-title d-sm-block mr-auto ml-auto" id="offcanvas">
-        Subcategory
+    Subcategory
     </h6>
     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
@@ -17,249 +19,219 @@
           </li>
         </div>
       {% endfor %}
+      </ul>
     </div>
-  </ul>
-</div>
 </div>
 <!-- filter -->
 <div class="offcanvas offcanvas-start" tabindex="-1" id="filter" data-bs-keyboard="false" data-bs-backdrop="false">
-<div class="offcanvas-header">
-  <h6 class="offcanvas-title d-sm-block ml-auto mr-auto">Filter Search</h6>
-  <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-</div>
-<div class="offcanvas-body px-3">
-  <form action="{% url 'dantorial:filter' %}" class="mx-auto text-dark rounded-5 mt-auto">
-    <div class="row align-items-md-stretch mx-0 p-3">
-      <div class="col-12">
-        <div class="input-group mb-3">
-          <select name='typ' class="form-select" id="inputGroupSelect02">
-            <!-- <option selected>Who are you?</option> -->
-            <option value="tutor" selected>Teacher</option>
-            <option value="student">Student</option>
-          </select>
+  <div class="offcanvas-header">
+    <h6 class="offcanvas-title d-sm-block ml-auto mr-auto">Filter Search</h6>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body px-3">
+    <form action="{% url 'dantorial:filter' %}" class="mx-auto text-dark rounded-5 mt-auto">
+      <div class="row align-items-md-stretch mx-0 p-3">
+        <div class="col-12">
+          <div class="input-group mb-3">
+            <select name='typ' class="form-select" id="inputGroupSelect02">
+              <!-- <option selected>Who are you?</option> -->
+              <option value="tutor" selected>Teacher</option>
+              <option value="student">Student</option>
+            </select>
+          </div>
         </div>
-      </div>
-      <div class="col-12 ">
-        <div class="input-group mb-3">
-          <select name='gender' class="form-select select-picker" id="inputGroupSelect02" data-live-search="true">
-            <option >Gender</option>
-            <option value="female">Female</option>
-            <option value="male">Male</option>
-          </select>
+        <div class="col-12 ">
+          <div class="input-group mb-3">
+            <select name='gender' class="form-select select-picker" id="inputGroupSelect02" data-live-search="true">
+              <option >Gender</option>
+              <option value="female">Female</option>
+              <option value="male">Male</option>
+            </select>
+          </div>
         </div>
-      </div>
-      <div class="col-12">
-        <div class="input-group mb-3">
-          <select name='category' class="form-select select-picker" id="inputGroupSelect02" data-live-search="true" data-placeholder="Select an option" data-allow-clear="true">
-            {% for cat in all_cat %}
-              <option value="{{cat.id}}">{{ cat.name }}</option>
+        <div class="col-12">
+          <div class="input-group mb-3">
+            <select name='category' class="form-select select-picker" id="inputGroupSelect02" data-live-search="true" data-placeholder="Select an option" data-allow-clear="true">
+              {% for cat in all_cat %}
+                <option value="{{cat.id}}">{{ cat.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="col-12 padding-minimum">
+          <select name='subject' id="select2-multiple-input" class=" select2 form-control select2-container input-lg step2-select">
+            {% for sub in all_sub %}
+              <option value="{{sub.id}}">{{ sub.name }}</option>
             {% endfor %}
           </select>
+          
+        </div>
+        <div class="col-12 ">
+          <div class="input-group mb-3">
+            <select name='education' class="form-select select-picker" id="inputGroupSelect02" data-live-search="true">
+              <option disabled>Level of Education</option>
+              <option value="Advanced Level">Advanced Level</option>
+              <option value="HND">HND</option>
+              <option value="Bachelor Degree">Bachelor Degree</option>
+              <option value="Master Degree">Master Degree</option>
+              <option value="Doctorate">PHD</option>
+              <option value="Others">Others</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-12 ">
+          <div class="input-group mb-3">
+            <select name='charge' class="form-select select-picker" id="inputGroupSelect02" data-live-search="true">
+              <option disabled>Charge</option>
+              <option value="daily">Daily</option>
+              <option value="weekly">Weekly</option>
+              <option value="monthly">Monthly</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-12 ">
+          <div class="input-group mb-3">
+            <select name='region' class="form-select select-picker" id="inputGroupSelect02" data-live-search="true">
+              <option disabled>Select Region</option>
+              {% for reg in region %}
+                <option value="{{reg.id}}">{{ reg.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="input-group mb-3">
+            <input name='quater' type="text" class="form-control" placeholder="Quater" aria-label="Quater" aria-describedby="basic-addon1" />
+          </div>
+        </div>
+        <div class="col-12 d-grid">
+          <button class="btn btn-primary" type="submit">Filter</button>
         </div>
       </div>
-      <div class="col-12 padding-minimum">
-        <select name='subject' id="select2-multiple-input" class=" select2 form-control select2-container input-lg step2-select">
-          {% for sub in all_sub %}
-            <option value="{{sub.id}}">{{ sub.name }}</option>
-          {% endfor %}
-        </select>
-        
-      </div>
-      <div class="col-12 ">
-        <div class="input-group mb-3">
-          <select name='education' class="form-select select-picker" id="inputGroupSelect02" data-live-search="true">
-            <option disabled>Level of Education</option>
-            <option value="Advanced Level">Advanced Level</option>
-            <option value="HND">HND</option>
-            <option value="Bachelor Degree">Bachelor Degree</option>
-            <option value="Master Degree">Master Degree</option>
-            <option value="Doctorate">PHD</option>
-            <option value="Others">Others</option>
-          </select>
-        </div>
-      </div>
-      <div class="col-12 ">
-        <div class="input-group mb-3">
-          <select name='charge' class="form-select select-picker" id="inputGroupSelect02" data-live-search="true">
-            <option disabled>Charge</option>
-            <option value="daily">Daily</option>
-            <option value="weekly">Weekly</option>
-            <option value="monthly">Monthly</option>
-          </select>
-        </div>
-      </div>
-      <div class="col-12 ">
-        <div class="input-group mb-3">
-          <select name='region' class="form-select select-picker" id="inputGroupSelect02" data-live-search="true">
-            <option disabled>Select Region</option>
-            {% for reg in region %}
-              <option value="{{reg.id}}">{{ reg.name }}</option>
-            {% endfor %}
-          </select>
-        </div>
-      </div>
-      <div class="col-12">
-        <div class="input-group mb-3">
-          <input name='quater' type="text" class="form-control" placeholder="Quater" aria-label="Quater" aria-describedby="basic-addon1" />
-        </div>
-      </div>
-      <div class="col-12 d-grid">
-        <button class="btn btn-primary" type="submit">Filter</button>
-      </div>
-    </div>
-  </form>
-</div>
-</ul>
-</div>
+    </form>
+  </div>
 </div>
 <!-- end -->
 <div class="container-fluid">
-<div class="row">
-<div class="col py-0">
-<!-- toggler -->
-<button class="btn float-start" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" role="button">
-<i class="fa fa-bars bi-arrow-right-square-fill fs-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvas"></i>
-</button>
-<button class="btn float-end" data-bs-toggle="filter" data-bs-target="#filter" role="button">
-<i class="fa fa-filter fs-3" data-bs-toggle="offcanvas" data-bs-target="#filter"></i>
-</button>
+  <div class="row">
+    <div class="col py-0">
+      <!-- toggler -->
+      <button class="btn float-start" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" role="button">
+      <i class="fa fa-bars bi-arrow-right-square-fill fs-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvas"></i>
+      </button>
+      <button class="btn float-end" data-bs-toggle="filter" data-bs-target="#filter" role="button">
+      <i class="fa fa-filter fs-3" data-bs-toggle="offcanvas" data-bs-target="#filter"></i>
+      </button>
+    </div>
+  </div>
 </div>
-</div>
-</div>
-<div class="row gx-4 gx-lg-5 justify-content-center">
-    <div class='col-sm-12 col-md-9'>
-        <div class='row'>
-{% for p in pro %} {% if p.first_name is not None %}
-    <div class="col-12 col-sm-4 col-md-3 mb-3">
-     <div class="card">
-      <div class="card-header" style="  position: relative;
-       text-align: center;
-       ">
-       <div>
-        <a href="{{p.profile_pic.url}}"><img class="card-img" src="{{p.profile_pic.url}}" alt="..." style='height:15rem; width:100%;'>
-        </a>
-        <button class="border-0 m-0 p-0 likebtn" type="button" id="{{p.id}}" data-url="{% url 'dantorial:favourite' %}" style="  position: absolute;
-        background: transparent;
-        top: 100;
-        right:  1.5rem;
-        font-size:200%;
-        color:blue">
-        <i class="fa fa-heart-o mr-0 ml-0" id='fa{{p.id}}'></i>
-        </button>
-        <div class="btn btn-outline-default"  style="  position: absolute;
-         bottom: 0;
-         left:  0.5rem;
-         opacity: 0.7;
-         ">
-         {% if p.user.profileinfo.subject %}
-          <p class="font-weight-bold bg-light">
-           {{p.user.profileinfo.category}} <br>
-           {{p.user.profileinfo.subcategory}} <br>
-           {{p.user.profileinfo.subject|default:""}}
-          </p>
-         {% endif %}
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- main categor -->
+    <div class="col-sm-12 col-md-9">
+      {% for p in pro %} {% if p.first_name is not None %}
+        <div class="row mb-3 h-20">
+          <!-- image -->
+          <div class="col-sm-5 col-md-4">
+            <div class="card">
+              <div class="card-header" style="  position: relative;
+                text-align: center;
+                ">
+                <a href="{{p.profile_pic.url}}"><img class="card-img" src="{{p.profile_pic.url}}" alt="..." style='height:14rem; width:100%;'>
+                </a>
+                {% if p.user in fav.favourite.all %}
+                  <button class="likebtn" type="button" id="{{p.id}}" data-url="{% url 'dantorial:favourite' %}" style="  position: absolute;
+                  background: transparent;
+                  top: 100;
+                  right:  1.5rem;
+                  font-size:200%;
+                  border: none;
+                  color:blue">
+                  <i class="fa fa-heart mr-0 ml-0" id='fa{{p.id}}'></i>
+                  
+                  </button>
+                {% else %}
+                  <button class="likebtn" type="button" id="{{p.id}}" data-url="{% url 'dantorial:favourite' %}" style="  position: absolute;
+                  background: transparent;
+                  top: 100;
+                  right:  1.5rem;
+                  font-size:200%;
+                  border: none;
+                  color:blue">
+                  <i class="fa fa-heart-o mr-0 ml-0" id='fa{{p.id}}'></i>
+                  
+                  </button>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          <!-- end image -->
+          <!-- description -->
+          <div class="col-sm-7 col-md-8 p-0">
+            <div class="card-body p-0">
+              {{p.review_set.all}}
+              <h5 class="card-title">{{ p.first_name }} {{ p.last_name|default:'' }}  ({{p.account_type|capfirst}})
+                <span>
+                                {% if p.user.verification.is_verified %}
+                                    <i class='fas fa-check' style="color:blue;"></i>
+                                {% endif %}
+                            </span>
+              </h5>
+              <p class="card-text">
+                {{p.user.profileinfo.bio|default:''|slice:'100'}}...
+              </p>
+              {{ p.review_set.all }}
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item p-0 mt-2">
+                <p class="font-weight-italic">
+                  {{p.address_1}}, {{p.region}}
+                </p>
+              </li>
+              <li class="list-group-item p-0">
+                {% if p.user.profileinfo.subject %}
+                  <p class="font-weight-dark">
+                    <em>
+                    {{p.user.profileinfo.subject|default:""}}
+                    {{p.user.profileinfo.amount|floatformat:0|intcomma}}FCFA per {{p.user.profileinfo.charge}}
+                    </em><br>
+                    <em>{{p.user.profileinfo.subcategory}}</em>
+                    {{p.user.profileinfo.category}}
+                    
+                                        
+                  </p>
+                {% endif %}
+              </li>
+            </ul>
+            <div class="card-footer bg-white">
+              <a class="btn btn-danger card-link d-grid mb-2" href="{% url 'dantorial:userprofile' p.id %}">Read
+              more →</a>
+            </div>
+          </div>
+          <!-- end description -->
         </div>
-<!--         <div class="btn btn-outline-default"  style="  position: absolute;
-         top: 0.5rem;
-         left:  0.5rem;
-         opacity:  0.6;
-         ">
-         {% if p.user.profileinfo.amount %}
-          <p class="font-weight-bold text-white bg-dark">
-           {{p.user.profileinfo.amount}}FRS per {{p.user.profileinfo.charge}} <br>
-          </p>
-         {% endif %}
-        </div> -->
-       </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+  <!-- main end -->
+  <!-- side bar -->
+  <div class="col-sm-12 col-md-3">
+    <div class="card mb-4">
+      <div class="card-header">
+        {% if user.profilepersonal == 'tutor' %} Suggested Students {% else %} Suggested Tutors {% endif %}
       </div>
       <div class="card-body">
-       <h5 class="card-title">{{ p.first_name }} {{ p.last_name|default:'' }}  ({{p.account_type|capfirst}})</h5>
-       <p class="card-text">
-        {{p.user.profileinfo.bio|default:''|slice:'100'}}...
-       </p>
+        Sugestions will appear here
+        {% for s in suggested %}
+          {{s}}
+        {% endfor %}
       </div>
-      <ul class="list-group list-group-flush">
-       <!-- <li class="list-group-item"> {{p.level_of_education|default:''}} </li>
-       <li class="list-group-item">{{p.gender|default:''}}</li> -->
-       <li class="list-group-item p-0 mx-4">
-        <p class="font-weight-italic">
-         {{p.address_1}}, {{p.region}}
-        </p>
-       </li>
-       
-       <!-- <li class="list-group-item">{{p.address_1|default:''}}</li> -->
-      </ul>
-      <div class="card-body">
-       <a class="btn btn-danger card-link d-grid mb-2" href="{% url 'dantorial:userprofile' p.id %}">Read
-       more →</a>
-       <!--                         <span>
-        <a data-toggle="modal" data-target="#exampleModal" class="btn btn-success card-link d-grid ">
-         Get Contact
-        </a>
-       </span>
-       -->
-       
-       <!-- <a href="tel:{{'+'}}{{p.country.phone}}{{p.phone_number}}" class="btn btn-success card-link d-grid ">
-        Get Contact
-       </a> -->
-       
-      </div>
-      
-     </div>
     </div>
-   {% endif %}
-  {% endfor %}
-        </div>
-    </div>
-    <div class="col-sm-12 col-md-3">
-        <!-- Search widget-->
-        <!--         <div class="card mb-4">
-            <div class="card-header">Search</div>
-            <div class="card-body">
-                <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Enter search term..."
-                        aria-label="Enter search term..." aria-describedby="button-search" />
-                    <button class="btn btn-primary" id="button-search" type="button">Go!</button>
-                </div>
-            </div>
-        </div> -->
-        <!-- Categories widget-->
-        <!--         <div class="card mb-4">
-            <div class="card-header">SubCategories</div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-12">
-                        <ul class="list-unstyled mb-0">
-                            <div class='row'>
-                                {% for sub in subcat %}
-                                <div class="col-6 col-sm-4 col-md-6 my-2">
-                                    <li>
-                                        <a href="{% url 'dantorial:subcategory' sub.category.slug sub.id %}" class='btn btn-info'>
-                                            {{ sub|capfirst}}
-                                        </a>
-
-                                    </li>
-                                </div>
+  </div>
+  <!-- sidebar end heree -->
+</div>
+</div>
 
 
-                                {% endfor %}
-                            </div>
-
-
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-        <!-- Side widget-->
-        <div class="card mb-4">
-            <div class="card-header">
-                {% if user.profilepersonal.account_type == 'tutor' %} Suggested Students {% else %} Suggested Tutors {% endif %}
-            </div>
-            <div class="card-body">
-                Sugestions will appear here
-            </div>
-        </div>
-
-    </div>
     {% endblock content %}
