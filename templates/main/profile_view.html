@@ -22,8 +22,8 @@
                         <a href="{% url 'dantorial:userprofile' pro.viewed_by.profilepersonal.id %}" style="text-decoration: none;">
                         	{{pro.viewed_by.profilepersonal.first_name}} {{pro.viewed_by.profilepersonal.last_name}}
                         </a>
-                        <span class="text-muted ml-5 d-none d-sm-block">
-                        		{{pro.date_created|timesince}} ago
+                        <span class="text-muted d-grid d-sm-block ml-5">
+                        		{{pro.date_created}}
                         	</span>	
                         
                         	

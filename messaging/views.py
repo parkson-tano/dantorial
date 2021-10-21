@@ -60,8 +60,17 @@ class MessageView(TemplateView):
 		context["message"] = message
 		return context
 		# context['out'] = out
-		
-		
+
+def send_message(request):
+    if request.POST.get('action') == 'post':
+        chatid = int(request.POST.get('chat_id'))
+        u = Chat.objects.get(id=chatid)
+        print(f'prof id {chatid}')
+        message_obj = Message.objects.filter(chat=chatid)
+        print(f"prof obj {message_obj} ")
+        return JsonResponse({'message': message_obj})
+    return HttpResponse("Error access Denied by")
+
 class SendView(View):
     def post(self, request, *args, **kwargs):
     	url_id = self.kwargs['pk']
