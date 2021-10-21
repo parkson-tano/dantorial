@@ -109,7 +109,7 @@ class UserProfileView(DetailView):
                 # current.save()
                 prof.save()
 
-                send_mail('profile viewed', f'{self.request.user.profilepersonal.first_name} viewed your profile', settings.DEFAULT_FROM_EMAIL, (self.get_object().user.email,))
+                # send_mail('profile viewed', f'{self.request.user.profilepersonal.first_name} viewed your profile', settings.DEFAULT_FROM_EMAIL, (self.get_object().user.email,))
             else:
                 pass
         # new_view.save()

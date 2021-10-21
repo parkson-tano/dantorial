@@ -42,9 +42,12 @@ color: #c59b08;
 <div class="main-body">
     <!-- Breadcrumb -->
     <!-- /Breadcrumb -->
-    <div class="row gutters-sm">
-        <div class="col-md-4 mb-3 mt-5">
+    <div class="row gutters-sm justify-content">
+        <div class="col-md-12 mb-3 mt-5">
             <div class="card">
+                <div class="row no-gutters">
+                    
+               
                 <div class="card-body">
                     <div class="d-flex flex-column align-items-center text-center">
                         <a href="{{userprofile.profile_pic.url}}">
@@ -76,10 +79,6 @@ color: #c59b08;
                                     {{userprofile.user.profileinfo.amount|default:""}}FCFA/{{userprofile.user.profileinfo.charge|default:"month"}}
                                 </span>
                             </p>
-                            
-                            <!--               <button class="btn btn-primary">Contact</button>
-                            <button class="btn btn-outline-primary">Message</button>
-                            <button class="btn btn-outline-primary">Whatsapp</button> -->
                             <button data-toggle="modal" data-target="#exampleModal" class="btn btn-outline-primary mt-2"><i class="fa fa-phone" style='color:rgb(5, 59, 41)'></i> Call
                             </button>
                             <a href="https://wa.me/{{userprofiles.phonenumber}}" target="_blank" class="btn btn-outline-primary mt-2">
@@ -89,6 +88,7 @@ color: #c59b08;
                         </span>
                     </div>
                 </div>
+            </div>
             </div>
         </div>
         <!-- <div class="card mt-3">
@@ -116,7 +116,7 @@ color: #c59b08;
 </ul>
 </div> -->
 </div>
-<div class="col-md-8 mt-5">
+<div class="col-md-12 mt-5">
 <div class="card mb-3">
 <div class="card-body">
 <div class="row">
