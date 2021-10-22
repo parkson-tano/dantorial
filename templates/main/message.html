@@ -468,82 +468,6 @@
     border-left-color: #00a65a;
 }
 </style>
-
-<!-- 
-		<div class="col-md-8 col-sm-10 mt-5">
-			<div class="card mb-3">
-				<div class='card-title alert alert-secondary text-uppercase fw-bold'>
-					messages
-				</div>
-				<div class="card-body">
-					{% for m in message %}
-						<div class="row">
-							{% if m.sender_user == request.user %}
-								<div class="col-sm-12 text-right ml-5"> -->
-									<!-- 									<a href="{% url 'dantorial:userprofile' m.receiver_user.profilepersonal.id %}" style="text-decoration:none">
-										{{m.sender_user.profilepersonal.first_name}} {{m.sender_user.profilepersonal.last_name}}
-									</a> -->
-									<!-- <img src="{{m.receiver_user.profilepersonal.profile_pic.url}}" class="rounded-circle" alt="..." style="width:50px"/> -->
-<!-- 									<div class="">
-										<div class="alert alert-success text-justify" style="width: 100%; border-radius: 20px; 		margin-top: auto;
-											margin-left: 3rem;">
-											{{m.message}}
-											<p class="text-right">
-												{{m.date_created|timesince}}
-											</p>
-											
-										</div>
-									</div>
-									
-									
-									
-								</div>
-								
-							</div>
-						{% else %}
-							<div class="col-sm-8 ml-2">
-								<img src="{{m.sender_user.profilepersonal.profile_pic.url}}" class="rounded-circle" alt="..." style="width:50px"/>
-								
-								<a href="{% url 'dantorial:userprofile' m.sender_user.profilepersonal.id %}" style="text-decoration:none">
-									{{m.sender_user.profilepersonal.first_name}} {{m.sender_user.profilepersonal.last_name}}
-								</a>
-								<div class="alert alert-warning" style="width: 90%; border-radius: 20px;">
-									{{m.message}}
-									<p class="text-right">
-										{{m.date_created|timesince}}
-									</p>
-									
-								</div>
-							</div>
-						{% endif %}
-					{% endfor %}
-				</div>
-				<div class="card-footer">
-					
-					<form method="POST" class='needs-validation' action="{% url 'dantorial_message:send' chat  %}" novalidate>
-						{% csrf_token %}
-						<div class="input-group">
-							<textarea name="message" class="form-control type_msg" id = 'msg' placeholder="Type your message..." required></textarea>
-							<div class="input-group-append">
-								
-								<span class="input-group-text">
-									<button type="submit" class="btn btn-success" id={{chat}}>
-									<i class="fas fa-location-arrow"></i>
-								</button></span>
-								
-							</div>
-						</div>
-					</div>
-				</form>
-				
-			</div>
-		</div>
-	</div> -->
-
-<!-- 			<script>
-				window.setTimeout(function(){location.reload()},30000)
-			</script> -->
-
 <div class="container">
 	<div class="row bootstrap snippets bootdeys">
 		<div class="col-md-9">
@@ -551,16 +475,6 @@
 			<div class="box box-primary direct-chat direct-chat-primary" >
 				<div class="box-header with-border">
 					<h3 class="box-title">Direct Chat</h3>
-					
-<!-- 					<div class="box-tools pull-right">
-						<span data-toggle="tooltip" title="" class="badge bg-light-blue" data-original-title="3 New Messages">3</span>
-						<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-						</button>
-						<button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Contacts" data-widget="chat-pane-toggle">
-						<i class="fa fa-comments"></i></button>
-						<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-					</div>
-				</div> -->
 				<!-- /.box-header -->
 				<div class="box-body">
 					<!-- Conversations are loaded here -->

@@ -39,6 +39,39 @@ color: #deb217;
 .rating>label:hover~input:checked~label {
 color: #c59b08;
 }
+@media (max-width: 768px) {
+    .carousel-inner .carousel-item > div {
+        display: none;
+    }
+    .carousel-inner .carousel-item > div:first-child {
+        display: block;
+    }
+}
+
+.carousel-inner .carousel-item.active,
+.carousel-inner .carousel-item-next,
+.carousel-inner .carousel-item-prev {
+    display: flex;
+}
+
+/* display 3 */
+@media (min-width: 768px) {
+    
+    .carousel-inner .carousel-item-right.active,
+    .carousel-inner .carousel-item-next {
+      transform: translateX(33.333%);
+    }
+    
+    .carousel-inner .carousel-item-left.active, 
+    .carousel-inner .carousel-item-prev {
+      transform: translateX(-33.333%);
+    }
+}
+
+.carousel-inner .carousel-item-right,
+.carousel-inner .carousel-item-left{ 
+  transform: translateX(0);
+}
 </style>
 <div class="container">
  <div class="main-body">
@@ -67,7 +100,7 @@ color: #c59b08;
         <!-- end col 1-1 -->
         <!-- col 1-2 -->
         <div class="col-sm-12 col-md-6">
-         <h4>{{userprofile.first_name|capfirst}} {{userprofile.last_name|capfirst}}
+         <h4>{{userprofile.first_name|capfirst}} {{userprofile.last_name|capfirst}} ({{userprofile.account_type|capfirst}})
          <span>
           {% if userprofile.user.verification.is_verified %}
            <i class='fas fa-check' style="color:blue;"></i>
@@ -505,9 +538,96 @@ Comment{{ comments.count|pluralize }}</strong>
 </div>
 </div>
 </div>
+<!-- similar -->
+<div class="container text-center my-3">
+ <h2 class="font-weight-light">
+ Similar Profiles
+ </h2>
+ <div class="row mx-auto my-auto">
+  <div id="recipeCarousel" class="carousel slide w-100" data-ride="carousel">
+   <div class="carousel-inner w-100" role="listbox">
+    {% for pro in similar %} {% if pro.user.profileinfo.subject  is not None and pro.account_type is not None %}
+     {% if forloop.first %}
+      <div class="carousel-item active">
+      {% else %}
+       <div class="carousel-item">
+       {% endif %}
+       <div class="col-md-4">
+        <div class="card card-body">
+         
+         <img class="img-fluid" src="{{pro.profile_pic.url}}" style="height: 14rem;">
+            <div style="  position: absolute;
+                  
+                  top: 100;
+                  right:  0.4rem;
+                  border: none;
+                          transition: all .9s;
+        -moz-transform: rotate(-310deg);
+        -webkit-transform: rotate(-310deg);
+        -o-transform: rotate(-310deg);
+        -ms-transform: rotate(-310deg);
+        transform: rotate(-310deg);"
+                  >
+                  <p class="fs-5 fw-bold text-primary bg-light">
+                   {{pro.account_type}}
+                  </p>
+                  
+                  </div>
+         <h5 class="card-title">
+         {{pro.first_name}} {{pro.last_name}}
+         </h5>
+         <p class="card-text text-dark">
+          {{pro.user.profileinfo.subject}}
+          <br>
+          {{pro.region}}
+         </p>
+         <a href="{% url 'dantorial:userprofile' pro.id %}" class="btn btn-primary">See More</a>
+        </div>
+       </div>
+      </div>
+      {% endif %}
+     {% endfor %}
+
+    </div>
+    <a class="carousel-control-prev w-auto" href="#recipeCarousel" role="button" data-slide="prev">
+     <span class="carousel-control-prev-icon bg-dark border border-dark rounded-circle" aria-hidden="true"></span>
+     <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next w-auto" href="#recipeCarousel" role="button" data-slide="next">
+     <span class="carousel-control-next-icon bg-dark border border-dark rounded-circle" aria-hidden="true"></span>
+     <span class="sr-only">Next</span>
+    </a>
+   </div>
+  </div>
+ </div>
+
+
+
+<!-- end similar -->
 <script>
 if (window.history.replaceState) {
 window.history.replaceState(null, null, window.location.href);
 }
+$('#recipeCarousel').carousel({
+    interval: 5000
+})
+
+$('.carousel .carousel-item').each(function() {
+    var minPerSlide = 3;
+    var next = $(this).next();
+    if (!next.length) {
+        next = $(this).siblings(':first');
+    }
+    next.children(':first-child').clone().appendTo($(this));
+
+    for (var i = 0; i < minPerSlide; i++) {
+        next = next.next();
+        if (!next.length) {
+            next = $(this).siblings(':first');
+        }
+
+        next.children(':first-child').clone().appendTo($(this));
+    }
+});
 </script>
 {% endblock content %} {% block extra_body %} {% endblock %}
