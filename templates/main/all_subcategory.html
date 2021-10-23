@@ -170,7 +170,7 @@
           </div>
           <!-- end image -->
           <!-- description -->
-          <div class="col-sm-7 col-md-8 p-0">
+          <div class="col-sm-7 col-md-8 p-3">
             <div class="card-body p-0">
               {{p.review_set.all}}
               <h5 class="card-title">{{ p.first_name }} {{ p.last_name|default:'' }}  ({{p.account_type|capfirst}})
@@ -207,8 +207,7 @@
               </li>
             </ul>
             <div class="card-footer bg-white">
-              <a class="btn btn-danger card-link d-grid mb-2" href="{% url 'dantorial:userprofile' p.id %}">Read
-              more →</a>
+              <a class="btn btn-danger card-link d-grid mb-2" href="{% url 'dantorial:userprofile' p.id %}">View Profile →</a>
             </div>
           </div>
           <!-- end description -->

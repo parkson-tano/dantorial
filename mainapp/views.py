@@ -95,10 +95,13 @@ class UserProfileView(DetailView):
         user_rating = Review.objects.filter(profile=self.get_object()).aggregate(Avg('rating'))
         similar = ProfilePersonal.objects.filter(Q(user__profileinfo__subject=self.get_object().user.profileinfo.subject)
          | Q(user__profileinfo__subcategory=self.get_object().user.profileinfo.subcategory) | Q(user__profileinfo__category=self.get_object().user.profileinfo.category))
+        pro = ProfilePersonal.objects.filter(paid = True)
         context["comments"] = comments_connected
         context['comment_form'] = ReviewForm 
         context['message'] = MessageForm
         context['similar'] = similar
+        context['prof'] = pro
+
         ur = user_rating['rating__avg']
         urr = str(ur)
 
