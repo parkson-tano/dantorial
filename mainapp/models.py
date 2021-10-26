@@ -103,32 +103,33 @@ class ProfilePersonal(models.Model):
     first_name = models.CharField(max_length=30,null=True, blank=True)
     last_name = models.CharField(max_length=30, null=True, blank=True)
     phone_number = models.CharField(max_length=15, null=True, blank=True)
-    country = models.ForeignKey(Country, on_delete=models.PROTECT, default='1')
+    country = models.ForeignKey(Country, on_delete=models.PROTECT, null=True)
     region = ChainedForeignKey(Region, chained_field="country",
         chained_model_field="country",
         show_all=False,
         auto_choose=True,
         sort=True,
-        default=1)
-    city =  ChainedForeignKey(City, chained_field="region",
+        null=True,)
+    town =  ChainedForeignKey(Town, chained_field="region",
         chained_model_field="region",
         show_all=False,
         auto_choose=True,
         sort=True,
-        default=1)
-    # subregion = ChainedForeignKey(SubRegion, chained_field="region",
-    #     chained_model_field="region",
-    #     show_all=False,
-    #     auto_choose=True,
-    #     sort=True)
+        null=True,)
+    quater = ChainedForeignKey(Quater, chained_field="town",
+        chained_model_field="town",
+        show_all=False,
+        auto_choose=True,
+        sort=True,
+        null=True,)
     # city = ChainedForeignKey(City, chained_field="subregion",
     #     chained_model_field="subregion",
     #     show_all=False,
     #     auto_choose=True,
     #     sort=True)
     date_of_birth = models.DateField(default=timezone.now)
-    address_1 = models.CharField(max_length=50, null=True)
-    address_2 = models.CharField(max_length=50, null=True, blank=True)
+    # address_1 = models.CharField(max_length=50, null=True)
+    # address_2 = models.CharField(max_length=50, null=True, blank=True)
     level_of_education = models.CharField(max_length=50, choices=EL, null=True, blank=True)
     date_of_birth = models.DateField(default=timezone.now)
     view_count = models.PositiveIntegerField(default=0)
@@ -348,7 +349,7 @@ class HowToUse(models.Model):
         if img.height >200 or img.width>200:
             output_size = (150,150)
             img.thumbnail(output_size)
-            img.save(self.profile_pic.path)
+            img.save(self.image.path)
 
 class ProfileViewed(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user', null=True, blank=True)
@@ -357,3 +358,18 @@ class ProfileViewed(models.Model):
 
     def __str__(self):
         return str(self.user.username)
+
+class SearchHistory(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    result = models.ManyToManyField(ProfilePersonal, null=True, blank=True)
+    account_type = models.CharField(max_length=50, null=True, blank=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True)
+    subcategory = models.ForeignKey(SubCategory, on_delete=models.CASCADE, null=True, blank=True)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE, null=True, blank=True)
+    region = models.ForeignKey(Region, on_delete=models.CASCADE, null=True, blank=True)
+    town = models.ForeignKey(Town, on_delete=models.CASCADE, null=True, blank=True)
+    gender = models.CharField(max_length=50, null=True, blank=True)
+    charge = models.CharField(max_length=50, null=True, blank=True)
+    date_created = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return str(self.user.profilepersonal) + " search"

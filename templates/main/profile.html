@@ -1,5 +1,6 @@
-{% extends "base.html" %} {% load crispy_forms_tags %} {% block title %} profile {% endblock title %} {% block content %}
-
+{% extends "base.html" %}
+{% load humanize %}
+{% load crispy_forms_tags %} {% block title %} profile {% endblock title %} {% block content %}
 <div class="container-fluid p-0">
     <div class="row mt-5">
         <div class="col-sm-4 col-md-4 col-lg-3 mx-auto">
@@ -109,7 +110,7 @@
                                     <h6 class="mb-0 text-secondary ">Phone</h6>
                                 </div>
                                 <div class="col-sm-6">
-                                    {{profile.country.phone}}{{profile.phone_number}}
+                                    {{profile.country.code}} {{profile.phone_number}}
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -138,6 +139,22 @@
                             </div>
                             <div class="row mb-3">
                                 <div class="col-sm-6">
+                                    <h6 class="mb-0 text-secondary ">Town</h6>
+                                </div>
+                                <div class="col-sm-6">
+                                    {{profile.town}}
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-6">
+                                    <h6 class="mb-0 text-secondary">Quater</h6>
+                                </div>
+                                <div class="col-sm-6">
+                                    {{profile.quater}}
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-6">
                                     <h6 class="mb-0 text-secondary ">Education Level</h6>
                                 </div>
                                 <div class="col-sm-6">
@@ -150,22 +167,6 @@
                                 </div>
                                 <div class="col-sm-6">
                                     {{profile.date_of_birth}}
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-sm-6">
-                                    <h6 class="mb-0 text-secondary ">Address</h6>
-                                </div>
-                                <div class="col-sm-6">
-                                    {{profile.address_1}}
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-sm-6">
-                                    <h6 class="mb-0 text-secondary">Address#2</h6>
-                                </div>
-                                <div class="col-sm-6">
-                                    {{profile.address_2}}
                                 </div>
                             </div>
                             <div class="row mb-auto">

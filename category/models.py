@@ -1,6 +1,7 @@
 from django.db import models
 from autoslug import AutoSlugField
 from django.urls import reverse
+from PIL import Image
 # Create your models here.
 
 # class Section(models.Model):
@@ -27,6 +28,14 @@ class Category(models.Model):
 
     def get_absolute_url(self):
         return reverse("dantorial:category", kwargs={"slug": self.slug})
+    # def save(self, *args, **kwargs):
+    #     super().save(*args, **kwargs)
+
+    #     img = Image.open(self.image.path)
+    #     if img.height >200 or img.width>200:
+    #         output_size = (200,200)
+    #         img.thumbnail(output_size)
+    #         img.save(self.image.path)
 
 class SubCategory(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
@@ -40,7 +49,14 @@ class SubCategory(models.Model):
 
     def get_absolute_url(self):
         return reverse("dantorial:subcategory", kwargs={"category_slug": self.category.slug, 'subcat_slug': self.id})
+    # def save(self, *args, **kwargs):
+    #     super().save(*args, **kwargs)
 
+    #     img = Image.open(self.image.path)
+    #     if img.height >200 or img.width>200:
+    #         output_size = (300,300)
+    #         img.thumbnail(output_size)
+    #         img.save(self.image.path)
 class Subject(models.Model):
     subcategory = models.ForeignKey(SubCategory, on_delete=models.CASCADE)
     name = models.CharField(max_length = 40)
@@ -53,3 +69,11 @@ class Subject(models.Model):
 
     def get_absolute_url(self):
         return reverse("dantorial:subject", kwargs={"category_slug": self.subcategory.category.slug, 'subcat_slug': self.subcategory.id, "subject_slug": self.slug})
+    # def save(self, *args, **kwargs):
+    #     super().save(*args, **kwargs)
+
+    #     img = Image.open(self.image.path)
+    #     if img.height >200 or img.width>200:
+    #         output_size = (300,300)
+    #         img.thumbnail(output_size)
+    #         img.save(self.image.path)

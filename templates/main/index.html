@@ -77,12 +77,12 @@
     </div>
 </div>
 {% endblock carousel %} {% block content %}
-<form action="{% url 'dantorial:search' %}" class="h-500 p-sm-5 mx-auto text-dark bg-dark rounded-5 mt-auto">
+<form action="{% url 'dantorial:search' %}" class="mx-auto text-dark bg-dark rounded-5 mt-auto">
     <div class="row align-items-md-stretch mx-0 p-3">
         <div class="col-sm-3 col-lg-2 col-12">
             <div class="input-group mb-3">
                 <select name='typ' class="form-select" id="inputGroupSelect02">
-                    <!-- <option selected>Who are you?</option> -->
+                    <option disabled>Who are you looking for?</option>
                     <option value="tutor" selected>Teacher</option>
                     <option value="student">Student</option>
                 </select>
@@ -98,17 +98,21 @@
             </div>
         </div>
         <div class="col-sm-4 col-xs-12 col-lg-3 padding-minimum">
-                <select name="subject" id="select2-multiple-input" class=" select2 form-control select2-container input-lg step2-select">
+            
+            <select name="subject" id="select2-multiple-input" class="select2 form-control select2-container input-lg step2-select">
                     {% for sub in all_sub %}
+
                     <option value="{{sub.id}}">{{ sub.name }}</option>
                     {% endfor %}
-                </select>
+                </select>    
+            
+                
             
         </div>
         <div class="col-sm-3 col-lg-2 ">
             <div class="input-group mb-3">
                 <select name='region' class="form-select select-picker" id="inputGroupSelect02" data-live-search="true">
-                    <option>Select Region</option>
+                    <option disabled>Select Region</option>
                     {% for reg in region %}
                     <option value="{{reg.id}}">{{ reg.name }}</option>
                     {% endfor %}
@@ -116,12 +120,16 @@
             </div>
         </div>
         <div class="col-sm-5 col-lg-2">
-            <div class="input-group mb-3">
-                <input name='quater' type="text" class="form-control" placeholder="Quater" aria-label="Quater" aria-describedby="basic-addon1" />
+            <div class="input-group mb-sm-3">
+                <select name='quater' class="town form-control select2-container input-lg step2-select">
+                    {% for quat in quater %}
+                    <option value="{{quat.id}}">{{ quat.name }} {{quat.town}}</option>
+                    {% endfor %}
+                </select>
             </div>
         </div>
 
-        <div class="col-sm-4 col-lg-1 d-block">
+        <div class="col-sm-3 col-lg-1 d-block">
             <button class="btn btn-primary" type="submit">Search</button>
         </div>
     </div>
@@ -140,7 +148,7 @@
                 {% for cat in all_cat_ind %}
                 <div class="col-sm-6 col-lg-3 mt-2">
                     <div class="card" style="width: 100%">
-                        <img src="{{cat.image.url}}" class="card-img-top" alt="..." />
+                        <img src="{{cat.image.url}}" class="card-img-top" alt="..." / style="height: 200px;">
                         <div class="card-body">
                             <a href="{% url 'dantorial:category' cat.slug %}" class="card-link">
                                 <h3 class="card-title text-center mb-3 fw-dark fs-3"> {{cat.name}} </h3>
@@ -216,7 +224,7 @@
                     {% for subcat in all_subcat_ind %}
                     <div class="col-sm-6 col-lg-3 mt-2">
                         <div class="card" style="width: 100%">
-                            <img src="{{subcat.image.url}}" class="card-img-top rounded" alt="..." />
+                            <img src="{{subcat.image.url}}" class="card-img-top rounded" alt="..." style="height: 200px;"/>
                             <div class="card-body">
                                 <h3 class="card-title text-center mb-3 fw-dark fs-3">
                                     <a href="{% url 'dantorial:subcategory' subcat.category.slug subcat.id %}" class="card-link">
@@ -241,7 +249,7 @@
                     {% for sub in all_sub_ind %}
                     <div class="col-sm-6 col-lg-3 mt-2">
                         <div class="card" style="width: 100%">
-                            <img src="{{ sub.image.url }}" class="card-img-top rounded" alt="..." />
+                            <img src="{{ sub.image.url }}" class="card-img-top rounded" alt="..." style="height: 200px;"/>
                             <div class="card-body">
                                 <a href="{% url 'dantorial:subject' sub.subcategory.category.slug sub.subcategory.id sub.slug %}" class="card-link">
                                     <h3 class="card-title text-center mb-3 fw-dark fs-4"> {{sub.name}} </h3>
@@ -261,7 +269,7 @@
                 {% for caro in how %}
                 <div class="col-lg-4 col-md-4 col-sm-4 me-0 ml-0 mb-2 p-2">
                     <div class="card y-0 mr-auto ml-auto me-0" style="width: 100%">
-                        <img src="{{caro.image.url}}" class="card-img-top rounded-circle mr-auto ml-auto" alt="..." style="width: 150px" />
+                        <img src="{{caro.image.url}}" class="card-img-top rounded-circle mr-auto ml-auto" alt="..." style="width: 150px; height:150px; " />
                         <div class="card-body">
                             <h3 class="card-text text-center mb-3 fw-dark fs-5">{{caro.how_text}}</h3>
                         </div>

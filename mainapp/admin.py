@@ -3,8 +3,8 @@ from .models import *
 # Register your models here.
 
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ['user','account_type', 'first_name', 'phone_number', 'region', 'level_of_education' ]
-    list_filter = ['account_type','region', 'level_of_education' ]
+    list_display = ['user','account_type', 'first_name', 'phone_number', 'level_of_education' ]
+    list_filter = ['account_type', 'level_of_education' ]
 
 
 class TutorProfileAdmin(admin.ModelAdmin):
@@ -49,4 +49,4 @@ admin.site.register(Booked)
 admin.site.register(Verification)
 admin.site.register(Upgrade, UpgradeAdmin)
 admin.site.register(ProfileViewed, ProfileViewedAdmin)
-admin.site.register([About, OurTeam,  HowToUse])
+admin.site.register([About, OurTeam,  HowToUse, SearchHistory])

@@ -23,6 +23,9 @@ class CategoryView(TemplateView):
         # rating = Review.objects.filter(profile=get_pro())
         # user_rating = Review.objects.filter(profile=self.get_object()).aggregate(Avg('rating'))
         # pro = random.shuffle(list(pro))
+        if self.request.user.is_authenticated:
+            fav = ProfilePersonal.objects.get(id=self.request.user.profilepersonal.id)
+            context['fav'] = fav
         context['category'] = category
         context['subcat'] = subcat
         context['pro'] = pro
@@ -50,6 +53,9 @@ class SubcategoryView(View):
         context = {}
         subject = Subject.objects.filter(subcategory = subcate)
         pro = ProfilePersonal.objects.filter(user__profileinfo__subcategory=subcat_slug)
+        if self.request.user.is_authenticated:
+            fav = ProfilePersonal.objects.get(id=self.request.user.profilepersonal.id)
+            context['fav'] = fav
         # context["subcat"] = subcat
         context['subcat'] = subcate
         context['subject'] = subject
@@ -76,6 +82,9 @@ class SubjectView(View):
         
         subject = Subject.objects.filter(subcategory = subcate)
         pro = ProfilePersonal.objects.filter(user__profileinfo__subject__slug=subject_slug)
+        if self.request.user.is_authenticated:
+            fav = ProfilePersonal.objects.get(id=self.request.user.profilepersonal.id)
+            context['fav'] = fav
         context['sub'] = subject_slug      
         context['subject'] = subject
         context['pro'] = pro        
@@ -108,6 +117,9 @@ class AllSubCategoryView(TemplateView):
         context = super().get_context_data(**kwargs)
         subcategory = SubCategory.objects.all()
         pro = ProfilePersonal.objects.all()
+        if self.request.user.is_authenticated:
+            fav = ProfilePersonal.objects.get(id=self.request.user.profilepersonal.id)
+            context['fav'] = fav
         context["pro"] = pro
         context['subcat'] = subcategory 
         return context
@@ -119,6 +131,9 @@ class AllSubjectView(TemplateView):
         context = super().get_context_data(**kwargs)
         subject = Subject.objects.all()
         pro = ProfilePersonal.objects.all()
+        if self.request.user.is_authenticated:
+            fav = ProfilePersonal.objects.get(id=self.request.user.profilepersonal.id)
+            context['fav'] = fav
         context["pro"] = pro
         context['sub'] = subject
         return context

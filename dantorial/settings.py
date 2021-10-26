@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'review',
     'autoslug',
     'location',
-    'cities_light',
+    # 'cities_light',
     'crispy_forms',
     'crispy_tailwind',
     'dani',
@@ -63,7 +63,7 @@ INSTALLED_APPS = [
     "django_notification_system",
     'api',
     'rest_framework',
-    "translation_manager",
+    # "translation_manager",
     'django.contrib.humanize',
 
 ]
@@ -236,13 +236,13 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 
-CITIES_LIGHT_APP_NAME = 'location'
-CITIES_LIGHT_TRANSLATION_LANGUAGES = ['fr', 'en']
-CITIES_LIGHT_INCLUDE_CONTINENTS = ['AF']
-CITIES_LIGHT_INCLUDE_COUNTRIES = ['CM']
-CITIES_LIGHT_INCLUDE_CITY_TYPES = ['PPL', 'PPLA', 'PPLA2', 'PPLA3', 'PPLA4', 'PPLC', 'PPLF', 'PPLG', 'PPLL', 'PPLR', 'PPLS', 'STLMT',]
+# CITIES_LIGHT_APP_NAME = 'location'
+# CITIES_LIGHT_TRANSLATION_LANGUAGES = ['fr', 'en']
+# CITIES_LIGHT_INCLUDE_CONTINENTS = ['AF']
+# CITIES_LIGHT_INCLUDE_COUNTRIES = ['CM']
+# CITIES_LIGHT_INCLUDE_CITY_TYPES = ['PPL', 'PPLA', 'PPLA2', 'PPLA3', 'PPLA4', 'PPLC', 'PPLF', 'PPLG', 'PPLL', 'PPLR', 'PPLS', 'STLMT',]
 
-SITE_ID = 2
+SITE_ID = 3
 
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'

@@ -9,7 +9,6 @@ from requests.api import request
 from .models import *
 from django.utils.decorators import method_decorator
 from django.http import Http404
-from location.models import Country, City, Region, SubRegion
 from category.models import Category, SubCategory
 from .forms import (AddSubjectForm, UserLoginForm, UserRegistrationForm, VerificationForm,
 PersonalProfileForm, ProfileInfoForm, AddExperienceForm, AddQualificationForm, UpgradeForm)
@@ -27,7 +26,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm, UserChangeForm, PasswordResetForm
 from django.core.paginator import Paginator
 from django.db.models import Q
-from location.models import Country, Region, SubRegion, City
+from location.models import Country, Region, Town, Quater
 from itertools import chain
 from review.models import Review
 from review.forms import ReviewForm
@@ -551,11 +550,13 @@ class SearchView(TemplateView):
         category = self.request.GET['category']
         quater = self.request.GET['quater']
         user_obj = User.objects.all()
-        profile_result = ProfilePersonal.objects.filter(Q(account_type = acc_type)).filter(Q(address_1__icontains = quater) | Q(address_2__icontains = quater) & Q(user__profileinfo__category = category) & Q(user__profileinfo__subject = subject))
+        profile_result = ProfilePersonal.objects.filter(Q(account_type = acc_type)).filter(Q(quater = quater)  & Q(user__profileinfo__category = category) & Q(user__profileinfo__subject = subject))
         # subject = Subject.objects.filter(subject = subject).order_by('user')
         # final = list(set(list(chain(subject, profile_result))))
         # finals = list(set(final))
-
+        if self.request.user.is_authenticated:
+            fav = ProfilePersonal.objects.get(id=self.request.user.profilepersonal.id)
+            context['fav'] = fav
         print(profile_result)
         # print(subject)
         # print(f'final: {final}')
@@ -575,14 +576,18 @@ class FilterView(TemplateView):
         charge = self.request.GET['charge']
         gender = self.request.GET['gender']
         education = self.request.GET['education']
+        region = self.request.GET['region']
+        town = self.request.GET['town']
+        # print(acc_type, subject, category, quater, charge, gender, education, region, town)
         user_obj = User.objects.all()
-        profile_result = ProfilePersonal.objects.filter(Q(account_type = acc_type)).filter(Q(address_1__icontains = quater) 
-            | Q(address_2__icontains = quater) & Q(gender = gender) & Q(level_of_education = education) & Q(user__profileinfo__category = category) 
+        profile_result = ProfilePersonal.objects.filter(Q(account_type = acc_type)).filter(Q(quater = quater) | Q(region=region) | Q(town=town)  & Q(gender = gender) & Q(level_of_education = education) & Q(user__profileinfo__category = category) 
             & Q(user__profileinfo__subject = subject) & Q(user__profileinfo__charge = charge))
         # subject = Subject.objects.filter(subject = subject).order_by('user')
         # final = list(set(list(chain(subject, profile_result))))
         # finals = list(set(final))
-
+        if self.request.user.is_authenticated:
+            fav = ProfilePersonal.objects.get(id=self.request.user.profilepersonal.id)
+            context['fav'] = fav
         print(profile_result)
         # print(subject)
         # print(f'final: {final}')
@@ -596,7 +601,10 @@ class SearchAllView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         kw = self.request.GET['keywords']
-        result = ProfilePersonal.objects.filter(Q(first_name__icontains=kw) | Q(last_name__icontains=kw) | Q(user__profileinfo__bio__icontains=kw) | Q(user__profileinfo__experience__icontains=kw))
+        result = ProfilePersonal.objects.filter(Q(first_name__icontains=kw) | Q(last_name__icontains=kw) | Q(user__profileinfo__subject__name__icontains=kw) | Q(user__profileinfo__category__name__icontains=kw) | Q(user__profileinfo__subcategory__name__icontains=kw) | Q(user__profileinfo__experience__icontains=kw))
+        if self.request.user.is_authenticated:
+            fav = ProfilePersonal.objects.get(id=self.request.user.profilepersonal.id)
+            context['fav'] = fav
         context["result"] = result
         return context
 

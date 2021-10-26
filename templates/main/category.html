@@ -58,13 +58,21 @@
             </select>
           </div>
         </div>
+        <div class="col-12">
+          <div class="input-group mb-3">
+            <select name='subcategory' class="form-select select-picker" id="inputGroupSelect02" data-live-search="true" data-placeholder="Select an option" data-allow-clear="true">
+              {% for subcat in all_subcat %}
+                <option value="{{subcat.id}}">{{ subcat.name }} </option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
         <div class="col-12 padding-minimum">
-          <select name='subject' id="select2-multiple-input" class=" select2 form-control select2-container input-lg step2-select">
+          <select name='subject' id="select2-multiple-input" class="select2 form-control select2-container input-lg step2-select">
             {% for sub in all_sub %}
               <option value="{{sub.id}}">{{ sub.name }}</option>
             {% endfor %}
           </select>
-          
         </div>
         <div class="col-12 ">
           <div class="input-group mb-3">
@@ -100,9 +108,20 @@
           </div>
         </div>
         <div class="col-12">
-          <div class="input-group mb-3">
-            <input name='quater' type="text" class="form-control" placeholder="Quater" aria-label="Quater" aria-describedby="basic-addon1" />
-          </div>
+          <select name='town' class="town form-control select2-container input-lg step2-select">
+            {% for town in town %}
+              <option value="{{town.id}}">{{ town.name }}</option>
+            {% endfor %}
+          </select>
+          
+        </div>
+        <div class="col-12">
+          <select name='quater' class="quater form-control select2-container input-lg step2-select">
+            {% for quat in quater %}
+              <option value="{{quat.id}}">{{ quat.name }} {{quat.town}}</option>
+            {% endfor %}
+          </select>
+          
         </div>
         <div class="col-12 d-grid">
           <button class="btn btn-primary" type="submit">Filter</button>
@@ -135,9 +154,6 @@
           <!-- image -->
           <div class="col-sm-5 col-md-4">
             <div class="card">
-              <div class="card-header" style="  position: relative;
-                text-align: center;
-                ">
                 <a href="{{p.profile_pic.url}}"><img class="card-img" src="{{p.profile_pic.url}}" alt="..." style='height:14rem; width:100%;'>
                 </a>
                 {% if p.user in fav.favourite.all %}
@@ -164,11 +180,11 @@
                   </button>
                 {% endif %}
               </div>
-            </div>
+          
           </div>
           <!-- end image -->
           <!-- description -->
-          <div class="col-sm-7 col-md-8 p-3">
+          <div class="col-sm-7 col-md-8">
             <div class="card-body p-0">
               {{p.review_set.all}}
               <h5 class="card-title">{{ p.first_name }} {{ p.last_name|default:'' }}  ({{p.account_type|capfirst}})
@@ -186,7 +202,7 @@
             <ul class="list-group list-group-flush">
               <li class="list-group-item p-0 mt-2">
                 <p class="font-weight-italic">
-                  {{p.address_1}}, {{p.region}}
+                  {{p.region}} {{p.town}}
                 </p>
               </li>
               <li class="list-group-item p-0">

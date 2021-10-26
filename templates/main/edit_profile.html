@@ -65,36 +65,34 @@
                     </div>
                     
                     
-                    <div class="col-md-3">
+                    <div class="col-md-6">
                       {{form.country|as_crispy_field}}
                     </div>
                     
-                    <div class="col-3 form-group">
+<!--                     <div class="col-3 form-group">
                       <label>Code</label>
                       <select class='form-control input-group-prepend'>
                         {% for c in country %}
                           <option value='{{c.code}}'>
-                            +{{c.phone}}
+                            +{{c.code}}
                           </option>
                         {% endfor %}
                       </select>
-                    </div>
-                    <div class="col-6 col-sm-9 col-md-6">
+                    </div> -->
+                    <div class="col-md-6">
                       {{form.phone_number|as_crispy_field}}
                     </div>
                             
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                       {{form.region|as_crispy_field}}
                     </div>
-                    <div class="col-md-3">
-                      {{form.city|as_crispy_field}}
-                    </div>
-                    <div class="col-md-5">
-                      {{form.address_1|as_crispy_field}}
+                    <div class="col-md-4">
+                      {{form.town|as_crispy_field}}
                     </div>
                     <div class="col-md-4">
-                      {{form.address_2|as_crispy_field}}
+                      {{form.quater|as_crispy_field}}
                     </div>
+              
                     
                     <div class="col-md-6">
                       {{form.date_of_birth|as_crispy_field}}
