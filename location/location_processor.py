@@ -12,7 +12,7 @@ def location_renderer(request):
         'region' : Region.objects.all(),
         'town' : Town.objects.all(),
         'quater': Quater.objects.all(),
-        'about': About.objects.all(),
+        'about': About.objects.get(id=1),
         'team': OurTeam.objects.all(),
         'how':  HowToUse.objects.all(),
         'messags': messags,
