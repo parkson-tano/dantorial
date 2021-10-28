@@ -242,19 +242,20 @@ position: relative;
         {% if user.profilepersonal.account_type == 'tutor' %} Suggested Students {% else %} Suggested Tutors {% endif %}
       </div>
       <div class="card-body">
-        {% for s in suggested %}
             <div class="row mb-3 h-20">
-          <!-- image -->
+    
+          {% for s in suggested %}
+                <!-- image -->
 
-          <div class="col-sm-6 col-md-12">
+   <!--        <div class="col-sm-1 col-md-12">
             <div class="card" style="border: 0;">
             
-                <a href="{{s.profile_pic.url}}"><img class="card-img" src="{{s.profile_pic.url}}" alt="..." style='height:7rem; width:100%;'>
+                <a href="{{s.profile_pic.url}}"><img class="card-img" src="{{s.profile_pic.url}}" alt="..." style='height:7rem; width:100%; border-raduis:100px;'>
                 </a>
 
-              </div>
-          
-          </div>
+              </div> -->
+          <!-- 
+          </div> -->
           <!-- end image -->
           <!-- description -->
           <div class="col-sm-6 col-md-12">
@@ -281,11 +282,11 @@ position: relative;
               </li>
             </ul>
           
-          </div></a>
+          </div></a>{% endfor %}
           <!-- end description -->
         </div>
       
-        {% endfor %}
+        
       </div>
     </div>
   </div>
