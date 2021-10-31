@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'rest_framework',
     # "translation_manager",
     'django.contrib.humanize',
+    'mathfilters',
 
 ]
 

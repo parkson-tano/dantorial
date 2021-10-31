@@ -1,7 +1,7 @@
 from mainapp.models import ProfilePersonal, ProfileInfo, Subject, Qualification, Experience
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from category.models import Category
+from category.models import Category, SubCategory, Subject
 
 class UserSerializer(serializers.ModelSerializer):
 	class Meta:
@@ -37,3 +37,13 @@ class CategorySerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Category
 		fields = "__all__"
+
+class SubCategorySerializer(serializers.ModelSerializer):
+	class Meta:
+		model = SubCategory
+		fields = ('id', 'name')
+
+class AllSubjectSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Subject
+		fields = ('id', 'name')

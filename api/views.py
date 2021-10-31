@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .serializers import *
 from mainapp.models import ProfilePersonal, ProfileInfo, Subject, Qualification, Experience
 from rest_framework import viewsets
-from category.models import Category
+from category.models import Category, SubCategory, Subject
 # Create your views here.
 
 class UserView(viewsets.ModelViewSet):
@@ -32,3 +32,11 @@ class ExperienceView(viewsets.ModelViewSet):
 class CategoryView(viewsets.ModelViewSet):
 	queryset = Category.objects.all()
 	serializer_class = CategorySerializer
+
+class SubCategoryView(viewsets.ModelViewSet):
+	queryset = SubCategory.objects.all()
+	serializer_class = SubCategorySerializer
+
+class AllSubjectView(viewsets.ModelViewSet):
+	queryset = Subject.objects.all()
+	serializer_class = AllSubjectSerializer
