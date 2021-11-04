@@ -1,82 +1,93 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load mathfilters %}
-{% load static %} {% block title %} dantorial {%endblock title %} {% block carousel %}
-
+{% load static %} {% block title %} tantorial {%endblock title %} 
+<style>
+.bg-cover {
+    background-size: cover !important;
+    height: 100vh;
+    width: 100%;
+}
+/*h1 {
+  font-size: 72px;
+  background: -webkit-linear-gradient(#eee, #333);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}*/
+</style>
+{% block carousel %}
+<!-- <div style="background: url(https://bootstrapious.com/i/snippets/sn-static-header/background.jpg)" class="jumbotron bg-cover text-white" style="height:100vh"> -->
+<!-- <div>
+    <img class="bd-placeholder-img" src="static/images/carousel/1_5aqZvwOMZAugvA66ahUYeA.jpeg" alt="" style="
+    max-height: 100vh;
+    max-width: 100%;
+    height:100vh;
+    width: 100%;
+    display: block;
+    " />
+        <h1 class="display-sm-2 display-4 font-weight-bold">
+        <p class="typewrite mb-2 fw-bold text-center mt-5" data-period="2000" data-type='[ "Welcome to Tantorial", "Find your Perfect Tutor", "Get Connected to Students"]'>
+            <span class="wrap"></span>
+        </p>
+        </h1>
+        <p class="mb-5 fs-3 fw-bold text-center ">
+            Book one-on-one lessons with verified instructors close to you.
+        </p>
+</div> -->
+<!-- For Demo Purpose --> 
 <div id="myCarousel" class="carousel slide mt-5" data-bs-ride="carousel" >
-    <div class="carousel-indicators">
-        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-    </div>
     <div class="carousel-inner">
-        {% for caro in carousel|slice:":3" %} {% if forloop.first %}
         <div class="carousel-item active" data-bs-interval="30000">
-            {% else %}
-            <div class="carousel-item" data-bs-interval="30000">
-                {% endif %}
-                <img class="bd-placeholder-img" src="{{ caro.image.url }}" alt="" style="
+            <img class="bd-placeholder-img" src="static/bgimg.jpg" alt="" style="
             max-height: 100vh;
             max-width: 100%;
             height:100vh;
             width: 100%;
             display: block;
-          " />
-                <div class="container">
-                    <div class="carousel-caption text-center mb-5">
-                        <div style="margin-bottom:10rem;">
-                          <h5>{{ caro.title }}</h5>
-                        <p class="mb-2 fs-1 fw-bold text-center">
-                            {% trans "Find Your Perfect Tutor" %} <br>
-
-                            </p>  
-                            <p class="mb-5 fs-3 fw-bold text-center ">
+            opacity: 0.7;
+            " />
+            <div class="container">
+                <div class="carousel-caption text-center mb-5">
+                    <div style="margin-bottom:10em;">
+                        <h1 class="fs-sm-3 fs-md-2 fw-bold" >
+                        <p class="typewrite mb-2 fw-bold text-center mt-5 bg-dark" data-period="2000" data-type='[ "Welcome to Tantorial", "Find your Perfect Tutor", "Get Connected to Students"]' style="
+  background: -webkit-linear-gradient(#ed3, #3a3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;">
+                            <span class="wrap"></span>
+                        </p>
+                        </h1>
+<!--                         <p class="mb-5 fs-3 fw-bold text-center" style="  font-size: 72px;
+  background: -webkit-linear-gradient(#eee, #333);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;">
                             Book one-on-one lessons with verified instructors close to you.
-
-                            </p>  
-                            
-
-                        <a href="{% url 'account_signup' %}" class='btn btn-primary mt-3 text-center fw-bold text-uppercase' style="border-radius:40px; width:80%; padding:10px">
+                        </p> -->
+                        <div class="row justify-content-center">
+                            <div class="col col-sm-12 col-md-8">
+                                <form action="{% url 'dantorial:allsearch' %}">
+                                    <div class="input-group mt-5">
+                                        <input class="form-control form-control-lg form-control-borderless" type="text" placeholder="Just Search....." aria-label="Enter search term..." aria-describedby="button-search" name='keywords' / style="border-radius:40px;">
+                                        <button class="btn btn-primary" id="button-search" type="submit" style="border-radius:40px;">
+                                        <i class='fa fa-search'></i>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                         
-                        Register Now
-                    </a>  
-<div class="row justify-content-center">
-    <div class="col col-sm-12 col-md-8">
-        <form action="{% url 'dantorial:allsearch' %}">
-            <div class="input-group mt-5">
-                <input class="form-control form-control-lg form-control-borderless" type="text" placeholder="What do you want" aria-label="Enter search term..." aria-describedby="button-search" name='keywords' / style="border-radius:40px;">
-                <button class="btn btn-primary" id="button-search" type="submit" style="border-radius:40px;">
-                <i class='fa fa-search'></i>
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
-
-                                                    
-
                         <!-- endform -->
                         
-                        </div>
-                        <!-- form -->
-                     
-
-
                     </div>
+                    <!-- form -->
+                    
                 </div>
             </div>
-            {% endfor %}
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
     </div>
 </div>
+
+
 {% endblock carousel %} {% block content %}
 <form action="{% url 'dantorial:search' %}" class="mx-auto text-dark bg-dark rounded-5 mt-auto">
     <div class="row align-items-md-stretch mx-0 p-3">
@@ -142,18 +153,6 @@
   data-width="450"
   data-show-faces="true">
 </div> -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2235358777308916"
-     crossorigin="anonymous"></script>
-<!-- display ads -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2235358777308916"
-     data-ad-slot="6386755545"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
     <div class="row mb-5">
         <div class="col-lg-12">
             <h3 class="text-center mb-3 fw-dark fs-3">Browse By Category</h3>
@@ -230,18 +229,6 @@
                     
                 </div>
             </div>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2235358777308916"
-     crossorigin="anonymous"></script>
-<!-- display ads -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2235358777308916"
-     data-ad-slot="6386755545"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
             <div class="mb-5">
                 <h3 class="text-center mb-3 fw-dark fs-3">Browse By SubCategory</h3>
                 <div class="row">
@@ -303,18 +290,65 @@
             </div>
         </div>
     </div>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2235358777308916"
-     crossorigin="anonymous"></script>
-<!-- display ads -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2235358777308916"
-     data-ad-slot="6386755545"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
 </div>
+
+<script>
+    var TxtType = function(el, toRotate, period) {
+        this.toRotate = toRotate;
+        this.el = el;
+        this.loopNum = 0;
+        this.period = parseInt(period, 10) || 2000;
+        this.txt = '';
+        this.tick();
+        this.isDeleting = false;
+    };
+
+    TxtType.prototype.tick = function() {
+        var i = this.loopNum % this.toRotate.length;
+        var fullTxt = this.toRotate[i];
+
+        if (this.isDeleting) {
+        this.txt = fullTxt.substring(0, this.txt.length - 1);
+        } else {
+        this.txt = fullTxt.substring(0, this.txt.length + 1);
+        }
+
+        this.el.innerHTML = '<span class="wrap">'+this.txt+'</span>';
+
+        var that = this;
+        var delta = 200 - Math.random() * 100;
+
+        if (this.isDeleting) { delta /= 2; }
+
+        if (!this.isDeleting && this.txt === fullTxt) {
+        delta = this.period;
+        this.isDeleting = true;
+        } else if (this.isDeleting && this.txt === '') {
+        this.isDeleting = false;
+        this.loopNum++;
+        delta = 500;
+        }
+
+        setTimeout(function() {
+        that.tick();
+        }, delta);
+    };
+
+    window.onload = function() {
+        var elements = document.getElementsByClassName('typewrite');
+        for (var i=0; i<elements.length; i++) {
+            var toRotate = elements[i].getAttribute('data-type');
+            var period = elements[i].getAttribute('data-period');
+            if (toRotate) {
+              new TxtType(elements[i], JSON.parse(toRotate), period);
+            }
+        }
+        // INJECT CSS
+        var css = document.createElement("style");
+        css.type = "text/css";
+        css.innerHTML = ".typewrite > .wrap { border-right: 0.08em solid #fff}";
+        document.body.appendChild(css);
+    };
+</script>
 
 {% endblock content %}

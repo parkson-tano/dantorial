@@ -3,6 +3,7 @@
 <!doctype html>
 <html lang="en">
 
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -32,6 +33,15 @@
     <!--   <script data-ad-client="ca-pub-2235358777308916" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
     {% load bootstrap4 %} {% bootstrap_css %} {% bootstrap_javascript jquery='full' %}
 </head>
+<style>
+    a {
+        color: black;
+    }
+    a:hover {
+        color: black;
+        text-decoration: none;
+    }
+</style>
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top ">
         <div class="container-fluid">
@@ -146,7 +156,7 @@
         <!-- Section: Social media -->
         <section class="d-flex justify-content-center justify-content-lg-between p-4">
             <!-- Left -->
-            <div class="me-5 d-none d-lg-block">
+            <div class="me-5 d-none d-sm-block">
                 <span>Get connected with us on social networks:</span>
             </div>
             <!-- Left -->
@@ -180,11 +190,14 @@
                 <!-- Grid row -->
                 <div class="row mt-3">
                     <!-- Grid column -->
-                    <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-auto">
+                    <div class="col-md-4 col-lg-4 col-xl-3 mx-auto mb-auto">
                         <!-- Content -->
                         <h6 class="text-uppercase fw-bold mb-4">
                             <img src="{% static 'final.png' %}" alt="" style="width: 25px; height: 25px"> Tantorial
                         </h6>
+                        <p class="d-none d-sm-block justify-content">
+                            Tantorial is Cameroon's first EdTech Start Up aim at bringing tutors and student together...
+                        </p>
                     </div>
                     <!-- Grid column -->
                     <!-- Grid column -->
@@ -228,17 +241,27 @@
               </div> -->
                     <!-- Grid column -->
                     <!-- Grid column -->
-                    <div class="col-md-4 col-sm-6 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                    <div class="col-md-4 col-sm-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
                         <!-- Links -->
 <!--                         <h6 class="text-uppercase fw-bold mb-4">
                             Contact
                         </h6> -->
                         <p><i class="fas fa-home me-3"></i> Yaounde, Cameroon</p>
                         <p>
-                            <i class="fas fa-envelope me-3"></i> info@tantorial.com
+                            <i class="fas fa-envelope me-3"></i> 
+                            <a href = "mailto:info@tantorial.com">
+                              info@tantorial.com  
+                            </a>
                         </p>
-                        <p><i class="fas fa-phone me-3"></i> + 237 674128573</p>
-                        <p><i class="fas fa-print me-3"></i> + 237 674128573</p>
+                        <p><i class="fas fa-phone me-3"></i>
+                            <a href="tel:+23764128573">+237674128573</a>
+                        </p>
+                        <p><i class="fa fa-whatsapp me-3 fs-4" aria-hidden="true"></i>
+                            <a href="https://wa.me/+237674128573?text=Hello%20My%20is%20_________">+237674128573</a>
+                            
+                        
+
+                        </p>
                     </div>
                     <!-- Grid column -->
                 </div>
@@ -253,7 +276,7 @@
                 document.write(new Date().getFullYear())
             </script> Copyright:
             <span>
-            <a class="text-reset fw-bold" href="{% url 'dantorial:index' %}">tantorial.com</a> <p class="font-italic text-muted mb-0">All rights reserved.</p>
+            <a class="text-reset fw-bold" href="{% url 'dantorial:index' %}">tantorial.com</a> <p class="font-italic mb-0">All rights reserved.</p>
           </span>
         </div>
         <!-- Copyright -->
