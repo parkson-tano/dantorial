@@ -35,7 +35,7 @@
 </head>
 <style>
     a {
-        color: black;
+        color: #9afe;
     }
     a:hover {
         color: black;
@@ -71,7 +71,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'dantorial:myfavourites' %}">
-                            <i class='fa fa-heart'></i>Favourite
+                            <i class='fa fa-heart'></i>Saved
                       <span class="badge rounded-pill badge-notification bg-danger like_count" id = 'like_count'>
 
                       {{ user.profilepersonal.total_favourites }}</span>
@@ -130,7 +130,7 @@
 <body class="d-flex flex-column h-100">
 <main class="flex-shrink-0">
     {% block carousel %} {% endblock carousel %}
-    <div class="container-fluid mt-5">
+    <div style="width: 100;">
         {% if messages %}
             <!-- <div class='alert alert-success alert-dismissible fade show' role='alert'>
                 {% for message in messages %}
@@ -248,16 +248,16 @@
                         </h6> -->
                         <p><i class="fas fa-home me-3"></i> Yaounde, Cameroon</p>
                         <p>
-                            <i class="fas fa-envelope me-3"></i> 
-                            <a href = "mailto:info@tantorial.com">
+                            <i class="fas fa-envelope me-3 fs-4"></i> 
+                            <a href = "mailto:info@tantorial.com"  class="text-reset">
                               info@tantorial.com  
                             </a>
                         </p>
-                        <p><i class="fas fa-phone me-3"></i>
-                            <a href="tel:+23764128573">+237674128573</a>
+                        <p><i class="fas fa-phone me-3 fs-4"></i>
+                            <a href="tel:+23764128573"  class="text-reset">+237674128573</a>
                         </p>
                         <p><i class="fa fa-whatsapp me-3 fs-4" aria-hidden="true"></i>
-                            <a href="https://wa.me/+237674128573?text=Hello%20My%20is%20_________">+237674128573</a>
+                            <a href="https://wa.me/+237674128573?text=Hello%20My%20is%20_________"  class="text-reset">+237674128573</a>
                             
                         
 

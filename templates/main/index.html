@@ -67,7 +67,7 @@
                             <div class="col col-sm-12 col-md-8">
                                 <form action="{% url 'dantorial:allsearch' %}">
                                     <div class="input-group mt-5">
-                                        <input class="form-control form-control-lg form-control-borderless" type="text" placeholder="Just Search....." aria-label="Enter search term..." aria-describedby="button-search" name='keywords' / style="border-radius:40px;">
+                                        <input class="form-control form-control-lg form-control-borderless" type="text" placeholder="What do you want  to learn" aria-label="Enter search term..." aria-describedby="button-search" name='keywords' / style="border-radius:40px;">
                                         <button class="btn btn-primary" id="button-search" type="submit" style="border-radius:40px;">
                                         <i class='fa fa-search'></i>
                                         </button>
@@ -278,11 +278,14 @@
             <div class="row align-items-md-stretch mb-auto">
                 <h5 class="text-center mb-3 fw-dark fs-3">How to use Tantorial</h5>
                 {% for caro in how %}
-                <div class="col-lg-4 col-md-4 col-sm-4 me-0 ml-0 mb-2 p-2">
-                    <div class="card y-0 mr-auto ml-auto me-0" style="width: 100%">
+                <div class="col-lg-3 col-md-3 col-sm-6 me-0 ml-0 mb-2 p-2">
+                    <div class="card y-0 mr-auto ml-auto me-0 border-0" style="width: 100%">
                         <img src="{{caro.image.url}}" class="card-img-top rounded-circle mr-auto ml-auto" alt="..." style="width: 150px; height:150px; " />
                         <div class="card-body">
-                            <h3 class="card-text text-center mb-3 fw-dark fs-5">{{caro.how_text}}</h3>
+                            <p class="card-text text-center fw-bold fs-5">{{caro.how_text}}</p>
+                        </div>
+                        <div class="card-text">
+                            <p class="card-text text-center fw-dark text-mute">{{caro.how_description}}</p>
                         </div>
                     </div>
                 </div>

@@ -12,6 +12,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from smart_selects.db_fields import ChainedForeignKey
 from ckeditor.fields import RichTextField
 import numpy as np
+from allauth.account.admin import EmailAddress
 # Create your models here.
 
 EL = (
@@ -166,6 +167,10 @@ def create_profile(sender,instance,created,**kwargs):
 def save_profile(sender,instance,**kwargs):
     instance.profilepersonal.save()
 
+@receiver(post_save,sender=User)
+def save_emailaddress(sender,instance,**kwargs):
+    instance.profilepersonal.save()
+
 class ProfileInfo(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     language = models.CharField(max_length=30, choices=LANG)
@@ -280,8 +285,8 @@ class Verification(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     document_type = models.CharField(max_length=50, choices = DOC, default='national ID')
     number = models.CharField(max_length=50)
-    photo_back = models.ImageField(upload_to = 'verifi', default='media/default.png')
-    photo_front = models.ImageField(upload_to='verifi', default='media/default.png')
+    photo_back = models.ImageField(upload_to = 'verifi')
+    photo_front = models.ImageField(upload_to='verifi')
     is_verified = models.BooleanField(default=False)
     status = models.CharField(max_length=50, choices=STA)
     date_created = models.DateTimeField(auto_now_add=True)
@@ -341,6 +346,7 @@ class OurTeam(models.Model):
 class HowToUse(models.Model):
     image = models.ImageField(upload_to='how_img')
     how_text = models.TextField()
+    how_description = models.TextField(default='how to used')
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)

@@ -41,9 +41,9 @@ class CategorySerializer(serializers.ModelSerializer):
 class SubCategorySerializer(serializers.ModelSerializer):
 	class Meta:
 		model = SubCategory
-		fields = ('id', 'name')
+		fields = ('id','category', 'name', 'slug', 'image', 'date_created',)
 
 class AllSubjectSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Subject
-		fields = ('id', 'name')
+		fields = "__all__"
