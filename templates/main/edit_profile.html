@@ -3,6 +3,8 @@
 {% block title %}
   edit profile
 {% endblock title %}
+
+
 {% block content %}
   <body>
     <div class="container-fluid p-0">
@@ -68,17 +70,6 @@
                     <div class="col-md-6">
                       {{form.country|as_crispy_field}}
                     </div>
-                    
-<!--                     <div class="col-3 form-group">
-                      <label>Code</label>
-                      <select class='form-control input-group-prepend'>
-                        {% for c in country %}
-                          <option value='{{c.code}}'>
-                            +{{c.code}}
-                          </option>
-                        {% endfor %}
-                      </select>
-                    </div> -->
                     <div class="col-md-6">
                       {{form.phone_number|as_crispy_field}}
                     </div>
@@ -100,9 +91,6 @@
                     
                     <div class="col-md-6">
                       {{form.level_of_education|as_crispy_field}}
-                    </div>
-                    <div>
-                      {{form.profile_pic|as_crispy_field}}
                     </div>
                   </div>
                   <div class="d-grid mt-3">

@@ -40,6 +40,7 @@ from campay.sdk import Client
 from django.http import JsonResponse
 from django.db.models import Avg
 from django.utils.translation import gettext as _
+from  payUnit import payUnit
 import random
 class IndexView(TemplateView):
     template_name = 'main/index.html'
@@ -484,6 +485,15 @@ class VerificationUpdateView(UpdateView):
 class ProfileVerificationView(TemplateView):
     template_name = 'main/my_verification.html'
 
+
+    def dispatch(self, request, *args, **kwargs):
+        if Verification.objects.filter(user = self.request.user).exists():
+            pass
+        else:
+            return redirect('dantorial:add-verification')
+            
+        return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         account = self.request.user
@@ -745,3 +755,19 @@ class FavouriteView(TemplateView):
         profile_info = ProfilePersonal.objects.get(user=profile)
         context["favourite"] = profile_info
         return context
+
+# def payment(request):
+#     payment = payUnit({
+#     "apiUsername":'payunit_sand_VapgmnrCU',
+#     "apiPassword":'c750d9b2-ea67-40da-ab71-a4bd5055b143',
+#     "api_key":'4fa76cb6727611e9e66b85df6b81ccd29e532401',
+#     "return_url": "tano.pythonanywhere.com",
+#     "notify_url":"",
+#     "mode": "test",
+#     "name": "dani",
+#     "description": "",
+#     "purchaseRef": "",
+#     "currency": "XAF",
+#    "transaction_id":  "1s234asass"
+#     })
+#     payment.makePayment(10)

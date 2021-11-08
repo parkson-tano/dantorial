@@ -27,6 +27,7 @@
                     <div class="text-center">
                         <img src="{{profile.profile_pic.url}}" class="rounded-circle" alt="...">
                     </div>
+
                     <hr>
 <!--                     <h5>
                         Account Type: {{profile.account_type|default:''|capfirst}}
@@ -186,10 +187,10 @@
                     </div>
                 
                     {% if profile.paid == False %}
-                    <div class='my-2'>
+                    <div class='my-2 d-grid'>
                         
-                         <a href="{% url 'dantorial:upgrade_profile' %}">
-                            <button class="btn btn-success btn-login text-uppercase fw-bold">Get Premium Account</button></a>   
+                        
+                            <button class="btn btn-success btn-login text-uppercase fw-bold"> <a href="{% url 'dantorial:upgrade_profile' %}" class="text-dark">Get Premium Account</a></button>   
                         
                         
                     </div>
@@ -241,6 +242,21 @@
 <!-- <script src="/static/smart-selects/admin/js/chainedfk.js"></script>
 <script src="/static/smart-selects/admin/js/bindfields.js"></script> -->
 
+<script>
+    $("#profileImage").click(function(e) {
+    $("#imageUpload").click();
+});
 
+function fasterPreview( uploader ) {
+    if ( uploader.files && uploader.files[0] ){
+          $('#profileImage').attr('src', 
+             window.URL.createObjectURL(uploader.files[0]) );
+    }
+}
+
+$("#imageUpload").change(function(){
+    fasterPreview( this );
+});
+</script>
 
 {% endblock content %}

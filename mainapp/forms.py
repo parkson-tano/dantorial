@@ -71,8 +71,7 @@ class PersonalProfileForm(forms.ModelForm):
         'phone_number','date_of_birth','country', 'region', 'town', 'quater', 'level_of_education', 'profile_pic']
 		
 		widgets = {
-			'date_of_birth': DatePickerInput()
-    
+			'date_of_birth': DatePickerInput(),
 		}
             # "account_type": forms.CharField(attrs= { 
 			# 	'name' : 'account_type',

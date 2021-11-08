@@ -42,7 +42,7 @@ CHARGE = (
 LANG = (
     ('English', 'English'),
     ('French', 'French'),
-    ('Others', 'Others')
+    ('Bilingual', 'Bilingual')
 )
 
 TITLE = (
@@ -56,9 +56,8 @@ TITLE = (
 
 
 ACC = (
-    ('tutor',"i'm a tutor"),
-    ('student',"i'm a Student"),
-    ('parent',"i'm a Parent")
+    ('tutor',"Tutor"),
+    ('learner',"Learner")
 )
 
 GENDER = (
@@ -240,7 +239,7 @@ class Qualification(models.Model):
     school = models.CharField(max_length=200)
     certificate = models.CharField(max_length=200)
     start_year = models.IntegerField()
-    end_year = models.IntegerField()
+    end_year = models.IntegerField(null=True, blank=True)
     still_studying = models.BooleanField(default=False)
     # image = models.ImageField(upload_to='qua_img', null=True, blank=True)
 
