@@ -458,7 +458,13 @@ class VerificationEditView(CreateView):
     model = Verification
     form_class  = VerificationForm
     success_url  = reverse_lazy('dantorial:my-verification')
-
+    def dispatch(self, request, *args, **kwargs):
+        if Verification.objects.filter(user = self.request.user).exists():
+            return redirect('dantorial:my-verification')
+        else:
+            pass
+            
+        return super().dispatch(request, *args, **kwargs)
     def form_valid(self, form):
         form.instance.user = self.request.user
         messages.success(self.request, "Successful")

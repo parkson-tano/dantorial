@@ -1,6 +1,35 @@
 {% extends "base.html" %}
 {% load humanize %}
 {% load crispy_forms_tags %} {% block title %} profile {% endblock title %} {% block content %}
+<style>
+  #imageUpload
+{
+    display: none;
+}
+
+#profileImage
+{
+    cursor: pointer;
+}
+
+#profile-container {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    border-radius: 50%;
+}
+
+#profile-container img {
+    width: 150px;
+    height: 150px;
+}  
+</style>
+
+
 <div class="container-fluid">
     <div class="row mt-5">
         <div class="col-sm-4 col-md-4 col-lg-3 mx-auto">
@@ -27,48 +56,7 @@
                     <div class="text-center">
                         <img src="{{profile.profile_pic.url}}" class="rounded-circle" alt="...">
                     </div>
-
                     <hr>
-<!--                     <h5>
-                        Account Type: {{profile.account_type|default:''|capfirst}}
-                    </h5>
-                    <h5>
-                        Username: {{profile.user.username}}
-                    </h5>
-                    <h5>
-                        Account Name: {{profile.first_name|default:''|capfirst}} {{profile.last_name|default:''|capfirst}}
-                    </h5>
-                    <h5>
-                        Title: {{profile.title|default:''|capfirst}}
-                    </h5>
-                    <h5>
-                        Gender: {{profile.gender|default:''|capfirst}}
-                    </h5>
-
-
-                    <h5>
-                        Phone_Number: {{profile.phone_number|default:''}}
-                    </h5>
-                    <h5>
-                        Country: {{profile.country|default:''}}
-                    </h5>
-                    <h5>
-                        Region: {{profile.region|default:''}}
-                    </h5>
-                    <h5>
-                        Level of education: {{profile.level_of_education|capfirst}}
-                    </h5>
-                    <h5>
-                        Date of Birth: {{profile.date_of_birth}}
-                    </h5>
-                    <h5>
-                        Address: {{profile.address_1|default:''|capfirst}}
-                    </h5>
-                    <h5>
-                        Address#2: {{profile.address_2|default:''|capfirst}}
-                    </h5>
- -->
-
                  <div class="col">
                     <div class="card border-0">
                         <div class="card-body">
@@ -80,7 +68,7 @@
                                     {{profile.account_type}}
                                 </div>
                             </div>
-                            <div class="row mb-3">
+<!--                             <div class="row mb-3">
                                 <div class="col-sm-6">
                                     <h6 class="mb-0 text-secondary ">
                                         username
@@ -89,7 +77,7 @@
                                 <div class="col-sm-6">
                                     @{{profile.user.username}}
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="row mb-3">
                                 <div class="col-sm-6">
                                     <h6 class="mb-0 text-secondary ">Full Name</h6>
