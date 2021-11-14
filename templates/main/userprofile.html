@@ -88,6 +88,7 @@ color: #c59b08;
          <a href="{{userprofile.profile_pic.url}}">
          <img src="{{userprofile.profile_pic.url}}" alt="{{userprofile.first_name}}" class="rounded-circle" width="200">
         </a>
+        
         <button class="border-0 mr-5 p-0 likebtn" type="button" id="{{userprofile.id}}" data-url="{% url 'dantorial:favourite' %}" style="  position: absolute;
         background: transparent;
         top: 100;
@@ -102,8 +103,8 @@ color: #c59b08;
         <div class="col-sm-12 col-md-6">
          <h4>{{userprofile.first_name|capfirst}} {{userprofile.last_name|capfirst}} ({{userprofile.account_type|capfirst}})
          <span>
-          {% if userprofile.user.verification.is_verified %}
-           <i class='fas fa-check' style="color:blue;"></i>
+          {% if userprofile.user.verification %}
+           <i class='fas fa-check-circle' style="color:blue;"></i>
           {% endif %}
          </span>
          </h4>
@@ -145,19 +146,30 @@ color: #c59b08;
   
       {% endif %}
          </p>
-         <p class="text-muted font-size-md">{{userprofile.region}} {{ userprofile.town }}
+         <p class="text-muted font-size-md mb-0">{{userprofile.region}} {{ userprofile.town }}
             {{userprofile.quater}}
          </p>
-         <p class="fw-bold">{{userprofile.user.profileinfo.subject|default:""}}
+         <p class="fw-bold mb-0">{{userprofile.user.profileinfo.subject|default:""}}
           <span class="fw-dark">
            {{userprofile.user.profileinfo.amount|floatformat:0|intcomma|default:"****"}}FCFA/{{userprofile.user.profileinfo.charge|default:"month"}}
           </span>
+
+         </p>
+         <p class="mb-0">
+                       <span>
+            {% if userprofile.online_lesson %}
+            Online Lessons 
+            {% endif %}
+          </span>
+          
          </p>
          <button data-toggle="modal" data-target="#exampleModal" class="btn btn-outline-primary mt-2"><i class="fa fa-phone" style='color:rgb(5, 59, 41)'></i> Call
          </button>
-         <a href="https://wa.me/{{userprofiles.phonenumber}}" target="_blank" class="btn btn-outline-primary mt-2">
+         {% if userprofile.show_whatsapp_number %}
+         <a href="https://wa.me/{{userprofile.country.code}}{{userprofile.whatsapp_number}}?text=Hello%20My%20I%20%Your%20From%20Tantorial.%20I%20am%20_______" target="_blank" class="btn btn-outline-primary mt-2">
           <i class="fa fa-whatsapp" style='color:rgb(5, 59, 41)'></i> Whatsapp
          </a>
+         {% endif %}
          <button href="#" class="btn btn-outline-primary mt-2" data-toggle="modal" data-target="#messageModal"><i class="fa fa-envelope-o" style='color:rgb(5, 59, 41)'></i> Message</button>
         </span>
         </div>
@@ -283,7 +295,7 @@ color: #c59b08;
  <div class="modal-body">
   <div class="fw-dark fs-5 text-center">
    <h3>
-   {{'+'}}{{userprofile.country.phone}}{{userprofile.phone_number}}
+   {{userprofile.country.code}}{{userprofile.phone_number}}
    </h3>
    
   </div>
@@ -296,7 +308,7 @@ color: #c59b08;
  </div>
  <div class="modal-footer">
   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-  <a href="tel:{{'+'}}{{userprofile.country.phone}}{{userprofile.phone_number}}" class="btn btn-success">
+  <a href="tel:{{userprofile.country.code}}{{userprofile.phone_number}}" class="btn btn-success">
    Make a Call
   </a>
  </div>

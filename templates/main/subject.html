@@ -156,28 +156,19 @@
             <div class="card">
                 <a href="{{p.profile_pic.url}}"><img class="card-img" src="{{p.profile_pic.url}}" alt="..." style='height:14rem; width:100%;'>
                 </a>
-                {% if p.user in fav.favourite.all %}
-                  <button class="likebtn" type="button" id="{{p.id}}" data-url="{% url 'dantorial:favourite' %}" style="  position: absolute;
+                {% if p.user.verification %}
+                  <p style="  position: absolute;
                   background: transparent;
                   top: 100;
                   right:  1.5rem;
                   font-size:200%;
                   border: none;
-                  color:blue">
-                  <i class="fa fa-heart mr-0 ml-0" id='fa{{p.id}}'></i>
+                  color:  #00ffaa;
+                  "
+                  >
+                  <i class="fas fa-check-circle"  aria-hidden="true"></i>
                   
-                  </button>
-                {% else %}
-                  <button class="likebtn" type="button" id="{{p.id}}" data-url="{% url 'dantorial:favourite' %}" style="  position: absolute;
-                  background: transparent;
-                  top: 100;
-                  right:  1.5rem;
-                  font-size:200%;
-                  border: none;
-                  color:blue">
-                  <i class="fa fa-heart-o mr-0 ml-0" id='fa{{p.id}}'></i>
-                  
-                  </button>
+                  </p>
                 {% endif %}
               </div>
             
@@ -189,10 +180,9 @@
               {{p.review_set.all}}
               <h5 class="card-title">{{ p.first_name }} {{ p.last_name|default:'' }}  ({{p.account_type|capfirst}})
                 <span>
-                                {% if p.user.verification.is_verified %}
-                                    <i class='fas fa-check' style="color:blue;"></i>
+                                {% if p.paid %}
+                                    <i class='fas fa-star' style="color:blue;"></i>
                                 {% endif %}
-                            </span>
               </h5>
               <p class="card-text">
                 {{p.user.profileinfo.bio|default:''|slice:'100'}}...

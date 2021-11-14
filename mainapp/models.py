@@ -103,6 +103,9 @@ class ProfilePersonal(models.Model):
     first_name = models.CharField(max_length=30,null=True, blank=True)
     last_name = models.CharField(max_length=30, null=True, blank=True)
     phone_number = models.CharField(max_length=15, null=True, blank=True)
+    whatsapp_number = models.CharField(max_length=15, null=True, blank=True)
+    show_whatsapp_number = models.BooleanField(default=True)
+    online_lesson = models.BooleanField(default=False)
     country = models.ForeignKey(Country, on_delete=models.PROTECT, null=True)
     region = ChainedForeignKey(Region, chained_field="country",
         chained_model_field="country",
@@ -146,14 +149,14 @@ class ProfilePersonal(models.Model):
     def __str__(self):
         return self.user.username + " profile"
 
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     super().save(*args, **kwargs)
 
-        img = Image.open(self.profile_pic.path)
-        if img.height >200 or img.width>200:
-            output_size = (300,300)
-            img.thumbnail(output_size)
-            img.save(self.profile_pic.path)
+    #     img = Image.open(self.profile_pic.path)
+    #     if img.height >200 or img.width>200:
+    #         output_size = (300,300)
+    #         img.thumbnail(output_size)
+    #         img.save(self.profile_pic.path)
 
 
 
