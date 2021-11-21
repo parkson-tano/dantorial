@@ -101,7 +101,14 @@ color: #c59b08;
         <!-- end col 1-1 -->
         <!-- col 1-2 -->
         <div class="col-sm-12 col-md-6">
-         <h4>{{userprofile.first_name|capfirst}} {{userprofile.last_name|capfirst}} ({{userprofile.account_type|capfirst}})
+         <h4>{{userprofile.first_name|capfirst}} {{userprofile.last_name|capfirst}} 
+          <span>
+            {% if userprofile.account_type is not None%}
+              ({{userprofile.account_type|capfirst}}) 
+            {% endif %}
+           
+          </span> 
+          
          <span>
           {% if userprofile.user.verification %}
            <i class='fas fa-check-circle' style="color:blue;"></i>
@@ -146,16 +153,16 @@ color: #c59b08;
   
       {% endif %}
          </p>
-         <p class="text-muted font-size-md mb-0">{{userprofile.region}} {{ userprofile.town }}
+         <p class="text-muted font-size-md mb-2">{{userprofile.region}} {{ userprofile.town }}
             {{userprofile.quater}}
          </p>
-         <p class="fw-bold mb-0">{{userprofile.user.profileinfo.subject|default:""}}
+         <p class="fw-bold mb-2">{{userprofile.user.profileinfo.subject|default:""}}
           <span class="fw-dark">
            {{userprofile.user.profileinfo.amount|floatformat:0|intcomma|default:"****"}}FCFA/{{userprofile.user.profileinfo.charge|default:"month"}}
           </span>
 
          </p>
-         <p class="mb-0">
+         <p class="mb-2">
                        <span>
             {% if userprofile.online_lesson %}
             Online Lessons 

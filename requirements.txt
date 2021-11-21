@@ -4,7 +4,7 @@ asgiref==3.4.1
 async-timeout==3.0.1
 asyncio==3.4.3
 attrs==21.2.0
-autobahn==21.3.1
+autobahn
 Automat==20.2.0
 autopep8==1.5.7
 backcall==0.2.0
@@ -21,7 +21,7 @@ click==8.0.3
 colorama==0.4.4
 constantly==15.1.0
 crispy-tailwind==0.5.0
-cryptography==3.4.7
+cryptography
 daphne==2.5.0
 debugpy==1.4.3
 decorator==5.1.0
@@ -97,7 +97,7 @@ python-utils==2.5.6
 python3-openid==3.2.0
 pytz==2021.1
 pywebpush==1.14.0
-pywin32==301
+# pywin32
 pyzmq==22.3.0
 redis==3.5.3
 requests==2.26.0
@@ -117,7 +117,7 @@ tqdm==4.62.0
 traitlets==5.1.0
 twilio==6.63.2
 Twisted==21.7.0
-twisted-iocpsupport==1.0.1
+# twisted-iocpsupport==1.0.1
 txaio==21.2.1
 typing-extensions==3.10.0.0
 Unidecode==1.2.0

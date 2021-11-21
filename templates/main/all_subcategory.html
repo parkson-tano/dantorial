@@ -183,7 +183,13 @@
           <div class="col-sm-7 col-md-8">
             <div class="card-body p-0">
               {{p.review_set.all}}
-              <h5 class="card-title">{{ p.first_name }} {{ p.last_name|default:'' }}  ({{p.account_type|capfirst}})
+              <h5 class="card-title">{{ p.first_name }} {{ p.last_name|default:'' }}
+                {% if p.account_type is not None %}
+                  <span class='text-muted'>
+                    ({{p.account_type|capfirst}})
+                  </span>
+                {% endif %}
+                
                 <span>
                                 {% if p.paid %}
                                     <i class='fas fa-star' style="color:blue;"></i>
