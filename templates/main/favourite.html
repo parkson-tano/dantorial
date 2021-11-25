@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %} favourite {%endblock title %}
 	{% block content %}
-		<div class="col-md-5 col-sm-8 ml-auto mr-auto mt-5">
+		<div class="col-md-6 col-sm-8 ml-auto mr-auto mt-5">
 			<div class="card mb-3">
 				<div class="card-body">
 					<h5 class="card-title text-center mb-3 fw-bold fs-5">Favourite</h5>
@@ -11,7 +11,7 @@
 							
                         
                         	<div class="col-sm-8">
-                        		<img src="{{fav.profilepersonal.profile_pic.url}}" class="rounded-circle" alt="..." style="width:50px"/>
+                        		<img src="{{fav.profilepersonal.profile_pic.url}}" class="rounded-circle" alt="..." style="width:3rem"/>
                         	
                         		<a  href="{% url 'dantorial:userprofile' fav.profilepersonal.id %}" style="text-decoration:none">
 									{{ fav.profilepersonal.first_name }} {{ fav.profilepersonal.last_name }}			

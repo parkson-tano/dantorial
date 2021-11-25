@@ -174,7 +174,7 @@ class UserProfileView(DetailView):
             new_message.save()
             # new_chat.save()
             send_mail('Message from tantorial user', f'{self.request.user.profilepersonal.first_name} sent you a messages', settings.DEFAULT_FROM_EMAIL, (self.get_object().user.email,))
-            mess
+            # mess
         return self.get(self, request, *args, **kwargs)
         
         

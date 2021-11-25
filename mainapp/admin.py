@@ -32,7 +32,7 @@ class UpgradeAdmin(admin.ModelAdmin):
     list_display = ['user', 'amount','operator','status', 'date_created']
 
 class ProfileViewedAdmin(admin.ModelAdmin):
-    search_fields = ['user__username', 'user_by__username']
+    search_fields = ['user', 'user_by']
     list_filter = ['user', 'viewed_by', 'date_created']
     list_display = ['user', 'viewed_by', 'date_created']
 

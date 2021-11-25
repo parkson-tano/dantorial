@@ -34,7 +34,7 @@ class Chat(models.Model):
 	receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+')
 
 	def __str__(self):
-		return (f'{self.user} chats')
+		return (f'{self.user} and {self.receiver} chats')
 
 class Message(models.Model):
 	chat = models.ForeignKey(Chat, on_delete=models.CASCADE)
