@@ -11,7 +11,7 @@ from django.utils.decorators import method_decorator
 from django.http import Http404
 from category.models import Category, SubCategory
 from .forms import (AddSubjectForm, UserLoginForm, UserRegistrationForm, VerificationForm,
-PersonalProfileForm, ProfileInfoForm, AddExperienceForm, AddQualificationForm, UpgradeForm)
+PersonalProfileForm, ProfileInfoForm, AddExperienceForm, AddQualificationForm, UpgradeForm, PersonalProfilePic)
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy, reverse
@@ -42,6 +42,7 @@ from django.db.models import Avg
 from django.utils.translation import gettext as _
 from  payUnit import payUnit
 import random
+import os
 class IndexView(TemplateView):
     template_name = 'main/index.html'
 
@@ -249,6 +250,7 @@ class PersonalProfileEditView(UpdateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
+        print(self.request.user.profilepersonal.account_type)
         messages.success(self.request, "Successful")
         form.save()
         return super().form_valid(form)
@@ -734,7 +736,7 @@ def profile_like(request):
     if request.POST.get('action') == 'post':
 
         flag = None
-        profileid = int(request.POST.get('profile_id'))
+        profileid = int(request.POST.get('ans_id'))
         u = ProfilePersonal.objects.get(id=profileid)
         print(f'prof id {profileid}')
         profile_obj = ProfilePersonal.objects.get(user=request.user)
@@ -762,6 +764,9 @@ class FavouriteView(TemplateView):
         context["favourite"] = profile_info
         return context
 
+class FavouriteDeleteView(DeleteView):
+    queryset = ProfilePersonal.objects.all()
+
 # def payment(request):
 #     payment = payUnit({
 #     "apiUsername":'payunit_sand_VapgmnrCU',
@@ -778,6 +783,23 @@ class FavouriteView(TemplateView):
 #     })
 #     payment.makePayment(10)
 
+# class UpdateImageView(TemplateView):
+#     template_name = 'main/photo.html'
+@login_required
+def updateimage(request):
+    profile = ProfilePersonal.objects.get(user=request.user)
+    if request.method == 'POST' and request.FILES['picture']:
+
+        image = request.FILES["picture"]
+
+        if image:
+            profile.profile_pic = image
+        # profile.update(profile_pic = image) 
+            profile.save(update_fields=['profile_pic'])
+            return redirect("dantorial:profile")
+            # return render(request, 'main/photo.html')
+    # context = {"image":image}
+    return render(request, 'main/photo.html')
 
 def error404(request, exception, template_name='404.html'):
     return render(request, template_name)

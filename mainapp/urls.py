@@ -14,6 +14,8 @@ urlpatterns = [
 
     path('profile-edit/<int:pk>', PersonalProfileEditView.as_view(), name='profile-edit'),
     path('profile-info-edit/<int:pk>', ProfileInfoEditView.as_view(), name='profile-info-edit'),
+    path('photo/', updateimage, name='photochange'),
+    # path('photoview/', UpdateImageView.as_view(), name='photoview'),
 
 # my profile view 
 

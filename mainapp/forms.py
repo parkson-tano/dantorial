@@ -65,6 +65,30 @@ class UserRegistrationForm(forms.ModelForm):
         return pass2
 
 class PersonalProfileForm(forms.ModelForm):
+	# town = forms.ModelChoiceField(
+    #     queryset=Town.objects.all(),
+    #     empty_label=None,
+    #     required=True,
+    #     to_field_name='id',
+    #     label='Select town',
+    #     widget=forms.Select(attrs={'class': 'form-control'})
+    # )
+	region = forms.ModelChoiceField(
+        queryset=Region.objects.all(),
+        empty_label=None,
+        required=True,
+        to_field_name='id',
+        label='Region',
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+	# quater = forms.ModelChoiceField(
+    #     queryset=Quater.objects.filter(),
+    #     empty_label=None,
+    #     required=True,
+    #     to_field_name='id',
+    #     label='Select Quater',
+    #     widget=forms.Select(attrs={'class': 'form-control'})
+    # )
 	class Meta:
 		model = ProfilePersonal
 		fields = ['account_type','title', 'gender','first_name', 'last_name', 
@@ -72,6 +96,11 @@ class PersonalProfileForm(forms.ModelForm):
 		
 		widgets = {
 			'date_of_birth': DatePickerInput(),
+			
+		}
+
+		labels = {
+			'whatsapp_number': 'Whatsapp',
 		}
             # "account_type": forms.CharField(attrs= { 
 			# 	'name' : 'account_type',
@@ -163,8 +192,10 @@ class PersonalProfileForm(forms.ModelForm):
 
 		# }
 
-
-
+class PersonalProfilePic(forms.ModelForm):
+	class Meta:
+		model = ProfilePersonal
+		fields = ('id', 'profile_pic',)
 class  ProfileInfoForm(forms.ModelForm):
     class Meta:
         model = ProfileInfo

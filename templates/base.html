@@ -340,6 +340,7 @@
                 event.preventDefault()
                 var ansid = $(this).attr('id');
                 console.log(ansid)
+                console.log("clicked:" + ansid)
                 $.ajax({
                     url: $(this).data('url'),
                     type: 'POST',
@@ -351,7 +352,7 @@
                     success: function (response) {
                         $('#like_count' ).text(response['total_favourites']);
                         console.log("clicked:" + ansid)
-                        console.log(response)
+                        console.log('response: ' + response)
                         if (response['flag']) {
                             $('#'+ansid).addClass('text-success');
                             // alert('you like this profile')
@@ -364,7 +365,7 @@
                         }
                     },
                     error: function(rs, e) {
-                        console.log(rs.response, ansid)
+                        console.log('error: ' + rs.response, ansid)
                     }
                 });
             });
@@ -372,6 +373,9 @@
     </script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
 $( ".select2" ).select2({
     placeholder: "Select a subject",
     allowClear: true,

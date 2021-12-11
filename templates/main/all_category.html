@@ -167,13 +167,13 @@ position: relative;
                   <p style="  position: absolute;
                   background: transparent;
                   top: 100;
-                  right:  1.5rem;
+                  right:  1rem;
                   font-size:200%;
                   border: none;
                   color:  #00ffaa;
                   "
                   >
-                  <i class="fas fa-check-circle"  aria-hidden="true"></i>
+                  <i class="fas fa-check-circle"  aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Verified"></i>
                   
                   </p>
                 {% endif %}
@@ -193,7 +193,7 @@ position: relative;
                 {% endif %}
                 <span>
                                 {% if p.paid %}
-                                    <i class='fas fa-star' style="color:blue;"></i>
+                                    <i class='fas fa-star' style="color:blue;" data-toggle="tooltip" data-placement="top" title="Premium Account"></i>
                                 {% endif %}
                             </span>
               </h5>

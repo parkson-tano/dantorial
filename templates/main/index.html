@@ -8,33 +8,9 @@
     height: 100vh;
     width: 100%;
 }
-/*h1 {
-  font-size: 72px;
-  background: -webkit-linear-gradient(#eee, #333);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}*/
 </style>
 {% block carousel %}
-<!-- <div style="background: url(https://bootstrapious.com/i/snippets/sn-static-header/background.jpg)" class="jumbotron bg-cover text-white" style="height:100vh"> -->
-<!-- <div>
-    <img class="bd-placeholder-img" src="static/images/carousel/1_5aqZvwOMZAugvA66ahUYeA.jpeg" alt="" style="
-    max-height: 100vh;
-    max-width: 100%;
-    height:100vh;
-    width: 100%;
-    display: block;
-    " />
-        <h1 class="display-sm-2 display-4 font-weight-bold">
-        <p class="typewrite mb-2 fw-bold text-center mt-5" data-period="2000" data-type='[ "Welcome to Tantorial", "Find your Perfect Tutor", "Get Connected to Students"]'>
-            <span class="wrap"></span>
-        </p>
-        </h1>
-        <p class="mb-5 fs-3 fw-bold text-center ">
-            Book one-on-one lessons with verified instructors close to you.
-        </p>
-</div> -->
-<!-- For Demo Purpose --> 
+
 <div id="myCarousel" class="carousel slide mt-5" data-bs-ride="carousel" >
     <div class="carousel-inner">
         <div class="carousel-item active" data-bs-interval="30000">
@@ -46,20 +22,19 @@
             display: block;
             opacity: 0.7;
             " />
-            <div class="container">
                 <div class="carousel-caption text-center mb-5">
                     <div style="margin-bottom:10em;">
                         <h1 class="fs-sm-3 fs-md-2 fw-bold" >
                         <p class="typewrite mb-2 fw-bold text-center mt-5 bg-dark" data-period="2000" data-type='[ "Welcome to Tantorial", "Find your Perfect Tutor", "Get Connected to Students"]' style="
-  background: -webkit-linear-gradient(#003, #3a3);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;">
+                                background: -webkit-linear-gradient(#003, #3a3);
+                                -webkit-background-clip: text;
+                                -webkit-text-fill-color: transparent;">
                             <span class="wrap"></span>
                         </p>
                         </h1>
-<p class="mb-5 fs-2 fw-bold text-center text-black" style="font-size: 72px;">
-    Book one-on-one lessons with verified tutors close to you
-</p>
+                            <p class="mb-5 fs-2 fw-bold text-center text-black" style="font-size: 72px;">
+                                Book one-on-one lessons with verified tutors close to you
+                            </p>
                         <div class="row justify-content-center">
                             <div class="col col-sm-12 col-md-8">
                                 <form action="{% url 'dantorial:allsearch' %}">
@@ -79,7 +54,7 @@
                     <!-- form -->
                     
                 </div>
-            </div>
+
         </div>
     </div>
 </div>
@@ -144,12 +119,6 @@
     </div>
 </form>
 <div class="container-fluid">
-    <!-- <div
-  class="fb-like"
-  data-share="true"
-  data-width="450"
-  data-show-faces="true">
-</div> -->
     <div class="row mb-5">
         <div class="col-lg-12">
             <h3 class="text-center mb-3 fw-dark fs-3">Browse By Category</h3>

@@ -98,7 +98,7 @@ top:-9999px;*/
                       width="170px" height='170px' style="border-radius: 50;">
                   </a>
 
-                  <button class="border-0 mr-5 p-0 likebtn" type="button" id="{{userprofile.id}}"
+                  <button class="likebtn border-0 mr-5 p-0" type="button" id="{{userprofile.id}}"
                     data-url="{% url 'dantorial:favourite' %}" style="  position: absolute;
         				background: transparent;
         					top: 100;
@@ -121,7 +121,7 @@ top:-9999px;*/
 
                     <span>
                       {% if userprofile.user.verification %}
-                      <i class='fas fa-check-circle' style="color:blue;"></i>
+                      <i class='fas fa-check-circle' style="color:blue;" data-toggle="tooltip" data-placement="top" title="Verified"></i>
                       {% endif %}
                     </span>
                   </h4>
@@ -489,7 +489,7 @@ top:-9999px;*/
         <div class="row mt-0">
           <div class="mb-3 me-5">
             <fieldset>
-              <legend>Leave a comment about {{user.profilepersonal.first_name}}</legend>
+              <legend>Reviews about {{user.profilepersonal.first_name}}</legend>
               <div id="comments_section">
                 <form method="POST" class='needs-validation' novalidate id='comment' action="">
                   {% csrf_token %}
@@ -508,7 +508,7 @@ top:-9999px;*/
                     <input type="radio" id="star1" name="rate" value="1" />
                     <label for="star1" title="text">1 star</label>
                   </div>
-                  <button class="btn btn-info mt-2" type="submit" name='post_comment'>Add comment <i
+                  <button class="btn btn-info mt-2" type="submit" name='post_comment'>Add Review <i
                       class="fas fa-comments"></i></button>
               </div>
               </form>

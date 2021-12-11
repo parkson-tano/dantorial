@@ -8,15 +8,13 @@
 					<h5 class="card-title text-center mb-3 fw-bold fs-5">Favourite</h5>
 					{% for fav in favourite.favourite.all %}
 						<div class="row">
-							
-                        
                         	<div class="col-sm-8">
-                        		<img src="{{fav.profilepersonal.profile_pic.url}}" class="rounded-circle" alt="..." style="width:3rem"/>
+                        		<img src="{{fav.profilepersonal.profile_pic.url}}" class="rounded-circle" alt="..." style="width:3rem; height:3rem"/>
                         	
                         		<a  href="{% url 'dantorial:userprofile' fav.profilepersonal.id %}" style="text-decoration:none">
 									{{ fav.profilepersonal.first_name }} {{ fav.profilepersonal.last_name }}			
-                        		
 								</a>
+								<!-- <i class="fa fa-times"></i> -->
 								
 								
 							</div>

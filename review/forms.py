@@ -17,3 +17,6 @@ class ReviewForm(forms.ModelForm):
 			'required' : True
 			}), 
         }
+    labels = {
+        'content' : ''
+      }

@@ -149,14 +149,14 @@ class ProfilePersonal(models.Model):
     def __str__(self):
         return self.user.username + " profile"
 
-    # def save(self, *args, **kwargs):
-    #     super().save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
 
-    #     img = Image.open(self.profile_pic.path)
-    #     if img.height >200 or img.width>200:
-    #         output_size = (300,300)
-    #         img.thumbnail(output_size)
-    #         img.save(self.profile_pic.path)
+        img = Image.open(self.profile_pic.path)
+        if img.height >200 or img.width>200:
+            output_size = (300,300)
+            img.thumbnail(output_size)
+            img.save(self.profile_pic.path)
 
 
 
@@ -369,7 +369,8 @@ class ProfileViewed(models.Model):
 
 class SearchHistory(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-    result = models.ManyToManyField(ProfilePersonal, null=True, blank=True)
+    # result = models.ManyToManyField(ProfilePersonal, null=True, blank=True)
+    keyword = models.CharField(max_length=100, null=True, blank=True)
     account_type = models.CharField(max_length=50, null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True)
     subcategory = models.ForeignKey(SubCategory, on_delete=models.CASCADE, null=True, blank=True)
