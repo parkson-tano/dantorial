@@ -1,50 +1,46 @@
-{% extends "base.html" %} 
-{% load crispy_forms_tags %} 
-{% load mathfilters %}
-{% block title %} viewed_profile {% endblock title %} {% block content %}
+{% extends "base.html" %} {% load crispy_forms_tags %} 
+{% load mathfilters %} 
+{%block title %} viewed_profile {% endblock title %} {% block content %}
 
-    <div class="row mt-5">
-        <div class="col-sm-8 col-md-6 col-lg-6 mx-auto">
-            <div class="card border-0 shadow rounded-3 my-5">
-            	<div class="card-title mb-0">
-            		<p class="fw-light fw-bold text-center fs-5">
-            			{{ profile.count }} Profile View{{ profile.count|pluralize }} 
-            		</p>
-            		
-            	</div>
-                <div class="card-body p-0 p-sm-0">
-                    <div class="list-group">
-                    	
-                    	<ul class="list-group list-group-flush">
-                    		{% if profile %}
-                    	{% for pro in profile %}
-                    	{% if pro.viewed_by is not None or pro.viewed_by.profilepersonal.account_type == 'tutor' %}
-                        <li class="list-group-item list-group-item-action">
-                        <div class="d-inline">
-                        <img src="{{pro.viewed_by.profilepersonal.profile_pic.url}}" class="rounded-circle" width="50px">
-                        <a href="{% url 'dantorial:userprofile' pro.viewed_by.profilepersonal.id %}" style="text-decoration: none;">
-                        	{{pro.viewed_by.profilepersonal.first_name}} {{pro.viewed_by.profilepersonal.last_name}}
-                        </a>
-                        <span class="text-muted d-grid d-sm-block ml-5">
-                        		{{pro.date_created}}
-                        	</span>	
-                        
-                        	
-                        </div>
-                        	
-            
-                        </li>
-                       
-                        {% endif %}
+<div class="row mt-5">
+  <div class="col-sm-8 col-md-6 col-lg-6 mx-auto">
+    <div class="card border-0 shadow rounded-3 my-5">
+      <div class="card-title mb-0">
+        <p class="fw-light fw-bold text-center fs-5">
+          {{ profile.count }} Profile View{{ profile.count|pluralize }}
+        </p>
+      </div>
+      <div class="card-body p-0 p-sm-0">
+        <div class="list-group">
+          <ul class="list-group list-group-flush">
+            {% if profile %} {% for pro in profile %}
+             {% if pro.viewed_by is not None or pro.viewed_by.profilepersonal.account_type == 'tutor' %}
+            <li class="list-group-item list-group-item-action">
+              <div class="d-inline">
+                <img
+                  src="{{pro.viewed_by.profilepersonal.profile_pic.url}}"
+                  class="rounded-circle"
+                  width="50px"
+                  height="50px"
+                />
+                <a
+                  href="{% url 'dantorial:userprofile' pro.viewed_by.profilepersonal.id %}"
+                  style="text-decoration: none"
+                >
+                  {{pro.viewed_by.profilepersonal.first_name}}
+                  {{pro.viewed_by.profilepersonal.last_name}}
+                </a>
+                <span class="text-muted d-grid d-sm-block ml-5">
+                  {{pro.date_created}}
+                </span>
+              </div>
+            </li>
 
-                        {% endfor %}
-
-                        {% endif %}	
-                    	</ul>
-                        
-                    </div>
-                </div>
-            </div>
+            {% endif %} {% endfor %} {% endif %}
+          </ul>
         </div>
+      </div>
     </div>
+  </div>
+</div>
 {% endblock %}

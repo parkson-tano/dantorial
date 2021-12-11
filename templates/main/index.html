@@ -2,18 +2,12 @@
 {% load i18n %}
 {% load mathfilters %}
 {% load static %} {% block title %} tantorial {%endblock title %} 
-<style>
-.bg-cover {
-    background-size: cover !important;
-    height: 100vh;
-    width: 100%;
-}
-</style>
+
 {% block carousel %}
 
 <div id="myCarousel" class="carousel slide mt-5" data-bs-ride="carousel" >
     <div class="carousel-inner">
-        <div class="carousel-item active" data-bs-interval="30000">
+        <div class="carousel-item active">
             <img class="bd-placeholder-img" src="static/bgimg.jpg" alt="" style="
             max-height: 100vh;
             max-width: 100%;
@@ -22,7 +16,8 @@
             display: block;
             opacity: 0.7;
             " />
-                <div class="carousel-caption text-center mb-5">
+            
+                <div class="carousel-caption text-center mb-5 d-block">
                     <div style="margin-bottom:10em;">
                         <h1 class="fs-sm-3 fs-md-2 fw-bold" >
                         <p class="typewrite mb-2 fw-bold text-center mt-5 bg-dark" data-period="2000" data-type='[ "Welcome to Tantorial", "Find your Perfect Tutor", "Get Connected to Students"]' style="
