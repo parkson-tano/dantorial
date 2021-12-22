@@ -2,6 +2,7 @@ from mainapp.models import ProfilePersonal, ProfileInfo, Subject, Qualification,
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from category.models import Category, SubCategory, Subject
+from location.models import Country, Region, Town, Quater
 
 class UserSerializer(serializers.ModelSerializer):
 	class Meta:
@@ -46,4 +47,24 @@ class SubCategorySerializer(serializers.ModelSerializer):
 class AllSubjectSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Subject
+		fields = "__all__"
+
+class CountrySerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Country
+		fields = "__all__"
+
+class RegionSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Region
+		fields = "__all__"
+
+class TownSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Town
+		fields = "__all__"
+
+class QuaterSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Quater
 		fields = "__all__"

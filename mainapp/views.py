@@ -1,3 +1,4 @@
+from io import SEEK_CUR
 from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.views.generic import TemplateView, DetailView, View, ListView, FormView, CreateView
@@ -35,7 +36,7 @@ from messaging.models import Message, Contact, Chat
 from messaging.forms import MessageForm, ContactForm
 # Create your views here.
 from django.core.mail import send_mail
-from django.conf import settings
+from django.conf import Settings, settings
 from campay.sdk import Client
 from django.http import JsonResponse
 from django.db.models import Avg
@@ -43,6 +44,7 @@ from django.utils.translation import gettext as _
 from  payUnit import payUnit
 import random
 import os
+from django.core.cache import cache
 class IndexView(TemplateView):
     template_name = 'main/index.html'
 
@@ -112,13 +114,17 @@ class UserProfileView(DetailView):
         if self.request.user.is_authenticated:
             # current = ProfilePersonal.objects.get(user=self.request.user)
             if (self.request.user != self.get_object().user):
+                subject = 'profile viewed'
+                message = f'{self.request.user.profilepersonal.first_name} viewed your profile'
+                from_email = settings.EMAIL_HOST_USER
+                to_email = (self.get_object().user.email,)
                 new_view = ProfileViewed.objects.create(user=self.get_object().user, viewed_by =self.request.user )
                 prof.view_count += 1
                 # current.favourite.add(self.get_object().user)
                 # current.save()
                 prof.save()
 
-                # send_mail('profile viewed', f'{self.request.user.profilepersonal.first_name} viewed your profile', settings.DEFAULT_FROM_EMAIL, (self.get_object().user.email,))
+                send_mail(subject, message, from_email, to_email, fail_silently=True)
             else:
                 pass
         # new_view.save()

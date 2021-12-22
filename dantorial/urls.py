@@ -19,6 +19,7 @@ from django.urls import path, include
 from django.views.defaults import page_not_found
 from django.conf import settings
 from django.conf.urls.static import static
+import debug_toolbar
 
 handler404 = 'mainapp.views.error404'
 handler403 = 'mainapp.views.error403'
@@ -32,7 +33,9 @@ urlpatterns = [
     path('', include('mainapp.urls')),
     path('message/', include('messaging.urls')),
     path("accounts/email/", page_not_found,{'exception': Exception('Not Found')}, name="account_email"),
-    path("api/", include('api.urls')),
+    path("api/u/", include('api.urls')),
+    path('__debug__', include(debug_toolbar.urls))
+
 
 ]
 

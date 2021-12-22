@@ -3,6 +3,7 @@ from .serializers import *
 from mainapp.models import ProfilePersonal, ProfileInfo, Subject, Qualification, Experience
 from rest_framework import viewsets
 from category.models import Category, SubCategory, Subject
+from location.models import Country, Region, Town, Quater
 # Create your views here.
 
 class UserView(viewsets.ModelViewSet):
@@ -40,3 +41,19 @@ class SubCategoryView(viewsets.ModelViewSet):
 class AllSubjectView(viewsets.ModelViewSet):
 	queryset = Subject.objects.all()
 	serializer_class = AllSubjectSerializer
+
+class CountryView(viewsets.ModelViewSet):
+	queryset = Country.objects.all()
+	serializer_class = CountrySerializer
+
+class RegionView(viewsets.ModelViewSet):
+	queryset = Region.objects.all()
+	serializer_class = RegionSerializer
+
+class TownView(viewsets.ModelViewSet):
+	queryset = Town.objects.all()
+	serializer_class = TownSerializer
+
+class QuaterView(viewsets.ModelViewSet):
+	queryset = Quater.objects.all()
+	serializer_class = QuaterSerializer
