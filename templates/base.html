@@ -66,7 +66,10 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'dantorial_message:chat' %}"><i class='fa fa-envelope-o'></i>
                             Message
-                      <span class="badge rounded-pill badge-notification bg-danger">{{ messags.count}}</span>
+                            {% if messags.count > 0 %}
+                              <span class="badge rounded-pill badge-notification bg-danger">{{ messags.count}}</span>
+                            {% endif %}
+                      
                     </a>
                     </li>
                     

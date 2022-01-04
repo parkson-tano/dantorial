@@ -708,13 +708,13 @@ class UpgradeAccountView(FormView):
             profile.save()
             pay.save()
             self.success_url = reverse_lazy('dantorial:pay-success')
-            send_mail('hey thanks ', 'here is the message', settings.DEFAULT_FROM_EMAIL, (self.request.user.email,))
+            send_mail('hey thanks ', 'here is the message', settings.DEFAULT_FROM_EMAIL, (self.request.user.email,), fail_silently=True)
             # messages.success(self.request, "Successful")
         else:
             form.instance.is_complete = False
             self.success_url = reverse_lazy('dantorial:pay-fail')
             # messages.success(self.request, "Failed")
-            send_mail('hey thanks for nothing', 'here is the message', settings.DEFAULT_FROM_EMAIL, (self.request.user.email,))
+            send_mail('hey thanks for nothing', 'here is the message', settings.DEFAULT_FROM_EMAIL, (self.request.user.email,), fail_silently=True,)
             pay.save()
         
         return super().form_valid(form)
