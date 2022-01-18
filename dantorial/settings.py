@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'category',
     'mainapp',
+    'mooc',
     'messaging',
     'review',
     'autoslug',

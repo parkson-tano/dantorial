@@ -5,6 +5,10 @@
 
 {% block carousel %}
 
+<!-- <style>
+    .hero @media only screen and (min-width: 1200px) {margin-bottom:10em}
+</style> -->
+
 <div id="myCarousel" class="carousel slide mt-5" data-bs-ride="carousel" >
     <div class="carousel-inner">
         <div class="carousel-item active">
@@ -18,22 +22,22 @@
             " />
             
                 <div class="carousel-caption text-center mb-5 d-block">
-                    <div style="margin-bottom:10em;">
-                        <h1 class="fs-sm-3 fs-md-2 fw-bold" >
-                        <p class="typewrite mb-2 fw-bold text-center mt-5 bg-dark" data-period="2000" data-type='[ "Welcome to Tantorial", "Find your Perfect Tutor", "Get Connected to Students"]' style="
+                    <div class='mb-0 mt-5'>
+                        <h1 class="fs-sm-3 fs-md-2 mb-5 fw-bold" >
+                        <p class="typewrite mb-auto  fw-bold text-center mt-auto mt-md-5 bg-dark" data-period="2000" data-type='[ "Welcome to Tantorial", "Find your Perfect Tutor", "Get Connected to Students"]' style="
                                 background: -webkit-linear-gradient(#003, #3a3);
                                 -webkit-background-clip: text;
                                 -webkit-text-fill-color: transparent;">
                             <span class="wrap"></span>
                         </p>
                         </h1>
-                            <p class="mb-5 fs-2 fw-bold text-center text-black" style="font-size: 72px;">
-                                Book one-on-one lessons with verified tutors close to you
+                            <p class="fs-2 fw-bold mt-0 text-center text-black" style="font-size: 72px;">
+                                Let someone close by help you!!!!
                             </p>
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center mb-5">
                             <div class="col col-sm-12 col-md-8">
                                 <form action="{% url 'dantorial:allsearch' %}">
-                                    <div class="input-group mt-5">
+                                    <div class="input-group mt-auto">
                                         <input class="form-control form-control-lg form-control-borderless" type="text" placeholder="What do you want  to learn" aria-label="Enter search term..." aria-describedby="button-search" name='keywords' / style="border-radius:40px;">
                                         <button class="btn btn-primary" id="button-search" type="submit" style="border-radius:40px;">
                                         <i class='fa fa-search'></i>

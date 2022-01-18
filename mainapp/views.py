@@ -114,7 +114,7 @@ class UserProfileView(DetailView):
         if self.request.user.is_authenticated:
             # current = ProfilePersonal.objects.get(user=self.request.user)
             if (self.request.user != self.get_object().user):
-                subject = 'profile viewed'
+                subject = 'Profile viewed'
                 message = f'{self.request.user.profilepersonal.first_name} viewed your profile'
                 from_email = settings.EMAIL_HOST_USER
                 to_email = (self.get_object().user.email,)
@@ -174,8 +174,13 @@ class UserProfileView(DetailView):
 
             new_message.save()
             # new_chat.save()
-            send_mail('Message from tantorial user', f'{self.request.user.profilepersonal.first_name} sent you a messages', settings.DEFAULT_FROM_EMAIL, (self.get_object().user.email,))
-            messages.success(self.request, 'message sucessfully sent')
+            subject = 'Message from Tantorial User'
+            message = f'{self.request.user.profilepersonal.first_name} sent you a messages'
+            from_email = settings.DEFAULT_FROM_EMAIL,
+            to_email = (self.get_object().user.email,)
+
+            send_mail(subject, message, from_email, to_email, fail_silently=True)
+            messages.success(self.request, 'message successfully sent')
         elif 'send_message' in request.GET:
             
             new_message.save()
@@ -224,7 +229,12 @@ class ContactView(CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         messages.success(self.request, "We will get back to you shortly")
-        send_mail('Thanks for Contacting us', f'{form.instance.user.profilepersonal.first_name} thanks for contacting us', settings.DEFAULT_FROM_EMAIL, (form.instance.user.email,))
+        subject = "Thanks for contacting us"
+        message = f'{form.instance.user.profilepersonal.first_name} thanks for contacting us'
+        from_email = settings.DEFAULT_FROM_EMAIL
+        to_email = (form.instance.user.email, )
+
+        send_mail(subject, message, from_email, to_email, fail_silently=True)
         form.save()
         return super().form_valid(form)
 
@@ -708,13 +718,23 @@ class UpgradeAccountView(FormView):
             profile.save()
             pay.save()
             self.success_url = reverse_lazy('dantorial:pay-success')
-            send_mail('hey thanks ', 'here is the message', settings.DEFAULT_FROM_EMAIL, (self.request.user.email,), fail_silently=True)
+            subject = "Payment Confirmation"
+            message = f'{self.requset.user.profilepersonal.first_name},Your Payment for Premium Service is complete'
+            from_email = settings.DEFAULT_FROM_EMAIL
+            to_email = (self.request.user.email, )
+            send_mail(subject, message, from_email, to_email, fail_silently=True)
+
             # messages.success(self.request, "Successful")
         else:
             form.instance.is_complete = False
             self.success_url = reverse_lazy('dantorial:pay-fail')
             # messages.success(self.request, "Failed")
-            send_mail('hey thanks for nothing', 'here is the message', settings.DEFAULT_FROM_EMAIL, (self.request.user.email,), fail_silently=True,)
+            subject = "Payment Fail"
+            message = f'{self.request.user.profilepersonal.first_name},Your Payment for Premium Service is not complete'
+            from_email = settings.DEFAULT_FROM_EMAIL
+            to_email = (self.request.user.email, )
+            send_mail(subject, message, from_email, to_email, fail_silently=True)
+            # send_mail('hey thanks for nothing', 'here is the message', settings.DEFAULT_FROM_EMAIL, (self.request.user.email,), fail_silently=True,)
             pay.save()
         
         return super().form_valid(form)
@@ -755,7 +775,11 @@ def profile_like(request):
         else:
             profile_obj.favourite.add(u.user)
             profile_obj.save()
-            send_mail('hey thanks ', f'{profile_obj.first_name} likes your profile', settings.DEFAULT_FROM_EMAIL, (u.user.email,))
+            subject = "Notification from Tantorial"
+            message = f'{profile_obj.first_name} liked Your Profile'
+            from_email = settings.DEFAULT_FROM_EMAIL
+            to_email = (u.user.email, )
+            send_mail(subject, message, from_email, to_email, fail_silently=True)
             flag = True
         return JsonResponse({'total_favourites': profile_obj.total_favourites, 'flag':flag})
     return HttpResponse("Error access Denied")

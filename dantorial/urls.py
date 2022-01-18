@@ -32,6 +32,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('chaining/', include('smart_selects.urls')),
     path('', include('mainapp.urls')),
+    path('course/', include('mooc.urls')),
     path('message/', include('messaging.urls')),
     path("accounts/email/", page_not_found,{'exception': Exception('Not Found')}, name="account_email"),
     path("api/", include('api.urls')),
