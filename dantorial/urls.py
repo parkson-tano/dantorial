@@ -36,7 +36,8 @@ urlpatterns = [
     path('message/', include('messaging.urls')),
     path("accounts/email/", page_not_found,{'exception': Exception('Not Found')}, name="account_email"),
     path("api/", include('api.urls')),
-    path('__debug__', include(debug_toolbar.urls))
+    path('__debug__', include(debug_toolbar.urls)),
+    path("__reload__/", include("django_browser_reload.urls")),
 
 
 ]

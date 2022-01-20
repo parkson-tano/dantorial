@@ -73,6 +73,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'mathfilters',
     'debug_toolbar',
+    'django_browser_reload',
 ]
 
 MIDDLEWARE = [
@@ -83,6 +84,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
