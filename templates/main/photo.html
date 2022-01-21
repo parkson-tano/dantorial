@@ -138,7 +138,7 @@
   font-weight: 700;
 }
 </style>
-<div class="file-upload mt-5 ">
+<div class="file-upload mt-5">
     <form id="update_user_form" method="POST" enctype="multipart/form-data" action="{% url 'dantorial:photochange'%}">
     {% csrf_token %}
       <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add Image</button>
