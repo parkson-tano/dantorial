@@ -12,9 +12,9 @@ class RegionAdmin(admin.ModelAdmin):
     # list_filter = ['name', 'country']
 
 class TownAdmin(admin.ModelAdmin):
-    search_fields = ['name', 'region']
-    list_display = ['name', 'region']
-    # list_filter = ['name', 'region' ]
+    search_fields = ['name', 'region', 'id']
+    list_display = ['name', 'region', 'id']
+    # list_filter = ['region' , 'id']
 
 class QuaterAdmin(admin.ModelAdmin):
     search_fields = ['name', 'town']

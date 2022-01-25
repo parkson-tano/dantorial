@@ -62,7 +62,7 @@ class RegionSerializer(serializers.ModelSerializer):
 class TownSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Town
-		fields = "__all__"
+		fields = ('id', 'name', 'region')
 
 class QuaterSerializer(serializers.ModelSerializer):
 	class Meta:
