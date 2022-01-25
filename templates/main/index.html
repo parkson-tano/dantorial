@@ -99,9 +99,9 @@
         </div>
         <div class="col-sm-5 col-lg-2">
             <div class="input-group mb-sm-3">
-                <select name='quater' class="town form-control select2-container input-lg step2-select">
-                    {% for quat in quater %}
-                    <option value="{{quat.id}}">{{ quat.name }} {{quat.town}}</option>
+                <select name='town' class="town form-control select2-container input-lg step2-select">
+                    {% for town in towns %}
+                    <option value="{{town.id}}">{{ town.name }}</option>
                     {% endfor %}
                 </select>
             </div>

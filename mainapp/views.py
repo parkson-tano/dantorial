@@ -582,9 +582,9 @@ class SearchView(TemplateView):
         acc_type = self.request.GET['typ']
         subject = self.request.GET['subject']
         category = self.request.GET['category']
-        quater = self.request.GET['quater']
+        town = self.request.GET['town']
         user_obj = User.objects.all()
-        profile_result = ProfilePersonal.objects.filter(Q(account_type = acc_type)).filter(Q(quater = quater)  & Q(user__profileinfo__category = category) & Q(user__profileinfo__subject = subject))
+        profile_result = ProfilePersonal.objects.filter(Q(account_type = acc_type)).filter(Q(town = town)  & Q(user__profileinfo__category = category) & Q(user__profileinfo__subject = subject))
         # subject = Subject.objects.filter(subject = subject).order_by('user')
         # final = list(set(list(chain(subject, profile_result))))
         # finals = list(set(final))

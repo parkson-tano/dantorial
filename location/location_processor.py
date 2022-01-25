@@ -10,7 +10,7 @@ def location_renderer(request):
     return {
         'country' : Country.objects.all(),
         'region' : Region.objects.all(),
-        'town' : Town.objects.all(),
+        'towns' : Town.objects.all(),
         'quater': Quater.objects.all(),
         'about': About.objects.get(id=1),
         'team': OurTeam.objects.all(),

@@ -17,8 +17,8 @@ class TownAdmin(admin.ModelAdmin):
     # list_filter = ['region' , 'id']
 
 class QuaterAdmin(admin.ModelAdmin):
-    search_fields = ['name', 'town']
-    list_display = ['name', 'town']
+    search_fields = ['name',]
+    list_display = ['name', ]
     # list_filter = ['name', 'town']
 
 admin.site.register(Country, CountryAdmin)
