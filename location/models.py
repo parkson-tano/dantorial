@@ -46,7 +46,13 @@ class Town(models.Model):
         return self.name
 
 class Quater(models.Model):
-    # town = models.ForeignKey(Town, on_delete=models.CASCADE)
+    town = models.ForeignKey(Town, on_delete=models.CASCADE, null=True, blank=True)
+    name = models.CharField(max_length=255, null=True)
+
+    def __str__(self):
+        return self.name
+
+class Address(models.Model):
     name = models.CharField(max_length=255, null=True)
 
     def __str__(self):

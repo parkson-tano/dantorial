@@ -125,6 +125,7 @@ class ProfilePersonal(models.Model):
         auto_choose=True,
         sort=True,
         null=True,)
+    address = models.CharField(max_length=256, null=True, blank=True)
     # city = ChainedForeignKey(City, chained_field="subregion",
     #     chained_model_field="subregion",
     #     show_all=False,

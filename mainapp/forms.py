@@ -92,7 +92,7 @@ class PersonalProfileForm(forms.ModelForm):
 	class Meta:
 		model = ProfilePersonal
 		fields = ['account_type','title', 'gender','first_name', 'last_name', 
-        'phone_number','date_of_birth','country', 'region', 'town', 'quater', 'level_of_education', 'profile_pic', 'whatsapp_number', 'show_whatsapp_number', 'online_lesson']
+        'phone_number','date_of_birth','country', 'region', 'town', 'address', 'level_of_education', 'profile_pic', 'whatsapp_number', 'show_whatsapp_number', 'online_lesson']
 		
 		widgets = {
 			'date_of_birth': DatePickerInput(),
