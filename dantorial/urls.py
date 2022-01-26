@@ -38,6 +38,7 @@ urlpatterns = [
     path("api/", include('api.urls')),
     path('__debug__', include(debug_toolbar.urls)),
     path("__reload__/", include("django_browser_reload.urls")),
+    path('cookies/', include('cookie_consent.urls')),
 
 
 ]

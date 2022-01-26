@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     'mathfilters',
     'debug_toolbar',
     'django_browser_reload',
+    'cookie_consent',
 ]
 
 MIDDLEWARE = [
@@ -105,6 +106,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.template.context_processors.i18n',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request',
                 'dani.dani_processor.carousel_slide',
                 'location.location_processor.location_renderer',
                 'category.category_processor.category_list',
