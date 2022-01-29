@@ -1,4 +1,5 @@
 from io import SEEK_CUR
+import re
 from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.views.generic import TemplateView, DetailView, View, ListView, FormView, CreateView
@@ -45,6 +46,7 @@ from  payUnit import payUnit
 import random
 import os
 from django.core.cache import cache
+from django.utils.datastructures import MultiValueDictKeyError
 class IndexView(TemplateView):
     template_name = 'main/index.html'
 
@@ -580,11 +582,30 @@ class SearchView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         acc_type = self.request.GET['typ']
-        subject = self.request.GET['subject']
+
+        try:
+            subject = self.request.GET['subject']
+        except MultiValueDictKeyError:
+            subject = None
         category = self.request.GET['category']
-        town = self.request.GET['town']
-        user_obj = User.objects.all()
-        profile_result = ProfilePersonal.objects.filter(Q(account_type = acc_type)).filter(Q(town = town)  & Q(user__profileinfo__category = category) & Q(user__profileinfo__subject = subject))
+        region = self.request.GET['region']
+        
+        # town = self.request.GET['town']
+        try:
+            town = self.request.GET['town']
+        except MultiValueDictKeyError:
+            town = None
+        
+        
+        if subject is None and town is None:
+            profile_result = ProfilePersonal.objects.filter(Q(account_type = acc_type) & Q(region = region) & Q(user__profileinfo__category = category))
+        
+        elif subject is None:
+            profile_result = ProfilePersonal.objects.filter(Q(account_type = acc_type)).filter(Q(region=region)).filter(Q(town = town)  & Q(user__profileinfo__category = category))
+        elif town is None:
+            profile_result = ProfilePersonal.objects.filter(Q(account_type = acc_type)).filter(Q(region=region) & Q(user__profileinfo__category = category) & Q(user__profileinfo__subject = subject))
+        else:
+            profile_result = ProfilePersonal.objects.filter(Q(account_type = acc_type)).filter(Q(region=region)).filter(Q(town = town)  & Q(user__profileinfo__category = category) & Q(user__profileinfo__subject = subject))
         # subject = Subject.objects.filter(subject = subject).order_by('user')
         # final = list(set(list(chain(subject, profile_result))))
         # finals = list(set(final))
@@ -604,17 +625,38 @@ class FilterView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         acc_type = self.request.GET['typ']
-        subject = self.request.GET['subject']
+        # subject = self.request.GET['subject']
         category = self.request.GET['category']
-        quater = self.request.GET['quater']
+        # quater = self.request.GET['quater']
         charge = self.request.GET['charge']
         gender = self.request.GET['gender']
         education = self.request.GET['education']
         region = self.request.GET['region']
-        town = self.request.GET['town']
+        # town = self.request.GET['town']
+        try:
+            town = self.request.GET['town']
+        except MultiValueDictKeyError:
+            town = None
+        
+        try:
+            subject = self.request.GET['subject']
+        except MultiValueDictKeyError:
+            subject = None
         # print(acc_type, subject, category, quater, charge, gender, education, region, town)
         user_obj = User.objects.all()
-        profile_result = ProfilePersonal.objects.filter(Q(account_type = acc_type)).filter(Q(quater = quater) | Q(region=region) | Q(town=town)  & Q(gender = gender) & Q(level_of_education = education) & Q(user__profileinfo__category = category) 
+
+        if subject is None and town is None:
+            profile_result = ProfilePersonal.objects.filter(Q(account_type = acc_type)).filter(Q(region=region)  & Q(gender = gender) & Q(level_of_education = education) & Q(user__profileinfo__category = category) & Q(user__profileinfo__charge = charge))
+        
+        elif subject is None:
+
+            profile_result = ProfilePersonal.objects.filter(Q(account_type = acc_type)).filter(Q(region=region) | Q(town=town)  & Q(gender = gender) & Q(level_of_education = education) & Q(user__profileinfo__category = category) & Q(user__profileinfo__charge = charge))
+            
+        elif town is None:
+            profile_result = ProfilePersonal.objects.filter(Q(account_type = acc_type)).filter(Q(region=region)  & Q(gender = gender) & Q(level_of_education = education) & Q(user__profileinfo__category = category) 
+            & Q(user__profileinfo__subject = subject) & Q(user__profileinfo__charge = charge))
+        else:
+            profile_result = ProfilePersonal.objects.filter(Q(account_type = acc_type)).filter(Q(region=region) | Q(town=town)  & Q(gender = gender) & Q(level_of_education = education) & Q(user__profileinfo__category = category) 
             & Q(user__profileinfo__subject = subject) & Q(user__profileinfo__charge = charge))
         # subject = Subject.objects.filter(subject = subject).order_by('user')
         # final = list(set(list(chain(subject, profile_result))))

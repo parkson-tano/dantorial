@@ -115,20 +115,20 @@ position: relative;
         </div>
         <div class="col-12">
           <select name='town' class="town form-control select2-container input-lg step2-select">
-            {% for town in town %}
+            {% for town in towns %}
               <option value="{{town.id}}">{{ town.name }}</option>
             {% endfor %}
           </select>
           
         </div>
-        <div class="col-12">
+        <!-- <div class="col-12">
           <select name='quater' class="quater form-control select2-container input-lg step2-select">
             {% for quat in quater %}
               <option value="{{quat.id}}">{{ quat.name }} {{quat.town}}</option>
             {% endfor %}
           </select>
           
-        </div>
+        </div> -->
         <div class="col-12 d-grid">
           <button class="btn btn-primary" type="submit">Filter</button>
         </div>
