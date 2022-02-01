@@ -8,6 +8,10 @@ class SubCategoryAdmin(admin.ModelAdmin):
     list_display = ['category', 'name']
     list_filter = ['category', ]
 
+class SubjectAdmin(admin.ModelAdmin):
+    list_display = ['__str__', 'subcategory', 'name']
+    list_filter = ['subcategory']
+
 admin.site.register(Category)
 admin.site.register(SubCategory, SubCategoryAdmin)
-admin.site.register(Subject)
+admin.site.register(Subject, SubjectAdmin)

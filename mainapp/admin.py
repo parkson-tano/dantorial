@@ -12,7 +12,7 @@ class TutorProfileAdmin(admin.ModelAdmin):
     list_filter = ['language']
 
 class SubjectAdmin(admin.ModelAdmin):
-    list_display = ['__str__', 'subject']
+    list_display = ['__str__', 'subject', 'category', 'subcategory']
     list_filter = ['subject', 'category', 'subcategory']
 
 
