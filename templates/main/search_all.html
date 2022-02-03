@@ -46,7 +46,7 @@
         <div class="col-12 ">
           <div class="input-group mb-3">
             <select name='gender' class="form-select select-picker" id="inputGroupSelect02" data-live-search="true">
-              <option >Gender</option>
+              <option>Gender</option>
               <option value="female">Female</option>
               <option value="male">Male</option>
             </select>
@@ -54,26 +54,29 @@
         </div>
         <div class="col-12">
           <div class="input-group mb-3">
-            <select name='category' class="form-select select-picker" id="inputGroupSelect02" data-live-search="true" data-placeholder="Select an option" data-allow-clear="true">
+            <select name='category' class="form-select select-picker" id="inputGroupSelect02" data-live-search="true"
+              data-placeholder="Select an option" data-allow-clear="true">
               {% for cat in all_cat %}
-                <option value="{{cat.id}}">{{ cat.name }}</option>
+              <option value="{{cat.id}}">{{ cat.name }}</option>
               {% endfor %}
             </select>
           </div>
         </div>
         <div class="col-12">
           <div class="input-group mb-3">
-            <select name='subcategory' class="form-select select-picker" id="inputGroupSelect02" data-live-search="true" data-placeholder="Select an option" data-allow-clear="true">
+            <select name='subcategory' class="form-select select-picker" id="inputGroupSelect02" data-live-search="true"
+              data-placeholder="Select an option" data-allow-clear="true">
               {% for subcat in all_subcat %}
-                <option value="{{subcat.id}}">{{ subcat.name }} </option>
+              <option value="{{subcat.id}}">{{ subcat.name }} </option>
               {% endfor %}
             </select>
           </div>
         </div>
         <div class="col-12 padding-minimum">
-          <select name='subject' id="select2-multiple-input" class="select2 form-control select2-container input-lg step2-select">
+          <select name='subject' id="select2-multiple-input"
+            class="select2 form-control select2-container input-lg step2-select">
             {% for sub in all_sub %}
-              <option value="{{sub.id}}">{{ sub.name }}</option>
+            <option value="{{sub.id}}">{{ sub.name }}</option>
             {% endfor %}
           </select>
         </div>
@@ -105,27 +108,27 @@
             <select name='region' class="form-select select-picker" id="inputGroupSelect02" data-live-search="true">
               <option disabled>Select Region</option>
               {% for reg in region %}
-                <option value="{{reg.id}}">{{ reg.name }}</option>
+              <option value="{{reg.id}}">{{ reg.name }}</option>
               {% endfor %}
             </select>
           </div>
         </div>
         <div class="col-12">
           <select name='town' class="town form-control select2-container input-lg step2-select">
-            {% for town in town %}
-              <option value="{{town.id}}">{{ town.name }}</option>
+            {% for town in towns %}
+            <option value="{{town.id}}">{{ town.name }}</option>
             {% endfor %}
           </select>
-          
+
         </div>
-        <div class="col-12">
+        <!-- <div class="col-12">
           <select name='quater' class="quater form-control select2-container input-lg step2-select">
             {% for quat in quater %}
               <option value="{{quat.id}}">{{ quat.name }} {{quat.town}}</option>
             {% endfor %}
           </select>
           
-        </div>
+        </div> -->
         <div class="col-12 d-grid">
           <button class="btn btn-primary" type="submit">Filter</button>
         </div>

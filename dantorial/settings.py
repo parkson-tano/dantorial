@@ -22,7 +22,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-3g#7eim3p0-g-lmhd-cggi0kqr$z4tfzx0@s-e&y=wozu!*9h%'
+# SECRET_KEY = '3g#7eim3p0-g-lmhd-cggi0kqr$z4tfzx0@s-e&y=wozu!*9h%'
+
+with open('secret_key.txt') as f:
+    SECRET_KEY = f.read().strip()
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -30,7 +33,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 INTERNAL_IPS = [
-    '127.0.0.5',
+    '127.0.0.0',
 ]
 
 
@@ -100,6 +103,12 @@ TEMPLATES = [
         ],
         'APP_DIRS': True,
         'OPTIONS': {
+            # 'loaders': [
+            # (
+            #     'django.template.loaders.filesystem.Loader',
+            #     [BASE_DIR / 'templates']
+            # ),
+            # ],
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -221,7 +230,8 @@ LOCALE_PATHS = (
 )
 
 
-
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 
 USE_DJANGO_JQUERY = True
 
