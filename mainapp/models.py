@@ -13,7 +13,24 @@ from smart_selects.db_fields import ChainedForeignKey
 from ckeditor.fields import RichTextField
 import numpy as np
 from allauth.account.admin import EmailAddress
+from multiselectfield import MultiSelectField
 # Create your models here.
+
+DAY = (
+    ('Monday','Monday'),
+    ('Tuesday', 'Tuesday'),
+    ('Wednesday','Wednesday'),
+    ('Thursday','Thursday'),
+    ('Friday','Friday'),
+    ('Saturday','Saturday'),
+    ('Sunday','Sunday')
+)
+
+HOUR = (
+    ('Morning', 'Morning'),
+    ('Afternoon','Afternoon'),
+    ('Evening','Evening'),
+)
 
 EL = (
     ('Bachelor Degree(Bacc+3)', 'Bachelor Degree'),
@@ -278,6 +295,8 @@ class Hour(models.Model):
 
 class Availability(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # day = models.CharField(max_length=30, choices=DAY)
+    # hour = models.SelectField(choices=HOUR, max_choices=3, max_length=30)
     day = models.ForeignKey(Day, on_delete=models.PROTECT)
     hour = models.ManyToManyField(Hour)
     date_created = models.DateTimeField(auto_now_add=True)
