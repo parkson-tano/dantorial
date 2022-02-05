@@ -23,6 +23,8 @@ update qualification
                             <a href="{% url 'dantorial:add-qualification'%}"
                                 class="list-group-item list-group-item-action active">Add Qualification</a>
                             {% endif %}
+                                                      <a href="{% url 'dantorial:add-availability' %}" class="list-group-item list-group-item-action">Add
+                                                        Availability</a>
             </div>
           </div>
         </div>
@@ -30,7 +32,7 @@ update qualification
       <div class="col-sm-8 col-md-8 col-lg-7 mx-auto">
         <div class="card border-0 shadow rounded-3 my-5">
           <div class="card-body p-2 p-sm-5">
-            <h5 class="card-title text-center mb-3 fw-light fs-5">Add Qualification</h5>
+            <h5 class="card-title text-center mb-3 fw-light fs-5">Edit Qualification</h5>
             <form class="needs-validation" method="post" action="" novalidate>
               {% csrf_token %}
               {{form.media.js}}

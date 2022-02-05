@@ -14,6 +14,8 @@
                             <a href="{% url 'dantorial:add-subject' %}" class="list-group-item list-group-item-action">Add Subjects</a> {% if user.profilepersonal.account_type == 'tutor' %}
                             <a href="{% url 'dantorial:add-experience'%}" class="list-group-item list-group-item-action active">Add Experience</a>
                             <a href="{% url 'dantorial:add-qualification'%}" class="list-group-item list-group-item-action">Add Qualification</a> {% endif %}
+                                                    <a href="{% url 'dantorial:add-availability' %}" class="list-group-item list-group-item-action">Add
+                                                        Availability</a>
                         </div>
                     </div>
                 </div>

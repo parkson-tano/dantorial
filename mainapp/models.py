@@ -16,9 +16,9 @@ from allauth.account.admin import EmailAddress
 # Create your models here.
 
 EL = (
-    ('Bachelor Degree(Bac +3)', 'Bachelor Degree'),
-    ('Master Degree(Bac +5)', 'Master Degree'),
-    ('Advanced Level(Bac)', 'Advanced Level'),
+    ('Bachelor Degree(Bacc+3)', 'Bachelor Degree'),
+    ('Master Degree(Bacc +5)', 'Master Degree'),
+    ('Advanced Level(Bacc)', 'Advanced Level'),
     ('Doctorate', 'Doctorate'),
     ('HND', 'HND'),
     ('Others', 'Others'),
@@ -271,6 +271,7 @@ class Day(models.Model):
 
 class Hour(models.Model):
     hour = models.CharField(max_length=30)
+    # time = models.TimeField(null=True)
 
     def __str__(self):
         return self.hour

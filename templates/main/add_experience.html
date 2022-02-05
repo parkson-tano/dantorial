@@ -25,6 +25,8 @@ experience
                             <a href="{% url 'dantorial:add-verification'%}"
                                 class="list-group-item list-group-item-action">Add Verification</a>
                             {% endif %}
+                                          <a href="{% url 'dantorial:add-availability' %}" class="list-group-item list-group-item-action">Add
+                                            Availability</a>
             </div>
           </div>
         </div>
@@ -32,7 +34,7 @@ experience
       <div class="col-sm-8 col-md-8 col-lg-7 mx-auto">
         <div class="card border-0 shadow rounded-3 my-5">
           <div class="card-body p-2 p-sm-5">
-            <h5 class="card-title text-center mb-3 fw-light fs-5">Edit Work Experience</h5>
+            <h5 class="card-title text-center mb-3 fw-light fs-5">Add Work Experience</h5>
             <form class="needs-validation" method="post" action="" novalidate>
               {% csrf_token %}
               {{form.media}}

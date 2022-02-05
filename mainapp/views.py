@@ -13,7 +13,7 @@ from django.utils.decorators import method_decorator
 from django.http import Http404
 from category.models import Category, SubCategory
 from .forms import (AddSubjectForm, UserLoginForm, UserRegistrationForm, VerificationForm,
-PersonalProfileForm, ProfileInfoForm, AddExperienceForm, AddQualificationForm, UpgradeForm, PersonalProfilePic)
+PersonalProfileForm, ProfileInfoForm, AddExperienceForm, AddQualificationForm, UpgradeForm, PersonalProfilePic, AvailabilityForm)
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy, reverse
@@ -369,6 +369,60 @@ class SubjectDeleteView(DeleteView):
     def delete(self, request, *args, **kwargs):
         messages.error(self.request, 'sucessfully removed subject')
         return super().delete(request, *args, **kwargs)
+
+
+class AvailabilityEditView(CreateView):
+    template_name = 'main/add_availability.html'
+    form_class = AvailabilityForm
+    success_url = reverse_lazy('dantorial:my-availability')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        messages.success(self.request, "Availability Added Successfully")
+        form.save()
+        return super().form_valid(form)
+
+class AvailabilityDeleteView(DeleteView):
+    # @method_decorator(csrf_exempt)
+    model = Availability
+    success_url = reverse_lazy('dantorial:my-availability')
+
+    def delete(self, request, *args, **kwargs):
+        messages.error(self.request, 'availability removed subject')
+        return super().delete(request, *args, **kwargs)
+
+
+class AvailabilityUpdateView(UpdateView):
+    template_name = 'main/update_availability.html'
+    form_class = AvailabilityForm
+    model = Availability
+    success_url = reverse_lazy('dantorial:my-availability')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        messages.success(self.request, "Successful")
+        form.save()
+        return super().form_valid(form)
+
+class ProfileAvailabilityView(TemplateView):
+    template_name = 'main/my_availability.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            pass
+        else:
+            return redirect('/accounts/login/?next=/my-availability/')
+            
+        return super().dispatch(request, *args, **kwargs)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        account = self.request.user
+        context["account"] = account
+
+        availability = Availability.objects.filter(user = account).order_by('-id')
+        context['availability'] = availability
+        return context
+
 
 class ExperienceEditView(CreateView):
     template_name = 'main/add_experience.html'

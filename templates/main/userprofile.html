@@ -495,6 +495,48 @@ top:-9999px;*/
 					</article>
 					</section>
 				</div>
+
+<!-- availabilty -->
+
+				<div class="card mb-2 mt-3">
+					<div class="text-center fw-bold pt-0 pt-xl-5 pb-0 pb-xl-3 fs-4">Availability</div>
+					<div class="card-body">
+						<div class="accordion" id='accordionExample'>
+							{% for hours in userprofile.user.availability_set.all %}
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="accordion-item">
+										<h2 class="accordion-header" id="headingOne">
+											<button class="accordion-button" type="button" data-bs-toggle="collapse"
+												data-bs-target="#collapseOne{{forloop.counter}}" aria-expanded="true"
+												aria-controls="collapseOne">
+												{{hours.day}}
+											</button>
+										</h2>
+									</div>
+									<div class="col-sm-12 text-secondary">
+										<div id="collapseOne{{forloop.counter}}" class="accordion-collapse collapse"
+											aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+											<div class="accordion-body">
+												<ul class="list-group list-group-flush">
+													<p class="d-flex fw-dark">Hours: {% for hou in hours.hour.all %}
+														{{hou}}
+													  
+													{% endfor %}</p>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<hr>
+							{% endfor %}
+						</div>
+					</div>
+					</div>
+
+<!-- end -->
+
 				<div class="row mt-0">
 					<div class="mb-3 me-5">
 						<fieldset>
