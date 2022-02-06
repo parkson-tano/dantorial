@@ -41,11 +41,11 @@ urlpatterns = [
 
 # update view
 
-    path('update/subject-<int:pk>/', SubjectUpdateView.as_view(), name='update_subject'),
-    path('update/qualification-<int:pk>/', QualificationUpdateView.as_view(), name='update_qualification'),
-    path('update/experience-<int:pk>/', ExperienceUpdateView.as_view(), name='update_experience'),
-    path('update/verification-<int:pk>/', VerificationUpdateView.as_view(), name='update_verification'),
-    path(f'update/availability-<int:pk>/', AvailabilityUpdateView.as_view(), name='update_availability'),
+    path(f'update/subject-{random.randint(10000,99999)}<int:pk>{random.randint(10000,99999)}/', SubjectUpdateView.as_view(), name='update_subject'),
+    path(f'update/qualification-{random.randint(10000,99999)}<int:pk>{random.randint(10000,99999)}/', QualificationUpdateView.as_view(), name='update_qualification'),
+    path(f'update/experience-{random.randint(10000,99999)}<int:pk>{random.randint(10000,99999)}/', ExperienceUpdateView.as_view(), name='update_experience'),
+    path(f'update/verification-{random.randint(10000,99999)}<int:pk>{random.randint(10000,99999)}/', VerificationUpdateView.as_view(), name='update_verification'),
+    path(f'update/availability-{random.randint(10000,99999)}<int:pk>{random.randint(10000,99999)}/', AvailabilityUpdateView.as_view(), name='update_availability'),
 
 # delete views
 
