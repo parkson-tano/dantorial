@@ -97,7 +97,8 @@ top:-9999px;*/
 										<img src="{{userprofile.profile_pic.url}}" alt="{{userprofile.first_name}}" class="rounded-circle"
 											width="170px" height='170px' style="border-radius: 50;">
 									</a>
-									<button class="likebtn border-0 mr-5 p-0" type="button" id="{{userprofile.id}}"
+									{% if True %}
+									  <button class="likebtn border-0 mr-5 p-0" type="button" id="{{userprofile.id}}"
 										data-url="{% url 'dantorial:favourite' %}" style="  position: absolute;
 								background: transparent;
 								top: 100;
@@ -105,20 +106,8 @@ top:-9999px;*/
 								color:blue">
 										<i class="fa fa-heart-o mr-0 ml-0" ></i>
 									</button>
-									<!-- <div id="like-section"> -->
-<!-- {% if request.user.is_authenticated %}
-									<form action="{% url 'likes' %" method="POST">
-										{% csrf_token %}
-										{% if is_liked %}
-										<button type="submit" id="like" name="post_id" value="{{ userprofile.id }}" class="btn btn-danger">Dislike</button>
-										{% else %}
-										<button type="submit" id="like" name="post_id" value="{{ userprofile.id }}" class="btn btn-primary">Like</button>
-										{% endif %}
-									</form>
 									{% endif %}
-										
-									</div> -->
-									
+									  
 								</div>
 								<!-- end col 1-1 -->
 								<!-- col 1-2 -->

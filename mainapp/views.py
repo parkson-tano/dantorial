@@ -101,6 +101,8 @@ class UserProfileView(DetailView):
         similar = ProfilePersonal.objects.filter(Q(user__profileinfo__subject=self.get_object().user.profileinfo.subject)
          | Q(user__profileinfo__subcategory=self.get_object().user.profileinfo.subcategory) | Q(user__profileinfo__category=self.get_object().user.profileinfo.category))
         pro = ProfilePersonal.objects.filter(paid = True)
+        # liked = ProfilePersonal.objects.filter(user=self.request.user)
+        # print(f'likes {liked.user}')
         context["comments"] = comments_connected
         context['comment_form'] = ReviewForm 
         context['message'] = MessageForm
@@ -949,7 +951,7 @@ class ProfileViewList(TemplateView):
 def profile_like(request):
     if request.POST.get('action') == 'post':
 
-        flag = None
+        flag = False
         profileid = int(request.POST.get('profile_id'))
         u = ProfilePersonal.objects.get(id=profileid)
         print(f'prof id {profileid}')
@@ -963,12 +965,20 @@ def profile_like(request):
         else:
             profile_obj.favourite.add(u.user)
             profile_obj.save()
+            flag = True
+
             subject = "Notification from Tantorial"
             message = f'{profile_obj.first_name} liked Your Profile'
             from_email = settings.DEFAULT_FROM_EMAIL
             to_email = (u.user.email, )
             send_mail(subject, message, from_email, to_email, fail_silently=True)
-            flag = True
+
+    #    context ={
+    #         'userprofile': profile_obj,
+    #         'flag': flag,
+    #         'total_favourites': profile_obj.favourite.count,
+    #     }
+        print(flag)
         return JsonResponse({'total_favourites': profile_obj.total_favourites, 'flag':flag})
     return HttpResponse("Error access Denied")
 
