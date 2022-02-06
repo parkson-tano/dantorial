@@ -97,16 +97,28 @@ top:-9999px;*/
 										<img src="{{userprofile.profile_pic.url}}" alt="{{userprofile.first_name}}" class="rounded-circle"
 											width="170px" height='170px' style="border-radius: 50;">
 									</a>
-
 									<button class="likebtn border-0 mr-5 p-0" type="button" id="{{userprofile.id}}"
 										data-url="{% url 'dantorial:favourite' %}" style="  position: absolute;
 								background: transparent;
-									top: 100;
-
+								top: 100;
 			 					font-size:200%;
 								color:blue">
 										<i class="fa fa-heart-o mr-0 ml-0" ></i>
 									</button>
+									<!-- <div id="like-section"> -->
+<!-- {% if request.user.is_authenticated %}
+									<form action="{% url 'likes' %" method="POST">
+										{% csrf_token %}
+										{% if is_liked %}
+										<button type="submit" id="like" name="post_id" value="{{ userprofile.id }}" class="btn btn-danger">Dislike</button>
+										{% else %}
+										<button type="submit" id="like" name="post_id" value="{{ userprofile.id }}" class="btn btn-primary">Like</button>
+										{% endif %}
+									</form>
+									{% endif %}
+										
+									</div> -->
+									
 								</div>
 								<!-- end col 1-1 -->
 								<!-- col 1-2 -->
@@ -472,7 +484,7 @@ top:-9999px;*/
 													</div>
 												</div>
 											</div>
-											<div class="accordion-item">
+											<!-- <div class="accordion-item">
 												<h4 class="accordion-header" id="headingTwo">
 													<button class="accordion-button" type="button" data-bs-toggle="collapse"
 														data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -487,7 +499,7 @@ top:-9999px;*/
 														<strong> {{ userprofile.user.profileinfo.experience|default:''|safe }} </strong>
 													</div>
 												</div>
-											</div>
+											</div> -->
 										</div>
 									</div>
 								</div>

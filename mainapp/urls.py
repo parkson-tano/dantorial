@@ -1,6 +1,7 @@
 from django.urls import path
 from mainapp.views import *
 from category.views import *
+import random
 app_name = 'dantorial'
 urlpatterns = [
 
@@ -44,7 +45,7 @@ urlpatterns = [
     path('update/qualification-<int:pk>/', QualificationUpdateView.as_view(), name='update_qualification'),
     path('update/experience-<int:pk>/', ExperienceUpdateView.as_view(), name='update_experience'),
     path('update/verification-<int:pk>/', VerificationUpdateView.as_view(), name='update_verification'),
-    path('update/availability-<int:pk>/', AvailabilityUpdateView.as_view(), name='update_availability'),
+    path(f'update/availability-<int:pk>/', AvailabilityUpdateView.as_view(), name='update_availability'),
 
 # delete views
 

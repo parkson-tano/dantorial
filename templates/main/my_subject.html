@@ -50,7 +50,8 @@ my-subject
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            {% if user.profileinfo.subject is not None%}
+                             <tr>
                                 <!-- <td> 1 </td> -->
                                 <td> {{ user.profileinfo.category }}</td>
                                 <td> {{ user.profileinfo.subcategory }} </td>
@@ -76,7 +77,9 @@ my-subject
                                 </td>
 
                                 <!-- <td> <a href="#" class="btn btn-danger"> Remove</a> </td> -->
-                            </tr>
+                            </tr>  
+                            {% endif %}
+                           
                             {% for ord in subject %}
                             <tr>
                                 <!-- <td> {{ forloop.counter }} </td> -->

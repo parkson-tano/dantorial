@@ -136,12 +136,12 @@ class ProfilePersonal(models.Model):
         auto_choose=True,
         sort=True,
         null=True,)
-    quater = ChainedForeignKey(Quater, chained_field="town",
-        chained_model_field="town",
-        show_all=False,
-        auto_choose=True,
-        sort=True,
-        null=True,)
+    # quater = ChainedForeignKey(Quater, chained_field="town",
+    #     chained_model_field="town",
+    #     show_all=False,
+    #     auto_choose=True,
+    #     sort=True,
+    #     null=True,)
     address = models.CharField(max_length=256, null=True, blank=True)
     # city = ChainedForeignKey(City, chained_field="subregion",
     #     chained_model_field="subregion",
@@ -195,7 +195,7 @@ class ProfileInfo(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     language = models.CharField(max_length=30, choices=LANG)
     bio = models.TextField(blank=True, null=True)
-    experience = models.TextField(blank=True, null=True)
+    # experience = models.TextField(blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True, related_name ='main_category')
     subcategory = ChainedForeignKey(SubCategory, chained_field="category",
         chained_model_field="category",

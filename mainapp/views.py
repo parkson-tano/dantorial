@@ -364,6 +364,7 @@ class ProfileInfoEditView(UpdateView):
         messages.success(self.request, "Successful")
         form.save()
         return super().form_valid(form)
+        
     # def get(request, *args, **kwargs):
     #     return super().get(request, *args, **kwargs)
 
@@ -435,16 +436,14 @@ class AvailabilityUpdateView(UpdateView):
 
     def dispatch(self, request, *args, **kwargs):
         if self.request.user.is_authenticated:
-            
             pass
         else:
             return redirect('/accounts/login/?next=/my-availability/')
             
         return super().dispatch(request, *args, **kwargs)
 
-    # def get_object(self):
-    #         av = Availability.objects.filter(user= self.request.user)
-    #         return av
+    def get_queryset(self):
+        return Availability.objects.filter(user=self.request.user)
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -543,6 +542,9 @@ class QualificationUpdateView(UpdateView):
             
         return super().dispatch(request, *args, **kwargs)
 
+    def get_queryset(self):
+        return Qualification.objects.filter(user=self.request.user)
+
     def form_valid(self, form):
         form.instance.user = self.request.user
         messages.success(self.request, "Successful")
@@ -554,6 +556,18 @@ class ExperienceUpdateView(UpdateView):
     form_class = AddExperienceForm
     model = Experience
     success_url = reverse_lazy('dantorial:my-experience')
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            pass
+        else:
+            return redirect('/accounts/login/?next=/my-experience/')
+            
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_queryset(self):
+        return Experience.objects.filter(user=self.request.user)
+
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -576,6 +590,9 @@ class SubjectUpdateView(UpdateView):
             return redirect('/accounts/login/?next=/my-subject/')
             
         return super().dispatch(request, *args, **kwargs)
+
+    def get_queryset(self):
+        return Subject.objects.filter(user=self.request.user)
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -933,7 +950,7 @@ def profile_like(request):
     if request.POST.get('action') == 'post':
 
         flag = None
-        profileid = int(request.POST.get('ans_id'))
+        profileid = int(request.POST.get('profile_id'))
         u = ProfilePersonal.objects.get(id=profileid)
         print(f'prof id {profileid}')
         profile_obj = ProfilePersonal.objects.get(user=request.user)
@@ -954,6 +971,24 @@ def profile_like(request):
             flag = True
         return JsonResponse({'total_favourites': profile_obj.total_favourites, 'flag':flag})
     return HttpResponse("Error access Denied")
+
+# def profile_like(request):
+#     post = get_object_or_404(ProfilePersonal, id=request.POST.get('userprofile_id'))
+#     is_liked = False
+#     if post.favourite.filter(id=request.user.id).exists():
+#         post.favourite.remove(request.user)
+#         is_liked = False
+#     else:
+#         post.favourite.add(request.user)
+#         is_liked = True
+#     context ={
+#         'userprofile': post,
+#         'is_liked': is_liked,
+#         'total_likes': post.likes.count(),
+#     }
+#     if request.is_ajax():
+#         html = render_to_string('like_section.html', context, request=request)
+#         return JsonResponse({'form': html})
 
 class FavouriteView(TemplateView):
     template_name = "main/favourite.html"

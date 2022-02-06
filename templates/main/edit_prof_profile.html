@@ -26,10 +26,10 @@ edit profile
                                 class="list-group-item list-group-item-action">Add Experience</a>
                             <a href="{% url 'dantorial:add-qualification'%}"
                                 class="list-group-item list-group-item-action">Add Qualification</a>
-                          
-                            {% endif %}
-                            <a href="{% url 'dantorial:add-verification'%}"
+                          <a href="{% url 'dantorial:add-verification'%}"
                             class="list-group-item list-group-item-action">Add Verification</a>
+                            {% endif %}
+                            
                                                       <a href="{% url 'dantorial:add-availability' %}" class="list-group-item list-group-item-action">Add
                                                         Availability</a>
             </div>
@@ -50,9 +50,7 @@ edit profile
                 <div>
                   {{form.bio|as_crispy_field}}
                 </div>
-                <div>
-                 {{form.experience|as_crispy_field}} 
-                </div>
+            
                 <div class="col-md-4">
                   {{form.category|as_crispy_field}}
                 </div> 
@@ -62,12 +60,15 @@ edit profile
                 <div class="col-md-4">
                  {{form.subject|as_crispy_field}} 
                 </div>
-                <div class="col-md-4">
+                {% if request.user.profilepersonal.account_type == 'tutor' %}
+                  <div class="col-md-4">
                 {{form.charge|as_crispy_field}}
                 </div>
                 <div class="col-md-4">
                  {{form.amount|as_crispy_field}} 
                 </div>
+                {% endif %}
+                
                 </div>
               <div class="d-grid mt-3">
                 <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">submit</button>

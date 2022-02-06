@@ -199,22 +199,23 @@ class PersonalProfilePic(forms.ModelForm):
 class  ProfileInfoForm(forms.ModelForm):
     class Meta:
         model = ProfileInfo
-        fields = ['language', 'bio', 'experience', 'category','subcategory','subject','charge', 'amount']
+        fields = ['language', 'bio','category','subcategory','subject','charge', 'amount']
         widgets = { 
             "bio": forms.Textarea(attrs= { 
 				'name' : 'bio',
-				'class': 'form-control',
+				'placeholder': 'Tell others about yourself',
+				'class':'form-control',
                 'rows': 8,
                 'cols': 20,
-				'required' : True
+				'required' : False
 			}), 
-            "experience": forms.Textarea(attrs= { 
-				'name' : 'experience',
-				'class': 'form-control',
-                'rows': 8,
-                'columns': 25,
-				'required' : True
-			}), 
+            # "experience": forms.Textarea(attrs= { 
+			# 	'name' : 'experience',
+			# 	'class': 'form-control',
+            #     'rows': 8,
+            #     'columns': 25,
+			# 	'required' : False
+			# }), 
         }
 
 class UserLoginForm(forms.Form):

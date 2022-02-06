@@ -329,16 +329,16 @@
                         'action': 'post'
                     },
                     success: function (response) {
-                        $('#like_count' ).text(response['total_favourites']);
+                        // $('#like_count' ).text(response['total_favourites']);
                         console.log("clicked:" + ansid)
                         console.log('response: ' + response)
                         if (response['flag']) {
-                            $('#'+ansid).addClass('text-success');
-                            // alert('you like this profile')
+                            $('#'+profile_id).addClass('text-success');
+                            alert('you like this profile')
 
                             console.log('successfully  added to favorites');
                         } else {
-                            $("#"+ansid).removeClass('text-success');
+                            $("#"+profile_id).removeClass('text-success');
                             console.log('successfully removed to favorites');
                             // alert('u dislike this')
                         }
