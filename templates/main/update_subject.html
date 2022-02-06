@@ -42,18 +42,15 @@ update subject
                 {{form|crispy}}
                 {% else %}
                 <div class="form-group">
-                {{form.category}}
+                {{form.category|as_crispy_field}}
+                </div>
+                <div>
+                  {{form.subcategory|as_crispy_field}}
+                </div>
+                <div>
+                 {{form.subject|as_crispy_field}} 
+                </div>
 
-                </div>
-                <div>
-                  {{form.subcategory}}
-                </div>
-                <div>
-                 {{form.subject}} 
-                </div>
-                <div>
-                  {{form.level}}
-                </div>
                 
               {% endif %}
               <div class="d-grid">

@@ -32,19 +32,19 @@ urlpatterns = [
     path('favourites/', FavouriteView.as_view(), name='myfavourites'),
 # add view
 
-    path('add-qualification', QualificationEditView.as_view(), name='add-qualification'),
-    path('add-experience', ExperienceEditView.as_view(), name='add-experience'),
-    path('add-subject', SubjectEditView.as_view(), name='add-subject'),
-    path('add-verification', VerificationEditView.as_view(), name='add-verification'),
-    path('add-availability', AvailabilityEditView.as_view(), name='add-availability'),
+    path('add-qualification/', QualificationAddView.as_view(), name='add-qualification'),
+    path('add-experience/', ExperienceAddView.as_view(), name='add-experience'),
+    path('add-subject/', SubjectAddView.as_view(), name='add-subject'),
+    path('add-verification/', VerificationAddView.as_view(), name='add-verification'),
+    path('add-availability/', AvailabilityAddView.as_view(), name='add-availability'),
 
 # update view
 
-    path('update/subject-<int:pk>', SubjectUpdateView.as_view(), name='update_subject'),
-    path('update/qualification-<int:pk>', QualificationUpdateView.as_view(), name='update_qualification'),
-    path('update/experience-<int:pk>', ExperienceUpdateView.as_view(), name='update_experience'),
-    path('update/verification-<int:pk>', VerificationUpdateView.as_view(), name='update_verification'),
-    path('update/availability-<int:pk>', AvailabilityUpdateView.as_view(), name='update_availability'),
+    path('update/subject-<int:pk>/', SubjectUpdateView.as_view(), name='update_subject'),
+    path('update/qualification-<int:pk>/', QualificationUpdateView.as_view(), name='update_qualification'),
+    path('update/experience-<int:pk>/', ExperienceUpdateView.as_view(), name='update_experience'),
+    path('update/verification-<int:pk>/', VerificationUpdateView.as_view(), name='update_verification'),
+    path('update/availability-<int:pk>/', AvailabilityUpdateView.as_view(), name='update_availability'),
 
 # delete views
 

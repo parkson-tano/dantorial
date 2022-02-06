@@ -260,6 +260,14 @@ class PersonalProfileEditView(UpdateView):
     success_url = reverse_lazy('dantorial:profile')
     model = ProfilePersonal
 
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            pass
+        else:
+            return redirect('/accounts/login/?next=/profile/')
+            
+        return super().dispatch(request, *args, **kwargs)
+
     def get_object(self):
         if self.request.user.is_authenticated:
             return self.request.user.profilepersonal
@@ -339,8 +347,17 @@ class ProfileInfoEditView(UpdateView):
     success_url = reverse_lazy('dantorial:profile-info')
     model = ProfileInfo
 
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            pass
+        else:
+            return redirect('/accounts/login/?next=/profile-info/')
+            
+        return super().dispatch(request, *args, **kwargs)
+
     def get_object(self):
         return self.request.user.profileinfo
+
     
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -350,10 +367,19 @@ class ProfileInfoEditView(UpdateView):
     # def get(request, *args, **kwargs):
     #     return super().get(request, *args, **kwargs)
 
-class SubjectEditView(CreateView):
+class SubjectAddView(CreateView):
     template_name = 'main/add_subject.html'
     form_class = AddSubjectForm
     success_url = reverse_lazy('dantorial:my-subject')
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            pass
+        else:
+            return redirect('/accounts/login/?next=/add-availability/')
+            
+        return super().dispatch(request, *args, **kwargs)
+
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -371,10 +397,19 @@ class SubjectDeleteView(DeleteView):
         return super().delete(request, *args, **kwargs)
 
 
-class AvailabilityEditView(CreateView):
+class AvailabilityAddView(CreateView):
     template_name = 'main/add_availability.html'
     form_class = AvailabilityForm
     success_url = reverse_lazy('dantorial:my-availability')
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            pass
+        else:
+            return redirect('/accounts/login/?next=/add-availability/')
+            
+        return super().dispatch(request, *args, **kwargs)
+
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -397,6 +432,19 @@ class AvailabilityUpdateView(UpdateView):
     form_class = AvailabilityForm
     model = Availability
     success_url = reverse_lazy('dantorial:my-availability')
+
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            
+            pass
+        else:
+            return redirect('/accounts/login/?next=/my-availability/')
+            
+        return super().dispatch(request, *args, **kwargs)
+
+    # def get_object(self):
+    #         av = Availability.objects.filter(user= self.request.user)
+    #         return av
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -424,7 +472,7 @@ class ProfileAvailabilityView(TemplateView):
         return context
 
 
-class ExperienceEditView(CreateView):
+class ExperienceAddView(CreateView):
     template_name = 'main/add_experience.html'
     form_class = AddExperienceForm
     success_url = reverse_lazy('dantorial:my-experience')
@@ -443,10 +491,18 @@ class ExperienceDeleteView(DeleteView):
         messages.error(self.request, 'sucessfully removed experience')
         return super().delete(request, *args, **kwargs)
 
-class QualificationEditView(CreateView):
+class QualificationAddView(CreateView):
     template_name = 'main/add_qualification.html'
     form_class = AddQualificationForm
     success_url = reverse_lazy('dantorial:my-qualification')
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            pass
+        else:
+            return redirect('/accounts/login/?next=/add-qualification/')
+            
+        return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -478,6 +534,15 @@ class QualificationUpdateView(UpdateView):
     model = Qualification
     success_url = reverse_lazy('dantorial:my-qualification')
 
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            pass
+        else:
+            return redirect('/accounts/login/?next=/my-qualification/')
+            
+        return super().dispatch(request, *args, **kwargs)
+
     def form_valid(self, form):
         form.instance.user = self.request.user
         messages.success(self.request, "Successful")
@@ -501,6 +566,16 @@ class SubjectUpdateView(UpdateView):
     form_class = AddSubjectForm
     model = Subject
     success_url = reverse_lazy('dantorial:my-subject')
+
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            if Subject.user == self.request.user:
+                pass
+        else:
+            return redirect('/accounts/login/?next=/my-subject/')
+            
+        return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -527,7 +602,7 @@ class ProfileSubjectView(TemplateView):
         context['subject'] = subject
         return context
 
-class VerificationEditView(CreateView):
+class VerificationAddView(CreateView):
     template_name   = 'main/add_verification.html'
     model = Verification
     form_class  = VerificationForm

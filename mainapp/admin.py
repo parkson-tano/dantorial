@@ -12,12 +12,12 @@ class TutorProfileAdmin(admin.ModelAdmin):
     list_filter = ['language']
 
 class SubjectAdmin(admin.ModelAdmin):
-    list_display = ['__str__', 'subject', 'category', 'subcategory']
+    list_display = ['id','__str__', 'subject', 'category', 'subcategory']
     list_filter = ['subject', 'category', 'subcategory']
 
 
 class AvailabilityAdmin(admin.ModelAdmin):
-    list_display = ['user', 'day']
+    list_display = ['id','user', 'day']
     list_filter = ['hour', 'day']
 
 class ExperienceAdmin(admin.ModelAdmin):

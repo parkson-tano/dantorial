@@ -240,7 +240,7 @@ class UserLoginForm(forms.Form):
 class AddSubjectForm(forms.ModelForm):
 	class Meta:
 		model = Subject
-		fields = ('category','subcategory','subject','charge', 'amount')
+		fields = ('category','subcategory','subject','charge', 'amount', )
 
 class AddExperienceForm(forms.ModelForm):
 	class Meta:
