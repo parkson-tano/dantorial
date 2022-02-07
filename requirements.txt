@@ -51,6 +51,7 @@ django-heroku==0.3.1
 django-js-asset==1.2.2
 django-mathfilters==1.0.0
 django-model-utils==4.1.1
+django-multiselectfield==0.1.12
 django-notification-system==1.5.3
 django-private-chat2==0.1.4
 django-push-notifications==2.0.0
