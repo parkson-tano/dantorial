@@ -331,16 +331,16 @@
                     success: function (response) {
                         // $('#like_count' ).text(response['total_favourites']);
                         console.log("clicked:" + ansid)
-                        console.log('response: ' + response.response)
+                        console.log('response: ' + response[1])
                         if (response['flag']) {
-                            $('#'+profile_id).addClass('text-success');
+                            $('#'+ansid).addClass('text-success');+
                             alert('you like this profile')
 
                             console.log('successfully  added to favorites');
                         } else {
-                            $("#"+profile_id).removeClass('text-success');
+                            $("#"+ansid).removeClass('text-success');
                             console.log('successfully removed to favorites');
-                            // alert('u dislike this')
+                            alert('u dislike this')
                         }
                     },
                     error: function(rs, e) {

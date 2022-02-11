@@ -825,7 +825,7 @@ class SearchAllView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         kw = self.request.GET['keywords']
-        result = ProfilePersonal.objects.filter(Q(first_name__icontains=kw) | Q(last_name__icontains=kw) | Q(user__profileinfo__subject__name__icontains=kw) | Q(user__profileinfo__category__name__icontains=kw) | Q(user__profileinfo__subcategory__name__icontains=kw) | Q(user__profileinfo__experience__icontains=kw))
+        result = ProfilePersonal.objects.filter(Q(first_name__icontains=kw) | Q(last_name__icontains=kw) | Q(user__profileinfo__subject__name__icontains=kw) | Q(user__profileinfo__category__name__icontains=kw) | Q(user__profileinfo__subcategory__name__icontains=kw))
         if self.request.user.is_authenticated:
             fav = ProfilePersonal.objects.get(id=self.request.user.profilepersonal.id)
             context['fav'] = fav

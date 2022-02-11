@@ -19,9 +19,17 @@ class ChapterAdmin(admin.ModelAdmin):
 class LessonAdmin(admin.ModelAdmin):
     list_display = ['chapter','title','position','view_count']
 
+class EnrollmentAdmin(admin.ModelAdmin):
+    list_display = ['student','course','complete']
+
+class PaymentAdmin(admin.ModelAdmin):
+    list_display = ['enrollment','is_complete','amount']
+
 admin.site.register(Competence)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(SubCategory, SubCategoryAdmin)
 admin.site.register(Course, CourseAdmin)
 admin.site.register(Chapter, ChapterAdmin)
 admin.site.register(Lesson, LessonAdmin)
+admin.site.register(Payment, PaymentAdmin)
+admin.site.register(Enrollment, EnrollmentAdmin)

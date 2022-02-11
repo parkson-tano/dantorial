@@ -79,7 +79,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'django_browser_reload',
     'cookie_consent',
-    'multiselectfield',
+    # 'multiselectfield',
 
 ]
 

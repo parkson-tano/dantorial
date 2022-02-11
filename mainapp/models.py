@@ -13,7 +13,7 @@ from smart_selects.db_fields import ChainedForeignKey
 from ckeditor.fields import RichTextField
 import numpy as np
 from allauth.account.admin import EmailAddress
-from multiselectfield import MultiSelectField
+# from multiselectfield import MultiSelectField
 # Create your models here.
 
 DAY = (
