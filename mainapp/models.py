@@ -403,3 +403,11 @@ class SearchHistory(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return str(self.user.profilepersonal) + " search"
+
+
+class Privacy(models.Model):
+    privacy_policy = RichTextField()
+    terms = RichTextField()
+
+    # def __str__(self):
+    #     return self.id

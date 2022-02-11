@@ -225,6 +225,11 @@ class UserProfileView(DetailView):
 class AboutView(TemplateView):
     template_name = 'main/about_us.html'
 
+class PrivacyView(TemplateView):
+    template_name = 'main/privacy_policy.html'
+
+class TermsView(TemplateView):
+    template_name = 'main/terms.html'
 class ContactView(CreateView):
     template_name = 'main/contact_us.html'
     form_class = ContactForm
