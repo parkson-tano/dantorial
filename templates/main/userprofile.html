@@ -156,8 +156,8 @@ top:-9999px;*/
 
 																{% endif %}
 									</p>
-									<p class="text-muted font-size-md mb-2">{{ userprofile.town }} |
-										{{userprofile.address}}
+									<p class="text-muted font-size-md mb-2">{{ userprofile.town|default:'' }} |
+										{{userprofile.address|default:''}}
 									</p>
 									<p class="fw-bold mb-2">{{userprofile.user.profileinfo.subject|default:""}}
 										<span class="fw-dark">
@@ -203,7 +203,7 @@ top:-9999px;*/
 								<h6 class="mb-0">Level of Education</h6>
 							</div>
 							<div class="col-sm-8 text-secondary">
-								{{userprofile.level_of_education}}
+								{{userprofile.level_of_education|default:''}}
 							</div>
 						</div>
 						<hr>
@@ -221,7 +221,7 @@ top:-9999px;*/
 								<h6 class="mb-0">Location</h6>
 							</div>
 							<div class="col-sm-8 text-secondary">
-								{{userprofile.region}} | {{userprofile.town}}
+								{{userprofile.region|default:''}} | {{userprofile.town|default:''}}
 							</div>
 						</div>
 						<hr>
@@ -230,7 +230,7 @@ top:-9999px;*/
 								<h6 class="mb-0">Language</h6>
 							</div>
 							<div class="col-sm-8 text-secondary">
-								{{userprofile.user.profileinfo.language}}
+								{{userprofile.user.profileinfo.language|default:''}}
 							</div>
 						</div>
 						<!-- <hr>
@@ -248,7 +248,7 @@ top:-9999px;*/
 								<h6 class="mb-0">Address</h6>
 							</div>
 							<div class="col-sm-8 text-secondary">
-								{{userprofile.address}}
+								{{userprofile.address|default:''}}
 							</div>
 						</div>
 						<hr>

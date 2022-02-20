@@ -138,13 +138,13 @@
     </div>
 </main>
     <!-- Footer -->
-    <footer class="footer text-center text-lg-start bg-secondary">
+    <footer class="footer text-center text-lg-start bg-dark">
         <div class="container-fluid">
         <!-- Section: Social media -->
-        <section class="d-flex justify-content-center justify-content-lg-between p-4">
+        <section class="d-flex justify-content-center justify-content-lg-between p-4 ">
             <!-- Left -->
             <div class="me-5 d-none d-sm-block">
-                <span>Get connected with us on social networks:</span>
+                <span class="text-light">Get connected with us on social networks:</span>
             </div>
             <!-- Left -->
             <!-- Right -->
@@ -177,12 +177,12 @@
                 <!-- Grid row -->
                 <div class="row mt-3">
                     <!-- Grid column -->
-                    <div class="col-md-4 col-lg-4 col-xl-3 mx-auto mb-auto">
+                    <div class="col-md-6 col-lg-6 col-xl-6 mx-auto mb-auto">
                         <!-- Content -->
-                        <h6 class="text-uppercase fw-bold mb-4">
+                        <h6 class="text-uppercase fw-bold mb-4 text-danger">
                             <img src="{% static 'final.png' %}" alt="" style="width: 25px; height: 25px"> Tantorial
                         </h6>
-                        <p class="d-none d-sm-block justify-content">
+                        <p class="d-none d-sm-block justify-content text-light">
                             Tantorial is Cameroon's first EdTech Start Up aim at bringing tutors and student together...
                         </p>
                     </div>
@@ -194,16 +194,16 @@
                             More
                         </h6> -->
                         <p>
-                            <a href="{% url 'dantorial:aboutus' %}" class="text-reset">About Us</a>
+                            <a href="{% url 'dantorial:aboutus' %}" >About Us</a>
                         </p>
                         <p>
-                            <a href="{% url 'dantorial:privacy_policy' %}" class="text-reset">Privacy Policy</a>
+                            <a href="{% url 'dantorial:privacy_policy' %}" >Privacy Policy</a>
                         </p>
                         <p>
-                            <a href="{% url 'dantorial:terms' %}" class="text-reset">Term of Use</a>
+                            <a href="{% url 'dantorial:terms' %}" >Term of Use</a>
                         </p>
                         <p>
-                            <a href="{% url 'dantorial:contactus' %}" class="text-reset">Contact Us</a>
+                            <a href="{% url 'dantorial:contactus' %}" >Contact Us</a>
                         </p>
                     </div>
                     <!-- Grid column -->
@@ -233,18 +233,18 @@
 <!--                         <h6 class="text-uppercase fw-bold mb-4">
                             Contact
                         </h6> -->
-                        <p><i class="fas fa-home me-3"></i> Yaounde, Cameroon</p>
+                        <p class="text-primary"><i class="fas fa-home me-3"></i> Yaounde, Cameroon</p>
                         <p>
                             <i class="fas fa-envelope me-3 fs-4"></i> 
-                            <a href = "mailto:info@tantorial.com"  class="text-reset">
+                            <a href = "mailto:info@tantorial.com" >
                               info@tantorial.com  
                             </a>
                         </p>
                         <p><i class="fas fa-phone me-3 fs-4"></i>
-                            <a href="tel:+23764128573"  class="text-reset">+237674128573</a>
+                            <a href="tel:+23764128573" >+237674128573</a>
                         </p>
                         <p><i class="fa fa-whatsapp me-3 fs-4" aria-hidden="true"></i>
-                            <a href="https://wa.me/+237674128573?text=Hello%20My%20is%20_________"  class="text-reset">+237674128573</a>
+                            <a href="https://wa.me/+237674128573?text=Hello%20My%20is%20_________" >+237674128573</a>
                             
                         
 
@@ -257,15 +257,18 @@
         </section>
         <!-- Section: Links  -->
         <!-- Copyright -->
-        <div class="text-center p-0" style="background-color: rgba(0, 0, 0, 0.05);">
-            &copy;
-            <script>
+        <span class="text-light"> &copy;</span>
+            
+        
+            <span class="text-light">
+                <script>
                 document.write(new Date().getFullYear())
-            </script> Copyright:
-            <span>
-            <a class="text-reset fw-bold" href="{% url 'dantorial:index' %}">tantorial.com</a> <p class="font-italic mb-0">All rights reserved.</p>
+            </script> 
+                Copyright:</span>
+            
+            <span class="text-light">
+            <a class="fw-bold" href="{% url 'dantorial:index' %}">tantorial</a> <p class="font-italic mb-0">All rights reserved.</p>
           </span>
-        </div>
         <!-- Copyright -->
     </div>
     </footer>
