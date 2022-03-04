@@ -13,7 +13,7 @@ from django.utils.translation import gettext_lazy as _
 from pathlib import Path
 import os
 from os import path
-import django_heroku
+# import django_heroku
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -242,7 +242,7 @@ USE_DJANGO_JQUERY = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = 'static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
@@ -357,4 +357,4 @@ NOTIFICATION_SYSTEM_TARGETS={
   }
 }
 
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
