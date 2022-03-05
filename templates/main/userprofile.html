@@ -97,8 +97,8 @@ top:-9999px;*/
 										<img src="{{userprofile.profile_pic.url}}" alt="{{userprofile.first_name}}" class="rounded-circle"
 											width="170px" height='170px' style="border-radius: 50;">
 									</a>
-								
-									  <button class="likebtn border-0 mr-5 p-0" type="button" id="{{userprofile.id}}"
+								{% if request.user.is_authenticated %}
+								    <button class="likebtn border-0 mr-5 p-0" type="button" id="{{userprofile.id}}"
 										data-url="{% url 'dantorial:favourite' %}" style="  position: absolute;
 								background: transparent;
 								top: 100;
@@ -110,10 +110,9 @@ top:-9999px;*/
         <a name="{{ userprofile.id }}" style="color: black;" id ='co'><i class="fa fa-thumbs-up" aria-hidden="true"></i></a>
     {% endif %}
 									</button>
-								<div>
-									
-
-								</div>
+								
+								{% endif %}
+									  
 									  
 								</div>
 								<!-- end col 1-1 -->

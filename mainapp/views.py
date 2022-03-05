@@ -952,7 +952,7 @@ class ProfileViewList(TemplateView):
         context["profile"] = profile_info
         return context
 
-@login_required
+@login_required(login_url='/accounts/login/')
 def profile_like(request):
     if request.POST.get('action') == 'post':
 
@@ -978,14 +978,6 @@ def profile_like(request):
             from_email = settings.DEFAULT_FROM_EMAIL
             to_email = (u.user.email, )
             send_mail(subject, message, from_email, to_email, fail_silently=True)
-
-
-
-    #    context ={
-    #         'userprofile': profile_obj,
-    #         'flag': flag,
-    #         'total_favourites': profile_obj.favourite.count,
-    #     }
         print(flag)
         return JsonResponse({'total_favourites': profile_obj.total_likes, 'flag':flag})
     return HttpResponse("Error access Denied")
