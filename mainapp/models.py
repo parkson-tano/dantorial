@@ -155,13 +155,13 @@ class ProfilePersonal(models.Model):
     date_of_birth = models.DateField(default=timezone.now)
     view_count = models.PositiveIntegerField(default=0)
     paid = models.BooleanField(default = False)
-    favourite = models.ManyToManyField(User,related_name='saved_user' )
+    like = models.ManyToManyField(User,related_name='saved_user', blank=True)
     profile_pic = models.ImageField(upload_to='profile_img', default='media/default.png')
     
 
     @property
-    def total_favourites(self):
-        return self.favourite.count()
+    def total_likes(self):
+        return self.like.count()
     
 
     def __str__(self):
