@@ -103,10 +103,17 @@ top:-9999px;*/
 								background: transparent;
 								top: 100;
 			 					font-size:200%;
-								color:blue">
-										<i class="fa fa-heart-o mr-0 ml-0" ></i>
+								">
+										{% if userprofile.user in request.user.profilepersonal.favourite.all %} 
+<a name="{{ userprofile.id }}" style="color: blue;" id ='co'><i class="fa fa-thumbs-up" aria-hidden="true"></i></a>
+        {% else %}
+        <a name="{{ userprofile.id }}" style="color: black;" id ='co'><i class="fa fa-thumbs-up" aria-hidden="true"></i></a>
+    {% endif %}
 									</button>
-								
+								<div>
+									
+
+								</div>
 									  
 								</div>
 								<!-- end col 1-1 -->

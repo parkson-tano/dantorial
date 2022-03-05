@@ -963,10 +963,11 @@ def profile_like(request):
         profile_obj = ProfilePersonal.objects.get(user=request.user)
         print(f"prof obj {profile_obj} ")
         
-        if profile_obj.favourite.filter(profilepersonal__favourite=u.user).exists():
+        if profile_obj.favourite.filter(user=u.id).exists():
             profile_obj.favourite.remove(u.user)
             profile_obj.save()
             flag = False
+            # print(profile_obj.favourite.filter(user=u.id).exists())
         else:
             profile_obj.favourite.add(u.user)
             profile_obj.save()
@@ -978,13 +979,15 @@ def profile_like(request):
             to_email = (u.user.email, )
             send_mail(subject, message, from_email, to_email, fail_silently=True)
 
+
+
     #    context ={
     #         'userprofile': profile_obj,
     #         'flag': flag,
     #         'total_favourites': profile_obj.favourite.count,
     #     }
         print(flag)
-        return JsonResponse({'total_favourites': profile_obj.total_favourites, 'flag':flag})
+        return JsonResponse({'total_favourites': profile_obj.total_likes, 'flag':flag})
     return HttpResponse("Error access Denied")
 
 # def profile_like(request):
