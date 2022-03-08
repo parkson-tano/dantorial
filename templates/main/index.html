@@ -120,9 +120,9 @@
             <div class="row">
                 {% for cat in all_cat_ind %}
                 <div class="col-sm-6 col-lg-3 mt-2">
-                    <div class="card" style="width: 100%">
+                    <div class="card" style="width: 100%; border: 0px solid red">
                         <img src="{{cat.image.url}}" class="card-img-top" alt="find {{cat.name}} tutors in cameroon" / style="height: 200px;">
-                        <div class="card-body">
+                        <div class="card-body" >
                             <a href="{% url 'dantorial:category' cat.slug %}" class="card-link">
                                 <h3 class="card-title text-center mb-3 fw-dark fs-3"> {{cat.name}} </h3>
                             </a>
@@ -197,7 +197,7 @@
                 <div class="row">
                     {% for subcat in all_subcat_ind %}
                     <div class="col-sm-6 col-lg-3 mt-2">
-                        <div class="card" style="width: 100%">
+                        <div class="card" style="width: 100%; border: 0px solid red">
                             <img src="{{subcat.image.url}}" class="card-img-top rounded" alt="find {{subcat.name}} tutor in cameroon" style="height: 200px;"/>
                             <div class="card-body">
                                 <h3 class="card-title text-center mb-3 fw-dark fs-3">
@@ -239,7 +239,7 @@
                 <div class="row">
                     {% for sub in all_sub_ind %}
                     <div class="col-sm-6 col-lg-3 mt-2">
-                        <div class="card" style="width: 100%">
+                        <div class="card" style="width: 100%; border: 0px solid red">
                             <img src="{{ sub.image.url }}" class="card-img-top rounded" alt="find {{sub.name}} tutors in cameroon" style="height: 200px;"/>
                             <div class="card-body">
                                 <a href="{% url 'dantorial:subject' sub.subcategory.category.slug sub.subcategory.id sub.slug %}" class="card-link">

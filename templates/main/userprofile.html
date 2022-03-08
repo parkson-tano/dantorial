@@ -86,7 +86,7 @@ top:-9999px;*/
 		<div class="row gutters-sm justify-content-center">
 			<!-- col 1 -->
 			<div class="col-md-8 mb-3">
-				<div class="card">
+				<div class="card" style="border: 0px solid red">
 					<div class="card-body">
 						<div class="d-flex flex-sm-column align-sm-items-center text-center">
 							<!-- row for image -->
@@ -202,7 +202,7 @@ top:-9999px;*/
 			<!-- end col 1s -->
 
 			<div class="col-md-8 mt-auto">
-				<div class="card mb-3">
+				<div class="card mb-3" style="border: 0px solid red">
 					<div class="card-body">
 						<div class="row">
 							<div class="col-sm-4">
@@ -279,7 +279,7 @@ top:-9999px;*/
 					</div>
 				</div>
 				<hr>
-				<div class="card mb-2">
+				<div class="card mb-2" style="border: 0px solid red">
 					<div class="text-center fw-bold pt-0 pt-xl-5 pb-0 pb-xl-3 fs-4">Other Subjects</div>
 					<div class="card-body">
 						<div class="accordion" id='accordionExample'>
@@ -505,7 +505,7 @@ top:-9999px;*/
 
 <!-- availabilty -->
 
-				<div class="card mb-2 mt-3">
+				<div class="card mb-2 mt-3" style="border: 0px solid red">
 					<div class="text-center fw-bold pt-0 pt-xl-5 pb-0 pb-xl-3 fs-4">Availability</div>
 					<div class="card-body">
 						<div class="accordion" id='accordionExample'>
@@ -671,7 +671,7 @@ top:-9999px;*/
 		<h2 class="font-weight-light">
 			Similar Profiles
 		</h2>
-		<div class="row mx-auto my-auto">
+		<div class="row mx-auto my-auto" style="border: 0px solid red">
 			<div id="recipeCarousel" class="carousel slide w-100" data-ride="carousel">
 				<div class="carousel-inner w-100" role="listbox">
 					{% for pro in similar %} {% if pro.user.profileinfo.subject is not None and pro.account_type is not None %}
@@ -681,7 +681,7 @@ top:-9999px;*/
 						<div class="carousel-item">
 							{% endif %}
 							<div class="col-md-4">
-								<div class="card card-body">
+								<div class="card card-body" style="border: 0px solid red">
 
 									<img class="img-fluid" src="{{pro.profile_pic.url}}" style="height: 14rem;">
 									<div style="  position: absolute;
