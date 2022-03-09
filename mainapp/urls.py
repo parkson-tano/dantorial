@@ -2,10 +2,11 @@ from django.urls import path
 from mainapp.views import *
 from category.views import *
 import random
+from django.views.decorators.cache import cache_page
 app_name = 'dantorial'
 urlpatterns = [
 
-    path('', IndexView.as_view(), name='index'),
+    path('', cache_page(60 * 15)(IndexView.as_view()), name='index'),
 # user account
     path('login/', UserLoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
@@ -13,15 +14,15 @@ urlpatterns = [
 
 # profile view
 
-    path('profile-edit/<int:pk>', PersonalProfileEditView.as_view(), name='profile-edit'),
-    path('profile-info-edit/<int:pk>', ProfileInfoEditView.as_view(), name='profile-info-edit'),
+    path('profile-edit/<int:pk>', cache_page(60 * 15)(PersonalProfileEditView.as_view()), name='profile-edit'),
+    path('profile-info-edit/<int:pk>', cache_page(60 * 15)(ProfileInfoEditView.as_view()), name='profile-info-edit'),
     path('photo/', updateimage, name='photochange'),
     # path('photoview/', UpdateImageView.as_view(), name='photoview'),
 
 # my profile view 
 
-    path('userprofile/<int:pk>', UserProfileView.as_view(), name='userprofile'),
-    path('profile/', ProfileView.as_view(), name='profile'),
+    path('userprofile/<int:pk>', cache_page(60 * 15)(UserProfileView.as_view()), name='userprofile'),
+    path('profile/', cache_page(60 * 15)(ProfileView.as_view()), name='profile'),
     path('profile-info/', ProfileInfoView.as_view(), name='profile-info'),
     path('my-subject/', ProfileSubjectView.as_view(), name='my-subject'),
     path('my-experience/', ProfileExperienceView.as_view(), name='my-experience'),
@@ -72,7 +73,7 @@ urlpatterns = [
 
 # contact us
 
-    path('contact-us', ContactView.as_view(), name='contactus'),  
+    path('contact-us', cache_page(60 * 15)(ContactView.as_view()), name='contactus'),  
     path('about-us', AboutView.as_view(), name='aboutus'),
     path('privacy', PrivacyView.as_view(), name='privacy_policy'),
     path('terms-and-conditions', TermsView.as_view(), name='terms'),
@@ -83,6 +84,6 @@ urlpatterns = [
     path('payment-fail/', PaymentFailView.as_view(), name='pay-fail'),
 
 # profile viewed
-    path('profview/', ProfileViewList.as_view(), name='profview'),
+    path('profview/', cache_page(60 * 15)(ProfileViewList.as_view()), name='profview'),
     path('like/', profile_like, name='favourite'),
 ]
