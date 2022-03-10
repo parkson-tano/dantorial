@@ -87,22 +87,22 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.cache.UpdateCacheMiddleware',
+    # 'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     "django_browser_reload.middleware.BrowserReloadMiddleware",
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.cache.FetchFromCacheMiddleware',
+    # 'django.middleware.cache.FetchFromCacheMiddleware',
     "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = 'dantorial.urls'
 
-CACHE_MIDDLEWARE_ALIAS = 'default'  # which cache alias to use
-CACHE_MIDDLEWARE_SECONDS = '600'    # number of seconds to cache a page for (TTL)
-CACHE_MIDDLEWARE_KEY_PREFIX = ''
+# CACHE_MIDDLEWARE_ALIAS = 'default'  # which cache alias to use
+# CACHE_MIDDLEWARE_SECONDS = '600'    # number of seconds to cache a page for (TTL)
+# CACHE_MIDDLEWARE_KEY_PREFIX = ''
 
 TEMPLATES = [
     {

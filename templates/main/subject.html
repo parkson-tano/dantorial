@@ -121,61 +121,7 @@
   </div>
   <!-- main end -->
   <!-- side bar -->
-<div class="col-sm-12 col-md-3">
-    <div class="card mb-4">
-      <div class="card-header fw-bold text-center fs-4">
-        {% if user.profilepersonal.account_type == 'tutor' %} Suggested Students {% else %} Suggested Tutors {% endif %}
-      </div>
-      <div class="card-body">
-            <div class="row mb-3 h-20">
-    
-          {% for s in suggested %}
-                <!-- image -->
-
-   <!--        <div class="col-sm-1 col-md-12">
-            <div class="card" style="border: 0;">
-            
-                <a href="{{s.profile_pic.url}}"><img class="card-img" src="{{s.profile_pic.url}}" alt="..." style='height:7rem; width:100%; border-raduis:100px;'>
-                </a>
-
-              </div> -->
-          <!-- 
-          </div> -->
-          <!-- end image -->
-          <!-- description -->
-          <div class="col-sm-6 col-md-12">
-            <a href="{% url 'dantorial:userprofile' s.id %}">
-            <div class="card-body p-0">
-              {{p.review_set.all}}
-              <h5 class="card-title">{{ s.first_name }} {{ s.last_name|default:'' }}
-                
-              </h5>
-    
-            </div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item p-0">
-                {% if s.user.profileinfo.subject %}
-                  <p class="font-weight-dark">
-                    <em>
-                    {{s.user.profileinfo.subject|default:""}}
-                    </em><br>
-                    <em>{{s.user.profileinfo.subcategory}}</em>
-                    {{s.user.profileinfo.category}}
-                                  
-                  </p>
-                {% endif %}
-              </li>
-            </ul>
-          
-          </div></a>
-          {% endfor %}
-          <!-- end description -->
-        </div>
-      
-        
-      </div>
-    </div>
-  </div>
+    {% include "side_bar.html" %}
   <!-- sidebar end heree -->
 </div>
 </div>

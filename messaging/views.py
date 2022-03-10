@@ -46,7 +46,7 @@ class MessageView(TemplateView):
 		url_id = kwargs['pk']
 		profile = self.request.user
 		chat = Chat.objects.get(id=url_id)
-		message = Message.objects.filter(Q(chat=url_id) & (Q(sender_user=profile) | Q(receiver_user=profile))).order_by('-date_created')
+		message = Message.objects.filter(Q(chat=url_id) & (Q(sender_user=profile) | Q(receiver_user=profile))).order_by('date_created')
 		# out = Message.objects.filter(receiver_user=profile).order_by('-date_created')
 		for mess in message:
 			if self.request.user == mess.receiver_user:
