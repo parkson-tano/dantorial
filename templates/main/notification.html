@@ -9,7 +9,7 @@
 					{% for notify in my_lesson %}
 						<div class="row mx-2">
 							<span>
-                        	You have an Available Online Lesson
+                        	You have an Available Request
                         	<a href="{% url 'dantorial:notification_detail' notify.id %}" class="btn btn-danger btn-sm">See Details</a>	{% if notify.is_confirm %}
                         	    
                         	<i class="fas fa-check-circle text-success"  aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Accepted"></i>

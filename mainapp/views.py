@@ -1103,6 +1103,16 @@ class OnlineLessonNotification(TemplateView):
     template_name = 'main/notification.html'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        my_lesson = OnlineLesson.objects.filter(teacher = self.request.user).filter(Q(is_decline = False) & Q(is_confirm = False))
+        # my_proposal = OnlineLesson.objects.filter(student = self.request.user)
+        context['my_lesson'] = my_lesson 
+        return context
+
+
+class OnlineLessonRequest(TemplateView):
+    template_name = 'main/history.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         my_lesson = OnlineLesson.objects.filter(teacher = self.request.user)
         # my_proposal = OnlineLesson.objects.filter(student = self.request.user)
         context['my_lesson'] = my_lesson 

@@ -90,7 +90,8 @@ urlpatterns = [
 
 # schedule 
     path('schedule/<int:pk>', ScheduleView.as_view(), name='schedule'),
-    path('notifications/', OnlineLessonNotification.as_view(), name='notification'),
-    path('notifications/<int:pk>', NotificationDetail.as_view(), name='notification_detail'),
+    path('request/', OnlineLessonNotification.as_view(), name='notification'),
+    path('request/<int:pk>', NotificationDetail.as_view(), name='notification_detail'),
+    path('request_history/', OnlineLessonRequest.as_view(), name='request_history'),
 ]
 

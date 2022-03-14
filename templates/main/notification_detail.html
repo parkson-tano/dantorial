@@ -14,13 +14,16 @@
 							</p>
                         	
                         	<p>
-                        		Start Date: {{notification.start}}
+                        		Start Date: <span class="font-weight-bold text-title">{{notification.start}}</span> 
                         	</p>
                         	<p>
-                        	End Time: {{notification.end}}		
+                        	End Time: <span class="font-weight-bold text-title">{{notification.end}}</span> 		
                         	</p>
                         	<p>
-                        		Mode: {{notification.mode}}
+                        		Mode: <span class="font-weight-bold text-title">{{notification.mode}}</span> 
+                        	</p>
+                        	<p>
+                        		Date Recieved:  <span class="font-weight-bold text-title">{{notification.date_created}}</span> 
                         	</p>
                         <div>
                         	{% if notification.is_confirm %}

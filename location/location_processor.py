@@ -8,6 +8,8 @@ def location_renderer(request):
     if request.user.is_authenticated:
         messags = Message.objects.filter(receiver_user = request.user).filter(is_read=False)
         notification = OnlineLesson.objects.filter(teacher=request.user).filter(is_seen=False)
+    else:
+        notification = ''
     return {
         'country' : Country.objects.all(),
         'region' : Region.objects.all(),
