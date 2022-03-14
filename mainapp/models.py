@@ -101,6 +101,13 @@ PAYMENT = (
     # ('VISA', 'visa'),
     )
 
+MODE = (
+    ('Video','Video'),
+    ('Audio', 'Audio'),
+    ('Chat', 'Chat')
+
+    )
+
 # User._meta.get_field('username')._unique = False
 
 # day = (
@@ -317,12 +324,6 @@ class Verification(models.Model):
     def __str__(self):
         return str(self.user) + ' verification'
 
-class Booked(models.Model):
-    user_1 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='student')
-    user_2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tutor') 
-    amount = models.IntegerField()
-    is_confirm = models.BooleanField(default=False)
-    date_created = models.DateTimeField(default=timezone.now)
 
 class Upgrade(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -411,3 +412,48 @@ class Privacy(models.Model):
 
     # def __str__(self):
     #     return self.id
+
+
+
+# class Booked(models.Model):
+#     student = models.ForeignKey(User, on_delete=models.CASCADE, related_name='student')
+#     teacher = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tutor') 
+#     is_confirm = models.BooleanField(default=False)
+#     date_created = models.DateTimeField(auto_now_add=True)
+
+#     def __str__(self):
+#         return f'{self.student.profilepersonal.first_name} and {self.teacher.profilepersonal.first_name}'
+
+
+class OnlineLesson(models.Model):
+    student = models.ForeignKey(User, on_delete=models.CASCADE, related_name='student', null=True, blank=True)
+    teacher = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tutor', null=True, blank=True) 
+    is_confirm = models.BooleanField(default=False)
+    duration = models.CharField(max_length=255, null=True, blank=True)
+    # amount = models.IntegerField(null=True, blank=True)
+    start = models.DateTimeField(blank=True, null=True)
+    end = models.DateTimeField(blank=True, null=True)
+    mode = models.CharField(max_length=255, null=True, blank=True, choices=MODE)
+    is_seen = models.BooleanField(default=False)
+    is_decline = models.BooleanField(default=False)
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.student} online'
+
+
+class LessonPayment(models.Model):
+    lesson = models.OneToOneField(OnlineLesson, on_delete=models.CASCADE)
+    amount = models.IntegerField(null=True, blank=True)
+    payment_method = models.CharField(max_length=255, choices=PAYMENT, null=True, blank=True)
+    complete = models.BooleanField(default=False)
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.lesson) + ' payment'
+
+
+@receiver(post_save,sender=OnlineLesson)
+def create_profile(sender,instance,created,**kwargs):
+    if created:
+        LessonPayment.objects.create(lesson=instance)

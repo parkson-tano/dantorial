@@ -86,4 +86,11 @@ urlpatterns = [
 # profile viewed
     path('profview/', ProfileViewList.as_view(), name='profview'),
     path('like/', profile_like, name='favourite'),
+
+
+# schedule 
+    path('schedule/<int:pk>', ScheduleView.as_view(), name='schedule'),
+    path('notifications/', OnlineLessonNotification.as_view(), name='notification'),
+    path('notifications/<int:pk>', NotificationDetail.as_view(), name='notification_detail'),
 ]
+

@@ -13,8 +13,9 @@ class ReviewForm(forms.ModelForm):
 			'class': 'form-control',
 			'id': 'floatingInput',
       'rows': 8,
-      'columns': 8,
-			'required' : True
+      'columns': 6,
+			'required' : True,
+      'placeholder': 'Type Your Comment here'
 			}), 
         }
     labels = {

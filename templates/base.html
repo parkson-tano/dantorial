@@ -4,6 +4,7 @@
 <html lang="en">
 
     <head>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="{% static 'favicon_.ico' %}" type="image/x-icon" />
@@ -14,6 +15,9 @@
 <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/navbar-fixed/">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+<link href=”https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css” rel=”stylesheet”>
+
 
     <!-- Font Awesome -->
 <!-- Google fonts-->
@@ -50,38 +54,39 @@
                 <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
                     {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link text-dark" href="{% url 'dantorial_message:chat' %}"><i class='fa fa-envelope-o'></i>Message
+                        <a class="nav-link text-dark font-weight-bold" href="{% url 'dantorial_message:chat' %}"><i class='fa fa-envelope-o'></i>Message
                             {% if messags.count > 0 %}
-                              <span class="badge rounded-pill badge-notification bg-danger">{{ messags.count}}</span>
+                              <span class="badge rounded-pill badge-notification bg-success">{{ messags.count}}</span>
                             {% endif %}
                       
                     </a>
                     </li>
 
                     <li>
-                        <a  class="nav-link text-dark" href="{% url 'dantorial:myfavourites' %}">
-                            <i class='fa fa-heart'></i>Saved
+                        <a  class="nav-link text-dark font-weight-bold" href="{% url 'dantorial:myfavourites' %}">
+                            <i class='fa fa-heart'></i> Saved
                             {% if user.profilepersonal.total_likes > 0 %}
                                 
-                            <span class="badge rounded-pill badge-notification bg-danger like_count" id = 'like_count'>
+                            <span class="badge rounded-pill badge-notification bg-success like_count" id = 'like_count'>
 
                       {{ user.profilepersonal.total_likes }}</span>
                             {% endif %}
                       
                     </a>
                     </li>
-                    
                     <li>
-                        {% if user.profilepersonal.account_type == 'tutor' %}
-                        <a class="nav-link text-dark">
-                            <i class="fa fa-book"></i>
-                        Tutor Account</a> {% else %}
-                        <a class="nav-link text-dark">
-                            <i class="fas fa-book-reader"></i>
-                        Student Account</a> {% endif %}
+                        <a  class="nav-link text-dark font-weight-bold" href="{% url 'dantorial:notification' %}">
+                            <i class='fa fa-bell'></i> Notification
+                                
+                            {% if notificatio.count > 0 %}
+                              <span class="badge rounded-pill badge-notification bg-success">{{ notificatio.count}}</span>
+                            {% endif %}
+                    </a>
                     </li>
+                    
+                    
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-black" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle text-black font-weight-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <span><i class="fa fa-user" aria-hidden="true"></i></span> 
                             {% trans "Account" %}
                         </a>
@@ -92,7 +97,17 @@
                                 </span>
                         
                     </li>
+                     <li>
+                        {% if user.profilepersonal.account_type == 'tutor' %}
+                        <a class="nav-link text-dark">
+                            <i class="fa fa-book"></i>
+                        Tutor Account</a> {% else %}
+                        <a class="nav-link text-dark">
+                            <i class="fas fa-book-reader"></i>
+                        Student Account</a> {% endif %}
+                    </li>
                             <li><a class="dropdown-item" href="{% url 'dantorial:profile' %}">Profile</a></li>
+
                             <li><a class="dropdown-item" href="{% url 'dantorial:my-subject' %}">My Subject</a></li>
                             <li><a class="dropdown-item" href="{% url 'dantorial:my-account'%}">My Account</a></li>
                             <li><a class="dropdown-item" href="{% url 'dantorial:logout'%}">Logout</a></li>
@@ -100,10 +115,10 @@
                     </li>
                     {% else %}
                     <li class="nav-item">
-                        <a class="nav-link active text-dark" aria-current="page" href="{% url 'account_login' %}">Login</a>
-                    </li>
+                        <a class="nav-link active text-dark font-weight-bold" aria-current="page" href="{% url 'account_login' %}">Login</a>
+                    </li> 
                     <li class="nav-item">
-                        <a class="nav-link text-dark" href="{% url 'account_signup' %}">Register</a>
+                        <a class="nav-link text-dark font-weight-bold" href="{% url 'account_signup' %}">Register</a>
                     </li>
                     {% endif %}
                     <!-- <li class="nav-item">
@@ -376,6 +391,8 @@
         });
     </script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
 <script>
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()

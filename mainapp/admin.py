@@ -20,6 +20,10 @@ class AvailabilityAdmin(admin.ModelAdmin):
     list_display = ['id','user', 'day']
     list_filter = ['hour', 'day']
 
+class OnlineLessonAdmin(admin.ModelAdmin):
+    list_display = ['student', 'teacher', 'is_confirm','is_decline']
+
+
 class ExperienceAdmin(admin.ModelAdmin):
     list_display = ['user', 'work_post','position', 'start_date', 'end_date']
 
@@ -45,8 +49,9 @@ admin.site.register(Day)
 admin.site.register(Hour)
 admin.site.register(Availability, AvailabilityAdmin)
 admin.site.register(SocialMedia)
-admin.site.register(Booked)
+# admin.site.register(Booked)
 admin.site.register(Verification)
 admin.site.register(Upgrade, UpgradeAdmin)
 admin.site.register(ProfileViewed, ProfileViewedAdmin)
-admin.site.register([About, OurTeam,  HowToUse, SearchHistory, Privacy])
+admin.site.register(OnlineLesson, OnlineLessonAdmin)
+admin.site.register([About, OurTeam,  HowToUse, SearchHistory, Privacy, LessonPayment])

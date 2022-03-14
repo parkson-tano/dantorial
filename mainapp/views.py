@@ -12,8 +12,7 @@ from .models import *
 from django.utils.decorators import method_decorator
 from django.http import Http404
 from category.models import Category, SubCategory
-from .forms import (AddSubjectForm, UserLoginForm, UserRegistrationForm, VerificationForm,
-PersonalProfileForm, ProfileInfoForm, AddExperienceForm, AddQualificationForm, UpgradeForm, PersonalProfilePic, AvailabilityForm)
+from .forms import *
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy, reverse
@@ -150,6 +149,8 @@ class UserProfileView(DetailView):
                                   rating=request.POST.get('rate'),
                                   profile=self.get_object(),
 									user = self.request.user)
+
+            # new_schedule = Booked(student=self.request.user, teacher=self.get_object().user)
             if (Chat.objects.filter(user=self.request.user, receiver=self.get_object().user).exists()) or (Chat.objects.filter(receiver=self.request.user, user=self.get_object().user).exists()):
                 ch = Chat.objects.get(Q(user=self.request.user, receiver=self.get_object().user) | Q(receiver=self.request.user, user=self.get_object().user))
                 if ch.receiver == request.user:
@@ -170,9 +171,16 @@ class UserProfileView(DetailView):
         else:
             return redirect(f'/accounts/login/?next=/userprofile/{self.get_object().id}')
 
+        if 'post_schedule' in request.POST:
+
+            new_schedule.save()
+
+
         if 'post_comment' in request.POST:
             new_comment.save()
 
+        # if 'schedule' in request.POST:
+        #     new_schedule.save()
 
         elif 'send_message' in request.POST:
 
@@ -1057,3 +1065,70 @@ def error400(request, exception, template_name='400.html'):
 
 def error500(request, template_name='500.html'):
     return render(request, template_name)
+
+
+class ScheduleView(DetailView):
+    template_name = 'main/schedule.html'
+    context_object_name = 'userprofile'
+    model = ProfilePersonal
+
+    # def dispatch(self, request, *args, **kwargs):
+    #     if request.user.is_authenticated:
+    #         pass
+    #     else:
+    #         return redirect(f'/accounts/login/?next=/userprofile/{self.get_object().id}')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['book_form'] = AddScheduleForm 
+        return context
+
+    def post(self, request, *args, **kwargs):
+
+        if request.user.is_authenticated:
+
+            new_schedule = OnlineLesson(student=self.request.user, teacher=self.get_object().user, 
+                start=request.POST.get('start'), end=request.POST.get('end'), mode=request.POST.get('mode'))
+            # new_schedule = Booked(student=self.request.user, teacher=self.get_object().user)
+        else:
+            return redirect(f'/accounts/login/?next=/userprofile/{self.get_object().id}')
+
+        if 'post_schedule' in request.POST:
+            new_schedule.save()
+            return redirect('dantorial:upgrade_profile')
+        return self.get(self, request, *args, **kwargs)
+
+
+class OnlineLessonNotification(TemplateView):
+    template_name = 'main/notification.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        my_lesson = OnlineLesson.objects.filter(teacher = self.request.user)
+        # my_proposal = OnlineLesson.objects.filter(student = self.request.user)
+        context['my_lesson'] = my_lesson 
+        return context
+
+class NotificationDetail(TemplateView):
+    template_name = 'main/notification_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pk = kwargs['pk']
+        notification = OnlineLesson.objects.get(id = pk)
+        notification.is_seen = True
+        notification.save()
+        # print(f'not {notification.is_seen}')
+        context['notification'] = notification 
+        return context
+    def post(self, request, *args, **kwargs):
+        pk = kwargs['pk']
+        noti = OnlineLesson.objects.get(id = pk)
+        if 'post_accept' in request.POST:
+            noti.is_confirm = True
+            noti.is_decline = False
+            noti.save()
+        if 'post_decline' in request.POST:
+            noti.is_decline = True
+            noti.is_confirm = False
+            noti.save()
+        return self.get(self, request, *args, **kwargs)

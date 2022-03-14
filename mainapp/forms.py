@@ -292,3 +292,24 @@ class UpgradeForm(forms.ModelForm):
 			raise forms.ValidationError('this email is already in use')
 		return phone
 
+class AddScheduleForm(forms.ModelForm):
+	class Meta:
+		model = OnlineLesson
+		fields = ('start', 'end', 'mode')
+		widgets = {
+			'start': DateTimePickerInput(
+				attrs = {
+				'name': 'start'
+				}),
+			'end': DateTimePickerInput(
+				attrs = {
+				'name': 'end'
+				}
+				),
+    
+		}
+
+class ConfirmScheduleForm(forms.ModelForm):
+	class Meta:
+		model = OnlineLesson
+		fields = ('is_confirm',)

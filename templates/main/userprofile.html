@@ -1,86 +1,7 @@
 {% extends "base.html" %}
 {% load humanize %}
 {% load crispy_forms_tags %} {% block title %} userprofile {% endblock title %} {% block content %}
-<style>
-	.rating {
-		float: left;
-		height: 46px;
-		padding: 0 10px;
-	}
 
-	.rating:not(:checked)>input {
-		/*    position:absolute;
-top:-9999px;*/
-		position: absolute;
-		left: -9999px;
-	}
-
-	.rating:not(:checked)>label {
-		float: right;
-		width: 1em;
-		overflow: hidden;
-		white-space: nowrap;
-		cursor: pointer;
-		font-size: 30px;
-		color: #ccc;
-	}
-
-	.rating:not(:checked)>label:before {
-		content: '★ ';
-	}
-
-	.rating>input:checked~label {
-		color: #ffc700;
-	}
-
-	.rating:not(:checked)>label:hover,
-	.rating:not(:checked)>label:hover~label {
-		color: #deb217;
-	}
-
-	.rating>input:checked+label:hover,
-	.rating>input:checked+label:hover~label,
-	.rating>input:checked~label:hover,
-	.rating>input:checked~label:hover~label,
-	.rating>label:hover~input:checked~label {
-		color: #c59b08;
-	}
-
-	@media (max-width: 768px) {
-		.carousel-inner .carousel-item>div {
-			display: none;
-		}
-
-		.carousel-inner .carousel-item>div:first-child {
-			display: block;
-		}
-	}
-
-	.carousel-inner .carousel-item.active,
-	.carousel-inner .carousel-item-next,
-	.carousel-inner .carousel-item-prev {
-		display: flex;
-	}
-
-	/* display 3 */
-	@media (min-width: 768px) {
-
-		.carousel-inner .carousel-item-right.active,
-		.carousel-inner .carousel-item-next {
-			transform: translateX(33.333%);
-		}
-
-		.carousel-inner .carousel-item-left.active,
-		.carousel-inner .carousel-item-prev {
-			transform: translateX(-33.333%);
-		}
-	}
-
-	.carousel-inner .carousel-item-right,
-	.carousel-inner .carousel-item-left {
-		transform: translateX(0);
-	}
-</style>
 <div class="container">
 	<div class="main-body">
 		<div class="row gutters-sm justify-content-center">
@@ -174,7 +95,14 @@ top:-9999px;*/
 									<p class="mb-2">
 										<span>
 											{% if userprofile.online_lesson %}
-											Online Lessons
+						
+											
+												<a href="{% url 'dantorial:schedule' userprofile.id %}" class="btn btn-outline-success">
+													Schedule Online Lesson
+												</a>
+												
+											
+
 											{% endif %}
 										</span>
 
@@ -278,7 +206,7 @@ top:-9999px;*/
 						<hr>
 					</div>
 				</div>
-				<hr>
+				<!-- <hr> -->
 				<div class="card mb-2" style="border: 0px solid red">
 					<div class="text-center fw-bold pt-0 pt-xl-5 pb-0 pb-xl-3 fs-4">Other Subjects</div>
 					<div class="card-body">
@@ -354,10 +282,10 @@ top:-9999px;*/
 				<div class="row">
 					<div class="col-md-12 mb-auto">
 						<section id="components">
-							<h2 class="fw-light pt-2 pt-xl-5 pb-2 pb-xl-3">Professional Information</h2>
+							<h2 class="text-center fw-bold pt-0 pt-xl-5 pb-0 pb-xl-3 fs-4">Professional Information</h2>
 							<article class="mb-0" id="accordion">
 								<div>
-									<div class="bd-example">
+									<div class="card-body bd-example">
 										<div class="accordion" id="accordionExample">
 											<div class="accordion-item">
 												<h4 class="accordion-header" id="headingThree">
@@ -377,13 +305,13 @@ top:-9999px;*/
 																<div class="row">
 																	<div class="col-sm-12">
 																		<div class="accordion-item">
-																			<h2 class="accordion-header" id="headingOne">
+												<h2 class="accordion-header" id="headingOne">
 																				<button class="accordion-button" type="button" data-bs-toggle="collapse"
 																					data-bs-target="#collapseOneEx{{forloop.counter}}" aria-expanded="true"
 																					aria-controls="collapseOne">
 																					{{experience.work_post}}
 																				</button>
-																			</h2>
+													</h2>
 																		</div>
 																		<div class="col-sm-12 text-secondary">
 																			<div id="collapseOneEx{{forloop.counter}}" class="accordion-collapse collapse"
@@ -545,9 +473,9 @@ top:-9999px;*/
 <!-- end -->
 
 				<div class="row mt-0">
-					<div class="mb-3 me-5">
+					<div class="col-12 mb-3">
 						<fieldset>
-							<legend>Reviews about {{user.profilepersonal.first_name}}</legend>
+							<legend class="text-center fw-bold pt-0 pt-xl-5 pb-0 pb-xl-3 fs-4">Reviews about {{userprofile.user.profilepersonal.first_name}}</legend>
 							<div id="comments_section">
 								<form method="POST" class='needs-validation' novalidate id='comment' action="">
 									{% csrf_token %}
@@ -573,7 +501,7 @@ top:-9999px;*/
 						</fieldset>
 						{% if comments %}
 						<strong class="text-secondary">{{ comments.count }}
-							Comment{{ comments.count|pluralize }}</strong>
+							Rating{{ comments.count|pluralize }}</strong>
 						<hr>
 						<ul class="list-group">
 							{% for comment in comments %}

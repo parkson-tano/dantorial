@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} notification {%endblock title %}
+	{% block content %}
+		<div class="col-md-6 col-sm-8 ml-auto mr-auto">
+			<div class="card mb-3 mx-5" >
+				<div class="card-body">
+					<h5 class="card-title text-center mb-3 fw-bold fs-5">Lesson Details</h5>
+						<div class="row mx-2">
+							<p>
+							Student: <a href="{% url 'dantorial:userprofile' notification.student.profilepersonal.id %}" class="card-link">
+                        		{{notification.student.profilepersonal.first_name}} {{notification.student.profilepersonal.last_name}}
+                        	</a>	
+							</p>
+                        	
+                        	<p>
+                        		Start Date: {{notification.start}}
+                        	</p>
+                        	<p>
+                        	End Time: {{notification.end}}		
+                        	</p>
+                        	<p>
+                        		Mode: {{notification.mode}}
+                        	</p>
+                        <div>
+                        	{% if notification.is_confirm %}
+                        	    <button class="btn btn-success font-weight-bold">
+                        	    	You Accepted this Lesson
+                        	    </button>
+                        	    <span>
+                        	    <form method="POST">
+                        		{% csrf_token %}
+                        	    <button class="btn btn-outline-danger" name='post_decline'>
+                        		Decline
+                        	</button>
+                        </form>	
+                        	    </span>
+                        	    
+                        	  {% elif notification.is_decline %}
+                        	    <button class="btn btn-danger font-weight-bold">
+                        	    	You Rejected this Lesson
+                        	    </button>
+                        	{% else %}
+                        	    <form method="POST">
+                        		{% csrf_token %}
+                        		<button class="btn btn-outline-success" name='post_accept' >
+                        		Accept
+                        	</button>
+                        	<button class="btn btn-outline-danger" name='post_decline'>
+                        		Decline
+                        	</button>
+                        	</form>
+                        	{% endif %}
+                        	
+                        	
+
+                        </div>
+						</div>
+						<hr>
+				</div>
+			</div>
+		</div>
+	{% endblock %}
