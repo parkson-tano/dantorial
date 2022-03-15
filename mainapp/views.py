@@ -46,6 +46,9 @@ import random
 import os
 from django.core.cache import cache
 from django.utils.datastructures import MultiValueDictKeyError
+from notifications.signals import notify
+
+
 class IndexView(TemplateView):
     template_name = 'main/index.html'
 
@@ -1095,6 +1098,7 @@ class ScheduleView(DetailView):
 
         if 'post_schedule' in request.POST:
             new_schedule.save()
+            notify.send(self.request.user, recipient=new_schedule.teacher, verb='request a lesson')
             return redirect('dantorial:upgrade_profile')
         return self.get(self, request, *args, **kwargs)
 
@@ -1104,7 +1108,7 @@ class OnlineLessonNotification(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         my_lesson = OnlineLesson.objects.filter(teacher = self.request.user).filter(Q(is_decline = False) & Q(is_confirm = False))
-        # my_proposal = OnlineLesson.objects.filter(student = self.request.user)
+        my_proposal = OnlineLesson.objects.filter(student = self.request.user)
         context['my_lesson'] = my_lesson 
         return context
 
@@ -1114,7 +1118,8 @@ class OnlineLessonRequest(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         my_lesson = OnlineLesson.objects.filter(teacher = self.request.user)
-        # my_proposal = OnlineLesson.objects.filter(student = self.request.user)
+        my_proposal = OnlineLesson.objects.filter(student = self.request.user)
+        context['my_proposal'] = my_proposal
         context['my_lesson'] = my_lesson 
         return context
 
@@ -1140,5 +1145,10 @@ class NotificationDetail(TemplateView):
         if 'post_decline' in request.POST:
             noti.is_decline = True
             noti.is_confirm = False
+            noti.save()
+        if 'post_cancel' in request.POST:
+            noti.is_decline = False
+            noti.is_confirm = False
+            noti.is_cancel = True
             noti.save()
         return self.get(self, request, *args, **kwargs)

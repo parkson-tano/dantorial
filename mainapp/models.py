@@ -431,11 +431,12 @@ class OnlineLesson(models.Model):
     is_confirm = models.BooleanField(default=False)
     duration = models.CharField(max_length=255, null=True, blank=True)
     # amount = models.IntegerField(null=True, blank=True)
-    start = models.DateTimeField(blank=True, null=True)
-    end = models.DateTimeField(blank=True, null=True)
+    start = models.DateTimeField(default=timezone.now())
+    end = models.DateTimeField(default=timezone.now())
     mode = models.CharField(max_length=255, null=True, blank=True, choices=MODE)
     is_seen = models.BooleanField(default=False)
     is_decline = models.BooleanField(default=False)
+    is_cancel = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

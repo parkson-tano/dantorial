@@ -79,6 +79,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'django_browser_reload',
     'cookie_consent',
+    'notifications',
     # 'multiselectfield',
 
 ]
@@ -306,8 +307,8 @@ DEFAULT_FROM_EMAIL = 'tanoparksonsilencer@gmail.com'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST='smtp.gmail.com'
-EMAIL_HOST_USER='tanoparksonsilencer@gmail.com'
-EMAIL_HOST_PASSWORD='P@$$w04dD@n!3l'
+EMAIL_HOST_USER='tanocoder237@gmail.com'
+EMAIL_HOST_PASSWORD='danielTano123@'
 EMAIL_PORT = 587 
 
 SOCIALACCOUNT_PROVIDERS = {

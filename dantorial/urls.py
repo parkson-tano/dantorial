@@ -20,6 +20,7 @@ from django.views.defaults import page_not_found
 from django.conf import settings
 from django.conf.urls.static import static
 import debug_toolbar
+import notifications.urls
 from django.conf.urls import url
 
 handler404 = 'mainapp.views.error404'
@@ -39,6 +40,7 @@ urlpatterns = [
     path('__debug__', include(debug_toolbar.urls)),
     path("__reload__/", include("django_browser_reload.urls")),
     path('cookies/', include('cookie_consent.urls')),
+    url('^inbox/notifications/', include(notifications.urls, namespace='notifications')),
 
 
 ]

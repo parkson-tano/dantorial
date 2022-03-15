@@ -33,6 +33,7 @@ decorator==5.1.0
 defusedxml==0.7.1
 dj-database-url==0.5.0
 Django==3.2.7
+django-ajax-favorite==1.0.0.dev1
 django-allauth==0.45.0
 django-appconf==1.0.5
 django-autoslug==1.9.8
@@ -55,6 +56,7 @@ django-mathfilters==1.0.0
 django-model-utils==4.1.1
 django-multiselectfield==0.1.12
 django-notification-system==1.5.3
+django-notifications-hq==1.7.0
 django-private-chat2==0.1.4
 django-push-notifications==2.0.0
 django-redis-cache==2.1.0
@@ -82,6 +84,7 @@ iniconfig==1.1.1
 itsdangerous==2.0.1
 Jinja2==3.0.3
 jinja2-time==0.2.0
+jsonfield==3.1.0
 MarkupSafe==2.0.1
 numpy==1.21.5
 oauthlib==3.1.1
