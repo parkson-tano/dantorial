@@ -1,6 +1,5 @@
 {% load static %}
 {% load i18n %}
-{% load notifications_tags %}
 <!doctype html>
 <html lang="en">
 
@@ -96,19 +95,6 @@
 
                     </ul>
                     </li>
-<!--                     <li class="dropdown">
-                <a href="#" class="nav-link dropdown-toggle text-dark font-weight-bold"  data-toggle="dropdown">
-                    Notifications <span class="badge rounded-pill badge-notification bg-success"> {% live_notify_badge %} </span>
-                    <span class="glyphicon glyphicon-user pull-right">
-
-                    </span>
-                </a>
-                <ul class="dropdown-menu" id="notice-link">
-                  <a href="{% url 'notifications:unread' %}" class="card-link">
-                    {% live_notify_list %}
-                  </a>
-                </ul>
-            </li> -->
                     
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-black font-weight-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -419,8 +405,7 @@
 
 <!-- notification -->
 
-<script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
-{% register_notify_callbacks callbacks='fill_notification_list,fill_notification_badge' %}
+
 <!--  -->
 <script>
 $(function () {

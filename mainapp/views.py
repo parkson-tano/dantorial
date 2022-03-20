@@ -46,7 +46,7 @@ import random
 import os
 from django.core.cache import cache
 from django.utils.datastructures import MultiValueDictKeyError
-from notifications.signals import notify
+# from notifications.signals import notify
 # from .notification_signal import *
 
 class IndexView(TemplateView):
@@ -130,7 +130,7 @@ class UserProfileView(DetailView):
                 # current.save()
                 prof.save()
 
-                send_mail(subject, message, from_email, to_email, fail_silently=True)
+                # send_mail(subject, message, from_email, to_email, fail_silently=True)
             else:
                 pass
         # new_view.save()
@@ -939,7 +939,7 @@ class UpgradeAccountView(FormView):
             message = f'{self.request.user.profilepersonal.first_name},Your Payment for Premium Service is not complete'
             from_email = settings.DEFAULT_FROM_EMAIL
             to_email = (self.request.user.email, )
-            send_mail(subject, message, from_email, to_email, fail_silently=True)
+            # send_mail(subject, message, from_email, to_email, fail_silently=True)
             # send_mail('hey thanks for nothing', 'here is the message', settings.DEFAULT_FROM_EMAIL, (self.request.user.email,), fail_silently=True,)
             pay.save()
         
