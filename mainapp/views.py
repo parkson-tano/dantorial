@@ -1108,6 +1108,13 @@ class ScheduleView(DetailView):
 
 class OnlineLessonNotification(TemplateView):
     template_name = 'main/notification.html'
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            pass
+        else:
+            return redirect('/accounts/login/?next=/request/')
+            
+        return super().dispatch(request, *args, **kwargs)
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         my_lesson = OnlineLesson.objects.filter(teacher = self.request.user).filter(Q(is_decline = False) & Q(is_confirm = False))
@@ -1118,6 +1125,13 @@ class OnlineLessonNotification(TemplateView):
 
 class OnlineLessonRequest(TemplateView):
     template_name = 'main/history.html' 
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            pass
+        else:
+            return redirect('/accounts/login/?next=/request_history/')
+            
+        return super().dispatch(request, *args, **kwargs)
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         my_lesson = OnlineLesson.objects.filter(teacher = self.request.user)
@@ -1128,7 +1142,13 @@ class OnlineLessonRequest(TemplateView):
 
 class NotificationDetail(TemplateView):
     template_name = 'main/notification_detail.html'
-
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            pass
+        else:
+            return redirect('/accounts/login/?next=/request/')
+            
+        return super().dispatch(request, *args, **kwargs)
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         pk = kwargs['pk']
