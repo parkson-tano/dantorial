@@ -38,7 +38,6 @@
 
 
 <header class="sticky-top">
-
     <nav class="navbar navbar-light navbar-expand-lg bg-white sticky-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="{% url 'dantorial:index' %}">
@@ -76,7 +75,28 @@
                       
                     </a>
                     </li>
-<li class="dropdown">
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link text-dark dropdown-toggle font-weight-bold" data-toggle="dropdown" aria-expanded="false">
+                            <i class='fa fa-bell'></i> Notification
+                                
+                            {% if notificatio.count > 0 %}
+                              <span class="badge rounded-pill badge-notification bg-success">{{ notificatio.count}}</span>
+                            {% endif %}
+                    </a>
+                    <ul class="dropdown-menu">
+                        {% for notif in notificatio %}
+                        <li class="nav-link text-dark">
+                            <span>
+                            
+                            <a href="{% url 'dantorial:notification_detail' notif.id %}" class="card-link" >You have an Available Request</a>
+                            </span>
+                         </li>
+                        {% endfor %}
+                        <li class="nav-link text-dark"><a href="{% url 'dantorial:notification' %}" class="card-link">See all Unread</a></li>
+
+                    </ul>
+                    </li>
+<!--                     <li class="dropdown">
                 <a href="#" class="nav-link dropdown-toggle text-dark font-weight-bold"  data-toggle="dropdown">
                     Notifications <span class="badge rounded-pill badge-notification bg-success"> {% live_notify_badge %} </span>
                     <span class="glyphicon glyphicon-user pull-right">
@@ -88,21 +108,7 @@
                     {% live_notify_list %}
                   </a>
                 </ul>
-            </li>
-
-
-
-<!--                     <li>
-                        {% notifications_unread as unread_count %} 
-                        <a  class="nav-link text-dark font-weight-bold" href="{% url 'dantorial:notification' %}">
-                            <i class='fa fa-bell'></i> Notification
-                                
-                            {% if unread_count %}
-                              <span class="badge rounded-pill badge-notification bg-success">{% live_notify_badge %}</span>
-                            {% endif %}
-                    </a>
-                    </li> -->
-                    
+            </li> -->
                     
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-black font-weight-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -180,13 +186,9 @@
                 </div>
 
             </div>
-            
-            
 
         {% endif %}
-           {% block content %}
-
-            {% endblock content %} 
+           {% block content %} {% endblock content %} 
     </div>
 </main>
     <!-- Footer -->
