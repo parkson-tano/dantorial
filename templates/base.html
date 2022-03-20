@@ -1,5 +1,6 @@
 {% load static %}
 {% load i18n %}
+{% load notifications_tags %}
 <!doctype html>
 <html lang="en">
 
@@ -37,6 +38,7 @@
 
 
 <header class="sticky-top">
+
     <nav class="navbar navbar-light navbar-expand-lg bg-white sticky-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="{% url 'dantorial:index' %}">
@@ -74,15 +76,32 @@
                       
                     </a>
                     </li>
-                    <li>
+<li class="dropdown">
+                <a href="#" class="nav-link dropdown-toggle text-dark font-weight-bold"  data-toggle="dropdown">
+                    Notifications <span class="badge rounded-pill badge-notification bg-success"> {% live_notify_badge %} </span>
+                    <span class="glyphicon glyphicon-user pull-right">
+
+                    </span>
+                </a>
+                <ul class="dropdown-menu" id="notice-link">
+                  <a href="{% url 'notifications:unread' %}" class="card-link">
+                    {% live_notify_list %}
+                  </a>
+                </ul>
+            </li>
+
+
+
+<!--                     <li>
+                        {% notifications_unread as unread_count %} 
                         <a  class="nav-link text-dark font-weight-bold" href="{% url 'dantorial:notification' %}">
                             <i class='fa fa-bell'></i> Notification
                                 
-                            {% if notificatio.count > 0 %}
-                              <span class="badge rounded-pill badge-notification bg-success">{{ notificatio.count}}</span>
+                            {% if unread_count %}
+                              <span class="badge rounded-pill badge-notification bg-success">{% live_notify_badge %}</span>
                             {% endif %}
                     </a>
-                    </li>
+                    </li> -->
                     
                     
                     <li class="nav-item dropdown">
@@ -96,9 +115,8 @@
                                     <span><i class="fa fa-user" aria-hidden="true"></i></span>
                                    {{user.profilepersonal.title|capfirst}} {{user.profilepersonal.first_name}} 
                                 </span>
-                        
-                    </li>
-                     <li>
+                            </li>
+                            <li>
                         {% if user.profilepersonal.account_type == 'tutor' %}
                         <a class="nav-link text-dark">
                             <i class="fa fa-book"></i>
@@ -106,7 +124,7 @@
                         <a class="nav-link text-dark">
                             <i class="fas fa-book-reader"></i>
                         Student Account</a> {% endif %}
-                    </li>
+                            </li>
                             <li><a class="dropdown-item" href="{% url 'dantorial:profile' %}">Profile</a></li>
                             <li><a class="dropdown-item" href="{% url 'dantorial:request_history' %}">Request History</a></li>
                             <li><a class="dropdown-item" href="{% url 'dantorial:my-subject' %}">My Subject</a></li>
@@ -162,9 +180,13 @@
                 </div>
 
             </div>
+            
+            
 
         {% endif %}
-           {% block content %} {% endblock content %} 
+           {% block content %}
+
+            {% endblock content %} 
     </div>
 </main>
     <!-- Footer -->
@@ -393,7 +415,11 @@
     </script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
+<!-- notification -->
 
+<script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
+{% register_notify_callbacks callbacks='fill_notification_list,fill_notification_badge' %}
+<!--  -->
 <script>
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()

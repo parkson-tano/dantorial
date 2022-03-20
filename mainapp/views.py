@@ -47,7 +47,7 @@ import os
 from django.core.cache import cache
 from django.utils.datastructures import MultiValueDictKeyError
 from notifications.signals import notify
-
+# from .notification_signal import *
 
 class IndexView(TemplateView):
     template_name = 'main/index.html'
@@ -976,13 +976,16 @@ def profile_like(request):
         if profile_obj.favourite.filter(user=userprofile.id).exists():
             profile_obj.favourite.remove(userprofile.user)
             profile_obj.save()
+            
             flag = False
+            notify.send(actor=profile_obj.user, recipient=userprofile.user, verb='unliked your profile', )
             # print(profile_obj.favourite.filter(user=u.id).exists())
         else:
             profile_obj.favourite.add(userprofile.user)
             profile_obj.save()
+            
             flag = True
-
+            notify.send(actor=profile_obj.user, recipient=userprofile.user, verb='liked your profile', )
             subject = "Notification from Tantorial"
             message = f'{profile_obj.first_name} liked Your Profile'
             from_email = settings.DEFAULT_FROM_EMAIL
@@ -1098,7 +1101,7 @@ class ScheduleView(DetailView):
 
         if 'post_schedule' in request.POST:
             new_schedule.save()
-            notify.send(self.request.user, recipient=new_schedule.teacher, verb='request a lesson')
+            notify.send(self.request.user, recipient=new_schedule.teacher, verb='request a lesson for the')
             return redirect('dantorial:upgrade_profile')
         return self.get(self, request, *args, **kwargs)
 
@@ -1114,7 +1117,7 @@ class OnlineLessonNotification(TemplateView):
 
 
 class OnlineLessonRequest(TemplateView):
-    template_name = 'main/history.html'
+    template_name = 'main/history.html' 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         my_lesson = OnlineLesson.objects.filter(teacher = self.request.user)
