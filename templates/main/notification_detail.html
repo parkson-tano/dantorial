@@ -3,10 +3,10 @@
 {% block title %} notification {%endblock title %}
 	{% block content %}
 		<div class="col-md-6 col-sm-12 ml-auto mr-auto">
-			<div class="card mb-3 mx-md-5 mx-sm-auto" >
+			<div class="card mb-3 mx-md-5 mx-sm-auto" style="border: 0px solid red">
 				<div class="card-body mx-md-4 mx-sm-0" >
 					<h5 class="card-title text-center mb-3 fw-bold fs-5">Lesson Details</h5>
-						<div class="row mx-2">
+						<div class="row mx-auto">
 							{% if notification.teacher == request.user %}
 							    <p>
 							Student: <a href="{% url 'dantorial:userprofile' notification.student.profilepersonal.id %}" class="card-link">

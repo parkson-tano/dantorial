@@ -83,6 +83,7 @@
                             {% endif %}
                     </a>
                     <ul class="dropdown-menu">
+                        {% if notificatio.count > 0 %}
                         {% for notif in notificatio %}
                         <li class="nav-link text-dark">
                             <span>
@@ -91,7 +92,11 @@
                             </span>
                          </li>
                         {% endfor %}
-                        <li class="nav-link text-dark"><a href="{% url 'dantorial:notification' %}" class="card-link">See all Unread</a></li>
+                       
+                        {% else %}
+                        <li class="nav-link text-dark">No New Notification</li>
+                        {% endif %}
+                         <li class="nav-link text-dark"><a href="{% url 'dantorial:notification' %}" class="card-link">See all Unread</a></li>
 
                     </ul>
                     </li>

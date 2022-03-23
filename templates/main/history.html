@@ -3,11 +3,11 @@
 {% block title %} request history {%endblock title %}
 	{% block content %}
 		<div class="col-md-6 col-sm-12 ml-auto mr-auto">
-			<div class="card mb-3">
-				<div class="card-body">
+			<div class="card mb-3" style="border: 0px solid red">
+				<div class="card-body ml-auto mr-auto">
 					<h5 class="card-title text-center mb-3 fw-bold fs-5">Lesson History</h5>
 					{% for notify in my_lesson %}
-						<div class="row mx-2">
+						<div class="row mx-2 ml-auto mr-auto">
 							<span>
                         	{% if notify.is_confirm %}
                         	  You Accepted this Request

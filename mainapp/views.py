@@ -1101,7 +1101,7 @@ class ScheduleView(DetailView):
 
         if 'post_schedule' in request.POST:
             new_schedule.save()
-            notify.send(self.request.user, recipient=new_schedule.teacher, verb='request a lesson for the')
+            # notify.send(self.request.user, recipient=new_schedule.teacher, verb='request a lesson for the')
             return redirect('dantorial:upgrade_profile')
         return self.get(self, request, *args, **kwargs)
 
@@ -1134,10 +1134,14 @@ class OnlineLessonRequest(TemplateView):
         return super().dispatch(request, *args, **kwargs)
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        my_lesson = OnlineLesson.objects.filter(teacher = self.request.user)
-        my_proposal = OnlineLesson.objects.filter(student = self.request.user)
-        context['my_proposal'] = my_proposal
-        context['my_lesson'] = my_lesson 
+        my_lesson = OnlineLesson.objects.filter(teacher = self.request.user).order_by('-date_created')
+        my_proposal = OnlineLesson.objects.filter(student = self.request.user).order_by('-date_created')
+        final = OnlineLesson.objects.filter(Q(student = self.request.user) | Q(teacher = self.request.user))
+        # subject = Subject.objects.filter(subject = subject).order_by('user')
+        # final = list(set(list(chain(my_lesson, my_proposal))))
+        print(f'final {final}')
+        context['my_proposal'] = final
+        # context['my_lesson'] = my_lesson 
         return context
 
 class NotificationDetail(TemplateView):

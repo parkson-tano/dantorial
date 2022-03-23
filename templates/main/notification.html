@@ -3,11 +3,11 @@
 {% block title %} notifications {%endblock title %}
 	{% block content %}
 		<div class="col-md-6 col-sm-8 ml-auto mr-auto">
-			<div class="card mb-3">
+			<div class="card mb-3" style="border: 0px solid red">
 				<div class="card-body">
 					<h5 class="card-title text-center mb-3 fw-bold fs-5">Notifications</h5>
 					{% for notify in my_lesson %}
-						<div class="row mx-2">
+						<div class="row mx-2 text-center">
 							<span>
                         	You have an Available Request
                         	<a href="{% url 'dantorial:notification_detail' notify.id %}" class="btn btn-danger btn-sm">See Details</a>	{% if notify.is_confirm %}
