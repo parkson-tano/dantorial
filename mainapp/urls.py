@@ -77,6 +77,7 @@ urlpatterns = [
     path('about-us', AboutView.as_view(), name='aboutus'),
     path('privacy', PrivacyView.as_view(), name='privacy_policy'),
     path('terms-and-conditions', TermsView.as_view(), name='terms'),
+    path('landing', LandingView.as_view(), name='landing'),
 
 # payment and support
     path('upgrade/', UpgradeAccountView.as_view(), name='upgrade_profile'),

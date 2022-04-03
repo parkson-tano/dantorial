@@ -5,6 +5,7 @@ import random
 def category_list(request):
     suggested = []
     tutor = ProfilePersonal.objects.filter(account_type="tutor")
+    profil = ProfilePersonal.objects.all()
     print('erjejr')
     print(tutor)
     if request.user.is_authenticated:
@@ -22,6 +23,7 @@ def category_list(request):
         'all_subcat': SubCategory.objects.all().order_by('name'),
         'all_sub': Subject.objects.all().order_by('subcategory'),
         'review' : Review.objects.all(),
+        'tutors': random.sample(list(ProfilePersonal.objects.all()),4),
         # 'suggest_tutor': random.sample(list(ProfilePersonal.objects.filter(account_type='tutor')),25),
         'suggested': suggested
 

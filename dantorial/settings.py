@@ -366,4 +366,6 @@ NOTIFICATION_SYSTEM_TARGETS={
   }
 }
 
+GOOGLE_APPLICATION_CREDENTIALS = os.path.join(BASE_DIR, 'dantorial-bdef7-9833c8c7d45c.json')
+
 # django_heroku.settings(locals())

@@ -46,6 +46,16 @@ import random
 import os
 from django.core.cache import cache
 from django.utils.datastructures import MultiValueDictKeyError
+
+# google api
+from google.auth.transport.requests import Request
+from google.oauth2.credentials import Credentials
+from google_auth_oauthlib.flow import InstalledAppFlow
+from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
+
+# from cal_setup import get_calendar_service
+
 # from notifications.signals import notify
 # from .notification_signal import *
 
@@ -1101,6 +1111,40 @@ class ScheduleView(DetailView):
 
         if 'post_schedule' in request.POST:
             new_schedule.save()
+            # GOOGLE_APPLICATION_CREDENTIALS = ('../dantorial-bdef7-9833c8c7d45c.json')
+            # service = build('drive', 'v3')
+            # event = {
+            #   'summary': 'Google I/O 2015',
+            #   'location': '800 Howard St., San Francisco, CA 94103',
+            #   'description': 'A chance to hear more about Google\'s developer products.',
+            #   'start': {
+            #     'dateTime': '2015-05-28T09:00:00-07:00',
+            #     'timeZone': 'America/Los_Angeles',
+            #   },
+            #   'end': {
+            #     'dateTime': '2015-05-28T17:00:00-07:00',
+            #     'timeZone': 'America/Los_Angeles',
+            #   },
+            #   'recurrence': [
+            #     'RRULE:FREQ=DAILY;COUNT=2'
+            #   ],
+            #   'attendees': [
+            #     {'email': 'lpage@example.com'},
+            #     {'email': 'sbrin@example.com'},
+            #   ],
+            #   'reminders': {
+            #     'useDefault': False,
+            #     'overrides': [
+            #       {'method': 'email', 'minutes': 24 * 60},
+            #       {'method': 'popup', 'minutes': 10},
+            #     ],
+            #   },
+            # }
+
+            # event = service.events().insert(calendarId='primary', body=event).execute()
+            # print('im here')
+            # print('Event created: %s' % (event.get('htmlLink')))
+
             # notify.send(self.request.user, recipient=new_schedule.teacher, verb='request a lesson for the')
             return redirect('dantorial:upgrade_profile')
         return self.get(self, request, *args, **kwargs)
@@ -1179,3 +1223,7 @@ class NotificationDetail(TemplateView):
             noti.is_cancel = True
             noti.save()
         return self.get(self, request, *args, **kwargs)
+
+
+class LandingView(TemplateView):
+    template_name = 'main/landing.html'

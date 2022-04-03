@@ -163,7 +163,7 @@ class ProfilePersonal(models.Model):
     view_count = models.PositiveIntegerField(default=0)
     paid = models.BooleanField(default = False)
     favourite = models.ManyToManyField(User,related_name='saved_user', blank=True)
-    profile_pic = models.ImageField(upload_to='profile_img', default='media/default.png')
+    profile_pic = models.ImageField(upload_to='profile_img', default='default.png')
     
 
     @property
