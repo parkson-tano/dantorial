@@ -48,11 +48,11 @@ from django.core.cache import cache
 from django.utils.datastructures import MultiValueDictKeyError
 
 # google api
-from google.auth.transport.requests import Request
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
-from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
+# from google.auth.transport.requests import Request
+# from google.oauth2.credentials import Credentials
+# from google_auth_oauthlib.flow import InstalledAppFlow
+# from googleapiclient.discovery import build
+# from googleapiclient.errors import HttpError
 
 # from cal_setup import get_calendar_service
 
