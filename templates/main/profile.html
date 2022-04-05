@@ -27,6 +27,10 @@
     width: 150px;
     height: 150px;
 }  
+
+a:hover{
+    text-decoration: none;
+}
 </style>
 
 
@@ -104,7 +108,7 @@
                                     <h6 class="mb-0 text-secondary ">Phone</h6>
                                 </div>
                                 <div class="col-sm-6">
-                                    {{profile.country.code}} {{profile.phone_number}}
+                                    {{profile.country.code}} {{profile.phone_number|default:'********'}}
                                 </div>
                             </div>
                             <div class="row mb-3">
