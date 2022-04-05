@@ -1,15 +1,39 @@
-{% extends "base.html" %}
-{% load i18n %}
-{% load mathfilters %}
-{% load static %} {% block title %} tantorial {%endblock title %} 
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block content %}
-<style>
-  header.head-nav{
-    display: none;
-  }
-</style>
- <!-- ======= Header ======= -->
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Tantorial - Index</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{% static 'favicon_.ico' %}" rel="icon">
+  <link href="{% static 'favicon_.ico' %}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
   <header id="header" class="fixed-top d-flex align-items-center header-transparent">
     <div class="container d-flex align-items-center justify-content-between">
 
@@ -24,7 +48,7 @@
           <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
           <li><a class="nav-link scrollto" href="#about">About</a></li>
           <li><a class="nav-link scrollto" href="#features">Features</a></li>
-          <li><a class="nav-link scrollto" href="#gallery">Gallery</a></li>
+          <li><a class="nav-link scrollto" href="#gallery">Courses</a></li>
           <li><a class="nav-link scrollto" href="#team">Team</a></li>
           <li><a class="nav-link scrollto" href="#pricing">Pricing</a></li>
           <!-- <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
@@ -63,10 +87,16 @@
             <h2>We help Bridge the gap between learners and tutors.<br>
               Let’s learn and evolve</h2>
             <div class="text-center text-lg-start">
-              <a href="{% url 'dantorial:index' %}" class="btn-get-started scrollto card-link">Get Started</a>
+              <!-- <a href="{% url 'dantorial:index' %}" class="btn-get-started scrollto card-link">Get Started</a> -->
+			  {% if request.user.is_authenticated %}
+					<a href="{% url 'dantorial:allcategory' %}" class="btn-get-started scrollto text-white">Get Started</a> 
+					{% else %}
+					<a href="{% url 'account_signup' %}" class="btn-get-started scrollto">Get Started</a> 
+					{% endif %}
             </div>
           </div>
         </div>
+		
         <div class="col-lg-4 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="300">
           <img src="{% static 'assets/img/hero-img.png' %}" class="img-fluid animated" alt="">
         </div>
@@ -98,7 +128,7 @@
 
         <div class="row">
           <div class="col-xl-5 col-lg-6 video-box d-flex justify-content-center align-items-stretch" data-aos="fade-right">
-            <a href="https://www.youtube.com/watch?v=jDDaplaOz7Q" class="venobox play-btn mb-4" data-vbtype="video" data-autoplay="true"></a>
+            <a href="https://www.youtube.com/watch?v=QKxIKKi2RNg" class="venobox play-btn mb-4" data-vbtype="video" data-autoplay="true"></a>
           </div>
 
           <div class="col-xl-7 col-lg-6 icon-boxes d-flex flex-column align-items-stretch justify-content-center py-5 px-lg-5" data-aos="fade-left">
@@ -168,7 +198,7 @@
             <div class="count-box">
               <i class="bi bi-emoji-smile"></i>
               <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Happy Clients</p>
+              <p>Students</p>
             </div>
           </div>
 
@@ -176,7 +206,7 @@
             <div class="count-box">
               <i class="bi bi-journal-richtext"></i>
               <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Projects</p>
+              <p>Tutors</p>
             </div>
           </div>
 
@@ -184,7 +214,7 @@
             <div class="count-box">
               <i class="bi bi-headset"></i>
               <span data-purecounter-start="0" data-purecounter-end="1463" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Hours Of Support</p>
+              <p>Hours Of Lesson</p>
             </div>
           </div>
 
@@ -192,7 +222,7 @@
             <div class="count-box">
               <i class="bi bi-people"></i>
               <span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Hard Workers</p>
+              <p>Available Courses</p>
             </div>
           </div>
 
@@ -222,7 +252,19 @@
             </ul>
             <p>
               With Tantorial you are able to get a realiable earning by teaching what you are best at whenever you want. You also get to tutor and earn according to your schedule
+			  </p>
+			  <div class="text-center text-lg-start">
+				  <button class="btn btn-success border-success rounded-pill">
+					  {% if request.user.is_authenticated %}
+					  <a href="{% url 'dantorial:allcategory' %}" class="btn-get-started scrollto text-white">Get Started</a> 
+					  {% else %}
+					  <a href="{% url 'account_signup' %}" class="btn-get-started scrollto text-white">Get Started</a> 
+					  {% endif %}
+				  </button>
+				
+			  </div>
           </div>
+		  
         </div>
 
         <!-- <div class="row content">
@@ -264,7 +306,18 @@
             <p>
               Tantorial, also allows learner to schedule  online lessons with Available tutors for instant help.
             </p>
+			<div class="text-center text-lg-start">
+				<button class="btn btn-success border-success rounded-pill">
+					{% if request.user.is_authenticated %}
+					<a href="{% url 'dantorial:allcategory' %}" class="btn-get-started scrollto text-white">Get Started</a> 
+					{% else %}
+					<a href="{% url 'account_signup' %}" class="btn-get-started scrollto text-white">Get Started</a> 
+					{% endif %}
+				</button>
+			  
+			</div>
           </div>
+		  
         </div>
 
         <div class="row content">
@@ -287,6 +340,16 @@
               <li><i class="bi bi-check"></i> Learners can create a profile of what they want to learn which will allow tutors find learners.</li>
               
             </ul>
+			<div class="text-center text-lg-start">
+				<button class="btn btn-success border-success rounded-pill">
+					{% if request.user.is_authenticated %}
+					<a href="{% url 'dantorial:allcategory' %}" class="btn-get-started scrollto text-white">Get Started</a> 
+					{% else %}
+					<a href="{% url 'account_signup' %}" class="btn-get-started scrollto text-white">Get Started</a> 
+					{% endif %}
+				</button>
+			  
+			</div>
           </div>
         </div>
 
@@ -447,14 +510,15 @@
               <h3>Free</h3>
               <h4><sup>$</sup>0<span> / month</span></h4>
               <ul>
-                <li>Aida dere</li>
-                <li>Nec feugiat nisl</li>
-                <li>Nulla at volutpat dola</li>
-                <li class="na">Pharetra massa</li>
-                <li class="na">Massa ultricies mi</li>
+                <li>Create and Update Profile</li>
+                <li>Find tutors and student</li>
+                <li>Send message to tutor or Student</li>
+                <li class="na">Get Tutors/Studenta Contact</li>
+                <li class="na">Schedule Online Lessons</li>
               </ul>
               <div class="btn-wrap">
-                <a href="#" class="btn-buy">Buy Now</a>
+                <a href="#" class="btn-buy">Subscribe
+				</a>
               </div>
             </div>
           </div>
@@ -462,16 +526,16 @@
           <div class="col-lg-4 col-md-6 mt-4 mt-md-0">
             <div class="box featured" data-aos="zoom-in" data-aos-delay="200">
               <h3>Student</h3>
-              <h4><sup>$</sup>19<span> / month</span></h4>
+              <h4><sup>FCFA</sup>2900<span> / Year</span></h4>
               <ul>
-                <li>Aida dere</li>
-                <li>Nec feugiat nisl</li>
-                <li>Nulla at volutpat dola</li>
-                <li>Pharetra massa</li>
-                <li class="na">Massa ultricies mi</li>
+                <li>Create and Update Profile</li>
+                <li>Find student</li>
+                <li>Send message to tutor</li>
+                <li>Get Tutors/Students Contact</li>
+                <li>Schedule Online Lessons</li>
               </ul>
               <div class="btn-wrap">
-                <a href="#" class="btn-buy">Buy Now</a>
+                <a href="#" class="btn-buy">Subscribe</a>
               </div>
             </div>
           </div>
@@ -479,16 +543,16 @@
           <div class="col-lg-4 col-md-6 mt-4 mt-lg-0">
             <div class="box" data-aos="zoom-in" data-aos-delay="300">
               <h3>Tutor</h3>
-              <h4><sup>$</sup>29<span> / month</span></h4>
+              <h4><sup>FCFA</sup>5900<span> / Year</span></h4>
               <ul>
-                <li>Aida dere</li>
-                <li>Nec feugiat nisl</li>
-                <li>Nulla at volutpat dola</li>
-                <li>Pharetra massa</li>
-                <li>Massa ultricies mi</li>
+                <li>Create and Update Profile</li>
+                <li>Contact Visible</li>
+                <li>Get Recommended to Students</li>
+                <li>Get Student Contact</li>
+                <li>Available for Online Lesson</li>
               </ul>
               <div class="btn-wrap">
-                <a href="#" class="btn-buy">Buy Now</a>
+                <a href="#" class="btn-buy">Subscribe</a>
               </div>
             </div>
           </div>
@@ -646,5 +710,94 @@
     </section><!-- End Contact Section -->
 
   </main><!-- End #main -->
+      <!-- ======= Footer ======= -->
+	  <footer id="footer">
+		<div class="footer-top">
+		  <div class="container">
+			<div class="row">
+	
+			  <div class="col-lg-4 col-md-6">
+				<div class="footer-info">
+				  <h3>Tantorial</h3>
+				  <p class="pb-3"><em>Tantorial is Cameroon's first EdTech Start Up aim at bringing tutors and student together...</em></p>
+				  <p>
+					Mbalgong, Yaounde <br>
+					Yaounde, CAMEROON<br><br>
+					<strong>Phone:</strong> <a href="tel:+23764128573">+237 674128573</a><br>
+					<strong>Email:</strong> <a href = "mailto:info@tantorial.com">info@tantorial.com  </a><br>
+					<strong>Whatsapp:</strong> <a href="https://wa.me/+237674128573?text=Hello%20My%20is%20_________">+237 674128573</a><br>
+				  </p>
+				  <div class="social-links mt-3">
+					<a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+					<a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+					<a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+					<a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+					<a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+				  </div>
+				</div>
+			  </div>
+	
+			  <div class="col-lg-2 col-md-6 footer-links">
+				<h4>Useful Links</h4>
+				<ul>
+				  <li><i class="bx bx-chevron-right"></i> <a href="{% url 'dantorial:index' %}">Home</a></li>
+				  <li><i class="bx bx-chevron-right"></i> <a href="{% url 'dantorial:aboutus' %}">About us</a></li>
+				  <li><i class="bx bx-chevron-right"></i> <a href="{% url 'dantorial:contactus' %}">Contact us</a></li>
+				  <li><i class="bx bx-chevron-right"></i> <a href="{% url 'dantorial:terms' %}">Terms of service</a></li>
+				  <li><i class="bx bx-chevron-right"></i> <a href="{% url 'dantorial:privacy_policy' %}">Privacy policy</a></li>
+				</ul>
+			  </div>
+	
+			  <div class="col-lg-2 col-md-6 footer-links">
+				<h4>Our Services</h4>
+				<ul>
+				  <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
+				  <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
+				  <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
+				  <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
+				  <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
+				</ul>
+			  </div>
+	
+			  <div class="col-lg-4 col-md-6 footer-newsletter">
+				<h4>Our Newsletter</h4>
+				<p>Subscribe for our Newsletter</p>
+				<form action="" method="post">
+				  <input type="email" name="email"><input type="submit" value="Subscribe">
+				</form>
+	
+			  </div>
+	
+			</div>
+		  </div>
+		</div>
+	
+		<div class="container"> 
+		  <div class="copyright">
+			&copy; Copyright          <script>
+				   document.write(new Date().getFullYear())
+			</script><strong><span> Tantorial</span></strong>. All Rights Reserved
+		  </div>
+		  <div class="credits">
+			Designed by <a href="#">ParksonTano</a>
+		  </div>
+		</div>
+	  </footer><!-- End Footer -->
 
-{% endblock %}
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'assets/vendor/purecounter/purecounter_vanilla.js' %}"></script>
+  <script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
+  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{% static 'assets/js/main.js' %}"></script>
+
+</body>
+
+</html>
