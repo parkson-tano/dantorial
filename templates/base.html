@@ -3,7 +3,8 @@
 <!doctype html>
 <html lang="en">
 
-<head>
+    <head>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="{% static 'favicon_.ico' %}" type="image/x-icon" />
@@ -11,32 +12,27 @@
 <!-- Font Awesome -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="{% static 'main.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/navbar-fixed/">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
 <link href=”https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css” rel=”stylesheet”>
 
- <!-- Favicons -->
-  <!-- <link href="{% static 'assets/img/favicon.png' %}" rel="icon">
-  <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon"> -->
+<link href="{% static 'assets/css/styles.css' %}" rel="stylesheet">
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+<link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+<link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+<link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+<link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+<link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
 
-  <!-- Vendor CSS Files -->
-  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
-  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
-  <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
-  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
-  <link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
-  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
-
-  <!-- Template Main CSS File -->
-
-  <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+    <!-- Font Awesome -->
+<!-- Google fonts-->
+<!-- <link rel="preconnect" href="https://fonts.gstatic.com" />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,600;1,600&amp;display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,300;0,500;0,600;0,700;1,300;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,400&amp;display=swap" rel="stylesheet" /> -->
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <title>
@@ -46,16 +42,8 @@
     {% load bootstrap4 %} {% bootstrap_css %} {% bootstrap_javascript jquery='full' %}
 </head>
 
-<style>
-  a:hover{
-    text-decoration: none;
-}
-</style>
-
- <!-- ======= Header ======= -->
-
-<header class="head-nav">
-    <nav class="navbar navbar-light navbar-expand-lg bg-white">
+<header class="sticky-top">
+    <nav class="navbar navbar-light navbar-expand-lg bg-white sticky-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="{% url 'dantorial:index' %}">
                 <em class='font-weight-bold text-uppercase'>
@@ -65,7 +53,7 @@
                 <!-- <img src="{% static 'logo_png.png' %}" alt="find the best turtor in cameroon" style="width: 250px; height:80px"> -->
             </a>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button> 
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -134,15 +122,11 @@
                             <li>
                         {% if user.profilepersonal.account_type == 'tutor' %}
                         <a class="nav-link text-dark">
-                            <span>
-                                <i class="fa fa-book"></i>Tutor Account
-                            </span>
-                            </a> {% else %}
+                            <i class="fa fa-book"></i>
+                        Tutor Account</a> {% else %}
                         <a class="nav-link text-dark">
-                            <span>
-                              <i class="fas fa-book-reader"></i>Student Account  
-                            </span>
-                            </a> {% endif %}
+                            <i class="fas fa-book-reader"></i>
+                        Student Account</a> {% endif %}
                             </li>
                             <li><a class="dropdown-item" href="{% url 'dantorial:profile' %}">Profile</a></li>
                             <li><a class="dropdown-item" href="{% url 'dantorial:request_history' %}">Request History</a></li>
@@ -184,7 +168,7 @@
 </header>
 <body>
     {% block carousel %} {% endblock carousel %}
-    <div s >
+    <div style="width: 100;">
         {% if messages %}
             <!-- <div class='alert alert-success alert-dismissible fade show' role='alert'>
                 {% for message in messages %}
@@ -204,135 +188,127 @@
            {% block content %} {% endblock content %} 
     </div>
 </main>
+    <!-- Footer -->
       <!-- ======= Footer ======= -->
-  <footer id="footer">
-    <div class="footer-top">
-      <div class="container">
-        <div class="row">
-
-          <div class="col-lg-4 col-md-6">
-            <div class="footer-info">
-              <h3>Tantorial</h3>
-              <p class="pb-3"><em>Tantorial is Cameroon's first EdTech Start Up aim at bringing tutors and student together...</em></p>
-              <p>
-                Mbalgong, Yaounde <br>
-                Yaounde, CAMEROON<br><br>
-                <strong>Phone:</strong> <a href="tel:+23764128573">+237 674128573</a><br>
-                <strong>Email:</strong> <a href = "mailto:info@tantorial.com">info@tantorial.com  </a><br>
-                <strong>Whatsapp:</strong> <a href="https://wa.me/+237674128573?text=Hello%20My%20is%20_________">+237 674128573</a><br>
-              </p>
-              <div class="social-links mt-3">
-                <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-                <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-                <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-                <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-                <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-2 col-md-6 footer-links">
-            <h4>Useful Links</h4>
-            <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="{% url 'dantorial:index' %}">Home</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="{% url 'dantorial:aboutus' %}">About us</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="{% url 'dantorial:contactus' %}">Contact us</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="{% url 'dantorial:terms' %}">Terms of service</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="{% url 'dantorial:privacy_policy' %}">Privacy policy</a></li>
-            </ul>
-          </div>
-
-          <div class="col-lg-2 col-md-6 footer-links">
-            <h4>Our Services</h4>
-            <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
-            </ul>
-          </div>
-
-          <div class="col-lg-4 col-md-6 footer-newsletter">
-            <h4>Our Newsletter</h4>
-            <p>Subscribe for our Newsletter</p>
-            <form action="" method="post">
-              <input type="email" name="email"><input type="submit" value="Subscribe">
-            </form>
-
-          </div>
-
-        </div>
-      </div>
-    </div>
-
-    <div class="container"> 
-      <div class="copyright">
-        &copy; Copyright          <script>
-               document.write(new Date().getFullYear())
-        </script><strong><span> Tantorial</span></strong>. All Rights Reserved
-      </div>
-      <div class="credits">
-        Designed by <a href="#">ParksonTano</a>
-      </div>
-    </div>
-  </footer><!-- End Footer -->
+	  <footer id="footer">
+		<div class="footer-top">
+		  <div class="container">
+			<div class="row">
+	
+			  <div class="col-lg-4 col-md-6">
+				<div class="footer-info">
+				  <h3>Tantorial</h3>
+				  <p class="pb-3"><em>Tantorial is Cameroon's first EdTech Start Up aim at bringing tutors and student together...</em></p>
+				  <p>
+					Mbalgong, Yaounde <br>
+					Yaounde, CAMEROON<br><br>
+					<strong>Phone:</strong> <a href="tel:+23764128573">+237 674128573</a><br>
+					<strong>Email:</strong> <a href = "mailto:info@tantorial.com">info@tantorial.com  </a><br>
+					<strong>Whatsapp:</strong> <a href="https://wa.me/+237674128573?text=Hello%20My%20is%20_________">+237 674128573</a><br>
+				  </p>
+				  <div class="social-links mt-3">
+					<a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+					<a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+					<a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+					<a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+					<a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+				  </div>
+				</div>
+			  </div>
+	
+			  <div class="col-lg-2 col-md-6 col-xs-6 footer-links ">
+				<h4>Useful Links</h4>
+				<ul>
+				  <li><i class="bx bx-chevron-right"></i> <a href="{% url 'dantorial:index' %}">Home</a></li>
+				  <li><i class="bx bx-chevron-right"></i> <a href="{% url 'dantorial:aboutus' %}">About us</a></li>
+				  <li><i class="bx bx-chevron-right"></i> <a href="{% url 'dantorial:contactus' %}">Contact us</a></li>
+				  <li><i class="bx bx-chevron-right"></i> <a href="{% url 'dantorial:terms' %}">Terms of service</a></li>
+				  <li><i class="bx bx-chevron-right"></i> <a href="{% url 'dantorial:privacy_policy' %}">Privacy policy</a></li>
+				</ul>
+			  </div>
+	
+			  <div class="col-lg-2 col-md-6 col-xs-6 footer-links">
+				<h4>Our Services</h4>
+				<ul>
+				  <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
+				  <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
+				  <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
+				  <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
+				  <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
+				</ul>
+			  </div>
+	
+			  <div class="col-lg-4 col-md-6 footer-newsletter">
+				<h4>Our Newsletter</h4>
+				<p>Subscribe for our Newsletter</p>
+				<form action="" method="post">
+				  <input type="email" name="newsletter" class="form-control shadow-none"><input type="submit" value="Subscribe">
+				</form>
+	
+			  </div>
+	
+			</div>
+		  </div>
+		</div>
+	
+		<div class="container"> 
+		  <div class="copyright">
+			&copy; Copyright          <script>
+				   document.write(new Date().getFullYear())
+			</script><strong><span> Tantorial</span></strong>. All Rights Reserved
+		  </div>
+		  <div class="credits">
+			Designed by <a href="#">ParksonTano</a>
+		  </div>
+		</div>
+	  </footer><!-- End Footer -->
+	  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+	  <div id="preloader"></div>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{% static 'main.js' %}"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <!-- <script>
+        function deleteFunction(e) {
+            if (!confirm("Are you sure you want to delete?")) {
+                e.preventDefault();
+            } else {
+                $('#subject-delete').submit();
+            }
+        }
+        function deleteProfileFunction(e) {
+            if (!confirm("Are you sure you want to delete?")) {
+                e.preventDefault();
+            } else {
+                $('#delete-profile').submit();
+            }
+        }
+    </script>
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId: '873796066573023',
+                xfbml: true,
+                version: 'v11.0'
+            });
+            FB.AppEvents.logPageView();
+        };
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk')); <
+        script type = "text/javascript"
+        src = "https://www.monetbil.com/widget/v2/monetbil.min.js" >
+    </script> -->
 
-<!-- notification -->
 
-
-
-<!-- <script type="text/javascript" src="https://cdn.weglot.com/weglot.min.js"></script> -->
-<script>
-    Weglot.initialize({
-        api_key: 'wg_88fbc822cd20082772de32d3eca0aa5b5'
-    });
-</script>
-
-
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-  <div id="preloader"></div>
-
-  <!-- Vendor JS Files -->
-
-  <script src="{% static 'assets/vendor/purecounter/purecounter_vanilla.js' %}"></script>
-  <script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
-  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-  <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
-  <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
-  <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
-
-  <!-- Template Main JS File -->
-  <script src="{% static 'assets/js/main.js' %}"></script>
-<!-- <script type="text/javascript" src="https://www.monetbil.com/widget/v2/monetbil.min.js"></script> -->
-<script>
-    $(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-})
-$( ".select2" ).select2({
-    placeholder: "Select a subject",
-    allowClear: true,
-    containerCssClass: ':all:',
-  // theme: "classic"
-});
-$( ".town" ).select2({
-    placeholder: "Select town",
-    allowClear: true,
-    containerCssClass: ':all:',
-  // theme: "classic"
-});
-$( ".quater" ).select2({
-    placeholder: "Select Quater",
-    allowClear: true,
-    containerCssClass: ':all:',
-  // theme: "classic"
-});
-
-$(document).ready(function() {
+    <script>
+        $(document).ready(function() {
             $(".likebtn").click(function (event) {
                 event.preventDefault()
                 var ansid = $(this).attr('id');
@@ -370,26 +346,44 @@ $(document).ready(function() {
                 });
             });
         });
+    </script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-        function deleteFunction(e) {
-            if (!confirm("Are you sure you want to delete?")) {
-                e.preventDefault();
-            } else {
-                $('#subject-delete').submit();
-            }
-        }
-
-        function deleteProfileFunction(e) {
-            if (!confirm("Are you sure you want to delete?")) {
-                e.preventDefault();
-            } else {
-                $('#delete-profile').submit();
-            }
-        }
+<!-- notification -->
 
 
+<!--  -->
+<script>
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+$( ".select2" ).select2({
+    placeholder: "Select a subject",
+    allowClear: true,
+    containerCssClass: ':all:',
+  // theme: "classic"
+});
+$( ".town" ).select2({
+    placeholder: "Select town",
+    allowClear: true,
+    containerCssClass: ':all:',
+  // theme: "classic"
+});
+$( ".quater" ).select2({
+    placeholder: "Select Quater",
+    allowClear: true,
+    containerCssClass: ':all:',
+  // theme: "classic"
+});
 </script>
-
+<!-- <script type="text/javascript" src="https://cdn.weglot.com/weglot.min.js"></script> -->
+<script>
+    Weglot.initialize({
+        api_key: 'wg_88fbc822cd20082772de32d3eca0aa5b5'
+    });
+</script>
+<script src="{% static 'assets/js/main.js' %}"></script>
+<!-- <script type="text/javascript" src="https://www.monetbil.com/widget/v2/monetbil.min.js"></script> -->
 </body>
 
 </html>
