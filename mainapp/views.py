@@ -1227,3 +1227,4 @@ class NotificationDetail(TemplateView):
 
 class LandingView(TemplateView):
     template_name = 'main/landing.html'
+

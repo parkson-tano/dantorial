@@ -313,3 +313,16 @@ class ConfirmScheduleForm(forms.ModelForm):
 	class Meta:
 		model = OnlineLesson
 		fields = ('is_confirm',)
+
+class NewsLetterForm(forms.ModelForm):
+	class Meta:
+		model = NewsLetter
+		fields = ('email',)
+		# widgets = {
+		# 	'email': forms.EmailInput(
+		# 		attrs = {
+		# 		'name': 'newsletter',
+		# 		'class': 'form-control shadow-none',
+		# 		}),
+    
+		# }

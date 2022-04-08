@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load mathfilters %}
-{% load static %} {% block title %} tantorial {%endblock title %} 
+{% load static %} {% block title %} tantorial {%endblock title %}
+
 
 {% block carousel %}
 
@@ -11,39 +12,38 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-4 col-sm-12 mt-md-5">
-                <h1 class="fs-sm-3 fs-md-2 mb-5 fw-bold">
-                    <p class="typewrite mb-auto  fw-bold text-center mt-auto mt-md-5 bg-dark" data-period="2000"
-                        data-type='[ "Welcome to Tantorial", "Find your Perfect Tutor", "Get Connected to Students"]'
-                        style="
+            <h1 class="fs-sm-3 fs-md-2 mb-sm-0 mb-lg-5 fw-bold">
+                <p class="typewrite mb-auto  fw-bold text-center mt-auto mt-md-5 bg-dark" data-period="2000"
+                    data-type='[ "Welcome to Tantorial", "Find your Perfect Tutor", "Get Connected to Students"]' style="
                                 background: -webkit-linear-gradient(#003, #3a3);
                                 -webkit-background-clip: text;
                                 -webkit-text-fill-color: transparent;">
-                        <span class="wrap"></span>
-                    </p>
-                </h1>
-                <p class="fs-2 fw-bold mt-0 text-center text-black" style="font-size: 72px;">
-                    Let someone close by help you!!!!
+                    <span class="wrap"></span>
                 </p>
-                <div class="row justify-content-sm-center mb-5">
-                    <div class="col col-sm-12 col-md-12">
-                        <form action="{% url 'dantorial:allsearch' %}">
-                            <div class="input-group mt-auto">
-                                <input class="form-control form-control-lg form-control-borderless" type="text"
-                                    placeholder="What do you want  to learn" aria-label="Enter search term..."
-                                    aria-describedby="button-search" name='keywords' style="border-radius:40px;">
-                                <button class="btn btn-primary" id="button-search" type="submit"
-                                    style="border-radius:40px;">
-                                    <i class='fa fa-search'></i>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+            </h1>
+            <p class="fs-2 fw-bold mt-0 text-center text-black" style="font-size: 72px;">
+                Let someone close by help you!!!!
+            </p>
+            <div class="row justify-content-sm-center mb-lg-0">
+                <div class="col col-sm-12 col-md-12">
+                    <form action="{% url 'dantorial:allsearch' %}">
+                        <div class="input-group mt-auto">
+                            <input class="form-control form-control-lg form-control-borderless" type="text"
+                                placeholder="What do you want  to learn" aria-label="Enter search term..."
+                                aria-describedby="button-search" name='keywords' style="border-radius:40px;">
+                            <button class="btn btn-primary" id="button-search" type="submit"
+                                style="border-radius:40px;">
+                                <i class='fa fa-search'></i>
+                            </button>
+                        </div>
+                    </form>
                 </div>
+            </div>
 
-            
+
         </div>
         <div class="col-md-8 col-sm-12">
-            <img class="bd-placeholder-img" src="static/bg.jpg" alt="" style="
+            <img class="bd-placeholder-img" src="{% static 'bg.png' %}" alt="" style="
             max-height: 100vh;
             max-width: 100%;
             height:100vh;
@@ -52,147 +52,165 @@
             " />
         </div>
     </div>
-    </div>
-{% endblock carousel %} {% block content %}
+</div>
+{% endblock carousel %} 
+{% block content %}
 <div class="container-fluid">
-  <form action="{% url 'dantorial:search' %}" class="mx-auto text-dark bg-dark rounded-5 mt-auto">
-    <div class="row align-items-md-stretch mx-0 p-3">
-        <div class="col-sm-3 col-lg-2 col-12">
-            <div class="input-group mb-3">
-                <select name='typ' class="form-select" id="inputGroupSelect02">
-                    <option disabled>Who are you looking for?</option>
-                    <option value="tutor" selected>Teacher</option>
-                    <option value="student">Student</option>
-                </select>
+    <form action="{% url 'dantorial:search' %}" class="mx-auto text-dark bg-dark rounded-5 mt-auto">
+        <div class="row align-items-md-stretch mx-0 p-3">
+            <div class="col-sm-3 col-lg-2 col-12">
+                <div class="input-group mb-3">
+                    <select name='typ' class="form-select" id="inputGroupSelect02">
+                        <option disabled>Who are you looking for?</option>
+                        <option value="tutor" selected>Teacher</option>
+                        <option value="student">Student</option>
+                    </select>
+                </div>
             </div>
-        </div>
-        <div class="col-sm-5 col-lg-2" >
-            <div class="input-group mb-3">
-                <select name='category' class="form-select select-picker" id="inputGroupSelect02" data-live-search="true" data-placeholder="Select an option" data-allow-clear="true">
-                    {% for cat in all_cat %}
-                    <option value="{{cat.id}}">{{ cat.name }}</option>
-                    {% endfor %}
-                </select>
+            <div class="col-sm-5 col-lg-2">
+                <div class="input-group mb-3">
+                    <select name='category' class="form-select select-picker" id="inputGroupSelect02"
+                        data-live-search="true" data-placeholder="Select an option" data-allow-clear="true">
+                        {% for cat in all_cat %}
+                        <option value="{{cat.id}}">{{ cat.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
             </div>
-        </div>
-        <div class="col-sm-4 col-xs-12 col-lg-3 padding-minimum">
-            
-            <select name="subject" id="select2-multiple-input" class="select2 form-control select2-container input-lg step2-select">
+            <div class="col-sm-4 col-xs-12 col-lg-3 padding-minimum">
+
+                <select name="subject" id="select2-multiple-input"
+                    class="select2 form-control select2-container input-lg step2-select">
                     {% for sub in all_sub %}
 
                     <option value="{{sub.id}}">{{ sub.name }}</option>
                     {% endfor %}
-                </select>    
-            
-                
-            
-        </div>
-        <div class="col-sm-3 col-lg-2 ">
-            <div class="input-group mb-3">
-                <select name='region' class="form-select select-picker" id="inputGroupSelect02" data-live-search="true">
-                    <option disabled>Select Region</option>
-                    {% for reg in region %}
-                    <option value="{{reg.id}}">{{ reg.name }}</option>
-                    {% endfor %}
                 </select>
-            </div>
-        </div>
-        <div class="col-sm-5 col-lg-2">
-            <div class="input-group mb-sm-3">
-                <select name='town' class="town form-control select2-container input-lg step2-select">
-                    {% for town in towns %}
-                    <option value="{{town.id}}">{{ town.name }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-        </div>
 
-        <div class="col-sm-3 col-lg-1 d-md-block gap-5">
-            <button class="btn btn-primary" type="submit">Search</button>
+
+
+            </div>
+            <div class="col-sm-3 col-lg-2 ">
+                <div class="input-group mb-3">
+                    <select name='region' class="form-select select-picker" id="inputGroupSelect02"
+                        data-live-search="true">
+                        <option disabled>Select Region</option>
+                        {% for reg in region %}
+                        <option value="{{reg.id}}">{{ reg.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-5 col-lg-2">
+                <div class="input-group mb-sm-3">
+                    <select name='town' class="town form-control select2-container input-lg step2-select">
+                        {% for town in towns %}
+                        <option value="{{town.id}}">{{ town.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-sm-3 col-lg-1 d-md-block gap-5">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="col-lg-12 mt-3">
+    <div class="row">
+        <!-- ======= Features Section ======= -->
+        <section id="features" class="features">
+            <div class="container-fluid">
+
+                <div class="section-title" data-aos="fade-up">
+                    <h2>Catergories</h2>
+                    <p>Available Learning Categories</p>
+                </div>
+
+                <div class="row" data-aos="fade-left">
+                    {% for cat in all_cat %}
+                    <div class="col-lg-3 col-md-4 mt-2">
+                        <div class="icon-box" data-aos="zoom-in" data-aos-delay="50">
+                            <i class="ri-store-line" style="color: #ffbb2c;"></i>
+                            <h3><a href="{% url 'dantorial:category' cat.slug %}">{{ cat }}</a></h3>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+
+            </div>
+            <div class="d-grid gap-2 col-sm-6 col-lg-3 mx-auto mt-3">
+                <a href="{% url 'dantorial:allcategory' %}" class="btn btn-primary">See All Profiles</a>
+            </div>
+        </section><!-- End Features Section -->
+    </div>
+
+
+    <div class="row mb-4 mt-3">
+        <div class="d-lg-flex flex-md-equal w-100 my-md-3 ps-md-3 mb-3">
+            <div
+                class="col-lg-6 col-md-12 col-sm-12 bg-success me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden mb-3">
+                <div class="my-3 py-3">
+                    <h2 class="display-5 text-center">Do you want to teach</h2>
+                    <!-- <p class="lead mb-auto fw-dark fs-3">Study profile and get in touch with the best for your children</p> -->
+                </div>
+                <div class="bg-dark shadow-sm" style="width: 100%; height: auto; border-radius: 21px 21px 0 0;">
+                    <ul class="list-group mb-auto">
+
+                        <li class="list-group-item border-bottom-0 text-center fw-dark fs-5">
+                            <i class='fa fa-check'></i>Create your profile
+                        </li>
+                        <li class="list-group-item border-bottom-0 text-center fw-dark fs-5">
+                            <i class='fa fa-check'></i>Add subjects and prices
+                        </li>
+                        <li class="list-group-item border-bottom-0 text-center fw-dark fs-5">
+                            <i class='fa fa-check'></i>
+                            Let Learners find you
+                        </li>
+                        <li class="list-group-item border-bottom-0 text-center fw-dark fs-5">
+                            <i class='fa fa-check'></i>Start now
+                        </li>
+                    </ul>
+                    <a href="{% url 'account_signup' %}" class='btn btn-primary mt-3 mb-3'
+                        style="border-radius:20px; width:80%">Register Now</a>
+                </div>
+
+            </div>
+            <div
+                class="col-lg-6 col-md-12 col-sm-12 bg-primary me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden mb-3">
+                <div class="my-3 py-3">
+                    <h2 class="display-5 text-center">Do you want to learn</h2>
+                    <!-- <p class="lead mb-auto fw-dark fs-3">Find students in need of your help around you</p> -->
+                </div>
+                <div class="bg-light shadow-sm mx-auto"
+                    style="width: 100%; height: auto; border-radius: 21px 21px 0 0;">
+                    <ul class="list-group mb-auto">
+                        <li class="list-group-item border-bottom-0 text-center fw-dark fs-5">
+                            <i class='fa fa-check'></i>
+                            Search for tutors
+                        </li>
+                        <li class="list-group-item border-bottom-0 text-center fw-dark fs-5">
+                            <i class='fa fa-check'></i>
+                            Create learning Profile
+                        </li>
+                        <li class="list-group-item border-bottom-0 text-center fw-dark fs-5">
+                            <i class='fa fa-check'></i>Meet tutor and start learning
+                        </li>
+                        <li class="list-group-item border-bottom-0 text-center fw-dark fs-5">
+                            <i class='fa fa-check'></i>Start now
+                        </li>
+                    </ul>
+                    <a href="{% url 'account_signup' %}" class='btn btn-primary mt-3 mb-3'
+                        style="border-radius:20px; width:80%">Register Now</a>
+                </div>
+
+            </div>
+
         </div>
     </div>
-</form>  
-</div>
-
-<div class="container-fluid">
-        <div class="col-lg-12 mt-3">
-            <h3 class="text-center mb-3 fw-dark fs-3 font-weight-bold" >Browse By Category</h3>
-            <div class="row">
-                {% for cat in all_cat_ind %}
-                <div class="col-sm-6 col-lg-3 mt-2">
-                    <div class="card" style="width: 100%; border: 0px solid red">
-                        <img src="{{cat.image.url}}" class="card-img-top" alt="find {{cat.name}} tutors in cameroon" / style="height: 200px;">
-                        <div class="card-body" >
-                            <a href="{% url 'dantorial:category' cat.slug %}" class="card-link">
-                                <h3 class="card-title text-center mb-3 fw-dark fs-3"> {{cat.name}} </h3>
-                            </a>
-
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-            <div class="d-grid gap-2 col-sm-6 col-lg-3 mx-auto mt-2">
-                <a href="{% url 'dantorial:allcategory' %}" class="btn btn-primary">See All Category</a>
-            </div>
-            <div class="row mb-4 mt-3">
-                <div class="d-lg-flex flex-md-equal w-100 my-md-3 ps-md-3 mb-3">
-                    <div class="col-lg-6 col-md-12 col-sm-12 bg-success me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden mb-3">
-                        <div class="my-3 py-3">
-                            <h2 class="display-5 text-center">Do you want to teach</h2>
-                            <!-- <p class="lead mb-auto fw-dark fs-3">Study profile and get in touch with the best for your children</p> -->
-                        </div>
-                        <div class="bg-dark shadow-sm" style="width: 100%; height: auto; border-radius: 21px 21px 0 0;">
-                            <ul class="list-group mb-auto">
-                                
-                                <li class="list-group-item border-bottom-0 text-center fw-dark fs-5">
-                                    <i class='fa fa-check'></i>Create your profile
-                                </li>
-                                <li class="list-group-item border-bottom-0 text-center fw-dark fs-5">
-                                    <i class='fa fa-check'></i>Add subjects and prices
-                                </li>
-                                <li class="list-group-item border-bottom-0 text-center fw-dark fs-5">
-                                    <i class='fa fa-check'></i>
-                                    Let Learners find you
-                                </li>
-                                <li class="list-group-item border-bottom-0 text-center fw-dark fs-5">
-                                    <i class='fa fa-check'></i>Start now
-                                </li>
-                              </ul>
-                            <a href="{% url 'account_signup' %}" class='btn btn-primary mt-3 mb-3' style="border-radius:20px; width:80%">Register Now</a> 
-                        </div>
-                        
-                    </div>
-                    <div class="col-lg-6 col-md-12 col-sm-12 bg-primary me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden mb-3">
-                        <div class="my-3 py-3">
-                            <h2 class="display-5 text-center">Do you want to learn</h2>
-                            <!-- <p class="lead mb-auto fw-dark fs-3">Find students in need of your help around you</p> -->
-                        </div>
-                        <div class="bg-light shadow-sm mx-auto" style="width: 100%; height: auto; border-radius: 21px 21px 0 0;">
-                            <ul class="list-group mb-auto">
-                                <li class="list-group-item border-bottom-0 text-center fw-dark fs-5">
-                                    <i class='fa fa-check'></i>
-                                    Search for tutors
-                                </li>
-                                <li class="list-group-item border-bottom-0 text-center fw-dark fs-5">
-                                    <i class='fa fa-check'></i>
-                                    Create learning Profile
-                                </li>
-                                <li class="list-group-item border-bottom-0 text-center fw-dark fs-5">
-                                    <i class='fa fa-check'></i>Meet tutor and start learning
-                                </li>
-                                <li class="list-group-item border-bottom-0 text-center fw-dark fs-5">
-                                    <i class='fa fa-check'></i>Start now
-                                </li>
-                              </ul>
-                            <a href="{% url 'account_signup' %}" class='btn btn-primary mt-3 mb-3' style="border-radius:20px; width:80%">Register Now</a>  
-                        </div>
-                    
-                    </div>
-                    
-                </div>
-            </div>
-            <div class="mb-5">
+    <!-- <div class="mb-5">
                 <h3 class="text-center mb-3 fw-dark fs-3 font-weight-bold">Browse By Subcategory</h3>
                 <div class="row">
                     {% for subcat in all_subcat_ind %}
@@ -212,70 +230,128 @@
                         </div>
                     </div>
                     {% endfor %}
-                </div>
-                <div class="d-grid gap-2 col-sm-6 col-lg-4 mx-auto mt-2">
-                    <a href="{% url 'dantorial:allsubcategory' %}" class="btn btn-primary">See All SubCategory</a>
-                </div>
-            </div>
-        <section class="bg-light mb-5">
-            <div class="container-fluid px-5">
-                <div class="row gx-5 align-items-center justify-content-center justify-content-lg-between">
-                    <div class="col-12 col-lg-5">
-                        <h2 class="display-5 lh-5 mb-3">Get connected</h2>
-                        <p class="lead fw-normal text-dark mb-4 mb-lg-0">
-                            Search Tantorial to find the best Tutor closest to you
-                        </p>
-                    </div>
-                    <div class="col-sm-12 col-md-6">
-                        <div class="px-sm-0"><img class="img-fluid rounded-circle"
-                                src="{% static 'sideimage.jpeg' %}" alt="..." /></div>
-                    </div>
-                </div>
-            </div>
-        </section>
+                </div> -->
+    <section id="features" class="features">
+        <div class="container-fluid">
 
-            <div class="mb-3">
-                <h3 class="text-center font-weight-bold">Browse By Subject</h3>
-                <div class="row">
-                    {% for sub in all_sub_ind %}
-                    <div class="col-sm-6 col-lg-3 mt-2">
-                        <div class="card" style="width: 100%; border: 0px solid red">
-                            <img src="{{ sub.image.url }}" class="card-img-top rounded" alt="find {{sub.name}} tutors in cameroon" style="height: 200px;"/>
-                            <div class="card-body">
-                                <a href="{% url 'dantorial:subject' sub.subcategory.category.slug sub.subcategory.id sub.slug %}" class="card-link">
-                                    <h3 class="card-title text-center mb-3 fw-dark fs-4"> {{sub.name}} </h3>
-                                </a>
-
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-                <div class="d-grid gap-2 col-sm-6 col-lg-4 mx-auto mt-2">
-                    <a href="{% url 'dantorial:allsubject' %}" class="btn btn-primary">See All Subject</a>
-                </div>
+            <div class="section-title" data-aos="fade-up">
+                <h2>SUbcatergories</h2>
+                <p>Available SubCategories</p>
             </div>
-            <div class="row align-items-md-stretch mb-auto">
-                <h5 class="text-center mb-3 fw-dark fs-3 font-weight-bold">How to use Tantorial</h5>
-                {% for caro in how %}
-                <div class="col-lg-3 col-md-3 col-sm-6 me-0 ml-0 mb-2 p-2">
-                    <div class="card y-0 mr-auto ml-auto me-0 border-0" style="width: 100%">
-                        <img src="{{caro.image.url}}" class="card-img-top rounded-circle mr-auto ml-auto" alt="..." style="width: 150px; height:150px; " />
-                        <div class="card-body">
-                            <p class="card-text text-center fw-bold fs-5">{{caro.how_text}}</p>
-                        </div>
-                        <div class="card-text">
-                            <p class="card-text text-center fw-dark text-mute">{{caro.how_description}}</p>
-                        </div>
+
+            <div class="row" data-aos="fade-left">
+                {% for subcat in all_subcat %}
+                <div class="col-lg-3 col-md-4 mt-2">
+                    <div class="icon-box" data-aos="zoom-in" data-aos-delay="50">
+                        <i class="ri-store-line" style="color: #ffbb2c;"></i>
+                        <h3><a href="{% url 'dantorial:subcategory' subcat.category.slug subcat.id %}">{{ subcat }}</a>
+                        </h3>
+
                     </div>
+                    <p class='text-mute text-center fw-light'>
+                        {{subcat.category.name}}
+                    </p>
                 </div>
                 {% endfor %}
+
+            </div>
+
+        </div>
+        <div class="d-grid gap-2 col-sm-6 col-lg-4 mx-auto mt-3">
+            <a href="{% url 'dantorial:allsubcategory' %}" class="btn btn-primary">See All Profile</a>
+        </div>
+    </section>
+
+    <section class="bg-light mb-5">
+        <div class="container-fluid px-5">
+            <div class="row gx-5 align-items-center justify-content-center justify-content-lg-between">
+                <div class="col-12 col-lg-5">
+                    <h2 class="display-5 lh-5 mb-3">Get connected</h2>
+                    <p class="lead fw-normal text-dark mb-4 mb-lg-0">
+                        Search Tantorial to find the best Tutor closest to you
+                    </p>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="px-sm-0"><img class="img-fluid rounded-circle" src="{% static 'sideimage.jpeg' %}"
+                            alt="..." /></div>
+                </div>
             </div>
         </div>
+    </section>
+
+    <!-- <div class="mb-3">
+        <h3 class="text-center font-weight-bold">Browse By Subject</h3>
+        <div class="row">
+            {% for sub in all_sub_ind %}
+            <div class="col-sm-6 col-lg-3 mt-2">
+                <div class="card" style="width: 100%; border: 0px solid red">
+                    <img src="{{ sub.image.url }}" class="card-img-top rounded"
+                        alt="find {{sub.name}} tutors in cameroon" style="height: 200px;" />
+                    <div class="card-body">
+                        <a href="{% url 'dantorial:subject' sub.subcategory.category.slug sub.subcategory.id sub.slug %}"
+                            class="card-link">
+                            <h3 class="card-title text-center mb-3 fw-dark fs-4"> {{sub.name}} </h3>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="d-grid gap-2 col-sm-6 col-lg-4 mx-auto mt-2">
+            <a href="{% url 'dantorial:allsubject' %}" class="btn btn-primary">See All Subject</a>
+        </div>
+    </div> -->
+    <section id="features" class="features">
+        <div class="container-fluid">
+
+            <div class="section-title" data-aos="fade-up">
+                <h2>SUbjects</h2>
+                <p class="display-sm-1">Available Subjects</p>
+            </div>
+
+            <div class="row" data-aos="fade-left">
+                {% for sub in all_sub %}
+                <div class="col-lg-3 col-md-4 mt-2">
+                    <div class="icon-box" data-aos="zoom-in" data-aos-delay="50">
+                        <i class="ri-store-line" style="color: #ffbb2c;"></i>
+                        <h3><a href="{% url 'dantorial:subject' sub.subcategory.category.slug sub.subcategory.id sub.slug %}">{{ sub }}</a>
+                        </h3>
+
+                    </div>
+                    <p class='text-mute text-center fw-light'>
+                </div>
+                {% endfor %}
+
+            </div>
+
+        </div>
+        <div class="d-grid gap-2 col-sm-6 col-lg-4 mx-auto mt-3">
+            <a href="{% url 'dantorial:allsubject' %}" class="btn btn-primary">See All Profile</a>
+        </div>
+    </section>
+    <div class="row align-items-md-stretch mb-auto">
+        <h5 class="text-center mb-3 fw-dark fs-3 font-weight-bold">How to use Tantorial</h5>
+        {% for caro in how %}
+        <div class="col-lg-3 col-md-3 col-sm-6 me-0 ml-0 mb-2 p-2">
+            <div class="card y-0 mr-auto ml-auto me-0 border-0" style="width: 100%">
+                <img src="{{caro.image.url}}" class="card-img-top rounded-circle mr-auto ml-auto" alt="..."
+                    style="width: 150px; height:150px; " />
+                <div class="card-body">
+                    <p class="card-text text-center fw-bold fs-5">{{caro.how_text}}</p>
+                </div>
+                <div class="card-text">
+                    <p class="card-text text-center fw-dark text-mute">{{caro.how_description}}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
+</div>
+</div>
 
 <script>
-    var TxtType = function(el, toRotate, period) {
+    var TxtType = function (el, toRotate, period) {
         this.toRotate = toRotate;
         this.el = el;
         this.loopNum = 0;
@@ -285,17 +361,17 @@
         this.isDeleting = false;
     };
 
-    TxtType.prototype.tick = function() {
+    TxtType.prototype.tick = function () {
         var i = this.loopNum % this.toRotate.length;
         var fullTxt = this.toRotate[i];
 
         if (this.isDeleting) {
-        this.txt = fullTxt.substring(0, this.txt.length - 1);
+            this.txt = fullTxt.substring(0, this.txt.length - 1);
         } else {
-        this.txt = fullTxt.substring(0, this.txt.length + 1);
+            this.txt = fullTxt.substring(0, this.txt.length + 1);
         }
 
-        this.el.innerHTML = '<span class="wrap">'+this.txt+'</span>';
+        this.el.innerHTML = '<span class="wrap">' + this.txt + '</span>';
 
         var that = this;
         var delta = 200 - Math.random() * 100;
@@ -303,26 +379,26 @@
         if (this.isDeleting) { delta /= 2; }
 
         if (!this.isDeleting && this.txt === fullTxt) {
-        delta = this.period;
-        this.isDeleting = true;
+            delta = this.period;
+            this.isDeleting = true;
         } else if (this.isDeleting && this.txt === '') {
-        this.isDeleting = false;
-        this.loopNum++;
-        delta = 500;
+            this.isDeleting = false;
+            this.loopNum++;
+            delta = 500;
         }
 
-        setTimeout(function() {
-        that.tick();
+        setTimeout(function () {
+            that.tick();
         }, delta);
     };
 
-    window.onload = function() {
+    window.onload = function () {
         var elements = document.getElementsByClassName('typewrite');
-        for (var i=0; i<elements.length; i++) {
+        for (var i = 0; i < elements.length; i++) {
             var toRotate = elements[i].getAttribute('data-type');
             var period = elements[i].getAttribute('data-period');
             if (toRotate) {
-              new TxtType(elements[i], JSON.parse(toRotate), period);
+                new TxtType(elements[i], JSON.parse(toRotate), period);
             }
         }
         // INJECT CSS

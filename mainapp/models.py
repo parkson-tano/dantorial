@@ -458,3 +458,8 @@ class LessonPayment(models.Model):
 def create_profile(sender,instance,created,**kwargs):
     if created:
         LessonPayment.objects.create(lesson=instance)
+
+
+class NewsLetter(models.Model):
+    email = models.EmailField()
+    date_created = models.DateTimeField(auto_now_add=True)
