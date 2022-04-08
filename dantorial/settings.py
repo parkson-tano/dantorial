@@ -79,7 +79,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'django_browser_reload',
     'cookie_consent',
-    'agora',
+    # 'agora',
     # 'notifications',
     # 'multiselectfield',
 
@@ -90,14 +90,14 @@ MIDDLEWARE = [
     "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.middleware.locale.LocaleMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    # 'django.middleware.cache.UpdateCacheMiddleware',
+    'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     "django_browser_reload.middleware.BrowserReloadMiddleware",
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'django.middleware.cache.FetchFromCacheMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
     "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
@@ -144,6 +144,18 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
+
+
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
+#         'LOCATION': [
+#             '172.19.26.240:11211',
+#             '172.19.26.242:11212',
+#             '172.19.26.244:11213',
+#         ]
+#     }
+# }
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -355,21 +367,6 @@ SOCIALACCOUNT_PROVIDERS = {
 SOCIAL_AUTH_FACEBOOK_KEY = 873796066573023
 SOCIAL_AUTH_FACEBOOK_SECRET = 'f0e01f2dc96c9699429d9ca1592c05a1'
 
-
-# Twilio Required settings, if you're not planning on using Twilio
-# these can be set to empty strings
-NOTIFICATION_SYSTEM_TARGETS={
-  # Twilio Required settings, if you're not planning on using Twilio these can be set
-  # to empty strings
-  "twilio_sms": {
-      'account_sid': '',
-      'auth_token': '',
-      'sender': '' # This is the phone number associated with the Twilio account
-  },
-  "email": {
-      'from_email': '' # Sending email address
-  }
-}
 
 GOOGLE_APPLICATION_CREDENTIALS = os.path.join(BASE_DIR, 'dantorial-bdef7-9833c8c7d45c.json')
 
