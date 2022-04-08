@@ -99,6 +99,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.cache.FetchFromCacheMiddleware',
     "debug_toolbar.middleware.DebugToolbarMiddleware",
+    "django.core.cache.backends.memcached.PyMemcacheCache",
 ]
 
 ROOT_URLCONF = 'dantorial.urls'
