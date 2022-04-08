@@ -23,6 +23,8 @@ import debug_toolbar
 # import notifications.urls
 from django.conf.urls import url
 
+from agora.views import Agora
+
 handler404 = 'mainapp.views.error404'
 handler403 = 'mainapp.views.error403'
 handler400 = 'mainapp.views.error400'
@@ -40,6 +42,9 @@ urlpatterns = [
     path('__debug__', include(debug_toolbar.urls)),
     path("__reload__/", include("django_browser_reload.urls")),
     path('cookies/', include('cookie_consent.urls')),
+    path('agora/',Agora.as_view(
+    app_id='4fb86dc603104fa5b15c80ead4b27d44',
+    channel='tantorial')),
     # url('^inbox/notifications/', include(notifications.urls, namespace='notifications'), name='notification'),
 
 
