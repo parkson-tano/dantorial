@@ -22,7 +22,7 @@
                 </p>
             </h1>
             <p class="fs-2 fw-bold mt-0 text-center text-black" style="font-size: 72px;">
-                Let someone close by help you!!!!
+                Find the Best Tutor Closest to You.
             </p>
             <div class="row justify-content-sm-center mb-lg-0">
                 <div class="col col-sm-12 col-md-12">
@@ -129,8 +129,10 @@
                 </div>
 
                 <div class="row" data-aos="fade-left">
+                  
                     {% for cat in all_cat %}
-                    <div class="col-lg-3 col-md-4 mt-2">
+                    
+                    <div class="col-lg-3 col-md-4 mt-2">  
                         <div class="icon-box" data-aos="zoom-in" data-aos-delay="50">
                             <i class="ri-store-line" style="color: #ffbb2c;"></i>
                             <h3><a href="{% url 'dantorial:category' cat.slug %}">{{ cat }}</a></h3>
@@ -279,6 +281,8 @@
         </div>
     </section>
 
+    
+
     <!-- <div class="mb-3">
         <h3 class="text-center font-weight-bold">Browse By Subject</h3>
         <div class="row">
@@ -330,6 +334,38 @@
             <a href="{% url 'dantorial:allsubject' %}" class="btn btn-primary">See All Profile</a>
         </div>
     </section>
+
+    <section id="features" class="features">
+        <div class="container-fluid">
+
+            <div class="section-title" data-aos="fade-up">
+                <h2>Region</h2>
+                <p class="display-sm-1">Available Regions</p>
+            </div>
+
+            <div class="row" data-aos="fade-left">
+                {% for reg in region %}
+                <div class="col-lg-3 col-md-4 mt-2">
+                    <div class="icon-box" data-aos="zoom-in" data-aos-delay="50">
+                        <i class="ri-store-line" style="color: #ffbb2c;"></i>
+                        <h3><a href="{% url 'dantorial:region' reg.id %}">{{ reg }}</a>
+                        </h3>
+
+                    </div>
+                    <p class='text-mute text-center fw-light'>
+                </div>
+                {% endfor %}
+
+            </div>
+
+        </div>
+        <div class="d-grid gap-2 col-sm-6 col-lg-4 mx-auto mt-3">
+            <a href="{% url 'dantorial:allsubject' %}" class="btn btn-primary">See All Profile</a>
+        </div>
+    </section>
+
+
+    
     <div class="row align-items-md-stretch mb-auto">
         <h5 class="text-center mb-3 fw-dark fs-3 font-weight-bold">How to use Tantorial</h5>
         {% for caro in how %}

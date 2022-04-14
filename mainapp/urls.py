@@ -70,6 +70,7 @@ urlpatterns = [
     path('allcategory', AllCategoryView.as_view(), name='allcategory'),
     path('allsubcategory', AllSubCategoryView.as_view(), name='allsubcategory'),
     path('allsubject', AllSubjectView.as_view(), name='allsubject'),
+    path('region/<int:pk>', FilterRegionView.as_view(), name='region'),
 
 # contact us
 

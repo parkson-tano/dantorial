@@ -66,9 +66,11 @@ class IndexView(TemplateView):
         context = super().get_context_data(**kwargs)
         country = Country.objects.all()
         pro = ProfilePersonal.objects.all()
+        pro_info = ProfileInfo.objects.all()
         category = Category.objects.all()
         context['category'] = category
         context['pro'] = pro
+        context['pro_info'] = pro_info
         # a = _("hello how are you")
         # print(a)
         return context
@@ -1228,3 +1230,16 @@ class NotificationDetail(TemplateView):
 class LandingView(TemplateView):
     template_name = 'main/landing.html'
 
+class FilterRegionView(TemplateView):
+    template_name = 'main/region.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        kw = kwargs['pk']
+        prof = ProfilePersonal.objects.filter(region=kw)
+        regi = Region.objects.get(id=kw)
+        # print(f'region: {regi}')
+        context["regi"] = regi
+        context["prof"] = prof
+        return context
+    

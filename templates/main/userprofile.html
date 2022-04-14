@@ -231,8 +231,16 @@
 													<p class="d-flex fw-dark">Category: {{subject.category}}</p>
 													<p class="d-flex fw-dark">Subcategory: {{subject.subcategory}}</p>
 													<p class="d-flex fw-dark">Subject: {{subject.subject}}</p>
-													<p class="d-flex fw-dark">Charge: Per {{subject.charge}}</p>
-													<p class="d-flex fw-dark">Amount: {{subject.amount}} FCFA</p>
+													<p class="d-flex fw-dark">Charge: {% if subject.charge != none %}
+														 Per {{subject.charge}}
+														 {% else %}
+														 *****
+														 {% endif %} </p>
+													<p class="d-flex fw-dark">Amount: {% if subject.amount != none %}
+														 {{subject.amount}} FCFA
+														 {% else %}
+														 *****
+														 {% endif %}</p>
 												</ul>
 											</div>
 										</div>
