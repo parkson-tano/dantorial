@@ -73,6 +73,7 @@ INSTALLED_APPS = [
     "django_notification_system",
     'api',
     'rest_framework',
+    "corsheaders",
     # "translation_manager",
     'django.contrib.humanize',
     'mathfilters',
@@ -86,6 +87,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
     'django.middleware.security.SecurityMiddleware',
     "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.middleware.locale.LocaleMiddleware',
@@ -378,5 +381,11 @@ SOCIAL_AUTH_FACEBOOK_SECRET = 'f0e01f2dc96c9699429d9ca1592c05a1'
 
 
 GOOGLE_APPLICATION_CREDENTIALS = os.path.join(BASE_DIR, 'dantorial-bdef7-9833c8c7d45c.json')
+
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8080",
+    "http://127.0.0.1:8000",
+]
 
 # django_heroku.settings(locals())
