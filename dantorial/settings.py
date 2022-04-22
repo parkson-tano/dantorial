@@ -383,9 +383,9 @@ SOCIAL_AUTH_FACEBOOK_SECRET = 'f0e01f2dc96c9699429d9ca1592c05a1'
 GOOGLE_APPLICATION_CREDENTIALS = os.path.join(BASE_DIR, 'dantorial-bdef7-9833c8c7d45c.json')
 
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8080",
-    "http://127.0.0.1:8000",
-]
-
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:8080",
+#     "http://127.0.0.1:8000",
+# ]
+CORS_ALLOW_ALL_ORIGINS = True
 # django_heroku.settings(locals())
