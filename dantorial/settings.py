@@ -34,7 +34,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 INTERNAL_IPS = [
-    '127.0.0.1',
+    '127.0.0.0',
 ]
 
 
@@ -73,7 +73,6 @@ INSTALLED_APPS = [
     "django_notification_system",
     'api',
     'rest_framework',
-    "corsheaders",
     # "translation_manager",
     'django.contrib.humanize',
     'mathfilters',
@@ -87,33 +86,22 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware",
-    "django.middleware.common.CommonMiddleware",
     'django.middleware.security.SecurityMiddleware',
     "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.middleware.locale.LocaleMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    # "django.core.cache.backends.filebased.FileBasedCache",
-    # 'django.middleware.cache.UpdateCacheMiddleware',
+    'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     "django_browser_reload.middleware.BrowserReloadMiddleware",
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'django.middleware.cache.FetchFromCacheMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
     "debug_toolbar.middleware.DebugToolbarMiddleware",
-    # "django.core.cache.backends.memcached.PyMemcacheCache",
 ]
 
 ROOT_URLCONF = 'dantorial.urls'
-
-# CACHES = {
-#     'default': {
-#         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-#         'LOCATION': '/var/tmp/django_cache'
-#     }
-# }
 
 # CACHE_MIDDLEWARE_ALIAS = 'default'  # which cache alias to use
 # CACHE_MIDDLEWARE_SECONDS = '600'    # number of seconds to cache a page for (TTL)
@@ -322,7 +310,7 @@ ACCOUNT_EMAIL_VERIFICATION = 'optional'
 
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = LOGIN_REDIRECT_URL
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = LOGIN_REDIRECT_URL
-ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 7
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
 
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 ACCOUNT_LOGIN_ON_PASSWORD_RESET = True
@@ -333,24 +321,14 @@ ACCOUNT_ADAPTER = "dantorial.adapter.MyAccountAdapter"
 # LOGIN_URL = "/"
 # LOGIN_REDIRECT_URL = "/users/{id}/mytags"
 
-DEFAULT_FROM_EMAIL = 'info@tantorial.com'
-
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_USE_TLS = True
-# EMAIL_HOST='smtp.gmail.com'
-# EMAIL_HOST_USER='tanocoder237@gmail.com'
-# EMAIL_HOST_PASSWORD='danielTano123@'
-# EMAIL_PORT = 587 
+DEFAULT_FROM_EMAIL = 'tanoparksonsilencer@gmail.com'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
-# EMAIL_USE_SSl = 0
-EMAIL_HOST='mail.privateemail.com'
-EMAIL_HOST_USER='info@tantorial.com'
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_HOST_USER='tanocoder237@gmail.com'
 EMAIL_HOST_PASSWORD='danielTano123@'
-EMAIL_PORT = 587
-
-# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_PORT = 587 
 
 SOCIALACCOUNT_PROVIDERS = {
         'google': 
@@ -392,10 +370,4 @@ SOCIAL_AUTH_FACEBOOK_SECRET = 'f0e01f2dc96c9699429d9ca1592c05a1'
 
 GOOGLE_APPLICATION_CREDENTIALS = os.path.join(BASE_DIR, 'dantorial-bdef7-9833c8c7d45c.json')
 
-
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:8080",
-#     "http://127.0.0.1:8000",
-# ]
-CORS_ALLOW_ALL_ORIGINS = True
 # django_heroku.settings(locals())
