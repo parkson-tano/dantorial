@@ -110,11 +110,12 @@ class UserProfileView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        comments_connected = Review.objects.filter(profile=self.get_object()).order_by('-date_created')
-        user_rating = Review.objects.filter(profile=self.get_object()).aggregate(Avg('rating'))
-        similar = ProfilePersonal.objects.filter(Q(user__profileinfo__subject=self.get_object().user.profileinfo.subject)
-         | Q(user__profileinfo__subcategory=self.get_object().user.profileinfo.subcategory) | Q(user__profileinfo__category=self.get_object().user.profileinfo.category))
-        pro = ProfilePersonal.objects.filter(paid = True)
+        comments_connected = Review.objects.select_related().filter(profile=self.get_object()).order_by('-date_created')
+        user_rating = Review.objects.select_related().filter(profile=self.get_object()).aggregate(Avg('rating'))
+        similar = ProfilePersonal.objects.select_related().filter(Q(user__profileinfo__subject=self.get_object().user.profileinfo.subject)
+        | Q(user__profileinfo__subcategory=self.get_object().user.profileinfo.subcategory) 
+        | Q(user__profileinfo__category=self.get_object().user.profileinfo.category))
+        pro = ProfilePersonal.objects.select_related().filter(paid = True)
         # liked = ProfilePersonal.objects.filter(user=self.request.user)
         # print(f'likes {liked.user}')
         context["comments"] = comments_connected
@@ -132,10 +133,10 @@ class UserProfileView(DetailView):
         if self.request.user.is_authenticated:
             # current = ProfilePersonal.objects.get(user=self.request.user)
             if (self.request.user != self.get_object().user):
-                subject = 'Profile viewed'
-                message = f'{self.request.user.profilepersonal.first_name} viewed your profile'
-                from_email = settings.EMAIL_HOST_USER
-                to_email = (self.get_object().user.email,)
+                # subject = 'Profile viewed'
+                # message = f'{self.request.user.profilepersonal.first_name} viewed your profile'
+                # from_email = settings.EMAIL_HOST_USER
+                # to_email = (self.get_object().user.email,)
                 new_view = ProfileViewed.objects.create(user=self.get_object().user, viewed_by =self.request.user )
                 prof.view_count += 1
                 # current.favourite.add(self.get_object().user)
@@ -143,6 +144,8 @@ class UserProfileView(DetailView):
                 prof.save()
 
                 # send_mail(subject, message, from_email, to_email, fail_silently=True)
+                if send_mail:
+                    print('email sent')
             else:
                 pass
         # new_view.save()
@@ -198,7 +201,6 @@ class UserProfileView(DetailView):
         #     new_schedule.save()
 
         elif 'send_message' in request.POST:
-
             new_message.save()
             # new_chat.save()
             subject = 'Message from Tantorial User'
@@ -355,7 +357,7 @@ class ProfileQualificationView(TemplateView):
         account = self.request.user
         context["account"] = account
 
-        qualification = Qualification.objects.filter(user = account).order_by('-id')
+        qualification = Qualification.objects.select_related().filter(user = account).order_by('-id')
         context['qualification'] = qualification
         return context
 
@@ -1031,7 +1033,7 @@ class FavouriteView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         profile = self.request.user
-        profile_info = ProfilePersonal.objects.get(user=profile)
+        profile_info = ProfilePersonal.objects.select_related('user').get(user=profile)
         context["favourite"] = profile_info
         return context
 

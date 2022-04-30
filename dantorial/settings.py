@@ -322,7 +322,7 @@ ACCOUNT_EMAIL_VERIFICATION = 'optional'
 
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = LOGIN_REDIRECT_URL
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = LOGIN_REDIRECT_URL
-ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 7
 
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 ACCOUNT_LOGIN_ON_PASSWORD_RESET = True
@@ -333,14 +333,24 @@ ACCOUNT_ADAPTER = "dantorial.adapter.MyAccountAdapter"
 # LOGIN_URL = "/"
 # LOGIN_REDIRECT_URL = "/users/{id}/mytags"
 
-DEFAULT_FROM_EMAIL = 'tanoparksonsilencer@gmail.com'
+DEFAULT_FROM_EMAIL = 'info@tantorial.com'
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_USE_TLS = True
+# EMAIL_HOST='smtp.gmail.com'
+# EMAIL_HOST_USER='tanocoder237@gmail.com'
+# EMAIL_HOST_PASSWORD='danielTano123@'
+# EMAIL_PORT = 587 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
-EMAIL_HOST='smtp.gmail.com'
-EMAIL_HOST_USER='tanocoder237@gmail.com'
+# EMAIL_USE_SSl = 0
+EMAIL_HOST='mail.privateemail.com'
+EMAIL_HOST_USER='info@tantorial.com'
 EMAIL_HOST_PASSWORD='danielTano123@'
-EMAIL_PORT = 587 
+EMAIL_PORT = 587
+
+# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 SOCIALACCOUNT_PROVIDERS = {
         'google': 
