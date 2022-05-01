@@ -16,12 +16,12 @@ def category_list(request):
     else:
         suggested = ProfilePersonal.objects.filter(account_type="tutor")
     return {
-        # 'all_cat_ind': random.sample(list(Category.objects.all()), 4),
-        # 'all_subcat_ind': random.sample(list(SubCategory.objects.all()), 4),
-        # 'all_sub_ind': random.sample(list(Subject.objects.all()), 4),
+        'all_cat_ind': random.sample(list(Category.objects.all()), 4),
+        'all_subcat_ind': random.sample(list(SubCategory.objects.all()), 4),
+        'all_sub_ind': random.sample(list(Subject.objects.all()), 4),
         'all_cat': Category.objects.all().order_by('name'),
-        'all_subcat': SubCategory.objects.select_related('category').all().order_by('name'),
-        'all_sub': Subject.objects.select_related('subcategory').all().order_by('subcategory'),
+        'all_subcat': SubCategory.objects.all().order_by('name'),
+        'all_sub': Subject.objects.all().order_by('subcategory'),
         'review' : Review.objects.all(),
         'tutors': random.sample(list(ProfilePersonal.objects.all()),4),
         # 'suggest_tutor': random.sample(list(ProfilePersonal.objects.filter(account_type='tutor')),25),
