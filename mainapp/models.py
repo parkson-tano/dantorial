@@ -183,6 +183,8 @@ class ProfilePersonal(models.Model):
             img.thumbnail(output_size)
             img.save(self.profile_pic.path)
 
+    def get_absolute_url(self):
+        return "/p/%i/" % self.id
 
 
 @receiver(post_save,sender=User)
@@ -352,6 +354,9 @@ class About(models.Model):
     goal = RichTextField()
 
     bg = models.ImageField(upload_to='bg_img', null=True, blank=True)
+
+    def get_absolute_url(self):
+        return reverse("dantorial:aboutus", kwargs={"slug": 'about-us'})
 
 class OurTeam(models.Model):
     name = models.CharField(max_length=256)

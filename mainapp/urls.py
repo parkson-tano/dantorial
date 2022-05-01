@@ -3,7 +3,17 @@ from mainapp.views import *
 from category.views import *
 import random
 from django.views.decorators.cache import cache_page
+from django.contrib.sitemaps.views import sitemap
+from .sitemap import *
 app_name = 'dantorial'
+
+sitemaps = {
+    'category': CategorySitemap,
+    # 'subcategory': SubCategorySitemap,
+    'subject': SubjectSitemap,
+    'static':StaticSitemap
+}
+
 urlpatterns = [
 
     path('', IndexView.as_view(), name='index'),
@@ -95,5 +105,7 @@ urlpatterns = [
     path('request/', OnlineLessonNotification.as_view(), name='notification'),
     path('request/<int:pk>', NotificationDetail.as_view(), name='notification_detail'),
     path('request_history/', OnlineLessonRequest.as_view(), name='request_history'),
+
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap')
 ]
 
