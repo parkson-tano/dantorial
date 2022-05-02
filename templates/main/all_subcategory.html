@@ -1,7 +1,11 @@
 {% extends "base.html" %}
 {% load humanize %}
 {% load mathfilters %}
-{% load crispy_forms_tags %} {% block title %} subcategory {% endblock title %} {% block content %}
+{% load crispy_forms_tags %} 
+{% block metadescription %}
+<meta name="description" content="Find the best qualified local tutor in Cameroon.">
+{% endblock metadescription %}
+{% block title %} subcategory- Find the best local tutor around Cameroon {% endblock title %} {% block content %}
 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas" data-bs-keyboard="false" data-bs-backdrop="false">
   <div class="offcanvas-header">
     <h6 class="offcanvas-title d-sm-block mr-auto ml-auto" id="offcanvas">
@@ -74,20 +78,18 @@
           </div>
           <!-- end image -->
           <!-- description -->
-          <div class="col-sm-7 col-md-8">
+         <div class="col-sm-7 col-md-8">
             <div class="card-body p-0">
-              {{p.review_set.all}}
-              <h5 class="card-title">{{ p.first_name }} {{ p.last_name|default:'' }}
+              <h5 class="card-title">{{ p.first_name }} {{ p.last_name|default:'' }} 
                 {% if p.account_type is not None %}
-                  <span class='text-muted'>
-                    ({{p.account_type|capfirst}})
+                  <span class='text-muted fw-bold fs-6'>
+                    {{p.account_type|capfirst|default:''}}
                   </span>
                 {% endif %}
-                
                 <span>
-                                {% if p.paid %}
-                                    <i class='fas fa-star' style="color:blue;" data-toggle="tooltip" data-placement="top" title="Premium"></i>
-                                {% endif %}
+                {% if p.paid %}
+                  <i class='fas fa-star' style="color:blue;" data-toggle="tooltip" data-placement="top" title="Premium Account"></i>
+                {% endif %}
                             </span>
               </h5>
               <p class="card-text">
@@ -98,17 +100,17 @@
             <ul class="list-group list-group-flush">
               <li class="list-group-item p-0 mt-2">
                 <p class="font-weight-italic">
-                  {{p.region}} {{p.town}}
+                  {{p.region}} || {{p.town}}
                 </p>
               </li>
               <li class="list-group-item p-0">
                 {% if p.user.profileinfo.subject %}
                   <p class="font-weight-dark">
                     <em>
-                    {{p.user.profileinfo.subject|default:""}}
+                    {{p.user.profileinfo.subject|default:""}},
                     {{p.user.profileinfo.amount|floatformat:0|intcomma}}FCFA per {{p.user.profileinfo.charge}}
                     </em><br>
-                    <em>{{p.user.profileinfo.subcategory}}</em>
+                    <em>{{p.user.profileinfo.subcategory}} || </em>
                     {{p.user.profileinfo.category}}
                     
                                         

@@ -335,7 +335,7 @@ ACCOUNT_ADAPTER = "dantorial.adapter.MyAccountAdapter"
 # LOGIN_URL = "/"
 # LOGIN_REDIRECT_URL = "/users/{id}/mytags"
 
-DEFAULT_FROM_EMAIL = 'info@tantorial.com'
+# DEFAULT_FROM_EMAIL = 'info@tantorial.com'
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_USE_TLS = True
@@ -345,14 +345,14 @@ DEFAULT_FROM_EMAIL = 'info@tantorial.com'
 # EMAIL_PORT = 587 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_USE_TLS = True
-# EMAIL_USE_SSl = 0
+# EMAIL_USE_TLS = True
+EMAIL_USE_SSl = True
 EMAIL_HOST='mail.privateemail.com'
 EMAIL_HOST_USER='info@tantorial.com'
 EMAIL_HOST_PASSWORD='danielTano123@'
-EMAIL_PORT = 587
+EMAIL_PORT = 465
 
-# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 SOCIALACCOUNT_PROVIDERS = {
         'google': 

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load humanize %}
-{% load crispy_forms_tags %} {% block title %} userprofile {% endblock title %} {% block content %}
+{% load crispy_forms_tags %} {% block title %} {{userprofile.first_name}} {{userprofile.last_name}}- Tantorial Profile {% endblock title %} {% block content %}
 
 <div class="container">
 	<div class="main-body">
@@ -130,7 +130,7 @@
 			<!-- end col 1s -->
 
 			<div class="col-md-8 mt-auto">
-				<div class="card mb-3" style="border: 0px solid red">
+				<div class="card mb-0" style="border: 0px solid red">
 					<div class="card-body">
 						<div class="row">
 							<div class="col-sm-4">

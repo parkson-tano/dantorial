@@ -71,17 +71,17 @@
           <!-- description -->
           <div class="col-sm-7 col-md-8">
             <div class="card-body p-0">
-              {{p.review_set.all}}
-              <h5 class="card-title">{{ p.first_name }} {{ p.last_name|default:'' }}
+              <h5 class="card-title">{{ p.first_name }} {{ p.last_name|default:'' }} 
                 {% if p.account_type is not None %}
-                  <span class='text-muted'>
-                    ({{p.account_type|capfirst}})
+                  <span class='text-muted fw-bold fs-6'>
+                    {{p.account_type|capfirst|default:''}}
                   </span>
                 {% endif %}
                 <span>
-                                {% if p.paid %}
-                                    <i class='fas fa-star' style="color:blue;" data-toggle="tooltip" data-placement="top" title="Premium"></i>
-                                {% endif %}
+                {% if p.paid %}
+                  <i class='fas fa-star' style="color:blue;" data-toggle="tooltip" data-placement="top" title="Premium Account"></i>
+                {% endif %}
+                            </span>
               </h5>
               <p class="card-text">
                 {{p.user.profileinfo.bio|default:''|slice:'100'}}...
@@ -91,17 +91,17 @@
             <ul class="list-group list-group-flush">
               <li class="list-group-item p-0 mt-2">
                 <p class="font-weight-italic">
-                  {{p.region}} {{p.town}}
+                  {{p.region}} || {{p.town}}
                 </p>
               </li>
               <li class="list-group-item p-0">
                 {% if p.user.profileinfo.subject %}
                   <p class="font-weight-dark">
                     <em>
-                    {{p.user.profileinfo.subject|default:""}}
+                    {{p.user.profileinfo.subject|default:""}},
                     {{p.user.profileinfo.amount|floatformat:0|intcomma}}FCFA per {{p.user.profileinfo.charge}}
                     </em><br>
-                    <em>{{p.user.profileinfo.subcategory}}</em>
+                    <em>{{p.user.profileinfo.subcategory}} || </em>
                     {{p.user.profileinfo.category}}
                     
                                         
@@ -109,11 +109,10 @@
                 {% endif %}
               </li>
             </ul>
-           <div class="card-footer bg-white">
+            <div class="card-footer bg-white">
               <a class="btn btn-danger card-link d-grid mb-2" href="{% url 'dantorial:userprofile' p.id %}">View Profile →</a>
             </div>
-          </div> 
-
+          </div>
           <!-- end description -->
         </div>
       {% endif %}
