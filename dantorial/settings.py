@@ -350,7 +350,7 @@ EMAIL_USE_SSL = True
 EMAIL_HOST='server96.web-hosting.com'
 
 # server96.web-hosting.com
-EMAIL_HOST_USER='admin@tantorial.com'
+EMAIL_HOST_USER='hello@tantorial.com'
 EMAIL_HOST_PASSWORD='d@n!3lT@n0123@'
 EMAIL_PORT = 465
 
