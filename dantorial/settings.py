@@ -346,10 +346,12 @@ ACCOUNT_ADAPTER = "dantorial.adapter.MyAccountAdapter"
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_USE_TLS = True
-EMAIL_USE_SSl = True
-EMAIL_HOST='mail.privateemail.com'
-EMAIL_HOST_USER='info@tantorial.com'
-EMAIL_HOST_PASSWORD='danielTano123@'
+EMAIL_USE_SSL = True
+EMAIL_HOST='server96.web-hosting.com'
+
+# server96.web-hosting.com
+EMAIL_HOST_USER='admin@tantorial.com'
+EMAIL_HOST_PASSWORD='d@n!3lT@n0123@'
 EMAIL_PORT = 465
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

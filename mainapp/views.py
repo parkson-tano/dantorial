@@ -133,17 +133,17 @@ class UserProfileView(DetailView):
         if self.request.user.is_authenticated:
             # current = ProfilePersonal.objects.get(user=self.request.user)
             if (self.request.user != self.get_object().user):
-                # subject = 'Profile viewed'
-                # message = f'{self.request.user.profilepersonal.first_name} viewed your profile'
-                # from_email = settings.EMAIL_HOST_USER
-                # to_email = (self.get_object().user.email,)
+                subject = 'Profile viewed'
+                message = f'{self.request.user.profilepersonal.first_name} viewed your profile'
+                from_email = settings.EMAIL_HOST_USER
+                to_email = (self.get_object().user.email,)
                 new_view = ProfileViewed.objects.create(user=self.get_object().user, viewed_by =self.request.user )
                 prof.view_count += 1
                 # current.favourite.add(self.get_object().user)
                 # current.save()
                 prof.save()
 
-                # send_mail(subject, message, from_email, to_email, fail_silently=True)
+                send_mail(subject, message, from_email, to_email, fail_silently=True)
                 if send_mail:
                     print('email sent')
             else:
@@ -205,16 +205,23 @@ class UserProfileView(DetailView):
             # new_chat.save()
             subject = 'Message from Tantorial User'
             message = f'{self.request.user.profilepersonal.first_name} sent you a messages'
-            from_email = settings.DEFAULT_FROM_EMAIL,
+            from_email = settings.EMAIL_HOST_USER
             to_email = (self.get_object().user.email,)
 
             send_mail(subject, message, from_email, to_email, fail_silently=True)
+            print(f'email sent: {to_email}')
             messages.success(self.request, 'message successfully sent')
         elif 'send_message' in request.GET:
             
             new_message.save()
             # new_chat.save()
-            send_mail('Message from tantorial user', f'{self.request.user.profilepersonal.first_name} sent you a messages', settings.DEFAULT_FROM_EMAIL, (self.get_object().user.email,))
+            subject = 'Message from Tantorial User'
+            message = f'{self.request.user.profilepersonal.first_name} sent you a messages'
+            from_email = settings.EMAIL_HOST_USER
+            to_email = (self.get_object().user.email,)
+
+            send_mail(subject, message, from_email, to_email, fail_silently=True)
+            print(f'email sent: {to_email}')
             # mess
         return self.get(self, request, *args, **kwargs)
         

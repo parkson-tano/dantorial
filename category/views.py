@@ -99,7 +99,7 @@ class AllCategoryView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         category = Category.objects.all()
-        pro = ProfilePersonal.objects.all()
+        pro = ProfilePersonal.objects.select_related("user").all()
         if self.request.user.is_authenticated:
             fav = ProfilePersonal.objects.get(id=self.request.user.profilepersonal.id)
             context['fav'] = fav
@@ -115,8 +115,8 @@ class AllSubCategoryView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        subcategory = SubCategory.objects.all()
-        pro = ProfilePersonal.objects.all()
+        subcategory = SubCategory.objects.select_related("category").all()
+        pro = ProfilePersonal.objects.select_related("user").all()
         if self.request.user.is_authenticated:
             fav = ProfilePersonal.objects.get(id=self.request.user.profilepersonal.id)
             context['fav'] = fav
@@ -130,7 +130,7 @@ class AllSubjectView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         subject = Subject.objects.all()
-        pro = ProfilePersonal.objects.all()
+        pro = ProfilePersonal.objects.select_related("user").all()
         if self.request.user.is_authenticated:
             fav = ProfilePersonal.objects.get(id=self.request.user.profilepersonal.id)
             context['fav'] = fav
