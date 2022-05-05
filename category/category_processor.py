@@ -10,9 +10,8 @@ def category_list(request):
     print(tutor)
     if request.user.is_authenticated:
         if request.user.profilepersonal in tutor:
-            suggested = random.sample(list(ProfilePersonal.objects.filter(account_type="student"  )), 10)
-            print(suggested)
-            print('sdfghfghm')
+            suggested = random.sample(list(ProfilePersonal.objects.filter(account_type="student")), 2)
+
     else:
         suggested = random.sample(list(ProfilePersonal.objects.filter(account_type="tutor")), 10)
     return {
