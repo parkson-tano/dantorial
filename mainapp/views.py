@@ -219,7 +219,7 @@ class UserProfileView(DetailView):
             from_email = settings.EMAIL_HOST_USER
             to_email = (self.get_object().user.email,)
 
-            send_mail(subject, message, from_email, to_email, fail_silently=True, html_message=html_message)
+            send_mail(subject, message, from_email, to_email, fail_silently=False, html_message=html_message)
             print(f'email sent: {to_email}')
             messages.success(self.request, 'message successfully sent')
         elif 'send_message' in request.GET:
@@ -1010,14 +1010,14 @@ def profile_like(request):
             profile_obj.save()
             
             flag = False
-            notify.send(actor=profile_obj.user, recipient=userprofile.user, verb='unliked your profile', )
+            # notify.send(actor=profile_obj.user, recipient=userprofile.user, verb='unliked your profile', )
             # print(profile_obj.favourite.filter(user=u.id).exists())
         else:
             profile_obj.favourite.add(userprofile.user)
             profile_obj.save()
             
             flag = True
-            notify.send(actor=profile_obj.user, recipient=userprofile.user, verb='liked your profile', )
+            # notify.send(actor=profile_obj.user, recipient=userprofile.user, verb='liked your profile', )
             subject = "Notification from Tantorial"
             message = f'{profile_obj.first_name} liked Your Profile'
             from_email = settings.DEFAULT_FROM_EMAIL
