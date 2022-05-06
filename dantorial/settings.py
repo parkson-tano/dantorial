@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 # import django_heroku
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -57,14 +57,13 @@ INSTALLED_APPS = [
     'location',
     # 'cities_light',
     'crispy_forms',
-    'crispy_tailwind',
+    # 'crispy_tailwind',
     'dani',
     'smart_selects',
     'ckeditor',
     'flatpickr',
     'bootstrap4',
     'bootstrap_datepicker_plus',
-    "django_notification_system",
     'api',
     'rest_framework',
     "corsheaders",
@@ -204,6 +203,8 @@ REST_FRAMEWORK = {
 
 MESSAGES_TO_LOAD = 15
 
+# In settings.py
+
 
 # CHANNEL_LAYERS = {
 #     'default': {
@@ -267,7 +268,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 
 MEDIA_URL = '/media/'

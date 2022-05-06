@@ -41,7 +41,7 @@ from campay.sdk import Client
 from django.http import JsonResponse
 from django.db.models import Avg
 from django.utils.translation import gettext as _
-from  payUnit import payUnit
+
 import random
 import os
 from django.core.cache import cache
