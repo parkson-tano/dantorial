@@ -8,12 +8,15 @@ ALLOWED_HOSTS = ['tantorial.com', 'www.tantorial.com']
 
 DATABASES = {
     'default': {
-        'ENGINE': os.getenv('ENGINE'),
-        'NAME': os.getenv('NAME'),
-        'USER': os.getenv('USER'),
-        'PASSWORD': os.getenv('PASSWORD'),
-        'HOST': os.getenv('HOST'),
-        'PORT': os.getenv('PORT'),
+        'ENGINE': "django.db.backends.mysql",
+        'NAME': "tantwexs_tantorial",
+        'USER': "tantwexs_tantorialadmin",
+        'PASSWORD':  os.getenv('PASSWORD'),
+        'HOST':  "localhost",
+        'PORT': 3306,
+        'OPTIONS': {
+            'sql_mode': 'traditional',
+        }
     }
 }
 
