@@ -1,0 +1,699 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% load crispy_forms_tags %} {% block title %} {{userprofile.first_name}} {{userprofile.last_name}}- Tantorial Profile {% endblock title %} {% block content %}
+
+<div class="container">
+	<div class="main-body">
+		<div class="row gutters-sm justify-content-center">
+			<!-- col 1 -->
+			<div class="col-md-8 mb-3">
+				<div class="card" style="border: 0px solid red">
+					<div class="card-body">
+						<div class="d-flex flex-sm-column align-sm-items-center text-center">
+							<!-- row for image -->
+							<div class="row">
+								<!-- col 1-1 -->
+								<div class="col-sm-12 col-md-12 col-lg-4">
+									<a href="{{userprofile.profile_pic.url}}">
+										<img src="{{userprofile.profile_pic.url}}" alt="{{userprofile.first_name}}" class="rounded-circle"
+											width="170px" height='170px' style="border-radius: 50;">
+									</a>
+								{% if request.user.is_authenticated %}
+								    <button class="likebtn border-0 mr-5 p-0" type="button" id="{{userprofile.id}}"
+										data-url="{% url 'dantorial:favourite' %}" style="  position: absolute;
+								background: transparent;
+								top: 100;
+			 					font-size:200%;
+								">
+										{% if userprofile.user in request.user.profilepersonal.favourite.all %} 
+<a name="{{ userprofile.id }}" style="color: blue;" id ='co'><i class="fa fa-thumbs-up" aria-hidden="true"></i></a>
+        {% else %}
+        <a name="{{ userprofile.id }}" style="color: black;" id ='co'><i class="fa fa-thumbs-up" aria-hidden="true"></i></a>
+    {% endif %}
+									</button>
+								
+								{% endif %}
+									  
+									  
+								</div>
+								<!-- end col 1-1 -->
+								<!-- col 1-2 -->
+								<div class="col-sm-12 col-md-12 col-lg-8 align-content-center">
+									<h4>{{userprofile.first_name|capfirst}} {{userprofile.last_name|capfirst}}
+										<span>
+											{% if userprofile.account_type is not None%}
+											({{userprofile.account_type|capfirst}})
+											{% endif %}
+
+										</span>
+
+										<span>
+											{% if userprofile.user.verification %}
+											<i class='fas fa-check-circle' style="color:blue;" data-toggle="tooltip" data-placement="top" title="Verified"></i>
+											{% endif %}
+										</span>
+									</h4>
+									<p class="text-dark mb-1">{{userprofile.account_type|default:""}}
+										({{ comments.count }} Reviews)
+										{% if ur > '0' and ur < '5.1' %} {{ur|default:""}} {% endif %} {% if ur >= '4.9' and ur < '5.1' %}
+												<span>
+												<i class="fas fa-star" style='color: #c59b08;'></i>
+												<i class="fas fa-star" style='color: #c59b08;'></i>
+												<i class="fas fa-star" style='color: #c59b08;'></i>
+												<i class="fas fa-star" style='color: #c59b08;'></i>
+												<i class="fas fa-star" style='color: #c59b08;'></i>
+
+												</span> {% elif ur >= '4' and ur < '5' %} <span>
+													<i class="fas fa-star" style='color: #c59b08;'></i>
+													<i class="fas fa-star" style='color: #c59b08;'></i>
+													<i class="fas fa-star" style='color: #c59b08;'></i>
+													<i class="fas fa-star" style='color: #c59b08;'></i>
+													</span> {% elif ur >= '3' and ur < '4' %} <span>
+
+														<i class="fas fa-star" style='color: #c59b08;'></i>
+														<i class="fas fa-star" style='color: #c59b08;'></i>
+														<i class="fas fa-star" style='color: #c59b08;'></i>
+														</span> {% elif ur >= '2' and ur < '2' %} <span>
+
+															<i class="fas fa-star" style='color: #c59b08;'></i>
+															<i class="fas fa-star" style='color: #c59b08;'></i>
+															</span> {% elif ur >= '1' and ur < '2' %} <span>
+																<i class="fas fa-star" style='color: #c59b08;'></i>
+																</span>
+
+																{% endif %}
+									</p>
+									<p class="text-muted font-size-md mb-2">{{ userprofile.town|default:'' }} |
+										{{userprofile.address|default:''}}
+									</p>
+									<p class="fw-bold mb-2">{{userprofile.user.profileinfo.subject|default:""}}
+										<span class="fw-dark">
+											{{userprofile.user.profileinfo.amount|floatformat:0|intcomma|default:"****"}}FCFA/{{userprofile.user.profileinfo.charge|default:"month"}}
+										</span>
+
+									</p>
+									<p class="mb-2">
+										<span>
+											{% if userprofile.online_lesson %}
+						
+											
+												<a href="{% url 'dantorial:schedule' userprofile.id %}" class="btn btn-outline-success">
+													Schedule Online Lesson
+												</a>
+												
+											
+
+											{% endif %}
+										</span>
+
+									</p>
+									<button data-toggle="modal" data-target="#exampleModal" class="btn btn-outline-primary mt-2"><i
+											class="fa fa-phone" style='color:rgb(5, 59, 41)'></i> Call
+									</button>
+									{% if userprofile.show_whatsapp_number %}
+									<a href="https://wa.me/{{userprofile.country.code}}{{userprofile.whatsapp_number}}?text=Hello,%20I%20Got%20Your%20Contact%20From%20Tantorial.%20I%20am%20_______"
+										target="_blank" class="btn btn-outline-primary mt-2">
+										<i class="fa fa-whatsapp" style='color:rgb(5, 59, 41)'></i> Whatsapp
+									</a>
+									{% endif %}
+									<button href="#" class="btn btn-outline-primary mt-2" data-toggle="modal"
+										data-target="#messageModal"><i class="fa fa-envelope-o" style='color:rgb(5, 59, 41)'></i>
+										Message</button>
+									</span>
+								</div>
+								<!-- end col 1-2 -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- end col 1s -->
+
+			<div class="col-md-8 mt-auto">
+				<div class="card mb-0" style="border: 0px solid red">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-sm-4">
+								<h6 class="mb-0">Level of Education</h6>
+							</div>
+							<div class="col-sm-8 text-secondary">
+								{{userprofile.level_of_education|default:''}}
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-sm-4">
+								<h6 class="mb-0">Age</h6>
+							</div>
+							<div class="col-sm-8 text-secondary">
+								{{userprofile.date_of_birth|timesince}}
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-sm-4">
+								<h6 class="mb-0">Location</h6>
+							</div>
+							<div class="col-sm-8 text-secondary">
+								{{userprofile.region|default:''}} | {{userprofile.town|default:''}}
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-sm-4">
+								<h6 class="mb-0">Language</h6>
+							</div>
+							<div class="col-sm-8 text-secondary">
+								{{userprofile.user.profileinfo.language|default:''}}
+							</div>
+						</div>
+						<!-- <hr>
+						<div class="row">
+							<div class="col-sm-4">
+								<h6 class="mb-0">Town</h6>
+							</div>
+							<div class="col-sm-8 text-secondary">
+								{{userprofile.town}} | {{userprofile.region}}
+							</div>
+						</div> -->
+						<hr>
+						<div class="row">
+							<div class="col-sm-4">
+								<h6 class="mb-0">Address</h6>
+							</div>
+							<div class="col-sm-8 text-secondary">
+								{{userprofile.address|default:''}}
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-sm-4">
+								<h6 class="mb-0">Category</h6>
+							</div>
+							<div class="col-sm-8 text-secondary">
+								{{ userprofile.user.profileinfo.category|default:"" }}
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-sm-4">
+								<h6 class="mb-0">SubCategory</h6>
+							</div>
+							<div class="col-sm-8 text-secondary">
+								{{ userprofile.user.profileinfo.subcategory|default:"" }}
+							</div>
+						</div>
+						<hr>
+					</div>
+				</div>
+				<!-- <hr> -->
+				<div class="card mb-2" style="border: 0px solid red">
+					<div class="text-center fw-bold pt-0 pt-xl-5 pb-0 pb-xl-3 fs-4">Other Subjects</div>
+					<div class="card-body">
+						<div class="accordion" id='accordionExample'>
+							{% for subject in userprofile.user.subject_set.all %}
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="accordion-item">
+										<h2 class="accordion-header" id="headingOne">
+											<button class="accordion-button" type="button" data-bs-toggle="collapse"
+												data-bs-target="#collapseOne{{forloop.counter}}" aria-expanded="true"
+												aria-controls="collapseOne">
+												{{subject.subject}}
+											</button>
+										</h2>
+									</div>
+									<div class="col-sm-12 text-secondary">
+										<div id="collapseOne{{forloop.counter}}" class="accordion-collapse collapse"
+											aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+											<div class="accordion-body">
+												<ul class="list-group list-group-flush">
+													<p class="d-flex fw-dark">Category: {{subject.category}}</p>
+													<p class="d-flex fw-dark">Subcategory: {{subject.subcategory}}</p>
+													<p class="d-flex fw-dark">Subject: {{subject.subject}}</p>
+													<p class="d-flex fw-dark">Charge: {% if subject.charge != none %}
+														 Per {{subject.charge}}
+														 {% else %}
+														 *****
+														 {% endif %} </p>
+													<p class="d-flex fw-dark">Amount: {% if subject.amount != none %}
+														 {{subject.amount}} FCFA
+														 {% else %}
+														 *****
+														 {% endif %}</p>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<hr>
+							{% endfor %}
+						</div>
+					</div>
+					<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+						aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabel">Contact {{userprofile.title|capfirst}}
+										{{userprofile.first_name|capfirst}}</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<div class="fw-dark fs-5 text-center">
+										<h3>
+											{{userprofile.country.code}}{{userprofile.phone_number}}
+										</h3>
+
+									</div>
+									<div>
+										<div class="alert alert-danger" role="alert">
+											Important: Don't send money remotely to anyone
+										</div>
+									</div>
+
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+									<a href="tel:{{userprofile.country.code}}{{userprofile.phone_number}}" class="btn btn-success">
+										Make a Call
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- end -->
+				</div>
+				<div class="row">
+					<div class="col-md-12 mb-auto">
+						<section id="components">
+							<h2 class="text-center fw-bold pt-0 pt-xl-5 pb-0 pb-xl-3 fs-4">Professional Information</h2>
+							<article class="mb-0" id="accordion">
+								<div>
+									<div class="card-body bd-example">
+										<div class="accordion" id="accordionExample">
+											<div class="accordion-item">
+												<h4 class="accordion-header" id="headingThree">
+													<button class="accordion-button" type="button" data-bs-toggle="collapse"
+														data-bs-target="#collapseexperience" aria-expanded="true" aria-controls="collapseThree">
+														<h4 class="fw-light">
+															Professional Experience
+														</h4>
+													</button>
+												</h4>
+												<div id="collapseexperience" class="accordion-collapse collapse" aria-labelledby="headingThree"
+													data-bs-parent="#accordionExample">
+													<div class="accordion-body">
+														<div class="card-body">
+															<div class="accordion" id='accordionExample'>
+																{% for experience in userprofile.user.experience_set.all %}
+																<div class="row">
+																	<div class="col-sm-12">
+																		<div class="accordion-item">
+												<h2 class="accordion-header" id="headingOne">
+																				<button class="accordion-button" type="button" data-bs-toggle="collapse"
+																					data-bs-target="#collapseOneEx{{forloop.counter}}" aria-expanded="true"
+																					aria-controls="collapseOne">
+																					{{experience.work_post}}
+																				</button>
+													</h2>
+																		</div>
+																		<div class="col-sm-12 text-secondary">
+																			<div id="collapseOneEx{{forloop.counter}}" class="accordion-collapse collapse"
+																				aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+																				<div class="accordion-body">
+																					<ul class="list-group list-group-flush">
+																						<li class="list-group-item fw-dark">Position: {{experience.position}}</li>
+																						<li class="list-group-item fw-dark">Start: {{experience.start_date}}</li>
+																						<li class="list-group-item fw-dark">End:
+																							{{experience.end_date|default:'Still Working'}}</li>
+																						<li class="list-group-item fw-dark">Current Job: {{experience.current_job}}
+																						</li>
+																						<li class="list-group-item fw-dark">Description: <br>
+																							{{experience.description}}</li>
+																					</ul>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<hr>
+																{% endfor %}
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="accordion-item">
+												<h5 class="accordion-header" id="headingOne">
+													<button class="accordion-button" type="button" data-bs-toggle="collapse"
+														data-bs-target="#collapsequalification" aria-expanded="true" aria-controls="collapseOne">
+														<h5 class="fw-light">
+															Educational Qualification
+														</h5>
+													</button>
+												</h5>
+												<div id="collapsequalification" class="accordion-collapse collapse"
+													aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+													<div class="accordion-body">
+														<div class="card-body">
+															<div class="accordion" id='accordionExample'>
+																{% for qualification in userprofile.user.qualification_set.all %}
+																<div class="row">
+																	<div class="col-sm-12">
+																		<div class="accordion-item">
+																			<h2 class="accordion-header" id="headingOne">
+																				<button class="accordion-button" type="button" data-bs-toggle="collapse"
+																					data-bs-target="#collapseOneQu{{forloop.counter}}" aria-expanded="true"
+																					aria-controls="collapseOne">
+																					{{qualification.certificate}}
+																				</button>
+																			</h2>
+																		</div>
+																		<div class="col-sm-12 text-secondary">
+																			<div id="collapseOneQu{{forloop.counter}}" class="accordion-collapse collapse"
+																				aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+																				<div class="accordion-body">
+																					<ul class="list-group list-group-flush">
+																						<li class="list-group-item fw-dark">School: {{qualification.school}}</li>
+																						<li class="list-group-item fw-dark">Start: {{qualification.start_year}}</li>
+																						<li class="list-group-item fw-dark">End:
+																							{{qualification.end_year|default:'Still Studying'}}</li>
+																						<li class="list-group-item fw-dark">Current School:
+																							{{qualification.still_studying}}</li>
+																						<li class="list-group-item fw-dark">Certificate: <br>
+																							{{qualification.certificate}}</li>
+																					</ul>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<hr>
+																{% endfor %}
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="accordion-item">
+												<h4 class="accordion-header" id="headingOne">
+													<button class="accordion-button" type="button" data-bs-toggle="collapse"
+														data-bs-target="#collapseOne" aria-expanded="True" aria-controls="collapseOne">
+														<h4 class="fw-light">
+															About {{userprofile.first_name|default:''}} {{userprofile.last_name|default:''}}
+														</h4>
+													</button>
+												</h4>
+												<div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+													data-bs-parent="#accordionExample">
+													<div class="accordion-body">
+														<p class="fw-dark"> {{userprofile.user.profileinfo.bio|default:''|safe}}</p>
+													</div>
+												</div>
+											</div>
+											<!-- <div class="accordion-item">
+												<h4 class="accordion-header" id="headingTwo">
+													<button class="accordion-button" type="button" data-bs-toggle="collapse"
+														data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+														<h4 class="fw-light">
+															Experience
+														</h4>
+													</button>
+												</h4>
+												<div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+													data-bs-parent="#accordionExample">
+													<div class="accordion-body">
+														<strong> {{ userprofile.user.profileinfo.experience|default:''|safe }} </strong>
+													</div>
+												</div>
+											</div> -->
+										</div>
+									</div>
+								</div>
+					</div>
+					</article>
+					</section>
+				</div>
+
+<!-- availabilty -->
+
+				<div class="card mb-2 mt-3" style="border: 0px solid red">
+					<div class="text-center fw-bold pt-0 pt-xl-5 pb-0 pb-xl-3 fs-4">Availability</div>
+					<div class="card-body">
+						<div class="accordion" id='accordionExample'>
+							{% for hours in userprofile.user.availability_set.all %}
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="accordion-item">
+										<h2 class="accordion-header" id="headingOne">
+											<button class="accordion-button" type="button" data-bs-toggle="collapse"
+												data-bs-target="#collapseOne{{forloop.counter}}" aria-expanded="true"
+												aria-controls="collapseOne">
+												{{hours.day}}
+											</button>
+										</h2>
+									</div>
+									<div class="col-sm-12 text-secondary">
+										<div id="collapseOne{{forloop.counter}}" class="accordion-collapse collapse"
+											aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+											<div class="accordion-body">
+												<ul class="list-group list-group-flush">
+													<p class="d-flex fw-dark">Hours: {% for hou in hours.hour.all %}
+														{{hou}} | 
+													  
+													{% endfor %}</p>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<hr>
+							{% endfor %}
+						</div>
+					</div>
+					</div>
+
+<!-- end -->
+
+				<div class="row mt-0">
+					<div class="col-12 mb-3">
+						<fieldset>
+							<legend class="text-center fw-bold pt-0 pt-xl-5 pb-0 pb-xl-3 fs-4">Reviews about {{userprofile.user.profilepersonal.first_name}}</legend>
+							<div id="comments_section">
+								<form method="POST" class='needs-validation' novalidate id='comment' action="">
+									{% csrf_token %}
+									<div class="form-group">
+										{{ comment_form|crispy }}
+									</div>
+									<div class="rating">
+										<input type="radio" id="star5" name="rate" value="5" />
+										<label for="star5" title="text">5 stars</label>
+										<input type="radio" id="star4" name="rate" value="4" />
+										<label for="star4" title="text">4 stars</label>
+										<input type="radio" id="star3" name="rate" value="3" />
+										<label for="star3" title="text">3 stars</label>
+										<input type="radio" id="star2" name="rate" value="2" />
+										<label for="star2" title="text">2 stars</label>
+										<input type="radio" id="star1" name="rate" value="1" />
+										<label for="star1" title="text">1 star</label>
+									</div>
+									<button class="btn btn-info mt-2" type="submit" name='post_comment'>Add Review <i
+											class="fas fa-comments"></i></button>
+							</div>
+							</form>
+						</fieldset>
+						{% if comments %}
+						<strong class="text-secondary">{{ comments.count }}
+							Rating{{ comments.count|pluralize }}</strong>
+						<hr>
+						<ul class="list-group">
+							{% for comment in comments %}
+							<li class="list-group-item">
+								<div>
+									<span>
+										<strong class="text-info">
+											<a href="{% url 'dantorial:userprofile' comment.user.profilepersonal.id %}">
+												{{ comment.user.profilepersonal.first_name }}
+											</a>
+										</strong>
+										<small class="text-muted">{{ comment.date_created }}</small>
+									</span>
+									<p>
+										{{ comment.content|safe }} {% if comment.rating == '5' %}
+										<span>
+											<i class="fas fa-star" style='color: #c59b08;'></i>
+											<i class="fas fa-star" style='color: #c59b08;'></i>
+											<i class="fas fa-star" style='color: #c59b08;'></i>
+											<i class="fas fa-star" style='color: #c59b08;'></i>
+											<i class="fas fa-star" style='color: #c59b08;'></i>
+
+										</span> {% elif comment.rating == '4' %}
+										<span>
+											<i class="fas fa-star" style='color: #c59b08;'></i>
+											<i class="fas fa-star" style='color: #c59b08;'></i>
+											<i class="fas fa-star" style='color: #c59b08;'></i>
+											<i class="fas fa-star" style='color: #c59b08;'></i>
+										</span> {% elif comment.rating == '3' %}
+										<span>
+
+											<i class="fas fa-star" style='color: #c59b08;'></i>
+											<i class="fas fa-star" style='color: #c59b08;'></i>
+											<i class="fas fa-star" style='color: #c59b08;'></i>
+										</span> {% elif comment.rating == '2' %}
+										<span>
+
+											<i class="fas fa-star" style='color: #c59b08;'></i>
+											<i class="fas fa-star" style='color: #c59b08;'></i>
+										</span> {% elif comment.rating == '1' %}
+										<span>
+											<i class="fas fa-star" style='color: #c59b08;'></i>
+										</span> {% endif %}
+									</p>
+								</div>
+							</li>
+							{% endfor %}
+						</ul>
+						{% else %}
+						<strong class="text-secondary">No comments yet...</strong> {% endif %}
+					</div>
+				</div>
+			</div>
+			<div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+				aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Send a message to {{userprofile.first_name}} </h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<fieldset>
+								<form method="POST" class='needs-validation' novalidate>
+									{% csrf_token %} {% if not user.is_authenticated %}
+									<div class="form-group">
+										{{message.name|as_crispy_field}}
+									</div>
+									<div class="form-group">
+										{{message.email|as_crispy_field}}
+									</div>
+									{% endif %}
+									<!-- <div class="form-group">
+		{{message.phone_number|as_crispy_field}}
+	 </div> -->
+									<div class="form-group">
+										{{message.message|as_crispy_field}}
+									</div>
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-default" data-dismiss="modal">Cancel</button>
+							<button type="submit" class="btn btn-success" name='send_message'>Send Message</button>
+						</div>
+					</div>
+					</form>
+					</fieldset>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- similar -->
+	<div class="container text-center my-3">
+		<h2 class="font-weight-light">
+			Similar Profiles
+		</h2>
+		<div class="row mx-auto my-auto" style="border: 0px solid red">
+			<div id="recipeCarousel" class="carousel slide w-100" data-ride="carousel">
+				<div class="carousel-inner w-100" role="listbox">
+					{% for pro in similar %} {% if pro.user.profileinfo.subject is not None and pro.account_type is not None %}
+					{% if forloop.first %}
+					<div class="carousel-item active">
+						{% else %}
+						<div class="carousel-item">
+							{% endif %}
+							<div class="col-md-4">
+								<div class="card card-body" style="border: 0px solid red">
+
+									<img class="img-fluid" src="{{pro.profile_pic.url}}" style="height: 14rem;">
+									<div style="  position: absolute;
+									
+									top: 100;
+									right:  0.4rem;
+									border: none;
+													transition: all .9s;
+				-moz-transform: rotate(-310deg);
+				-webkit-transform: rotate(-310deg);
+				-o-transform: rotate(-310deg);
+				-ms-transform: rotate(-310deg);
+				transform: rotate(-310deg);">
+										<p class="fs-5 fw-bold text-primary bg-light">
+											{{pro.account_type}}
+										</p>
+
+									</div>
+									<h5 class="card-title">
+										{{pro.first_name}} {{pro.last_name}}
+									</h5>
+									<p class="card-text text-dark">
+										{{pro.user.profileinfo.subject}}
+										<br>
+										{{pro.region}}
+									</p>
+									<a href="{% url 'dantorial:userprofile' pro.id %}" class="btn btn-primary">See More</a>
+								</div>
+							</div>
+						</div>
+						{% endif %}
+						{% endfor %}
+
+					</div>
+					<a class="carousel-control-prev w-auto" href="#recipeCarousel" role="button" data-slide="prev">
+						<span class="carousel-control-prev-icon bg-dark border border-dark rounded-circle"
+							aria-hidden="true"></span>
+						<span class="sr-only">Previous</span>
+					</a>
+					<a class="carousel-control-next w-auto" href="#recipeCarousel" role="button" data-slide="next">
+						<span class="carousel-control-next-icon bg-dark border border-dark rounded-circle"
+							aria-hidden="true"></span>
+						<span class="sr-only">Next</span>
+					</a>
+				</div>
+			</div>
+		</div>
+
+
+
+		<!-- end similar -->
+		<script>
+			if (window.history.replaceState) {
+				window.history.replaceState(null, null, window.location.href);
+			}
+			$('#recipeCarousel').carousel({
+				interval: 5000
+			})
+
+			$('.carousel .carousel-item').each(function () {
+				var minPerSlide = 3;
+				var next = $(this).next();
+				if (!next.length) {
+					next = $(this).siblings(':first');
+				}
+				next.children(':first-child').clone().appendTo($(this));
+
+				for (var i = 0; i < minPerSlide; i++) {
+					next = next.next();
+					if (!next.length) {
+						next = $(this).siblings(':first');
+					}
+
+					next.children(':first-child').clone().appendTo($(this));
+				}
+			});
+		</script>
+		{% endblock content %} {% block extra_body %} {% endblock %}

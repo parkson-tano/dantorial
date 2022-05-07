@@ -1,0 +1,8 @@
+{% load account %}
+{% load i18n %}
+{% user_display user as username %}
+{% blocktrans %}
+
+Successfully signed in as {{username}}.
+
+{% endblocktrans %}

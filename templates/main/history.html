@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} request history {%endblock title %}
+	{% block content %}
+		<div class="col-md-6 col-sm-12 ml-auto mr-auto">
+			<div class="card mb-3" style="border: 0px solid red">
+				<div class="card-body ml-auto mr-auto">
+					<h5 class="card-title text-center mb-3 fw-bold fs-5">Lesson History</h5>
+					{% for notify in my_lesson %}
+						<div class="row mx-2 ml-auto mr-auto">
+							<span>
+                        	{% if notify.is_confirm %}
+                        	  You Accepted this Request
+                        	<a href="{% url 'dantorial:notification_detail' notify.id %}" class="btn btn-success btn-sm">See Details</a><br>
+   	 
+                        	<span class="direct-chat-timestamp">{{notify.date_created|timesince}}</span>
+                        	<i class="fas fa-check-circle text-success"  aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Accepted"></i>
+                        	{% elif notify.is_decline %}
+                        	You Rejected this Request
+                        	<a href="{% url 'dantorial:notification_detail' notify.id %}" class="btn btn-danger btn-sm">See Details</a><br>
+                        	{{notify.date_created|timesince}}  ago
+                        	<i class="fas fa-check-circle text-danger"  aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Rejected"></i>
+                        	{% elif notify.is_cancel %}
+                        	This Request is Cancel
+                        	<a href="{% url 'dantorial:notification_detail' notify.id %}" class="btn btn-danger btn-sm">See Details</a><br>
+                        	{{notify.date_created|timesince}}  ago
+                        	<i class="fas fa-check-circle text-danger"  aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Cancel"></i>
+                        	{% else %}
+                        	You have A pending request
+                        	<a href="{% url 'dantorial:notification_detail' notify.id %}" class="btn btn-secondary btn-sm">See Details</a>	<br>
+                        	{{notify.date_created|timesince}}  ago
+                        	    <i class="fas fa-check-circle"  aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Pending"></i>
+                        	{% endif %}
+                        	</span>
+                        	
+						</div>
+						<hr>
+					{% endfor %}
+					{% for proposal in my_proposal %}
+					<div class="row mx-2">
+							<span>
+                        	{% if proposal.is_confirm %}
+                        	  Your Request was Accepted
+                        	<a href="{% url 'dantorial:notification_detail' notify.id %}" class="btn btn-success btn-sm">See Details</a><br>
+   	 
+                        	<span class="direct-chat-timestamp">{{proposal.date_created|timesince}}</span>
+                        	<i class="fas fa-check-circle text-success"  aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Accepted"></i>
+                        	{% elif proposal.is_decline %}
+                        	Your Request was Rejected
+                        	<a href="{% url 'dantorial:notification_detail' proposal.id %}" class="btn btn-danger btn-sm">See Details</a> <br>
+                        	{{proposal.date_created|timesince}}  ago
+                        	<i class="fas fa-check-circle text-danger"  aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Rejected"></i>
+                        	{% elif proposal.is_cancel %}
+                        	You Cancel this Request
+                        	<a href="{% url 'dantorial:notification_detail' proposal.id %}" class="btn btn-warning btn-sm">See Details</a> <br>
+                        	{{proposal.date_created|timesince}}  ago
+                        	<i class="fas fa-check-circle text-danger"  aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Cancel"></i>
+                        	{% else %}
+                        	Your Request is pending
+                        	<a href="{% url 'dantorial:notification_detail' proposal.id %}" class="btn btn-secondary btn-sm">See Details</a> <br>
+                        	{{proposal.date_created|timesince}}  ago
+                        	    <i class="fas fa-check-circle"  aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Pending"></i>
+                        	{% endif %}
+                        	</span>
+                        	
+						</div>
+						<hr>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	{% endblock %}

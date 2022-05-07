@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} notification {%endblock title %}
+	{% block content %}
+		<div class="col-md-6 col-sm-12 ml-auto mr-auto">
+			<div class="card mb-3 mx-md-5 mx-sm-auto" style="border: 0px solid red">
+				<div class="card-body mx-md-4 mx-sm-0" >
+					<h5 class="card-title text-center mb-3 fw-bold fs-5">Lesson Details</h5>
+						<div class="row mx-auto">
+							{% if notification.teacher == request.user %}
+							    <p>
+							Student: <a href="{% url 'dantorial:userprofile' notification.student.profilepersonal.id %}" class="card-link">
+                        		{{notification.student.profilepersonal.first_name}} {{notification.student.profilepersonal.last_name}}
+                        	</a>	
+							</p>
+							{% else %}
+							    <p>
+							Teacher: <a href="{% url 'dantorial:userprofile' notification.teacher.profilepersonal.id %}" class="card-link">
+                        		{{notification.teacher.profilepersonal.first_name}} {{notification.teacher.profilepersonal.last_name}}
+                        	</a>	
+							</p>
+							
+							{% endif %}
+                        	<p>
+                        		Start Date: <span class="font-weight-bold text-title">{{notification.start}}</span> 
+                        	</p>
+                        	<p>
+                        	End Time: <span class="font-weight-bold text-title">{{notification.end}}</span> 		
+                        	</p>
+                        	<p>
+                        		Mode: <span class="font-weight-bold text-title">{{notification.mode}}</span> 
+                        	</p>
+                        	<p>
+                        		Date:  <span class="font-weight-bold text-title">{{notification.date_created}}</span> 
+                        	</p>
+                        <div>
+                        	{% if notification.teacher == request.user %}
+                        	    {% if notification.is_confirm %}
+                        	    <button class="btn btn-success font-weight-bold">
+                        	    	You Accepted this Lesson
+                        	    </button>
+                        	    <span>
+                        	    <form method="POST">
+                        		{% csrf_token %}
+                        	    <button class="btn btn-outline-danger" name='post_decline'>
+                        		Decline
+                        	</button>
+                        </form>	
+                        	    </span>
+                        	    
+                        	  {% elif notification.is_decline %}
+                        	    <button class="btn btn-danger font-weight-bold">
+                        	    	You Rejected this Lesson
+                        	    </button>
+
+                        	   {% elif notification.is_cancel %}
+                        	    <button class="btn btn-warning font-weight-bold">
+                        	    	This Request has been cancel
+                        	    </button>
+                        	{% else %}
+                        	    <form method="POST">
+                        		{% csrf_token %}
+                        		<button class="btn btn-outline-success" name='post_accept' >
+                        		Accept
+                        	</button>
+                        	<button class="btn btn-outline-danger" name='post_decline'>
+                        		Decline
+                        	</button>
+                        	</form>
+                        	{% endif %}
+                        	{% else %}
+                        	    {% if notification.is_confirm %}
+                        	    <button class="btn btn-success font-weight-bold">
+                        	    	Your request is Accepted
+                        	    </button>
+                        	    <span>
+                        	    <form method="POST">
+                        		{% csrf_token %}
+                        	    <button class="btn btn-outline-danger" name='post_decline'>
+                        		Decline
+                        	</button>
+                        </form>	
+                        	    </span>
+                        	    
+                        	  {% elif notification.is_decline %}
+                        	    <button class="btn btn-danger font-weight-bold">
+                        	    	You Request is Rejected
+                        	    </button>
+                        	    {% elif notification.is_cancel %}
+                        	    <button class="btn btn-warning font-weight-bold">
+                        	    	You Cancel this Request
+                        	    </button>
+                        	{% else %}
+                        	    <form method="POST">
+                        		{% csrf_token %}
+                        		<button class="btn btn-outline-warning" name='post_cancel' >
+                        		Cancel
+                        	</button>
+                        	</form>
+                        	{% endif %}
+                        	<a href="{% url 'dantorial:allcategory' %}" class="btn btn-primary mt-3">Find the best Tutor</a>
+                        	
+                        	{% endif %}
+                        	
+                        	
+                        	
+
+                        </div>
+						</div>
+						<hr>
+				</div>
+			</div>
+		</div>
+	{% endblock %}

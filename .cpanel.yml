@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/tantwexs/dantorial/
+    - /bin/cp -R images $DEPLOYPATH

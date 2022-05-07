@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} notifications {%endblock title %}
+	{% block content %}
+		<div class="col-md-6 col-sm-8 ml-auto mr-auto">
+			<div class="card mb-3" style="border: 0px solid red">
+				<div class="card-body">
+					<h5 class="card-title text-center mb-3 fw-bold fs-5">Notifications</h5>
+					{% for notify in my_lesson %}
+						<div class="row mx-2 text-center">
+							<span>
+                        	You have an Available Request
+                        	<a href="{% url 'dantorial:notification_detail' notify.id %}" class="btn btn-danger btn-sm">See Details</a>	{% if notify.is_confirm %}
+                        	    
+                        	<i class="fas fa-check-circle text-success"  aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Accepted"></i>
+                        	{% elif notify.is_decline %}
+                        	<i class="fas fa-check-circle text-danger"  aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Rejected"></i>
+                        	{% elif notify.is_cancel %}
+                        	<i class="fas fa-check-circle text-danger"  aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Cancel"></i>
+                        	{% else %}
+                        	    <i class="fas fa-check-circle"  aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Pending"></i>
+                        	{% endif %}
+                        	</span>
+                        	
+						</div>
+						<hr>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	{% endblock %}
