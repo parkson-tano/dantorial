@@ -38,17 +38,30 @@
 
             </form>
             <p class='text-center display-6'>OR</p>
-            <div class="d-grid mb-2">
-              <a href="{% provider_login_url 'google' %}" class="btn-google btn-login text-uppercase fw-bold text-center card-link">
-                <i class="fab fa-google me-2"></i> Sign in with Google
-              </a>
-            </div>
-            <div class="d-grid">
-              <a href="{% provider_login_url 'facebook' method='oauth2' %}"
+                          <form action="{% provider_login_url 'google' %}" method="post">
+  {% csrf_token %}
+  <div class="d-grid mb-2">
+  <button type="submit" class="btn-google btn-login text-uppercase fw-bold text-center card-link" >
+    <i class="fab fa-google me-2"></i> Sign in with Google
+  </button>
+  </div>
+
+</form>
+
+  
+              <!-- <a href="{% provider_login_url 'facebook' method='oauth2' %}"
                 class="btn-facebook btn-login text-uppercase text-center fw-bold card-link">
                 <i class="fab fa-facebook-f me-2"></i> Sign in with Facebook
-              </a>
+              </a> -->
+              <form action="{% provider_login_url 'facebook' method='oauth2' %}" method="post">
+  {% csrf_token %}
+            <div class="d-grid">
+  <button type="submit" class="btn-facebook btn-login text-uppercase fw-bold text-center card-link" >
+    <i class="fab fa-facebook-f e-2"></i> Sign in with Facebook
+  </button>
             </div>
+
+</form>
           </div>
         </div>
       </div>
