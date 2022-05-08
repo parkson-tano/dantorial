@@ -7194,7 +7194,7 @@
     "fields": {
       "name": "Can add profile personal",
       "content_type": 27,
-      "codename": "add_profilepersonal"
+      "codename": "add_"
     }
   },
   {
@@ -7203,7 +7203,7 @@
     "fields": {
       "name": "Can change profile personal",
       "content_type": 27,
-      "codename": "change_profilepersonal"
+      "codename": "change_"
     }
   },
   {
@@ -7212,7 +7212,7 @@
     "fields": {
       "name": "Can delete profile personal",
       "content_type": 27,
-      "codename": "delete_profilepersonal"
+      "codename": "delete_"
     }
   },
   {
@@ -7221,7 +7221,7 @@
     "fields": {
       "name": "Can view profile personal",
       "content_type": 27,
-      "codename": "view_profilepersonal"
+      "codename": "view_"
     }
   },
   {
@@ -8489,7 +8489,7 @@
     "pk": 1,
     "fields": {
       "password": "pbkdf2_sha256$260000$iuRr3wOqyGxGwpuZVxIOMg$BoV7jaeJtGzlzedeoIjV2MUtDN3iFxRYJShqoZi2AcE=",
-      "last_login": "2022-05-05T14:42:20.255Z",
+      "last_login": "2022-05-07T12:43:27.414Z",
       "is_superuser": true,
       "username": "dani",
       "first_name": "",
@@ -9085,7 +9085,7 @@
   {
     "model": "contenttypes.contenttype",
     "pk": 27,
-    "fields": { "app_label": "mainapp", "model": "profilepersonal" }
+    "fields": { "app_label": "mainapp", "model": "" }
   },
   {
     "model": "contenttypes.contenttype",
@@ -9288,6 +9288,14 @@
     "fields": {
       "session_data": ".eJxVjdEKgzAMRf-lz0Maa6vxbf5IaWPEMqnDVtgY-_fV4cMGecm5ybkvYd2eZ7sn3mwYRS9AXH6Zd3TjeARuWQ5cOaJ1j7n63pxxqq5l45gDuRzWOJxff6rZpbl4FDJPtUJQngnauqWx0aYDbBiBOl3GKGDkwqTU3rFGb2CSNAEQmUOaOKVSY_lxD9tT9FBLNFK-PzesRGE:1nAT2U:xjalcTTeLkkfXQje5lTJQfr-9Rh-C8qdy-GWOwPOD9Y",
       "expire_date": "2022-02-03T08:43:26.765Z"
+    }
+  },
+  {
+    "model": "sessions.session",
+    "pk": "3ma8yjl20wmzhiyhy5ckvndsymw9szsz",
+    "fields": {
+      "session_data": ".eJxVjEEOwiAQAP_C2RBcltJ49O4byMIuUjWQlPZk_Lsh6UGvM5N5q0D7VsLeZQ0Lq4s6q9Mvi5SeUofgB9V706nVbV2iHok-bNe3xvK6Hu3foFAvY-sMTISQUSzMnkWYALNHw1myECI5a91kyfvs52QEhDERRmBLGdXnC-mVOIU:1nnJmR:n9YfFM9mYZE9Wx4TW5ZSZOfCI7fIwZrDkW2q5roCAnU",
+      "expire_date": "2022-05-21T12:43:27.473Z"
     }
   },
   {
@@ -10850,7 +10858,7 @@
     }
   },
   {
-    "model": "mainapp.profilepersonal",
+    "model": "mainapp.",
     "pk": 1,
     "fields": {
       "user": 1,
@@ -10869,14 +10877,14 @@
       "address": null,
       "level_of_education": "Bachelor Degree(Bacc+3)",
       "date_of_birth": "2021-10-24",
-      "view_count": 125,
+      "view_count": 127,
       "paid": false,
       "profile_pic": "profile_img/django_plus_charts_js_share.png",
       "favourite": [1, 3, 4, 5]
     }
   },
   {
-    "model": "mainapp.profilepersonal",
+    "model": "mainapp.",
     "pk": 2,
     "fields": {
       "user": 2,
@@ -10902,7 +10910,7 @@
     }
   },
   {
-    "model": "mainapp.profilepersonal",
+    "model": "mainapp.",
     "pk": 3,
     "fields": {
       "user": 3,
@@ -10928,7 +10936,7 @@
     }
   },
   {
-    "model": "mainapp.profilepersonal",
+    "model": "mainapp.",
     "pk": 4,
     "fields": {
       "user": 4,
@@ -10954,7 +10962,7 @@
     }
   },
   {
-    "model": "mainapp.profilepersonal",
+    "model": "mainapp.",
     "pk": 5,
     "fields": {
       "user": 5,
@@ -10980,7 +10988,7 @@
     }
   },
   {
-    "model": "mainapp.profilepersonal",
+    "model": "mainapp.",
     "pk": 8,
     "fields": {
       "user": 8,
@@ -11006,7 +11014,7 @@
     }
   },
   {
-    "model": "mainapp.profilepersonal",
+    "model": "mainapp.",
     "pk": 9,
     "fields": {
       "user": 9,
@@ -11032,7 +11040,7 @@
     }
   },
   {
-    "model": "mainapp.profilepersonal",
+    "model": "mainapp.",
     "pk": 10,
     "fields": {
       "user": 10,
@@ -11058,7 +11066,7 @@
     }
   },
   {
-    "model": "mainapp.profilepersonal",
+    "model": "mainapp.",
     "pk": 11,
     "fields": {
       "user": 11,
@@ -11084,7 +11092,7 @@
     }
   },
   {
-    "model": "mainapp.profilepersonal",
+    "model": "mainapp.",
     "pk": 12,
     "fields": {
       "user": 12,
@@ -11110,7 +11118,7 @@
     }
   },
   {
-    "model": "mainapp.profilepersonal",
+    "model": "mainapp.",
     "pk": 13,
     "fields": {
       "user": 13,
@@ -11136,7 +11144,7 @@
     }
   },
   {
-    "model": "mainapp.profilepersonal",
+    "model": "mainapp.",
     "pk": 14,
     "fields": {
       "user": 14,
@@ -11162,7 +11170,7 @@
     }
   },
   {
-    "model": "mainapp.profilepersonal",
+    "model": "mainapp.",
     "pk": 15,
     "fields": {
       "user": 15,
@@ -11188,7 +11196,7 @@
     }
   },
   {
-    "model": "mainapp.profilepersonal",
+    "model": "mainapp.",
     "pk": 16,
     "fields": {
       "user": 16,
@@ -11214,7 +11222,7 @@
     }
   },
   {
-    "model": "mainapp.profilepersonal",
+    "model": "mainapp.",
     "pk": 17,
     "fields": {
       "user": 17,
@@ -11240,7 +11248,7 @@
     }
   },
   {
-    "model": "mainapp.profilepersonal",
+    "model": "mainapp.",
     "pk": 18,
     "fields": {
       "user": 18,
@@ -11266,7 +11274,7 @@
     }
   },
   {
-    "model": "mainapp.profilepersonal",
+    "model": "mainapp.",
     "pk": 19,
     "fields": {
       "user": 19,
@@ -11292,7 +11300,7 @@
     }
   },
   {
-    "model": "mainapp.profilepersonal",
+    "model": "mainapp.",
     "pk": 20,
     "fields": {
       "user": 20,
@@ -11318,7 +11326,7 @@
     }
   },
   {
-    "model": "mainapp.profilepersonal",
+    "model": "mainapp.",
     "pk": 21,
     "fields": {
       "user": 21,
@@ -11344,7 +11352,7 @@
     }
   },
   {
-    "model": "mainapp.profilepersonal",
+    "model": "mainapp.",
     "pk": 22,
     "fields": {
       "user": 22,
@@ -11370,7 +11378,7 @@
     }
   },
   {
-    "model": "mainapp.profilepersonal",
+    "model": "mainapp.",
     "pk": 23,
     "fields": {
       "user": 23,
@@ -11396,7 +11404,7 @@
     }
   },
   {
-    "model": "mainapp.profilepersonal",
+    "model": "mainapp.",
     "pk": 24,
     "fields": {
       "user": 24,
@@ -11422,7 +11430,7 @@
     }
   },
   {
-    "model": "mainapp.profilepersonal",
+    "model": "mainapp.",
     "pk": 25,
     "fields": {
       "user": 25,
@@ -11448,7 +11456,7 @@
     }
   },
   {
-    "model": "mainapp.profilepersonal",
+    "model": "mainapp.",
     "pk": 26,
     "fields": {
       "user": 26,
@@ -11474,7 +11482,7 @@
     }
   },
   {
-    "model": "mainapp.profilepersonal",
+    "model": "mainapp.",
     "pk": 27,
     "fields": {
       "user": 27,
@@ -11500,7 +11508,7 @@
     }
   },
   {
-    "model": "mainapp.profilepersonal",
+    "model": "mainapp.",
     "pk": 28,
     "fields": {
       "user": 28,
@@ -21131,6 +21139,24 @@
       "user": 4,
       "viewed_by": null,
       "date_created": "2022-05-06T21:42:47.106Z"
+    }
+  },
+  {
+    "model": "mainapp.profileviewed",
+    "pk": 990,
+    "fields": {
+      "user": 1,
+      "viewed_by": null,
+      "date_created": "2022-05-07T12:02:48.430Z"
+    }
+  },
+  {
+    "model": "mainapp.profileviewed",
+    "pk": 991,
+    "fields": {
+      "user": 1,
+      "viewed_by": null,
+      "date_created": "2022-05-07T12:02:51.267Z"
     }
   },
   {

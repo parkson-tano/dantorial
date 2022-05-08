@@ -11,7 +11,7 @@ from django.conf import settings
 import json
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404, resolve_url
-
+from django.contrib.auth.models import User
 class MyAccountAdapter(DefaultAccountAdapter):
 
     def get_signup_redirect_url(self, request):
@@ -25,3 +25,9 @@ class MyAccountAdapter(DefaultAccountAdapter):
             return path
         path = '/profile-edit/{user}'
         return path.format(user=request.user.profilepersonal.id)
+
+class MySocialAccountAdapter(DefaultSocialAccountAdapter):
+    def pre_social_login(self, request, sociallogin):
+        user = User.objects.filter(email=sociallogin.user.email).first()
+        if user and not sociallogin.is_existing:
+            sociallogin.connect(request, user)

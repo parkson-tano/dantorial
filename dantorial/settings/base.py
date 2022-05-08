@@ -73,6 +73,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'django_browser_reload',
     'cookie_consent',
+    'whitenoise.runserver_nostatic',
     # 'agora',
     # 'notifications',
     # 'multiselectfield',
@@ -81,6 +82,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     "django.middleware.common.CommonMiddleware",
     'django.middleware.security.SecurityMiddleware',
     "whitenoise.middleware.WhiteNoiseMiddleware",
