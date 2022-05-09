@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import handler400, handler403, handler404, handler500
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.views.defaults import page_not_found
 from django.conf import settings
 from django.conf.urls.static import static
@@ -42,6 +42,7 @@ urlpatterns = [
     path('__debug__', include(debug_toolbar.urls)),
     path("__reload__/", include("django_browser_reload.urls")),
     path('cookies/', include('cookie_consent.urls')),
+    re_path(r'^robots\.txt', include('robots.urls')),
     # path('agora/',Agora.as_view(
     # app_id='4fb86dc603104fa5b15c80ead4b27d44',
     # channel='tantorial')),

@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    "whitenoise.runserver_nostatic",
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.sitemaps',
@@ -73,6 +74,8 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'django_browser_reload',
     'cookie_consent',
+    'whitenoise.runserver_nostatic',
+    'robots',
     # 'agora',
     # 'notifications',
     # 'multiselectfield',
@@ -80,10 +83,10 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware",
-    "django.middleware.common.CommonMiddleware",
     'django.middleware.security.SecurityMiddleware',
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
     'django.middleware.locale.LocaleMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     # "django.core.cache.backends.filebased.FileBasedCache",
@@ -118,7 +121,7 @@ TEMPLATES = [
         'DIRS': [
             os.path.join(BASE_DIR, 'templates')
         ],
-        'APP_DIRS': True,
+        # 'APP_DIRS': True,
         'OPTIONS': {
             # 'loaders': [
             # (
@@ -126,6 +129,10 @@ TEMPLATES = [
             #     [BASE_DIR / 'templates']
             # ),
             # ],
+            'loaders': [
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader',
+            ],
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -172,7 +179,11 @@ AUTHENTICATION_BACKENDS = (
 #     }
 # }
 
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
+ROBOTS_USE_SITEMAP = False
+ROBOTS_USE_SCHEME_IN_HOST = True
+ROBOTS_CACHE_TIMEOUT = 60*60*24
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
