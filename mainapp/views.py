@@ -282,9 +282,9 @@ class ContactView(CreateView):
         form.instance.user = self.request.user
         messages.success(self.request, "We will get back to you shortly")
         subject = "Thanks for contacting us"
-        message = f'{form.instance.user.profilepersonal.first_name} thanks for contacting us'
+        message = f'{form.instance.first_name} thanks for contacting us'
         from_email = settings.DEFAULT_FROM_EMAIL
-        to_email = (form.instance.user.email, )
+        to_email = (form.instance.email, )
 
         send_mail(subject, message, from_email, to_email, fail_silently=True)
         form.save()
