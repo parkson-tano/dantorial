@@ -13,7 +13,8 @@ def category_list(request):
             suggested = ProfilePersonal.objects.filter(account_type="student")
 
     else:
-        suggested = random.sample(list(ProfilePersonal.objects.filter(account_type="tutor")), 10)
+        suggested = ProfilePersonal.objects.filter(account_type="student")
+        # suggested = random.sample(list(ProfilePersonal.objects.filter(account_type="tutor")), 10)
     return {
         # 'all_cat_ind': random.sample(list(Category.objects.all()), 4),
         # 'all_subcat_ind': random.sample(list(SubCategory.objects.all()), 4),
@@ -22,7 +23,8 @@ def category_list(request):
         'all_subcat': SubCategory.objects.select_related('category').all().order_by('name'),
         'all_sub': Subject.objects.select_related('subcategory').all().order_by('subcategory'),
         'review' : Review.objects.all(),
-        'tutors': random.sample(list(ProfilePersonal.objects.all()),4),
+        'tutors': tutor,
+        # 'tutors': random.sample(list(ProfilePersonal.objects.filter(account_type="tutor")),4),
         # 'suggest_tutor': random.sample(list(ProfilePersonal.objects.filter(account_type='tutor')),25),
         'suggested': suggested
 

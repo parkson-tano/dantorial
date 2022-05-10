@@ -2,6 +2,9 @@ from .base import *
 import os
 
 
+
+ALLOWED_HOSTS = ["*"]
+
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 DATABASES = {
     'default': {

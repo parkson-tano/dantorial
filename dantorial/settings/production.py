@@ -2,14 +2,15 @@ from .base import *
 import os
 from dotenv import load_dotenv
 load_dotenv()
-DEBUG = False
+
+DEBUG = True
 
 ALLOWED_HOSTS = ['tantorial.com', 'www.tantorial.com']
 
 DATABASES = {
     'default': {
         'ENGINE': "django.db.backends.mysql",
-        'NAME': "tantwexs_tantorial",
+        'NAME': "tantwexs_db",
         'USER': "tantwexs_tantorialadmin",
         'PASSWORD':  os.getenv('PASSWORD'),
         'HOST':  "localhost",
