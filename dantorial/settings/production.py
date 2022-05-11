@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['tantorial.com', 'www.tantorial.com']
 

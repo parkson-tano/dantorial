@@ -282,9 +282,9 @@ class ContactView(CreateView):
         form.instance.user = self.request.user
         messages.success(self.request, "We will get back to you shortly")
         subject = "Thanks for contacting us"
-        message = f'{form.instance.user.profilepersonal.first_name} thanks for contacting us'
+        message = f'{form.instance.first_name} thanks for contacting us'
         from_email = settings.DEFAULT_FROM_EMAIL
-        to_email = (form.instance.user.email, )
+        to_email = (form.instance.email, )
 
         send_mail(subject, message, from_email, to_email, fail_silently=True)
         form.save()
@@ -1249,6 +1249,22 @@ class NotificationDetail(TemplateView):
 
 class LandingView(TemplateView):
     template_name = 'main/landing.html'
+    def post(self, request, *args, **kwargs):
+        con = Contact(message=request.POST.get('message'),
+        first_name=request.POST.get('first_name'),
+        last_name=request.POST.get('last_name'),
+		email = request.POST.get('email'),
+        phone_number = request.POST.get('phone_number')
+        )
+        con.save()
+        messages.success(self.request, "We will get back to you shortly")
+        subject = "Thanks for contacting us"
+        message = request.POST.get('first_name') + " thanks for contacting us"
+        from_email = settings.DEFAULT_FROM_EMAIL
+        to_email = [request.POST.get('email'),]
+
+        send_mail(subject, message, from_email, to_email, fail_silently=True)
+        return redirect('dantorial:index')
 
 class FilterRegionView(TemplateView):
     template_name = 'main/region.html'

@@ -47,8 +47,8 @@
         <ul>
           <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
           <li><a class="nav-link scrollto" href="#about">About</a></li>
-          <li><a class="nav-link scrollto" href="#features">Features</a></li>
-          <li><a class="nav-link scrollto" href="#gallery">Courses</a></li>
+          <li><a class="nav-link scrollto" href="#features">Courses</a></li>
+          <li><a class="nav-link scrollto" href="#gallery">Tutors</a></li>
           <li><a class="nav-link scrollto" href="#team">Team</a></li>
           <li><a class="nav-link scrollto" href="#pricing">Pricing</a></li>
           <!-- <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
@@ -380,7 +380,7 @@
 
       </div>
     </section><!-- End Gallery Section -->
-
+{% comment %} 
     <!-- ======= Testimonials Section ======= -->
     <section id="testimonials" class="testimonials">
       <div class="container">
@@ -438,7 +438,8 @@
                   <i class="bx bxs-quote-alt-right quote-icon-right"></i>
                 </p>
               </div>
-            </div><!-- End testimonial item -->
+            </div>
+            <!-- End testimonial item -->
 
             <div class="swiper-slide">
               <div class="testimonial-item">
@@ -460,6 +461,7 @@
       </div>
     </section><!-- End Testimonials Section -->
 
+     {% endcomment %}
     <!-- ======= Team Section ======= -->
     <section id="team" class="team">
       <div class="container">
@@ -679,27 +681,32 @@
 
           <div class="col-lg-8 mt-5 mt-lg-0" data-aos="fade-left" data-aos-delay="200">
 
-            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+            <form action="" method="post" role="form" class="php-email-form">
+             {% csrf_token %}
               <div class="row">
-                <div class="col-md-6 form-group">
-                  <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
+                <div class="col-md-6 form-group mb-3">
+                  <input type="text" name="first_name" class="form-control" id="name" placeholder="Your First Name">
+                </div>
+                <div class="col-md-6 form-group mb-3">
+                  <input type="text" name="last_name" class="form-control" id="name" placeholder="Your Last Name">
                 </div>
                 <div class="col-md-6 form-group mt-3 mt-md-0">
-                  <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+                  <input type="email" class="form-control" name="email" id="email" placeholder="Your Email">
                 </div>
+                 <div class="col-md-6 form-group mt-3 mt-md-0">
+                <input type="text" class="form-control" name="phone_number" id="subject" placeholder="Your Phone Number">
               </div>
-              <div class="form-group mt-3">
-                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
               </div>
+             
               <div class="form-group mt-3">
                 <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
               </div>
-              <div class="my-3">
+              {% comment %} <div class="my-3">
                 <div class="loading">Loading</div>
                 <div class="error-message"></div>
                 <div class="sent-message">Your message has been sent. Thank you!</div>
-              </div>
-              <div class="text-center"><button type="submit">Send Message</button></div>
+              </div> {% endcomment %}
+              <div class="text-center"><button type="submit" class='btn btn-success mt-3'>Send Message</button></div>
             </form>
 
           </div>
@@ -751,11 +758,11 @@
 			  <div class="col-lg-2 col-md-6 footer-links">
 				<h4>Our Services</h4>
 				<ul>
-				  <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
-				  <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
-				  <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
-				  <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
-				  <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
+          <li><i class="bx bx-chevron-right"></i> <a href="{% url 'dantorial:index' %}">By Region</a></li>
+				  <li><i class="bx bx-chevron-right"></i> <a href="{% url 'dantorial:index' %}">By Catergory</a></li>
+				  <li><i class="bx bx-chevron-right"></i> <a href="{% url 'dantorial:index' %}">By Subcategory</a></li>
+				  <li><i class="bx bx-chevron-right"></i> <a href="{% url 'dantorial:index' %}">By Subject</a></li>
+				  <li><i class="bx bx-chevron-right"></i> <a href="{% url 'dantorial:index' %}">All</a></li>
 				</ul>
 			  </div>
 	
@@ -763,7 +770,7 @@
 				<h4>Our Newsletter</h4>
 				<p>Subscribe for our Newsletter</p>
 				<form action="" method="post">
-				  <input type="email" name="email"><input type="submit" value="Subscribe">
+				  <input type="email" name="email" class="form-control shadow-none"><input type="submit" value="Subscribe">
 				</form>
 	
 			  </div>
@@ -797,7 +804,7 @@
 
   <!-- Template Main JS File -->
   <script src="{% static 'assets/js/main.js' %}"></script>
-
+<script src="//code.tidio.co/qvym5xdmezybvrxslrqzb6twcffkmgvc.js" async></script>
 </body>
 
 </html>

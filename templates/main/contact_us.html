@@ -1,34 +1,70 @@
-{% extends "base.html" %}
-{% load crispy_forms_tags %}
-{% block title %}
-	contact us
-{% endblock title %}
-{% block content %}
-	<div class="col col-md-8 p-5 mr-auto ml-auto
-                            text-center">
-		<h5 class="card-title text-center mb-3 fw-dark fs-5">
-		Leave Us a Message
-		</h5>
-		<form class="needs-validation" method="post" action="" novalidate>
-			{% csrf_token %}
-			<div class="row align-items-center">
-				<div class='col-sm-6'>
-					{{form.first_name|as_crispy_field}}
-				</div>
-				<div class='col-sm-6'>
-					{{form.last_name|as_crispy_field}}
-				</div>
-				<div class='col-sm-6'>
-					{{form.phone_number|as_crispy_field}}
-				</div>
-				<div class='col-sm-6'>
-					{{form.email|as_crispy_field}}
-				</div>
-				<div class='col-12'>
-					{{form.message|as_crispy_field}}
-				</div>
-			</div>
-			<button type="submit" class="btn btn-primary">Submit A Message</button>
-		</form>
-	</div>
-{% endblock	%}
+{% extends "base.html" %} {% load crispy_forms_tags %} {% block title %} contact
+us {% endblock title %} {% block content %}
+<div class="col col-md-4 mr-auto ml-auto">
+  <div class="section-title">
+    <h2>Contact</h2>
+    <p>Contact Us</p>
+  </div>
+
+  <div class="section-title">
+    <h2>Email:</h2>
+    <p class="fs-5">
+      <i class="bi bi-envelope"></i>
+      <a href="mailto:contact@tantorial.com">contact@tantorial.com</a>
+    </p>
+  </div>
+  <div class="section-title">
+    <h2>Phone Number:</h2>
+    <p class="fs-5">
+      <i class="bi bi-phone"></i>
+      <a href="tel:+237693895546">237 693 895 546</a>
+    </p>
+  </div>
+  <div class="section-title">
+    <h2>Whatsapp:</h2>
+    <p class="fs-5">
+      <i class="bi bi-whatsapp"></i>
+      <a href="https://wa.me/+237693895546" target="_blank">237 693 895 546</a>
+    </p>
+  </div>
+  <div class="section-title">
+    <h2>Twitter:</h2>
+    <p class="fs-5">
+      <i class="bi bi-twitter"></i>
+      <a href="https://twitter.com/tantorial" target="_blank">@tantorial</a>
+    </p>
+  </div>
+  <div class="section-title">
+    <h2>Instagram:</h2>
+    <p class="fs-5">
+      <i class="bi bi-instagram"></i>
+      <a href="https://www.instagram.com/tantorial_official/" target="_blank"
+        >@tantorial_official</a
+      >
+    </p>
+  </div>
+</div>
+<!-- <div class="col col-md-8 p-5 mr-auto ml-auto">
+    <div class="section-title" data-aos="fade-up">
+      <h2>Leave Us A Message</h2>
+      <p>We will get back to You</p>
+    </div>
+    <form
+      class="needs-validation text-center"
+      method="post"
+      action=""
+      novalidate
+    >
+      {% csrf_token %}
+      <div class="row align-items-center">
+        <div class="col-sm-6">{{form.first_name|as_crispy_field}}</div>
+        <div class="col-sm-6">{{form.last_name|as_crispy_field}}</div>
+        <div class="col-sm-6">{{form.phone_number|as_crispy_field}}</div>
+        <div class="col-sm-6">{{form.email|as_crispy_field}}</div>
+        <div class="col-12">{{form.message|as_crispy_field}}</div>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit A Message</button>
+    </form>
+  </div> -->
+
+{% endblock %}
