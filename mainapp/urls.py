@@ -31,7 +31,7 @@ urlpatterns = [
 
 # my profile view 
 
-    path('userprofile/<int:pk>', UserProfileView.as_view(), name='userprofile'),
+    path('userprofile/<int:pk>/', UserProfileView.as_view(), name='userprofile'),
     path('profile/', ProfileView.as_view(), name='profile'),
     path('profile-info/', ProfileInfoView.as_view(), name='profile-info'),
     path('my-subject/', ProfileSubjectView.as_view(), name='my-subject'),
@@ -106,6 +106,7 @@ urlpatterns = [
     path('request/<int:pk>', NotificationDetail.as_view(), name='notification_detail'),
     path('request_history/', OnlineLessonRequest.as_view(), name='request_history'),
 
-    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap')
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+    path('price/', PriceView.as_view(), name='price'),
 ]
 

@@ -46,6 +46,9 @@ class Message(models.Model):
 	message = models.TextField()
 	is_read = models.BooleanField(default=False)
 	date_created = models.DateTimeField(auto_now_add=True)
+	
+	class Meta:
+        ordering = ("date_created",)
 
 class Contact(models.Model):
 	first_name = models.CharField(max_length=156)
