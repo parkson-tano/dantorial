@@ -9,5 +9,5 @@ urlpatterns = [
 	path('chat/<int:pk>', MessageView.as_view(), name='message'),
 	path('chat/send/<int:pk>/', SendView.as_view(), name='send'),
 	path('refresh/', send_message, name='refresh'),
-	path("ajax/<int:pk>/", views.ajax_load_messages, name="chatroom-ajax"),
+	# path("ajax/<int:pk>/", views.ajax_load_messages, name="chatroom-ajax"),
 ]

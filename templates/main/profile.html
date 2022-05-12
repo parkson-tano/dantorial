@@ -211,7 +211,7 @@
               >
             </div>
 
-            {% if profile.paid == False %}
+            {% comment %} {% if profile.paid == False %}
             <div class="my-2 d-grid">
               <button class="btn btn-success btn-login text-uppercase fw-bold">
                 <a href="{% url 'dantorial:price' %}" class="text-dark"
@@ -227,7 +227,7 @@
                 </button>
               </div>
             </div>
-            {% endif %}
+            {% endif %} {% endcomment %}
 
             <div class="my-2">
               <div class="d-grid">

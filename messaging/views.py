@@ -69,9 +69,7 @@ def send_message(request):
     if request.POST.get('action') == 'post':
         chatid = int(request.POST.get('chat_id'))
         u = Chat.objects.get(id=chatid)
-        print(f'prof id {chatid}')
         message_obj = Message.objects.filter(chat=chatid)
-        print(f"prof obj {message_obj} ")
         return JsonResponse({'message': message_obj})
     return HttpResponse("Error access Denied by")
 
@@ -80,10 +78,6 @@ class SendView(View):
     	url_id = self.kwargs['pk']
     	msg = request.POST.get('message')
     	user = request.user
-    	print(msg)
-    	print(user)
-    	print(url_id)
-    	print('helloooooo')
     	c = Chat.objects.get(id=url_id)
     	if c.receiver == request.user:
     		receiver = c.user
@@ -94,7 +88,6 @@ class SendView(View):
                 message = msg,
                 )
     	new_message.save()
-    	print('saved')
     	return redirect(f'/message/chat/{url_id}')
 
 
