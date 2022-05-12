@@ -47,6 +47,7 @@ class Message(models.Model):
 	is_read = models.BooleanField(default=False)
 	date_created = models.DateTimeField(auto_now_add=True)
 
+
 class Contact(models.Model):
 	first_name = models.CharField(max_length=156)
 	last_name = models.CharField(max_length=156, null=True, blank=True)

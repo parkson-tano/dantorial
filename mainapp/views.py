@@ -1279,3 +1279,5 @@ class FilterRegionView(TemplateView):
         context["prof"] = prof
         return context
     
+class PriceView(TemplateView):
+    template_name = 'main/pricing.html'

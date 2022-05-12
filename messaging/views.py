@@ -12,6 +12,10 @@ from django.conf import settings
 from django.db.models import Q
 from messaging.forms import MessageForm
 from django.urls import reverse_lazy, reverse
+from django.contrib.humanize.templatetags.humanize import naturaltime
+from django.http.response import JsonResponse
+import json
+
 class ChatView(TemplateView):
 	template_name = 'main/chat.html'
 	def dispatch(self, request, *args, **kwargs):
@@ -65,9 +69,7 @@ def send_message(request):
     if request.POST.get('action') == 'post':
         chatid = int(request.POST.get('chat_id'))
         u = Chat.objects.get(id=chatid)
-        print(f'prof id {chatid}')
         message_obj = Message.objects.filter(chat=chatid)
-        print(f"prof obj {message_obj} ")
         return JsonResponse({'message': message_obj})
     return HttpResponse("Error access Denied by")
 
@@ -76,10 +78,6 @@ class SendView(View):
     	url_id = self.kwargs['pk']
     	msg = request.POST.get('message')
     	user = request.user
-    	print(msg)
-    	print(user)
-    	print(url_id)
-    	print('helloooooo')
     	c = Chat.objects.get(id=url_id)
     	if c.receiver == request.user:
     		receiver = c.user
@@ -90,5 +88,49 @@ class SendView(View):
                 message = msg,
                 )
     	new_message.save()
-    	print('saved')
     	return redirect(f'/message/chat/{url_id}')
+
+
+# @login_required
+# def chatroom(request, pk:int):
+#     other_user = get_object_or_404(User, pk=pk)
+#     messages = Message.objects.filter(
+#         Q(receiver=request.user, sender=other_user)
+#     )
+#     messages.update(seen=True)
+#     messages = messages | Message.objects.filter(Q(receiver=other_user, sender=request.user) )
+#     return render(request, "chatroom1.html", {"other_user": other_user, 'users': User.objects.all(), "user_messages": messages})
+
+
+# @login_required
+# def ajax_load_messages(request, pk):
+#     other_user = get_object_or_404(User, pk=pk)
+#     messages = Message.objects.filter(seen=False, receiver=request.user)
+    
+#     print("messages")
+#     message_list = [{
+#         "sender": message.sender.username,
+#         "message": message.message,
+#         "sent": message.sender == request.user,
+#         "picture": other_user.profile.picture.url,
+
+#         "date_created": naturaltime(message.date_created),
+
+#     } for message in messages]
+#     messages.update(seen=True)
+    
+#     if request.method == "POST":
+#         message = json.loads(request.body)['message']
+        
+#         m = Message.objects.create(receiver=other_user, sender=request.user, message=message)
+#         message_list.append({
+#             "sender": request.user.username,
+#             "username": request.user.username,
+#             "message": m.message,
+#             "date_created": naturaltime(m.date_created),
+
+#             "picture": request.user.profile.picture.url,
+#             "sent": True,
+#         })
+#     print(message_list)
+#     return JsonResponse(message_list, safe=False)

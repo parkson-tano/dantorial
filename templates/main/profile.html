@@ -1,18 +1,15 @@
-{% extends "base.html" %}
-{% load humanize %}
-{% load crispy_forms_tags %} {% block title %} profile {% endblock title %} {% block content %}
+{% extends "base.html" %} {% load humanize %} {% load crispy_forms_tags %}
+ {% block title %} My tantorial profile -  {% endblock title %} {% block content %}
 <style>
-  #imageUpload
-{
+  #imageUpload {
     display: none;
-}
+  }
 
-#profileImage
-{
+  #profileImage {
     cursor: pointer;
-}
+  }
 
-#profile-container {
+  #profile-container {
     width: 150px;
     height: 150px;
     overflow: hidden;
@@ -21,63 +18,100 @@
     -ms-border-radius: 50%;
     -o-border-radius: 50%;
     border-radius: 50%;
-}
+  }
 
-#profile-container img {
+  #profile-container img {
     width: 150px;
     height: 150px;
-}  
+  }
 
-a:hover{
+  a:hover {
     text-decoration: none;
-}
+  }
 </style>
 
-
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-4 col-md-4 col-lg-3 mx-auto">
-            <div class="card border-0 shadow rounded-3 my-5">
-                <div class="card-body p-0 p-sm-0">
-                    <div class="list-group mx-auto">
-                        <a href="{% url 'dantorial:profile'  %}" class="list-group-item list-group-item-action active">
-                                Personal Information
-                            </a>
-                        <a href="{% url 'dantorial:profile-info' %}" class="list-group-item list-group-item-action">Profile Information</a>
-                        <a href="{% url 'dantorial:my-subject'%}" class="list-group-item list-group-item-action">My Subjects</a> {% if user.profilepersonal.account_type == 'tutor' %}
-                        <a href="{% url 'dantorial:my-experience'%}" class="list-group-item list-group-item-action">My Experience</a>
-                        <a href="{% url 'dantorial:my-qualification'%}" class="list-group-item list-group-item-action">My Qualification</a>
-                        <a href="{% url 'dantorial:my-verification'%}" class="list-group-item list-group-item-action">My Verification</a> {% endif %}
-                        <a href="{% url 'dantorial:my-availability'%}" class="list-group-item list-group-item-action">My Availability</a>
-                    </div>
-                </div>
-            </div>
+  <div class="row">
+    <div class="col-sm-4 col-md-4 col-lg-3 mx-auto">
+      <div class="card border-0 shadow rounded-3 my-5">
+        <div class="card-body p-0 p-sm-0">
+          <div class="list-group mx-auto">
+            <a
+              href="{% url 'dantorial:profile'  %}"
+              class="list-group-item list-group-item-action active"
+            >
+              Personal Information
+            </a>
+            <a
+              href="{% url 'dantorial:profile-info' %}"
+              class="list-group-item list-group-item-action"
+              >Profile Information</a
+            >
+            <a
+              href="{% url 'dantorial:my-subject'%}"
+              class="list-group-item list-group-item-action"
+              >My Subjects</a
+            >
+            {% if user.profilepersonal.account_type == 'tutor' %}
+            <a
+              href="{% url 'dantorial:my-experience'%}"
+              class="list-group-item list-group-item-action"
+              >My Experience</a
+            >
+            <a
+              href="{% url 'dantorial:my-qualification'%}"
+              class="list-group-item list-group-item-action"
+              >My Qualification</a
+            >
+            <a
+              href="{% url 'dantorial:my-verification'%}"
+              class="list-group-item list-group-item-action"
+              >My Verification</a
+            >
+            {% endif %}
+            <a
+              href="{% url 'dantorial:my-availability'%}"
+              class="list-group-item list-group-item-action"
+              >My Availability</a
+            >
+          </div>
         </div>
-        <div class="col-sm-8 col-md-8 col-lg-7 mx-auto">
-            <div class="card border-0 shadow rounded-3 my-5">
-                <div class="card-body p-2">
-                    <h5 class="card-title text-center mb-3 fw-light fs-5">Personal Information</h5>
-                    <div class="text-center">
-                        <img src="{{profile.profile_pic.url}}" class="rounded-circle" alt="..." style="width:200px; height: 200px;"><br>
-                        <a class="btn btn-secondary mt-3 text-center" href="{% url 'dantorial:photochange' %}">
-                        Change Image
-                        </a> 
-                    </div>
-                   
-                    
-                    <hr>
-                 <div class="col">
-                    <div class="card border-0">
-                        <div class="card-body">
-                            <div class="row mb-3">
-                                <div class="col-sm-6">
-                                    <h6 class="mb-0 text-secondary ">Account Type</h6>
-                                </div>
-                                <div class="col-sm-6 text-uppercase">
-                                    {{profile.account_type}}
-                                </div>
-                            </div>
-<!--                             <div class="row mb-3">
+      </div>
+    </div>
+    <div class="col-sm-8 col-md-8 col-lg-7 mx-auto">
+      <div class="card border-0 shadow rounded-3 my-5">
+        <div class="card-body p-2">
+          <h5 class="card-title text-center mb-3 fw-light fs-5">
+            Personal Information
+          </h5>
+          <div class="text-center">
+            <img
+              src="{{profile.profile_pic.url}}"
+              class="rounded-circle"
+              alt="..."
+              style="width: 200px; height: 200px"
+            /><br />
+            <a
+              class="btn btn-secondary mt-3 text-center"
+              href="{% url 'dantorial:photochange' %}"
+            >
+              Change Image
+            </a>
+          </div>
+
+          <hr />
+          <div class="col">
+            <div class="card border-0">
+              <div class="card-body">
+                <div class="row mb-3">
+                  <div class="col-sm-6">
+                    <h6 class="mb-0 text-secondary">Account Type</h6>
+                  </div>
+                  <div class="col-sm-6 text-uppercase">
+                    {{profile.account_type}}
+                  </div>
+                </div>
+                <!--                             <div class="row mb-3">
                                 <div class="col-sm-6">
                                     <h6 class="mb-0 text-secondary ">
                                         username
@@ -87,173 +121,195 @@ a:hover{
                                     @{{profile.user.username}}
                                 </div>
                             </div> -->
-                            <div class="row mb-3">
-                                <div class="col-sm-6">
-                                    <h6 class="mb-0 text-secondary ">Full Name</h6>
-                                </div>
-                                <div class="col-sm-6 text-uppercase">
-                                    {{profile.first_name|default:''|capfirst}} {{profile.last_name|default:''|capfirst}}
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-sm-6">
-                                    <h6 class="mb-0 text-secondary ">Title</h6>
-                                </div>
-                                <div class="col-sm-6 text-uppercase">
-                                    {{profile.title}}
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-sm-6">
-                                    <h6 class="mb-0 text-secondary ">Phone</h6>
-                                </div>
-                                <div class="col-sm-6">
-                                    {{profile.country.code}} {{profile.phone_number|default:'********'}}
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-sm-6">
-                                    <h6 class="mb-0 text-secondary">Gender</h6>
-                                </div>
-                                <div class="col-sm-6 text-uppercase">
-                                    {{profile.gender}}
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-sm-6">
-                                    <h6 class="mb-0 text-secondary">Country</h6>
-                                </div>
-                                <div class="col-sm-6  text-uppercase">
-                                    {{profile.country}}
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-sm-6">
-                                    <h6 class="mb-0 text-secondary">Region</h6>
-                                </div>
-                                <div class="col-sm-6 text-uppercase">
-                                    {{profile.region}}
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-sm-6">
-                                    <h6 class="mb-0 text-secondary ">Town</h6>
-                                </div>
-                                <div class="col-sm-6">
-                                    {{profile.town}}
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-sm-6">
-                                    <h6 class="mb-0 text-secondary">Address</h6>
-                                </div>
-                                <div class="col-sm-6">
-                                    {{profile.address}}
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-sm-6">
-                                    <h6 class="mb-0 text-secondary ">Education Level</h6>
-                                </div>
-                                <div class="col-sm-6">
-                                    {{profile.level_of_education}}
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-sm-6">
-                                    <h6 class="mb-0 text-secondary ">Date of Birth</h6>
-                                </div>
-                                <div class="col-sm-6">
-                                    {{profile.date_of_birth}}
-                                </div>
-                            </div>
-                            <div class="row mb-auto">
-                                <div class="col-sm-12">
-                                    <div class="alert alert-primary text-center">
-                                        Your Profile has been viewed <a href="{% url 'dantorial:profview' %}" class="btn btn-default">{{profile.view_count}} times</a> 
-                                    </div>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="my-4">
-
-                    <div class="d-grid">
-                        <a href="{% url 'dantorial:profile-edit' user.profilepersonal.id%}" class="btn btn-primary btn-login text-uppercase fw-bold">Edit Profile</a>
-                    </div>
-                
-                    {% if profile.paid == False %}
-                    <div class='my-2 d-grid'>
-                        
-                        
-                            <button class="btn btn-success btn-login text-uppercase fw-bold"> <a href="{% url 'dantorial:upgrade_profile' %}" class="text-dark">Get Premium Account</a></button>   
-                        
-                        
-                    </div>
-                    {% else %}
-                    <div class='my-2'>
-                        <div class="d-grid">
-                           <button class="btn btn-success text-uppercase fw-bold">You are using a Premium Account</button>  
-                        </div>
-                       
-                    </div>
-                    {% endif %}
-
-                    <div class='my-2'>
-                    <div class="d-grid">
-                     <button class="btn btn-danger btn-login text-uppercase fw-bold" data-bs-toggle="modal" data-bs-target="#exampleModalDefault">Delete Profile</button>   
-                    </div>
-                                
-                       
-                    </div>
+                <div class="row mb-3">
+                  <div class="col-sm-6">
+                    <h6 class="mb-0 text-secondary">Full Name</h6>
+                  </div>
+                  <div class="col-sm-6 text-uppercase">
+                    {{profile.first_name|default:''|capfirst}}
+                    {{profile.last_name|default:''|capfirst}}
+                  </div>
                 </div>
-
-
+                <div class="row mb-3">
+                  <div class="col-sm-6">
+                    <h6 class="mb-0 text-secondary">Title</h6>
+                  </div>
+                  <div class="col-sm-6 text-uppercase">{{profile.title}}</div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-sm-6">
+                    <h6 class="mb-0 text-secondary">Phone</h6>
+                  </div>
+                  <div class="col-sm-6">
+                    {{profile.country.code}}
+                    {{profile.phone_number|default:'********'}}
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-sm-6">
+                    <h6 class="mb-0 text-secondary">Gender</h6>
+                  </div>
+                  <div class="col-sm-6 text-uppercase">{{profile.gender}}</div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-sm-6">
+                    <h6 class="mb-0 text-secondary">Country</h6>
+                  </div>
+                  <div class="col-sm-6 text-uppercase">{{profile.country}}</div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-sm-6">
+                    <h6 class="mb-0 text-secondary">Region</h6>
+                  </div>
+                  <div class="col-sm-6 text-uppercase">{{profile.region}}</div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-sm-6">
+                    <h6 class="mb-0 text-secondary">Town</h6>
+                  </div>
+                  <div class="col-sm-6">{{profile.town}}</div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-sm-6">
+                    <h6 class="mb-0 text-secondary">Address</h6>
+                  </div>
+                  <div class="col-sm-6">{{profile.address}}</div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-sm-6">
+                    <h6 class="mb-0 text-secondary">Education Level</h6>
+                  </div>
+                  <div class="col-sm-6">{{profile.level_of_education}}</div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-sm-6">
+                    <h6 class="mb-0 text-secondary">Date of Birth</h6>
+                  </div>
+                  <div class="col-sm-6">{{profile.date_of_birth}}</div>
+                </div>
+                <div class="row mb-auto">
+                  <div class="col-sm-12">
+                    <div class="alert alert-primary text-center">
+                      Your Profile has been viewed
+                      <a
+                        href="{% url 'dantorial:profview' %}"
+                        class="btn btn-default"
+                        >{{profile.view_count}} times</a
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+            <hr class="my-4" />
+
+            <div class="d-grid">
+              <a
+                href="{% url 'dantorial:profile-edit' user.profilepersonal.id%}"
+                class="btn btn-primary btn-login text-uppercase fw-bold"
+                >Edit Profile</a
+              >
+            </div>
+
+            {% comment %} {% if profile.paid == False %}
+            <div class="my-2 d-grid">
+              <button class="btn btn-success btn-login text-uppercase fw-bold">
+                <a href="{% url 'dantorial:price' %}" class="text-dark"
+                  >Get Premium Account</a
+                >
+              </button>
+            </div>
+            {% else %}
+            <div class="my-2">
+              <div class="d-grid">
+                <button class="btn btn-success text-uppercase fw-bold">
+                  You are using a Premium Account
+                </button>
+              </div>
+            </div>
+            {% endif %} {% endcomment %}
+
+            <div class="my-2">
+              <div class="d-grid">
+                <button
+                  class="btn btn-danger btn-login text-uppercase fw-bold"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModalDefault"
+                >
+                  Delete Profile
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-    </div>
-</div>
-<div class="modal fade" id="exampleModalDefault" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title text-center" id="exampleModalLabel">Delete Account</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body text-center">
-        Do You Really Want to delete this Profile?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-        <form id='profile-delete' method="POST" action="{% url 'dantorial:delete_profile' profile.user.id %}">
-                                        {% csrf_token %}
-        <button type="submit" class="btn btn-danger w-100">Yes</button>
-    </form>
       </div>
     </div>
   </div>
+  <div
+    class="modal fade"
+    id="exampleModalDefault"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title text-center" id="exampleModalLabel">
+            Delete Account
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body text-center">
+          Do You Really Want to delete this Profile?
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            No
+          </button>
+          <form
+            id="profile-delete"
+            method="POST"
+            action="{% url 'dantorial:delete_profile' profile.user.id %}"
+          >
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger w-100">Yes</button>
+          </form>
+        </div>
+      </div>
+    </div>
 
-
-
-<!-- <script src="/static/smart-selects/admin/js/chainedfk.js"></script>
+    <!-- <script src="/static/smart-selects/admin/js/chainedfk.js"></script>
 <script src="/static/smart-selects/admin/js/bindfields.js"></script> -->
 
-<script>
-    $("#profileImage").click(function(e) {
-    $("#imageUpload").click();
-});
+    <script>
+      $("#profileImage").click(function (e) {
+        $("#imageUpload").click();
+      });
 
-function fasterPreview( uploader ) {
-    if ( uploader.files && uploader.files[0] ){
-          $('#profileImage').attr('src', 
-             window.URL.createObjectURL(uploader.files[0]) );
-    }
-}
+      function fasterPreview(uploader) {
+        if (uploader.files && uploader.files[0]) {
+          $("#profileImage").attr(
+            "src",
+            window.URL.createObjectURL(uploader.files[0])
+          );
+        }
+      }
 
-$("#imageUpload").change(function(){
-    fasterPreview( this );
-});
-</script>
+      $("#imageUpload").change(function () {
+        fasterPreview(this);
+      });
+    </script>
 
-{% endblock content %}
+    {% endblock content %}
+  </div>
+</div>
