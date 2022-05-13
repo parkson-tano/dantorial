@@ -27,11 +27,11 @@
 
 
 <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
-<link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-<link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
-<link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+<!-- <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet"> -->
+<!-- <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet"> -->
+<!-- <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet"> -->
 <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
-<link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+<!-- <link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet"> -->
 <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
 
     <!-- Font Awesome -->
@@ -47,6 +47,7 @@
     </title>
     <!--   <script data-ad-client="ca-pub-2235358777308916" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
     {% load bootstrap4 %} {% bootstrap_css %} {% bootstrap_javascript jquery='full' %}
+
 </head>
 
 <style>
@@ -335,12 +336,13 @@ section {
 	
 		<div class="container"> 
 		  <div class="copyright">
-			&copy; Copyright          <script>
-				   document.write(new Date().getFullYear())
-			</script><strong><span> Tantorial</span></strong>. All Rights Reserved
+			&copy; Copyright <strong id="year"></strong> <strong><span>Tantorial</span></strong>. All Rights Reserved        
+      <script>
+				  document.getElementById('year').innerHTML = (new Date().getFullYear())
+			</script>
 		  </div>
 		  <div class="credits">
-			Designed by <a href="#">ParksonTano</a>
+			Designed by <a href="parksontano.com">ParksonTano</a>
 		  </div>
 		</div>
 	  </footer><!-- End Footer -->

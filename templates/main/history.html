@@ -6,7 +6,7 @@
 			<div class="card mb-3" style="border: 0px solid red">
 				<div class="card-body ml-auto mr-auto">
 					<h5 class="card-title text-center mb-3 fw-bold fs-5">Lesson History</h5>
-					{% for notify in my_lesson %}
+					{% comment %} {% for notify in my_lesson %}
 						<div class="row mx-2 ml-auto mr-auto">
 							<span>
                         	{% if notify.is_confirm %}
@@ -35,13 +35,13 @@
                         	
 						</div>
 						<hr>
-					{% endfor %}
+					{% endfor %} {% endcomment %}
 					{% for proposal in my_proposal %}
 					<div class="row mx-2">
 							<span>
                         	{% if proposal.is_confirm %}
                         	  Your Request was Accepted
-                        	<a href="{% url 'dantorial:notification_detail' notify.id %}" class="btn btn-success btn-sm">See Details</a><br>
+                        	<a href="{% url 'dantorial:notification_detail' proposal.id %}" class="btn btn-success btn-sm">See Details</a><br>
    	 
                         	<span class="direct-chat-timestamp">{{proposal.date_created|timesince}}</span>
                         	<i class="fas fa-check-circle text-success"  aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Accepted"></i>

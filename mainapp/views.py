@@ -1200,9 +1200,9 @@ class OnlineLessonRequest(TemplateView):
         return super().dispatch(request, *args, **kwargs)
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        my_lesson = OnlineLesson.objects.filter(teacher = self.request.user).order_by('-date_created')
-        my_proposal = OnlineLesson.objects.filter(student = self.request.user).order_by('-date_created')
-        final = OnlineLesson.objects.filter(Q(student = self.request.user) | Q(teacher = self.request.user))
+        # my_lesson = OnlineLesson.objects.filter(Q(teacher = self.request.user) | Q(student = self.request.user)).order_by('-date_created')
+        # my_proposal = OnlineLesson.objects.filter(student = self.request.user).order_by('-date_created')
+        final = OnlineLesson.objects.filter(Q(student = self.request.user) | Q(teacher = self.request.user)).order_by('-date_created')
         # subject = Subject.objects.filter(subject = subject).order_by('user')
         # final = list(set(list(chain(my_lesson, my_proposal))))
         print(f'final {final}')
