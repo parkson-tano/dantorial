@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title> Tantorial Price - Tantorial.com</title>
+    <title>Tantorial Price - Tantorial.com</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="{% static 'favicon_.ico' %}" type="image/x-icon" />
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
@@ -16,11 +16,8 @@
     <div class="container">
       <div class="text-center">
         <div class="nav price-tabs" role="tablist">
-          <a class="nav-link active" href="#yearly" role="tab" data-toggle="tab"
-            >Yearly</a
-          >
-          <a class="nav-link" href="#monthly" role="tab" data-toggle="tab"
-            >Monthly</a
+          <a class="nav-link" href="#yearly" role="tab" data-toggle="tab"
+            >Subscribe to Tantorial Plus</a
           >
         </div>
       </div>
@@ -33,9 +30,9 @@
             <div class="col-md-6 col-lg-4 mb-3">
               <div class="price-item text-center">
                 <div class="price-top">
-                  <h4>Personal</h4>
-                  <h2 class="mb-0"><sup>FCFA</sup>99</h2>
-                  <span class="text-capitalize">per year</span>
+                  <h4>3 Months Plan</h4>
+                  <h2 class="mb-0"><sup>FCFA</sup>2500</h2>
+                  <span class="text-capitalize">per 3 Months</span>
                 </div>
                 <div class="price-content">
                   <ul class="border-bottom mb-30 mt-md-4 pb-3 text-left">
@@ -64,16 +61,21 @@
                       <span>Adipisci atque beatae</span>
                     </li>
                   </ul>
-                  <a href="{% url 'dantorial:upgrade_profile' %}" class="btn btn-custom">Buy now</a>
+                  <a
+                    href="{% url 'dantorial:upgrade_profile' %}"
+                    class="btn btn-custom"
+                    name="3months"
+                    >Proceed to Payment</a
+                  >
                 </div>
               </div>
             </div>
             <div class="col-md-6 col-lg-4 mb-3">
               <div class="price-item text-center popular">
                 <div class="price-top">
-                  <h4>Business</h4>
-                  <h2 class="mb-0"><sup>FCFA</sup>299</h2>
-                  <span class="text-capitalize">per year</span>
+                  <h4>6 Months Plan</h4>
+                  <h2 class="mb-0"><sup>FCFA</sup>3700</h2>
+                  <span class="text-capitalize">per 6 Months</span>
                 </div>
                 <div class="price-content">
                   <ul class="border-bottom mb-30 mt-md-4 pb-3 text-left">
@@ -102,15 +104,20 @@
                       <span>Adipisci atque beatae</span>
                     </li>
                   </ul>
-                  <a href="{% url 'dantorial:upgrade_profile' %}" class="btn btn-custom btn-light">Buy now</a>
+                  <a
+                    href="{% url 'dantorial:upgrade_profile' %}"
+                    class="btn btn-custom btn-light"
+                    name="6months"
+                    >Proceed to Payment</a
+                  >
                 </div>
               </div>
             </div>
             <div class="col-md-6 col-lg-4 mb-3">
               <div class="price-item text-center">
                 <div class="price-top">
-                  <h4>Enterprise</h4>
-                  <h2 class="mb-0"><sup>FCFA</sup>399</h2>
+                  <h4>Yearly Plan</h4>
+                  <h2 class="mb-0"><sup>FCFA</sup>6200</h2>
                   <span class="text-capitalize">per year</span>
                 </div>
                 <div class="price-content">
@@ -140,13 +147,18 @@
                       <span>Adipisci atque beatae</span>
                     </li>
                   </ul>
-                  <a href="{% url 'dantorial:upgrade_profile' %}" class="btn btn-custom">Buy now</a>
-    
+                  <a
+                    href="{% url 'dantorial:upgrade_profile' %}"
+                    class="btn btn-custom"
+                    name="yearly"
+                    >Proceed To Payment</a
+                  >
                 </div>
               </div>
             </div>
           </div>
         </div>
+        {% comment %}
         <div role="tabpanel" class="tab-pane fade" id="monthly">
           <div class="row justify-content-center">
             <div class="col-md-6 col-lg-4 mb-3">
@@ -183,7 +195,11 @@
                       <span>Adipisci atque beatae</span>
                     </li>
                   </ul>
-                  <a href="{% url 'dantorial:upgrade_profile' %}" class="btn btn-custom">Buy now</a>
+                  <a
+                    href="{% url 'dantorial:upgrade_profile' %}"
+                    class="btn btn-custom"
+                    >Buy now</a
+                  >
                 </div>
               </div>
             </div>
@@ -221,7 +237,11 @@
                       <span>Adipisci atque beatae</span>
                     </li>
                   </ul>
-                  <a href="{% url 'dantorial:upgrade_profile' %}" class="btn btn-custom btn-light">Buy now</a>
+                  <a
+                    href="{% url 'dantorial:upgrade_profile' %}"
+                    class="btn btn-custom btn-light"
+                    >Buy now</a
+                  >
                 </div>
               </div>
             </div>
@@ -259,12 +279,17 @@
                       <span>Adipisci atque beatae</span>
                     </li>
                   </ul>
-                  <a href="{% url 'dantorial:upgrade_profile' %}" class="btn btn-custom">Buy now</a>
+                  <a
+                    href="{% url 'dantorial:upgrade_profile' %}"
+                    class="btn btn-custom"
+                    >Buy now</a
+                  >
                 </div>
               </div>
             </div>
           </div>
         </div>
+        {% endcomment %}
       </div>
     </div>
 
