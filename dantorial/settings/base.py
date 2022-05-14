@@ -82,6 +82,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.security.SecurityMiddleware',
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "corsheaders.middleware.CorsMiddleware",
@@ -96,9 +97,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     "django_browser_reload.middleware.BrowserReloadMiddleware",
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'django.middleware.cache.FetchFromCacheMiddleware',
     "debug_toolbar.middleware.DebugToolbarMiddleware",
-    # "django.core.cache.backends.memcached.PyMemcacheCache",
 ]
 
 ROOT_URLCONF = 'dantorial.urls'
@@ -110,9 +109,9 @@ ROOT_URLCONF = 'dantorial.urls'
 #     }
 # }
 
-# CACHE_MIDDLEWARE_ALIAS = 'default'  # which cache alias to use
-# CACHE_MIDDLEWARE_SECONDS = '600'    # number of seconds to cache a page for (TTL)
-# CACHE_MIDDLEWARE_KEY_PREFIX = ''
+CACHE_MIDDLEWARE_ALIAS = 'default'  # which cache alias to use
+CACHE_MIDDLEWARE_SECONDS = 60*60*24    # number of seconds to cache a page for (TTL)
+CACHE_MIDDLEWARE_KEY_PREFIX = ''
 
 TEMPLATES = [
     {
@@ -173,6 +172,26 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+
+#DataFlair #Memcached
+# CACHES = {
+#     'default':{
+#         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+#         'LOCATION': '127.0.0.1;11211',
+#     }
+# }
+
+#DataFlair #Database Cache
+CACHES = {
+    'default':{
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'data_cache',
+        'TIMEOUT': 60,
+        'OPTIONS': {
+            'MAX_ENTRIES': 1000
+        }
+    }
+}
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 

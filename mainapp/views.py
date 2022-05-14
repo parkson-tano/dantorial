@@ -997,19 +997,20 @@ class ProfileViewList(TemplateView):
 
 @login_required(login_url='/accounts/login/')
 def profile_like(request):
-    if request.POST.get('action') == 'post':
+    if request.GET.get('action') == 'get':
         flag = False
-        profileid = int(request.POST.get('profile_id'))
+        profileid = int(request.GET.get('profile_id'))
         userprofile = ProfilePersonal.objects.get(id=profileid)
         print(f'prof id {profileid}')
         profile_obj = ProfilePersonal.objects.get(user=request.user)
         print(f"prof obj {profile_obj} ")
+        print(f'hhs {profile_obj.favourite.filter(user=userprofile.id).exists()}')
         
         if profile_obj.favourite.filter(user=userprofile.id).exists():
             profile_obj.favourite.remove(userprofile.user)
             profile_obj.save()
-            
             flag = False
+            
             # notify.send(actor=profile_obj.user, recipient=userprofile.user, verb='unliked your profile', )
             # print(profile_obj.favourite.filter(user=u.id).exists())
         else:
