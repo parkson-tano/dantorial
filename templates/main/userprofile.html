@@ -28,7 +28,7 @@
 			 					font-size:200%;
 								">
 										{% if userprofile.user in request.user.profilepersonal.favourite.all %} 
-<a name="{{ userprofile.id }}" style="color: blue;" id ='co'><i class="fa fa-thumbs-up" aria-hidden="true"></i></a>
+								<a name="{{ userprofile.id }}" style="color: blue;" id ='co'><i class="fa fa-thumbs-up" aria-hidden="true"></i></a>
         {% else %}
         <a name="{{ userprofile.id }}" style="color: black;" id ='co'><i class="fa fa-thumbs-up" aria-hidden="true"></i></a>
     {% endif %}
