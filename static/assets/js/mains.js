@@ -1,37 +1,34 @@
 $(document).ready(function () {
   $(".likebtn").click(function (event) {
     event.preventDefault();
-    var ansid = $(this).attr("id");
-    console.log(ansid);
-    console.log("clicked:" + ansid);
+    var profile_id = $(this).attr("id");
+    console.log(profile_id);
+    console.log("clicked:" + profile_id);
     $.ajax({
       url: $(this).data("url"),
-      type: "POST",
+      type: "GET",
       data: {
-        profile_id: ansid,
-        csrfmiddlewaretoken: "{{csrf_token}}",
-        action: "post",
+        profile_id: profile_id,
+        action: "get",
       },
       success: function (response) {
         $("#like_count").text(response["total_favourites"]);
-        console.log("clicked:" + ansid);
+        console.log("clicked:" + profile_id);
         console.log("response: number  " + response.total_favourites);
         console.log("response: flag  " + response.flag);
-        if (response["flag"] == true) {
-          // $('#'+ansid).style.color = 'blue';
+        // console.log("response  " + response)
+        if (response.flag == true) {
           document.getElementById("co").style.color = "blue";
-          // alert('you like this profile')
 
           console.log("successfully  added to favorites");
         } else {
-          $("#" + ansid).removeClass("text-success");
+          $("#" + profile_id).removeClass("text-success");
           document.getElementById("co").style.color = "black";
           console.log("successfully removed to favorites");
-          // alert('u dislike this')
         }
       },
       error: function (rs, e) {
-        console.log("error: " + rs.response, ansid);
+        console.log("error: " + rs.response, profile_id);
       },
     });
   });
