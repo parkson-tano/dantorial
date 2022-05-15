@@ -1282,3 +1282,7 @@ class FilterRegionView(TemplateView):
     
 class PriceView(TemplateView):
     template_name = 'main/pricing.html'
+
+def load_test(request):
+    return HttpResponse('loaderio-c1a185840f545fea9a1f72d3524a5531')
+    # return render(request, 'loaderio-c1a185840f545fea9a1f72d3524a5531.html')

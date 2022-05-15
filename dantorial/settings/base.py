@@ -127,7 +127,9 @@ TEMPLATES = [
             ('django.template.loaders.cached.Loader', [
                 'django.template.loaders.filesystem.Loader',
                 'django.template.loaders.app_directories.Loader',
+                
             ]),
+                'django.template.loaders.app_directories.Loader',
         ],
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -152,7 +154,7 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
-
+# STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # CACHES = {
 #     'default': {
@@ -195,7 +197,9 @@ CACHES = {
     }
 }
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+
 
 ROBOTS_USE_SITEMAP = False
 ROBOTS_USE_SCHEME_IN_HOST = True
