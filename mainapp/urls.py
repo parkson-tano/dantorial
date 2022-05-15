@@ -108,5 +108,8 @@ urlpatterns = [
 
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     path('price/', PriceView.as_view(), name='price'),
+    path('loaderio-c1a185840f545fea9a1f72d3524a5531/', load_test),
+    path('loaderio-c1a185840f545fea9a1f72d3524a5531.html/', load_test),
+    path('loaderio-c1a185840f545fea9a1f72d3524a5531.txt/', load_test),
 ]
 
