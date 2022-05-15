@@ -25,20 +25,22 @@
 <link rel="preload" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" as="style">
 <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" as="style">
 <link rel="preload" href="{% static 'assets/css/styles.css' %}" as="style">
-<link rel="preload" href="{% static 'assets/vendor/aos/aos.css' %}" as="style">
-<link rel="preload" href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" as="style">
-<link rel="preload" href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" as="style">
+<link rel="preload" href="https://unpkg.com/aos@2.3.1/dist/aos.css" as="style">
+<link rel="preload" href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' as="style">
+<link rel="preload" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" as="style">
 <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" as="style">
 
 <link rel="preload" href="https://code.jquery.com/jquery-3.3.1.min.js" as="script">
 <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" as="script">
 <link rel="preload" href="{% static 'main.js' %}" as="script">
 <link rel="preload" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js" as="script">
-<link rel="preload" href="{% static 'assets/vendor/aos/aos.js' %}" as="script">
-<link rel="preload" href="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}" as="script">
-<link rel="preload" href="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}" as="script">
-<link rel="preload" href="{% static 'assets/js/main.js' %}" as="script">
+
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<link rel="preload" href="https://unpkg.com/aos@2.3.1/dist/aos.js" as="script">
+<link rel="preload" href="https://unpkg.com/swiper@8/swiper-bundle.min.js" as="script">
 <link rel="preload" href="{% static 'assets/js/mains.js' %}" as="script">
+<link rel="preload" href="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js" as="script">
+
 
 <link rel="preload" href="{% static 'favicon_.ico' %}" as="image">
 <link rel="preload" href="{% static 'bg.png' %}" as="image">
@@ -59,20 +61,11 @@
 <link href="{% static 'assets/css/styles.css' %}" rel="stylesheet">
 
 
-<link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
-<!-- <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet"> -->
-<!-- <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet"> -->
-<link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
-<link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
-<!-- <link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet"> -->
-<link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
-
-    <!-- Font Awesome -->
-<!-- Google fonts-->
-<!-- <link rel="preconnect" href="https://fonts.gstatic.com" />
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,600;1,600&amp;display=swap" rel="stylesheet" />
-<link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,300;0,500;0,600;0,700;1,300;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
-<link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,400&amp;display=swap" rel="stylesheet" /> -->
+{% comment %} <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet"> {% endcomment %}
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
+<link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <title>
@@ -399,9 +392,10 @@ section {
 <!--  -->
 
   <!-- Vendor JS Files -->
-  <script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
-  <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
-  <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+  {% comment %} <script src="{% static 'assets/vendor/aos/aos.js' %}"></script> {% endcomment %}
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
+  <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 
   
 <script src="{% static 'assets/js/main.js' %}"></script>
