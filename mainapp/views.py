@@ -1,12 +1,21 @@
+import http
+from time import time
+import json
+import requests
+import jwt
+from django.template.loader import render_to_string, get_template
+from django.utils.datastructures import MultiValueDictKeyError
+from django.core.cache import cache
 from io import SEEK_CUR
 import re
+import datetime
 from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.views.generic import TemplateView, DetailView, View, ListView, FormView, CreateView
 from django.views.generic.edit import UpdateView, DeleteView
 from django.db.models import Q
 from django.contrib import messages
-from django.shortcuts import  redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404
 from requests.api import request
 from .models import *
 from django.utils.decorators import method_decorator
@@ -44,22 +53,9 @@ from django.utils.translation import gettext as _
 
 import random
 import os
-from django.core.cache import cache
-from django.utils.datastructures import MultiValueDictKeyError
+from dotenv import load_dotenv
+load_dotenv()
 
-from django.template.loader import render_to_string, get_template
-
-# google api
-# from google.auth.transport.requests import Request
-# from google.oauth2.credentials import Credentials
-# from google_auth_oauthlib.flow import InstalledAppFlow
-# from googleapiclient.discovery import build
-# from googleapiclient.errors import HttpError
-
-# from cal_setup import get_calendar_service
-
-# from notifications.signals import notify
-# from .notification_signal import *
 
 class IndexView(TemplateView):
     template_name = 'main/index.html'
@@ -77,6 +73,7 @@ class IndexView(TemplateView):
         # print(a)
         return context
 
+
 class MyAccount(TemplateView):
     template_name = 'main/my_account.html'
 
@@ -85,43 +82,45 @@ class MyAccount(TemplateView):
             pass
         else:
             return redirect('/accounts/login/?next=/myaccount/')
-            
+
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        prof = ProfilePersonal.objects.get(user = self.request.user)
+        prof = ProfilePersonal.objects.get(user=self.request.user)
         userEmail = EmailAddress.objects.get(user=self.request.user)
         context['auth'] = userEmail
         context['prof'] = prof
-        return context  
+        return context
+
 
 class UserProfileView(DetailView):
     template_name = 'main/userprofile.html'
     context_object_name = 'userprofile'
     model = ProfilePersonal
 
-    
     # def dispatch(self, request, *args, **kwargs):
     #     if request.user.is_authenticated:
     #         pass
     #     else:
     #         return redirect('/accounts/login/?next=userprofile/6')
-            
+
     #     return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        comments_connected = Review.objects.select_related().filter(profile=self.get_object()).order_by('-date_created')
-        user_rating = Review.objects.select_related().filter(profile=self.get_object()).aggregate(Avg('rating'))
+        comments_connected = Review.objects.select_related().filter(
+            profile=self.get_object()).order_by('-date_created')
+        user_rating = Review.objects.select_related().filter(
+            profile=self.get_object()).aggregate(Avg('rating'))
         similar = ProfilePersonal.objects.select_related().filter(Q(user__profileinfo__subject=self.get_object().user.profileinfo.subject)
-        | Q(user__profileinfo__subcategory=self.get_object().user.profileinfo.subcategory) 
-        | Q(user__profileinfo__category=self.get_object().user.profileinfo.category))
-        pro = ProfilePersonal.objects.select_related().filter(paid = True)
+                                                                  | Q(user__profileinfo__subcategory=self.get_object().user.profileinfo.subcategory)
+                                                                  | Q(user__profileinfo__category=self.get_object().user.profileinfo.category))
+        pro = ProfilePersonal.objects.select_related().filter(paid=True)
         # liked = ProfilePersonal.objects.filter(user=self.request.user)
         # print(f'likes {liked.user}')
         context["comments"] = comments_connected
-        context['comment_form'] = ReviewForm 
+        context['comment_form'] = ReviewForm
         context['message'] = MessageForm
         context['similar'] = similar
         context['prof'] = pro
@@ -131,7 +130,8 @@ class UserProfileView(DetailView):
 
         context['ur'] = urr[:3]
         print(ur)
-        prof = ProfilePersonal.objects.get(user__username=self.get_object().user)
+        prof = ProfilePersonal.objects.get(
+            user__username=self.get_object().user)
         if self.request.user.is_authenticated:
             # current = ProfilePersonal.objects.get(user=self.request.user)
             if (self.request.user != self.get_object().user):
@@ -139,7 +139,8 @@ class UserProfileView(DetailView):
                 # message = f'{self.request.user.profilepersonal.first_name} viewed your profile'
                 # from_email = settings.EMAIL_HOST_USER
                 # to_email = (self.get_object().user.email,)
-                new_view = ProfileViewed.objects.create(user=self.get_object().user, viewed_by =self.request.user )
+                new_view = ProfileViewed.objects.create(
+                    user=self.get_object().user, viewed_by=self.request.user)
                 prof.view_count += 1
                 # current.favourite.add(self.get_object().user)
                 # current.save()
@@ -153,7 +154,8 @@ class UserProfileView(DetailView):
         # new_view.save()
         else:
             if (self.request.user != self.get_object().user):
-                new_view = ProfileViewed.objects.create(user=self.get_object().user,)
+                new_view = ProfileViewed.objects.create(
+                    user=self.get_object().user,)
                 prof.view_count += 1
                 # prof.favourite.add(self.get_object().user)
                 prof.save()
@@ -166,27 +168,29 @@ class UserProfileView(DetailView):
 
         if request.user.is_authenticated:
             new_comment = Review(content=request.POST.get('content'),
-                                  rating=request.POST.get('rate'),
-                                  profile=self.get_object(),
-									user = self.request.user)
+                                 rating=request.POST.get('rate'),
+                                 profile=self.get_object(),
+                                 user=self.request.user)
 
             # new_schedule = Booked(student=self.request.user, teacher=self.get_object().user)
             if (Chat.objects.filter(user=self.request.user, receiver=self.get_object().user).exists()) or (Chat.objects.filter(receiver=self.request.user, user=self.get_object().user).exists()):
-                ch = Chat.objects.get(Q(user=self.request.user, receiver=self.get_object().user) | Q(receiver=self.request.user, user=self.get_object().user))
+                ch = Chat.objects.get(Q(user=self.request.user, receiver=self.get_object(
+                ).user) | Q(receiver=self.request.user, user=self.get_object().user))
                 if ch.receiver == request.user:
                     receiver = ch.user
                 else:
                     receiver = ch.receiver
-                new_message = Message(chat = ch, sender_user = self.request.user,
-                receiver_user = receiver,
-                message = request.POST.get('message'),
-                )
+                new_message = Message(chat=ch, sender_user=self.request.user,
+                                      receiver_user=receiver,
+                                      message=request.POST.get('message'),
+                                      )
             else:
-                new_chat = Chat(user=self.request.user, receiver=self.get_object().user)
-                new_message = Message(chat = new_chat, sender_user = self.request.user,
-                receiver_user = self.get_object().user,
-                message = request.POST.get('message'),
-                )
+                new_chat = Chat(user=self.request.user,
+                                receiver=self.get_object().user)
+                new_message = Message(chat=new_chat, sender_user=self.request.user,
+                                      receiver_user=self.get_object().user,
+                                      message=request.POST.get('message'),
+                                      )
                 new_chat.save()
         else:
             return redirect(f'/accounts/login/?next=/userprofile/{self.get_object().id}')
@@ -194,7 +198,6 @@ class UserProfileView(DetailView):
         if 'post_schedule' in request.POST:
 
             new_schedule.save()
-
 
         if 'post_comment' in request.POST:
             new_comment.save()
@@ -204,7 +207,7 @@ class UserProfileView(DetailView):
 
         elif 'send_message' in request.POST:
             ctx = {
-            'user': self.request.user.profilepersonal.first_name
+                'user': self.request.user.profilepersonal.first_name
             }
             new_message.save()
             # new_chat.save()
@@ -219,24 +222,25 @@ class UserProfileView(DetailView):
             from_email = settings.EMAIL_HOST_USER
             to_email = (self.get_object().user.email,)
 
-            send_mail(subject, message, from_email, to_email, fail_silently=False, html_message=html_message)
+            send_mail(subject, message, from_email, to_email,
+                      fail_silently=False, html_message=html_message)
             print(f'email sent: {to_email}')
             messages.success(self.request, 'message successfully sent')
         elif 'send_message' in request.GET:
-            
+
             new_message.save()
             # new_chat.save()
             subject = 'Message from Tantorial User'
             message = f'{self.request.user.profilepersonal.first_name} sent you a messages'
-            from_email = settings.EMAIL_HOST_USER 
+            from_email = settings.EMAIL_HOST_USER
             to_email = (self.get_object().user.email,)
 
-            send_mail(subject, message, from_email, to_email, fail_silently=True)
+            send_mail(subject, message, from_email,
+                      to_email, fail_silently=True)
             print(f'email sent: {to_email}')
             # mess
         return self.get(self, request, *args, **kwargs)
-        
-        
+
     # def get(self, request, *args, **kwargs):
     #     form = self.form_class
     #     return render(request, self.template_name, {'form':form})
@@ -265,14 +269,19 @@ class UserProfileView(DetailView):
 #         new_message.save()
 #         return self.get(self, request, *args, **kwargs)
 
+
 class AboutView(TemplateView):
     template_name = 'main/about_us.html'
+
 
 class PrivacyView(TemplateView):
     template_name = 'main/privacy_policy.html'
 
+
 class TermsView(TemplateView):
     template_name = 'main/terms.html'
+
+
 class ContactView(CreateView):
     template_name = 'main/contact_us.html'
     form_class = ContactForm
@@ -295,14 +304,16 @@ class UserRegistrationView(CreateView):
     template_name = 'main/signup.html'
     form_class = UserRegistrationForm
     success_url = reverse_lazy('dantorial:index')
+
     def form_valid(self, form):
         username = form.cleaned_data.get('username')
         password = form.cleaned_data.get('password')
         email = form.cleaned_data.get('email')
-        user = User.objects.create_user(username, email,password)
+        user = User.objects.create_user(username, email, password)
         form.instance.user = user
         login(self.request, user, backend='django.contrib.auth.backends.ModelBackend')
         return super().form_valid(form)
+
 
 class PersonalProfileEditView(UpdateView):
     template_name = 'main/edit_profile.html'
@@ -315,7 +326,7 @@ class PersonalProfileEditView(UpdateView):
             pass
         else:
             return redirect('/accounts/login/?next=/profile/')
-            
+
         return super().dispatch(request, *args, **kwargs)
 
     def get_object(self):
@@ -330,7 +341,7 @@ class PersonalProfileEditView(UpdateView):
         messages.success(self.request, "Successful")
         form.save()
         return super().form_valid(form)
-    
+
     # def dispatch(self, request, *args, **kwargs):
     #     if request.user.is_authenticated and ProfilePersonal.objects.get(user=request.user):
     #         pass
@@ -338,10 +349,10 @@ class PersonalProfileEditView(UpdateView):
     #         redirect('dantorial:index')
 
     #     return super().dispatch(request, *args, **kwargs)
-    
 
     # def get(request, *args, **kwargs):
     #     return super().get(request, *args, **kwargs)
+
 
 class ProfileView(TemplateView):
     template_name = 'main/profile.html'
@@ -355,10 +366,11 @@ class ProfileView(TemplateView):
         context["profile"] = profile_info
         return context
 
+
 class ProfileInfoView(TemplateView):
     template_name = 'main/profile_info.html'
     # model = ProfileInfo
-    # context_object_name = 'profile_info'  
+    # context_object_name = 'profile_info'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -366,7 +378,8 @@ class ProfileInfoView(TemplateView):
         profile_info = ProfileInfo.objects.get(user=profile)
         context["profile_info"] = profile_info
         return context
-    
+
+
 class ProfileQualificationView(TemplateView):
     template_name = 'main/my_qualification.html'
 
@@ -375,9 +388,11 @@ class ProfileQualificationView(TemplateView):
         account = self.request.user
         context["account"] = account
 
-        qualification = Qualification.objects.select_related().filter(user = account).order_by('-id')
+        qualification = Qualification.objects.select_related().filter(
+            user=account).order_by('-id')
         context['qualification'] = qualification
         return context
+
 
 class ProfileExperienceView(TemplateView):
     template_name = 'main/my_experience.html'
@@ -387,9 +402,10 @@ class ProfileExperienceView(TemplateView):
         account = self.request.user
         context["account"] = account
 
-        experience = Experience.objects.filter(user = account).order_by('-id')
+        experience = Experience.objects.filter(user=account).order_by('-id')
         context['experience'] = experience
         return context
+
 
 class ProfileInfoEditView(UpdateView):
     template_name = 'main/edit_prof_profile.html'
@@ -402,21 +418,21 @@ class ProfileInfoEditView(UpdateView):
             pass
         else:
             return redirect('/accounts/login/?next=/profile-info/')
-            
+
         return super().dispatch(request, *args, **kwargs)
 
     def get_object(self):
         return self.request.user.profileinfo
 
-    
     def form_valid(self, form):
         form.instance.user = self.request.user
         messages.success(self.request, "Successful")
         form.save()
         return super().form_valid(form)
-        
+
     # def get(request, *args, **kwargs):
     #     return super().get(request, *args, **kwargs)
+
 
 class SubjectAddView(CreateView):
     template_name = 'main/add_subject.html'
@@ -428,15 +444,15 @@ class SubjectAddView(CreateView):
             pass
         else:
             return redirect('/accounts/login/?next=/add-availability/')
-            
-        return super().dispatch(request, *args, **kwargs)
 
+        return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         form.instance.user = self.request.user
         messages.success(self.request, "Subject Added Successfully")
         form.save()
         return super().form_valid(form)
+
 
 class SubjectDeleteView(DeleteView):
     # @method_decorator(csrf_exempt)
@@ -458,15 +474,15 @@ class AvailabilityAddView(CreateView):
             pass
         else:
             return redirect('/accounts/login/?next=/add-availability/')
-            
-        return super().dispatch(request, *args, **kwargs)
 
+        return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         form.instance.user = self.request.user
         messages.success(self.request, "Availability Added Successfully")
         form.save()
         return super().form_valid(form)
+
 
 class AvailabilityDeleteView(DeleteView):
     # @method_decorator(csrf_exempt)
@@ -489,7 +505,7 @@ class AvailabilityUpdateView(UpdateView):
             pass
         else:
             return redirect('/accounts/login/?next=/my-availability/')
-            
+
         return super().dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
@@ -501,6 +517,7 @@ class AvailabilityUpdateView(UpdateView):
         form.save()
         return super().form_valid(form)
 
+
 class ProfileAvailabilityView(TemplateView):
     template_name = 'main/my_availability.html'
 
@@ -509,14 +526,16 @@ class ProfileAvailabilityView(TemplateView):
             pass
         else:
             return redirect('/accounts/login/?next=/my-availability/')
-            
+
         return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         account = self.request.user
         context["account"] = account
 
-        availability = Availability.objects.filter(user = account).order_by('-id')
+        availability = Availability.objects.filter(
+            user=account).order_by('-id')
         context['availability'] = availability
         return context
 
@@ -532,13 +551,16 @@ class ExperienceAddView(CreateView):
         form.save()
         return super().form_valid(form)
 
+
 class ExperienceDeleteView(DeleteView):
     # @method_decorator(csrf_exempt)
     model = Experience
     success_url = reverse_lazy('dantorial:my-experience')
+
     def delete(self, request, *args, **kwargs):
         messages.error(self.request, 'sucessfully removed experience')
         return super().delete(request, *args, **kwargs)
+
 
 class QualificationAddView(CreateView):
     template_name = 'main/add_qualification.html'
@@ -550,7 +572,7 @@ class QualificationAddView(CreateView):
             pass
         else:
             return redirect('/accounts/login/?next=/add-qualification/')
-            
+
         return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
@@ -558,6 +580,7 @@ class QualificationAddView(CreateView):
         messages.success(self.request, "Successful")
         form.save()
         return super().form_valid(form)
+
 
 class QualificationDeleteView(DeleteView):
     # @method_decorator(csrf_exempt)
@@ -568,6 +591,7 @@ class QualificationDeleteView(DeleteView):
         messages.success(self.request, 'sucessfully removed Qualification')
         return super().delete(request, *args, **kwargs)
 
+
 class ProfileDeleteView(DeleteView):
     model = User
     success_url = reverse_lazy('dantorial:index')
@@ -576,6 +600,7 @@ class ProfileDeleteView(DeleteView):
         messages.success(self.request, 'sucessfully removed Profile')
         return super().delete(request, *args, **kwargs)
 
+
 class QualificationUpdateView(UpdateView):
     # @method_decorator(csrf_exempt)
     template_name = 'main/update_qualification.html'
@@ -583,13 +608,12 @@ class QualificationUpdateView(UpdateView):
     model = Qualification
     success_url = reverse_lazy('dantorial:my-qualification')
 
-
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             pass
         else:
             return redirect('/accounts/login/?next=/my-qualification/')
-            
+
         return super().dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
@@ -600,6 +624,7 @@ class QualificationUpdateView(UpdateView):
         messages.success(self.request, "Successful")
         form.save()
         return super().form_valid(form)
+
 
 class ExperienceUpdateView(UpdateView):
     template_name = 'main/update_experience.html'
@@ -612,12 +637,11 @@ class ExperienceUpdateView(UpdateView):
             pass
         else:
             return redirect('/accounts/login/?next=/my-experience/')
-            
+
         return super().dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
         return Experience.objects.filter(user=self.request.user)
-
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -625,12 +649,12 @@ class ExperienceUpdateView(UpdateView):
         form.save()
         return super().form_valid(form)
 
+
 class SubjectUpdateView(UpdateView):
     template_name = 'main/update_subject.html'
     form_class = AddSubjectForm
     model = Subject
     success_url = reverse_lazy('dantorial:my-subject')
-
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -638,7 +662,7 @@ class SubjectUpdateView(UpdateView):
                 pass
         else:
             return redirect('/accounts/login/?next=/my-subject/')
-            
+
         return super().dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
@@ -650,6 +674,7 @@ class SubjectUpdateView(UpdateView):
         form.save()
         return super().form_valid(form)
 
+
 class ProfileSubjectView(TemplateView):
     template_name = 'main/my_subject.html'
 
@@ -658,43 +683,49 @@ class ProfileSubjectView(TemplateView):
             pass
         else:
             return redirect('/accounts/login/?next=/my-subject/')
-            
+
         return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         account = self.request.user
         context["account"] = account
 
-        subject = Subject.objects.filter(user = account).order_by('-id')
+        subject = Subject.objects.filter(user=account).order_by('-id')
         context['subject'] = subject
         return context
 
+
 class VerificationAddView(CreateView):
-    template_name   = 'main/add_verification.html'
+    template_name = 'main/add_verification.html'
     model = Verification
-    form_class  = VerificationForm
-    success_url  = reverse_lazy('dantorial:my-verification')
+    form_class = VerificationForm
+    success_url = reverse_lazy('dantorial:my-verification')
+
     def dispatch(self, request, *args, **kwargs):
-        if Verification.objects.filter(user = self.request.user).exists():
+        if Verification.objects.filter(user=self.request.user).exists():
             return redirect('dantorial:my-verification')
         else:
             pass
-            
+
         return super().dispatch(request, *args, **kwargs)
+
     def form_valid(self, form):
         form.instance.user = self.request.user
         messages.success(self.request, "Successful")
         form.save()
         return super().form_valid(form)
 
+
 class VerificationDeleteView(DeleteView):
     # @method_decorator(csrf_exempt)
-    model = Verification    
+    model = Verification
     success_url = reverse_lazy('dantorial:my-verification')
+
 
 class VerificationUpdateView(UpdateView):
     template_name = 'main/update_verification.html'
-    form_class = VerificationForm   
+    form_class = VerificationForm
     model = Verification
     success_url = reverse_lazy('dantorial:my-verification')
 
@@ -703,17 +734,17 @@ class VerificationUpdateView(UpdateView):
         messages.success(self.request, "Successful")
         form.save()
         return super().form_valid(form)
+
 
 class ProfileVerificationView(TemplateView):
     template_name = 'main/my_verification.html'
 
-
     def dispatch(self, request, *args, **kwargs):
-        if Verification.objects.filter(user = self.request.user).exists():
+        if Verification.objects.filter(user=self.request.user).exists():
             pass
         else:
             return redirect('dantorial:add-verification')
-            
+
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -721,8 +752,8 @@ class ProfileVerificationView(TemplateView):
         account = self.request.user
         context["account"] = account
 
-        verification    = Verification.objects.get(user = account)
-        context['verify'] = verification    
+        verification = Verification.objects.get(user=account)
+        context['verify'] = verification
         return context
 
 # class SubjectView(DetailView):
@@ -744,34 +775,39 @@ class ProfileVerificationView(TemplateView):
 #         else:
 #             pass
 #         return super().dispatch(request, *args, **kwargs)
-    
+
 
 class UserLoginView(FormView):
     template_name = 'main/login.html'
     form_class = UserLoginForm
     success_url = reverse_lazy('dantorial:index')
+
     def form_valid(self, form):
         uname = form.cleaned_data.get('username')
         pword = form.cleaned_data.get('password')
         usr = authenticate(username=uname, password=pword)
         if usr is not None and ProfilePersonal.objects.filter(user=usr).exists():
-            login(self.request, usr, backend='django.contrib.auth.backends.ModelBackend')
+            login(self.request, usr,
+                  backend='django.contrib.auth.backends.ModelBackend')
         else:
-            return render(self.request,self.template_name, {'form': self.form_class, 'error':'invalid creditials'})	
+            return render(self.request, self.template_name, {'form': self.form_class, 'error': 'invalid creditials'})
         return super().form_valid(form)
+
     def get_success_url(self):
         if 'next' in self.request.GET:
             next_url = self.request.GET.get('next')
             print(next_url)
-            return next_url 	
+            return next_url
         else:
             return self.success_url
+
 
 class LogoutView(View):
     def get(self, request):
         logout(request)
         return redirect('dantorial:index')
- 
+
+
 class SearchView(TemplateView):
     template_name = 'main/search_all.html'
 
@@ -785,28 +821,32 @@ class SearchView(TemplateView):
             subject = None
         category = self.request.GET['category']
         region = self.request.GET['region']
-        
+
         # town = self.request.GET['town']
         try:
             town = self.request.GET['town']
         except MultiValueDictKeyError:
             town = None
-        
-        
+
         if subject is None and town is None:
-            profile_result = ProfilePersonal.objects.filter(Q(account_type = acc_type) & Q(region = region) & Q(user__profileinfo__category = category))
-        
+            profile_result = ProfilePersonal.objects.filter(Q(account_type=acc_type) & Q(
+                region=region) & Q(user__profileinfo__category=category))
+
         elif subject is None:
-            profile_result = ProfilePersonal.objects.filter(Q(account_type = acc_type)).filter(Q(region=region)).filter(Q(town = town)  & Q(user__profileinfo__category = category))
+            profile_result = ProfilePersonal.objects.filter(Q(account_type=acc_type)).filter(
+                Q(region=region)).filter(Q(town=town) & Q(user__profileinfo__category=category))
         elif town is None:
-            profile_result = ProfilePersonal.objects.filter(Q(account_type = acc_type)).filter(Q(region=region) & Q(user__profileinfo__category = category) & Q(user__profileinfo__subject = subject))
+            profile_result = ProfilePersonal.objects.filter(Q(account_type=acc_type)).filter(
+                Q(region=region) & Q(user__profileinfo__category=category) & Q(user__profileinfo__subject=subject))
         else:
-            profile_result = ProfilePersonal.objects.filter(Q(account_type = acc_type)).filter(Q(region=region)).filter(Q(town = town)  & Q(user__profileinfo__category = category) & Q(user__profileinfo__subject = subject))
+            profile_result = ProfilePersonal.objects.filter(Q(account_type=acc_type)).filter(Q(region=region)).filter(
+                Q(town=town) & Q(user__profileinfo__category=category) & Q(user__profileinfo__subject=subject))
         # subject = Subject.objects.filter(subject = subject).order_by('user')
         # final = list(set(list(chain(subject, profile_result))))
         # finals = list(set(final))
         if self.request.user.is_authenticated:
-            fav = ProfilePersonal.objects.get(id=self.request.user.profilepersonal.id)
+            fav = ProfilePersonal.objects.get(
+                id=self.request.user.profilepersonal.id)
             context['fav'] = fav
         print(profile_result)
         # print(subject)
@@ -814,6 +854,7 @@ class SearchView(TemplateView):
         context['result'] = profile_result
         # print(f'{acc_type} {subject} {city} {quater}')
         return context
+
 
 class FilterView(TemplateView):
     template_name = 'main/search_all.html'
@@ -833,7 +874,7 @@ class FilterView(TemplateView):
             town = self.request.GET['town']
         except MultiValueDictKeyError:
             town = None
-        
+
         try:
             subject = self.request.GET['subject']
         except MultiValueDictKeyError:
@@ -842,23 +883,26 @@ class FilterView(TemplateView):
         user_obj = User.objects.all()
 
         if subject is None and town is None:
-            profile_result = ProfilePersonal.objects.filter(Q(account_type = acc_type)).filter(Q(region=region)  & Q(gender = gender) & Q(level_of_education = education) & Q(user__profileinfo__category = category) & Q(user__profileinfo__charge = charge))
-        
+            profile_result = ProfilePersonal.objects.filter(Q(account_type=acc_type)).filter(Q(region=region) & Q(gender=gender) & Q(
+                level_of_education=education) & Q(user__profileinfo__category=category) & Q(user__profileinfo__charge=charge))
+
         elif subject is None:
 
-            profile_result = ProfilePersonal.objects.filter(Q(account_type = acc_type)).filter(Q(region=region) | Q(town=town)  & Q(gender = gender) & Q(level_of_education = education) & Q(user__profileinfo__category = category) & Q(user__profileinfo__charge = charge))
-            
+            profile_result = ProfilePersonal.objects.filter(Q(account_type=acc_type)).filter(Q(region=region) | Q(town=town) & Q(
+                gender=gender) & Q(level_of_education=education) & Q(user__profileinfo__category=category) & Q(user__profileinfo__charge=charge))
+
         elif town is None:
-            profile_result = ProfilePersonal.objects.filter(Q(account_type = acc_type)).filter(Q(region=region)  & Q(gender = gender) & Q(level_of_education = education) & Q(user__profileinfo__category = category) 
-            & Q(user__profileinfo__subject = subject) & Q(user__profileinfo__charge = charge))
+            profile_result = ProfilePersonal.objects.filter(Q(account_type=acc_type)).filter(Q(region=region) & Q(gender=gender) & Q(level_of_education=education) & Q(user__profileinfo__category=category)
+                                                                                             & Q(user__profileinfo__subject=subject) & Q(user__profileinfo__charge=charge))
         else:
-            profile_result = ProfilePersonal.objects.filter(Q(account_type = acc_type)).filter(Q(region=region) | Q(town=town)  & Q(gender = gender) & Q(level_of_education = education) & Q(user__profileinfo__category = category) 
-            & Q(user__profileinfo__subject = subject) & Q(user__profileinfo__charge = charge))
+            profile_result = ProfilePersonal.objects.filter(Q(account_type=acc_type)).filter(Q(region=region) | Q(town=town) & Q(gender=gender) & Q(level_of_education=education) & Q(user__profileinfo__category=category)
+                                                                                             & Q(user__profileinfo__subject=subject) & Q(user__profileinfo__charge=charge))
         # subject = Subject.objects.filter(subject = subject).order_by('user')
         # final = list(set(list(chain(subject, profile_result))))
         # finals = list(set(final))
         if self.request.user.is_authenticated:
-            fav = ProfilePersonal.objects.get(id=self.request.user.profilepersonal.id)
+            fav = ProfilePersonal.objects.get(
+                id=self.request.user.profilepersonal.id)
             context['fav'] = fav
         print(profile_result)
         # print(subject)
@@ -867,32 +911,37 @@ class FilterView(TemplateView):
         # print(f'{acc_type} {subject} {city} {quater}')
         return context
 
+
 class SearchAllView(TemplateView):
     template_name = 'main/search_all.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         kw = self.request.GET['keywords']
-        result = ProfilePersonal.objects.filter(Q(first_name__icontains=kw) | Q(last_name__icontains=kw) | Q(user__profileinfo__subject__name__icontains=kw) | Q(user__profileinfo__category__name__icontains=kw) | Q(user__profileinfo__subcategory__name__icontains=kw))
+        result = ProfilePersonal.objects.filter(Q(first_name__icontains=kw) | Q(last_name__icontains=kw) | Q(user__profileinfo__subject__name__icontains=kw) | Q(
+            user__profileinfo__category__name__icontains=kw) | Q(user__profileinfo__subcategory__name__icontains=kw))
         if self.request.user.is_authenticated:
-            fav = ProfilePersonal.objects.get(id=self.request.user.profilepersonal.id)
+            fav = ProfilePersonal.objects.get(
+                id=self.request.user.profilepersonal.id)
             context['fav'] = fav
         context["result"] = result
         return context
 
+
 def subscribe(amount, number):
     campay = Client({
-        "app_username" : "3_4hXF79S-PPnrduRjwCqu10EOjm6nXHezUaE76Gv-ZGuCa8qQxV-GwQP-xiaVQ_oFg4FqrduN33Od_Mi7FUmw",
-        "app_password" : "ICqt9K5kx-GdFfPP52Z3apDwS0LJChjSs0h1SYZ4yDAuTAXDGxgsVZ8h_Ihk9j8kxqOsQGXqj6TurNnMNwDxLw",
-        "environment" : "DEV" #use "DEV" for demo mode or "PROD" for live mode
+        "app_username": "3_4hXF79S-PPnrduRjwCqu10EOjm6nXHezUaE76Gv-ZGuCa8qQxV-GwQP-xiaVQ_oFg4FqrduN33Od_Mi7FUmw",
+        "app_password": "ICqt9K5kx-GdFfPP52Z3apDwS0LJChjSs0h1SYZ4yDAuTAXDGxgsVZ8h_Ihk9j8kxqOsQGXqj6TurNnMNwDxLw",
+        "environment": "DEV"  # use "DEV" for demo mode or "PROD" for live mode
     })
     collect = campay.collect({
-         "amount": amount, #The amount you want to collect
-         "currency": "XAF",
-         "from": number, #Phone number to request amount from. Must include country code
-         "description": "some description"
-      })
+        "amount": amount,  # The amount you want to collect
+        "currency": "XAF",
+        "from": number,  # Phone number to request amount from. Must include country code
+        "description": "some description"
+    })
     print(collect)
+
 
 class UpgradeAccountView(FormView):
     template_name = 'main/upgrade.html'
@@ -904,7 +953,7 @@ class UpgradeAccountView(FormView):
             pass
         else:
             return redirect('/accounts/login/?next=/upgrade/')
-            
+
         return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
@@ -913,20 +962,21 @@ class UpgradeAccountView(FormView):
         form.instance.phone_number = form.cleaned_data.get('phone_number')
         form.instance.is_complete = True
         pay = form.save(commit=False)
-        profile = ProfilePersonal.objects.get(user = self.request.user)
+        profile = ProfilePersonal.objects.get(user=self.request.user)
         # subscribe(form.instance.amount, form.instance.phone_number)
         campay = Client({
-        "app_username" : "3_4hXF79S-PPnrduRjwCqu10EOjm6nXHezUaE76Gv-ZGuCa8qQxV-GwQP-xiaVQ_oFg4FqrduN33Od_Mi7FUmw",
-        "app_password" : "ICqt9K5kx-GdFfPP52Z3apDwS0LJChjSs0h1SYZ4yDAuTAXDGxgsVZ8h_Ihk9j8kxqOsQGXqj6TurNnMNwDxLw",
-        "environment" : "DEV" #use "DEV" for demo mode or "PROD" for live mode
+            "app_username": "3_4hXF79S-PPnrduRjwCqu10EOjm6nXHezUaE76Gv-ZGuCa8qQxV-GwQP-xiaVQ_oFg4FqrduN33Od_Mi7FUmw",
+            "app_password": "ICqt9K5kx-GdFfPP52Z3apDwS0LJChjSs0h1SYZ4yDAuTAXDGxgsVZ8h_Ihk9j8kxqOsQGXqj6TurNnMNwDxLw",
+            "environment": "DEV"  # use "DEV" for demo mode or "PROD" for live mode
         })
         collect = campay.collect({
-         "amount": 2, #The amount you want to collect
-         "currency": "XAF",
-         "from": form.instance.phone_number, #Phone number to request amount from. Must include country code
-         "description": "Tantorial Premium Account",
-         "first_name": self.request.user.profilepersonal.first_name
-         })
+            "amount": 2,  # The amount you want to collect
+            "currency": "XAF",
+            # Phone number to request amount from. Must include country code
+            "from": form.instance.phone_number,
+            "description": "Tantorial Premium Account",
+            "first_name": self.request.user.profilepersonal.first_name
+        })
         print(collect)
         # disburse = campay.disburse({
         #  "amount": "5", #The amount you want to disburse
@@ -960,7 +1010,8 @@ class UpgradeAccountView(FormView):
             message = f'{self.requset.user.profilepersonal.first_name},Your Payment for Premium Service is complete'
             from_email = settings.DEFAULT_FROM_EMAIL
             to_email = (self.request.user.email, )
-            send_mail(subject, message, from_email, to_email, fail_silently=True)
+            send_mail(subject, message, from_email,
+                      to_email, fail_silently=True)
 
             # messages.success(self.request, "Successful")
         else:
@@ -974,12 +1025,13 @@ class UpgradeAccountView(FormView):
             # send_mail(subject, message, from_email, to_email, fail_silently=True)
             # send_mail('hey thanks for nothing', 'here is the message', settings.DEFAULT_FROM_EMAIL, (self.request.user.email,), fail_silently=True,)
             pay.save()
-        
+
         return super().form_valid(form)
 
 
 class PaymentSuccessView(TemplateView):
     template_name = 'main/payment-successful.html'
+
 
 class PaymentFailView(TemplateView):
     template_name = 'main/payment-fail.html'
@@ -991,9 +1043,11 @@ class ProfileViewList(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         profile = self.request.user
-        profile_info = ProfileViewed.objects.filter(user=profile).order_by('-date_created')
+        profile_info = ProfileViewed.objects.filter(
+            user=profile).order_by('-date_created')
         context["profile"] = profile_info
         return context
+
 
 @login_required(login_url='/accounts/login/')
 def profile_like(request):
@@ -1005,27 +1059,28 @@ def profile_like(request):
         profile_obj = ProfilePersonal.objects.get(user=request.user)
         print(f"prof obj {profile_obj} ")
         print(f'hhs {profile_obj.favourite.filter(user=userprofile.id).exists()}')
-        
+
         if profile_obj.favourite.filter(user=userprofile.id).exists():
             profile_obj.favourite.remove(userprofile.user)
             profile_obj.save()
             flag = False
-            
+
             # notify.send(actor=profile_obj.user, recipient=userprofile.user, verb='unliked your profile', )
             # print(profile_obj.favourite.filter(user=u.id).exists())
         else:
             profile_obj.favourite.add(userprofile.user)
             profile_obj.save()
-            
+
             flag = True
             # notify.send(actor=profile_obj.user, recipient=userprofile.user, verb='liked your profile', )
             subject = "Notification from Tantorial"
             message = f'{profile_obj.first_name} liked Your Profile'
             from_email = settings.DEFAULT_FROM_EMAIL
             to_email = (userprofile.user.email, )
-            send_mail(subject, message, from_email, to_email, fail_silently=True)
+            send_mail(subject, message, from_email,
+                      to_email, fail_silently=True)
         print(flag)
-        return JsonResponse({'total_favourites': profile_obj.total_likes, 'flag':flag})
+        return JsonResponse({'total_favourites': profile_obj.total_likes, 'flag': flag})
     return HttpResponse("Error access Denied")
 
 # def profile_like(request):
@@ -1046,15 +1101,18 @@ def profile_like(request):
 #         html = render_to_string('like_section.html', context, request=request)
 #         return JsonResponse({'form': html})
 
+
 class FavouriteView(TemplateView):
     template_name = "main/favourite.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         profile = self.request.user
-        profile_info = ProfilePersonal.objects.select_related('user').get(user=profile)
+        profile_info = ProfilePersonal.objects.select_related(
+            'user').get(user=profile)
         context["favourite"] = profile_info
         return context
+
 
 class FavouriteDeleteView(DeleteView):
     queryset = ProfilePersonal.objects.all()
@@ -1077,6 +1135,8 @@ class FavouriteDeleteView(DeleteView):
 
 # class UpdateImageView(TemplateView):
 #     template_name = 'main/photo.html'
+
+
 @login_required
 def updateimage(request):
     profile = ProfilePersonal.objects.get(user=request.user)
@@ -1086,21 +1146,25 @@ def updateimage(request):
 
         if image:
             profile.profile_pic = image
-        # profile.update(profile_pic = image) 
+        # profile.update(profile_pic = image)
             profile.save(update_fields=['profile_pic'])
             return redirect("dantorial:profile")
             # return render(request, 'main/photo.html')
     # context = {"image":image}
     return render(request, 'main/photo.html')
 
+
 def error404(request, exception, template_name='404.html'):
     return render(request, template_name)
+
 
 def error403(request, exception, template_name='403.html'):
     return render(request, template_name)
 
+
 def error400(request, exception, template_name='400.html'):
     return render(request, template_name)
+
 
 def error500(request, template_name='500.html'):
     return render(request, template_name)
@@ -1119,15 +1183,15 @@ class ScheduleView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['book_form'] = AddScheduleForm 
+        context['book_form'] = AddScheduleForm
         return context
 
     def post(self, request, *args, **kwargs):
 
         if request.user.is_authenticated:
 
-            new_schedule = OnlineLesson(student=self.request.user, teacher=self.get_object().user, 
-                start=request.POST.get('start'), end=request.POST.get('end'), mode=request.POST.get('mode'))
+            new_schedule = OnlineLesson(student=self.request.user, teacher=self.get_object().user,
+                                        start=request.POST.get('start'), end=request.POST.get('end'), mode=request.POST.get('mode'))
             # new_schedule = Booked(student=self.request.user, teacher=self.get_object().user)
         else:
             return redirect(f'/accounts/login/?next=/userprofile/{self.get_object().id}')
@@ -1175,63 +1239,73 @@ class ScheduleView(DetailView):
 
 class OnlineLessonNotification(TemplateView):
     template_name = 'main/notification.html'
+
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             pass
         else:
             return redirect('/accounts/login/?next=/request/')
-            
+
         return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        my_lesson = OnlineLesson.objects.filter(teacher = self.request.user).filter(Q(is_decline = False) & Q(is_confirm = False))
-        my_proposal = OnlineLesson.objects.filter(student = self.request.user)
-        context['my_lesson'] = my_lesson 
+        my_lesson = OnlineLesson.objects.filter(teacher=self.request.user).filter(
+            Q(is_decline=False) & Q(is_confirm=False))
+        my_proposal = OnlineLesson.objects.filter(student=self.request.user)
+        context['my_lesson'] = my_lesson
         return context
 
 
 class OnlineLessonRequest(TemplateView):
-    template_name = 'main/history.html' 
+    template_name = 'main/history.html'
+
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             pass
         else:
             return redirect('/accounts/login/?next=/request_history/')
-            
+
         return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # my_lesson = OnlineLesson.objects.filter(Q(teacher = self.request.user) | Q(student = self.request.user)).order_by('-date_created')
         # my_proposal = OnlineLesson.objects.filter(student = self.request.user).order_by('-date_created')
-        final = OnlineLesson.objects.filter(Q(student = self.request.user) | Q(teacher = self.request.user)).order_by('-date_created')
+        final = OnlineLesson.objects.filter(Q(student=self.request.user) | Q(
+            teacher=self.request.user)).order_by('-date_created')
         # subject = Subject.objects.filter(subject = subject).order_by('user')
         # final = list(set(list(chain(my_lesson, my_proposal))))
         print(f'final {final}')
         context['my_proposal'] = final
-        # context['my_lesson'] = my_lesson 
+        # context['my_lesson'] = my_lesson
         return context
+
 
 class NotificationDetail(TemplateView):
     template_name = 'main/notification_detail.html'
+
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             pass
         else:
             return redirect('/accounts/login/?next=/request/')
-            
+
         return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         pk = kwargs['pk']
-        notification = OnlineLesson.objects.get(id = pk)
+        notification = OnlineLesson.objects.get(id=pk)
         notification.is_seen = True
         notification.save()
         # print(f'not {notification.is_seen}')
-        context['notification'] = notification 
+        context['notification'] = notification
         return context
+
     def post(self, request, *args, **kwargs):
         pk = kwargs['pk']
-        noti = OnlineLesson.objects.get(id = pk)
+        noti = OnlineLesson.objects.get(id=pk)
         if 'post_accept' in request.POST:
             noti.is_confirm = True
             noti.is_decline = False
@@ -1250,22 +1324,24 @@ class NotificationDetail(TemplateView):
 
 class LandingView(TemplateView):
     template_name = 'main/landing.html'
+
     def post(self, request, *args, **kwargs):
         con = Contact(message=request.POST.get('message'),
-        first_name=request.POST.get('first_name'),
-        last_name=request.POST.get('last_name'),
-		email = request.POST.get('email'),
-        phone_number = request.POST.get('phone_number')
-        )
+                      first_name=request.POST.get('first_name'),
+                      last_name=request.POST.get('last_name'),
+                      email=request.POST.get('email'),
+                      phone_number=request.POST.get('phone_number')
+                      )
         con.save()
         messages.success(self.request, "We will get back to you shortly")
         subject = "Thanks for contacting us"
         message = request.POST.get('first_name') + " thanks for contacting us"
         from_email = settings.DEFAULT_FROM_EMAIL
-        to_email = [request.POST.get('email'),]
+        to_email = [request.POST.get('email'), ]
 
         send_mail(subject, message, from_email, to_email, fail_silently=True)
         return redirect('dantorial:index')
+
 
 class FilterRegionView(TemplateView):
     template_name = 'main/region.html'
@@ -1279,9 +1355,11 @@ class FilterRegionView(TemplateView):
         context["regi"] = regi
         context["prof"] = prof
         return context
-    
+
+
 class PriceView(TemplateView):
     template_name = 'main/pricing.html'
+
 
 def load_test(request):
     return HttpResponse('loaderio-c1a185840f545fea9a1f72d3524a5531')
