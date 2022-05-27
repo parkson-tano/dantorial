@@ -134,5 +134,5 @@ urlpatterns = [
     path('loaderio-c1a185840f545fea9a1f72d3524a5531/', load_test),
     path('loaderio-c1a185840f545fea9a1f72d3524a5531.html/', load_test),
     path('loaderio-c1a185840f545fea9a1f72d3524a5531.txt/', load_test),
-    path('meet/', meet, name="meet"),
+    #     path('meet/', meet, name="meet"),
 ]
