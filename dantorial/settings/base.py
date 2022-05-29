@@ -14,7 +14,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# 
+#
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # with open('secret_key.txt') as f:
@@ -90,9 +90,6 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     'django.middleware.locale.LocaleMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-
-    # "django.core.cache.backends.filebased.FileBasedCache",
-    # 'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -112,7 +109,8 @@ ROOT_URLCONF = 'dantorial.urls'
 # }
 
 CACHE_MIDDLEWARE_ALIAS = 'default'  # which cache alias to use
-CACHE_MIDDLEWARE_SECONDS = 60*60*24    # number of seconds to cache a page for (TTL)
+# number of seconds to cache a page for (TTL)
+CACHE_MIDDLEWARE_SECONDS = 60*60*24
 CACHE_MIDDLEWARE_KEY_PREFIX = ''
 
 TEMPLATES = [
@@ -124,13 +122,13 @@ TEMPLATES = [
         # 'APP_DIRS': True,
         'OPTIONS': {
             'loaders': [
-            ('django.template.loaders.cached.Loader', [
-                'django.template.loaders.filesystem.Loader',
+                ('django.template.loaders.cached.Loader', [
+                    'django.template.loaders.filesystem.Loader',
+                    'django.template.loaders.app_directories.Loader',
+
+                ]),
                 'django.template.loaders.app_directories.Loader',
-                
-            ]),
-                'django.template.loaders.app_directories.Loader',
-        ],
+            ],
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -177,7 +175,7 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 #     }
 # }
 
-#DataFlair #Memcached
+# DataFlair #Memcached
 # CACHES = {
 #     'default':{
 #         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
@@ -185,9 +183,9 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 #     }
 # }
 
-#DataFlair #Database Cache
+# DataFlair #Database Cache
 CACHES = {
-    'default':{
+    'default': {
         'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
         'LOCATION': 'data_cache',
         'TIMEOUT': 60,
@@ -198,7 +196,6 @@ CACHES = {
 }
 
 # STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-
 
 
 ROBOTS_USE_SITEMAP = False
@@ -247,17 +244,18 @@ MESSAGES_TO_LOAD = 15
 # }
 
 CKEDITOR_CONFIGS = {
-'default': {
-    'toolbar': 'Custom', #You can change this based on your requirements.
-    'toolbar_Custom': [
-        ['Bold', 'Italic', 'Underline', 'Font', 'FontSize'],
-        ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-        ['Link', 'Unlink'],
-        ['RemoveFormat']
+    'default': {
+        'toolbar': 'Custom',  # You can change this based on your requirements.
+        'toolbar_Custom': [
+            ['Bold', 'Italic', 'Underline', 'Font', 'FontSize'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+             'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['Link', 'Unlink'],
+            ['RemoveFormat']
         ],
-    'width': 'auto !important'
-          },
-    }
+        'width': 'auto !important'
+    },
+}
 
 BOOTSTRAP4 = {
     'include_jquery': True,
@@ -271,7 +269,7 @@ LANGUAGE_CODE = 'fr'
 LANGUAGES = (
     ('en', _('English')),
     ('fr', _('French')),
-    )
+)
 
 TIME_ZONE = 'UTC'
 
@@ -286,7 +284,7 @@ LOCALE_PATHS = (
 )
 
 
-DJANGO_NOTIFICATIONS_CONFIG = { 'USE_JSONFIELD': True}
+DJANGO_NOTIFICATIONS_CONFIG = {'USE_JSONFIELD': True}
 
 
 USE_DJANGO_JQUERY = True
@@ -294,8 +292,8 @@ USE_DJANGO_JQUERY = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
@@ -336,7 +334,6 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = 'optional'
 
 
-
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = LOGIN_REDIRECT_URL
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = LOGIN_REDIRECT_URL
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 7
@@ -357,59 +354,60 @@ ACCOUNT_ADAPTER = "dantorial.adapter.MyAccountAdapter"
 # EMAIL_HOST='smtp.gmail.com'
 # EMAIL_HOST_USER='tanocoder237@gmail.com'
 # EMAIL_HOST_PASSWORD='danielTano123@'
-# EMAIL_PORT = 587 
+# EMAIL_PORT = 587
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_USE_TLS = True
 EMAIL_USE_SSL = True
-EMAIL_HOST= os.getenv('EMAIL_HOST')
+EMAIL_HOST = os.getenv('EMAIL_HOST')
 
 # server96.web-hosting.com
-EMAIL_HOST_USER= os.getenv('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD=os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = os.getenv('EMAIL_PORT')
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 SOCIALACCOUNT_PROVIDERS = {
-        'google': 
+    'google':
         {
             'SCOPE': [
                 'profile',
                 'email',
             ],
-            'AUTH_PARAMS' : {
+            'AUTH_PARAMS': {
                 'access_type': 'online'
             }
         },
-            'facebook': {
-        'METHOD': 'oauth2',
-        'SDK_URL': '//connect.facebook.net/{locale}/sdk.js',
-        'SCOPE': ['email', 'public_profile'],
-        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
-        'INIT_PARAMS': {'cookie': True},
-        'FIELDS': [
-            'id',
-            'first_name',
-            'last_name',
-            'middle_name',
-            'name',
-            'name_format',
-            'picture',
-            'short_name'
-        ],
-        'EXCHANGE_TOKEN': True,
-        # 'LOCALE_FUNC': 'path.to.callable',
-        'VERIFIED_EMAIL': True,
-        'VERSION': 'v7.0',
+    'facebook': {
+            'METHOD': 'oauth2',
+            'SDK_URL': '//connect.facebook.net/{locale}/sdk.js',
+            'SCOPE': ['email', 'public_profile'],
+            'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+            'INIT_PARAMS': {'cookie': True},
+            'FIELDS': [
+                'id',
+                'first_name',
+                'last_name',
+                'middle_name',
+                'name',
+                'name_format',
+                'picture',
+                'short_name'
+            ],
+            'EXCHANGE_TOKEN': True,
+            # 'LOCALE_FUNC': 'path.to.callable',
+            'VERIFIED_EMAIL': True,
+            'VERSION': 'v7.0',
     }
-        }
+}
 
 SOCIAL_AUTH_FACEBOOK_KEY = os.getenv('SOCIAL_AUTH_FACEBOOK_KEY')
 SOCIAL_AUTH_FACEBOOK_SECRET = os.getenv('SOCIAL_AUTH_FACEBOOK_SECRET')
 
 
-GOOGLE_APPLICATION_CREDENTIALS = os.path.join(BASE_DIR, 'dantorial-bdef7-9833c8c7d45c.json')
+GOOGLE_APPLICATION_CREDENTIALS = os.path.join(
+    BASE_DIR, 'dantorial-bdef7-9833c8c7d45c.json')
 
 
 # CORS_ALLOWED_ORIGINS = [
