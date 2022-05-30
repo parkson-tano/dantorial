@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load humanize %}
 {% load crispy_forms_tags %}
 {% block title %}
 Book a lesson
@@ -6,41 +7,63 @@ Book a lesson
 {% block content %}
 
 <body>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-sm-8 col-md-8 col-lg-7 mx-auto">
-        <div class="card border-0 shadow rounded-3 my-5">
-          <div class="card-body p-2 p-sm-5">
-            <h5 class="card-title text-center mb-3 fw-light fs-5">Book a Lesson</h5>
-            <p class="text-center font-weight-bold">
-              Schedule a Lesson with {{userprofile.first_name}} {{userprofile.last_name}}
-            </p>
-            <form class="needs-validation" method="post" action="" novalidate>
-              {% csrf_token %}
-              {{book_form.media}}
-    
-                 <div class="row">
-                <div class='col-md-6'>
-                {{book_form.start|as_crispy_field}}
-                </div>
-                <div class='col-md-6'>
-                  {{book_form.end|as_crispy_field}}
-                </div>
-                <div class='col-md-12'>
-                  {{book_form.mode|as_crispy_field}}
-                </div>
-              <div class="d-grid">
-                <button class="btn btn-primary btn-login text-uppercase fw-bold mt-3" type="submit" name='post_schedule'>Proceed to Payment</button>
-              </div>
-              <hr class="my-4">
-          </div>
-          <a href="https://zoom.us/oauth/authorize?response_type=code&client_id=3Y2dxSxNSYCKDLYDPTs8PA&redirect_uri=https://tantorial.com" target="_blank" rel="noopener noreferrer"><img src="https://marketplacecontent.zoom.us/zoom_marketplace/img/add_to_zoom.png" height="32" alt="Add to ZOOM" /></a>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- <script src="/static/smart-selects/admin/js/chainedfk.js"></script>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-8 col-md-8 col-lg-7 mx-auto">
+				<div class="card border-0 shadow rounded-3 my-5">
+					<div class="card-body p-2 p-sm-5">
+						<h5 class="card-title text-center mb-3 fw-light fs-5">Book a Lesson</h5>
+						<p class="text-center font-weight-bold">
+							Schedule a Lesson with {{userprofile.first_name}} {{userprofile.last_name}}
+						</p>
+						<p class="fs-5 font-weight-bold">
+							Propose Fee: {{userprofile.user.profileinfo.amount | intcomma}} XAF Per
+							{{userprofile.user.profileinfo.charge}}
+						</p>
+						<form class="needs-validation" method="post" action="" novalidate>
+							{% csrf_token %}
+							{{book_form.media}}
+
+							<div class="row">
+								<div class='col-md-6'>
+									{{book_form.start|as_crispy_field}}
+								</div>
+								<div class='col-md-6'>
+									{{book_form.end|as_crispy_field}}
+								</div>
+								<div class='col-md-6'>
+									{{book_form.mode|as_crispy_field}}
+								</div>
+								<div class="col-md-6">
+									<label for="inlineFormInputGroup">Fee Proposal</label>
+									<div class="input-group mb-2">
+										<div class="input-group-prepend">
+											<div class="input-group-text">XAF</div>
+										</div>
+										<input type="text" class="form-control" id="inlineFormInputGroup"
+											value="{{userprofile.user.profileinfo.amount | intcomma}}">
+										<div class="input-group-prepend">
+											<div class="input-group-text">/{{userprofile.user.profileinfo.charge}}</div>
+										</div>
+									</div>
+								</div>
+								<div class="d-grid">
+									<button class="btn btn-primary btn-login text-uppercase fw-bold mt-3" type="submit"
+										name='post_schedule'>Proceed</button>
+								</div>
+								<hr class="my-4">
+							</div>
+							{% comment %} <a
+								href="https://zoom.us/oauth/authorize?response_type=code&client_id=3Y2dxSxNSYCKDLYDPTs8PA&redirect_uri=https://tantorial.com"
+								target="_blank" rel="noopener noreferrer"><img
+									src="https://marketplacecontent.zoom.us/zoom_marketplace/img/add_to_zoom.png"
+									height="32" alt="Add to ZOOM" /></a> {% endcomment %}
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- <script src="/static/smart-selects/admin/js/chainedfk.js"></script>
 <script src="/static/smart-selects/admin/js/bindfields.js"></script> -->
 </body>
 
