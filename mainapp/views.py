@@ -186,11 +186,7 @@ class UserProfileView(DetailView):
             }
             new_message.save()
             subject = 'Message from Tantorial User'
-            html_message = render_to_string('email/mail.html', {
-                'user': self.request.user.profilepersonal.first_name,
-                'id': self.request.user.profilepersonal.id,
-                'asd': request.get_host()
-            })
+            html_message = render_to_string('email/mail.html')
             message = f'{self.request.user.profilepersonal.first_name} sent you a messages'
             from_email = settings.EMAIL_HOST_USER
             to_email = (self.get_object().user.email,)
