@@ -1047,7 +1047,7 @@ class OnlineLessonNotification(TemplateView):
         context = super().get_context_data(**kwargs)
         my_lesson = OnlineLesson.objects.filter(teacher=self.request.user).filter(
             Q(is_decline=False) & Q(is_confirm=False))
-        my_proposal = OnlineLesson.objects.filter(student=self.request.user)
+        # my_proposal = OnlineLesson.objects.filter(student=self.request.user)
         context['my_lesson'] = my_lesson
         return context
 

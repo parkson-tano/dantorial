@@ -4,6 +4,7 @@
   <div class="card mb-3 mx-md-5 mx-sm-auto" style="border: 0px solid red">
     <div class="card-body mx-md-4 mx-sm-0">
       <h5 class="card-title text-center mb-3 fw-bold fs-5">Lesson Details</h5>
+
       <div class="row mx-auto">
         {% if notification.teacher == request.user %}
         <p>
@@ -57,7 +58,7 @@
         </p>
         <div>
           {% if notification.teacher == request.user %} 
-		  {% if notification.is_confirm %}
+          {% if notification.is_confirm %}
           <button class="btn btn-success font-weight-bold">
             You Accepted this Lesson
           </button>
@@ -120,7 +121,7 @@
           {% endif %}
           <a
             href="{% url 'dantorial:allcategory' %}"
-            class="btn btn-primary mt-3"
+            class="btn btn-primary"
             >Find the best Tutor</a
           >
 
