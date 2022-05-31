@@ -1,72 +1,79 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %} request history {%endblock title %}
-	{% block content %}
-		<div class="col-md-6 col-sm-12 ml-auto mr-auto">
-			<div class="card mb-3" style="border: 0px solid red">
-				<div class="card-body ml-auto mr-auto">
-					<h5 class="card-title text-center mb-3 fw-bold fs-5">Lesson History</h5>
-					{% comment %} {% for notify in my_lesson %}
-						<div class="row mx-2 ml-auto mr-auto">
-							<span>
-                        	{% if notify.is_confirm %}
-                        	  You Accepted this Request
-                        	<a href="{% url 'dantorial:notification_detail' notify.id %}" class="btn btn-success btn-sm">See Details</a><br>
-   	 
-                        	<span class="direct-chat-timestamp">{{notify.date_created|timesince}}</span>
-                        	<i class="fas fa-check-circle text-success"  aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Accepted"></i>
-                        	{% elif notify.is_decline %}
-                        	You Rejected this Request
-                        	<a href="{% url 'dantorial:notification_detail' notify.id %}" class="btn btn-danger btn-sm">See Details</a><br>
-                        	{{notify.date_created|timesince}}  ago
-                        	<i class="fas fa-check-circle text-danger"  aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Rejected"></i>
-                        	{% elif notify.is_cancel %}
-                        	This Request is Cancel
-                        	<a href="{% url 'dantorial:notification_detail' notify.id %}" class="btn btn-danger btn-sm">See Details</a><br>
-                        	{{notify.date_created|timesince}}  ago
-                        	<i class="fas fa-check-circle text-danger"  aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Cancel"></i>
-                        	{% else %}
-                        	You have A pending request
-                        	<a href="{% url 'dantorial:notification_detail' notify.id %}" class="btn btn-secondary btn-sm">See Details</a>	<br>
-                        	{{notify.date_created|timesince}}  ago
-                        	    <i class="fas fa-check-circle"  aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Pending"></i>
-                        	{% endif %}
-                        	</span>
-                        	
-						</div>
-						<hr>
-					{% endfor %} {% endcomment %}
-					{% for proposal in my_proposal %}
-					<div class="row mx-2">
-							<span>
-                        	{% if proposal.is_confirm %}
-                        	  Your Request was Accepted
-                        	<a href="{% url 'dantorial:notification_detail' proposal.id %}" class="btn btn-success btn-sm">See Details</a><br>
-   	 
-                        	<span class="direct-chat-timestamp">{{proposal.date_created|timesince}}</span>
-                        	<i class="fas fa-check-circle text-success"  aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Accepted"></i>
-                        	{% elif proposal.is_decline %}
-                        	Your Request was Rejected
-                        	<a href="{% url 'dantorial:notification_detail' proposal.id %}" class="btn btn-danger btn-sm">See Details</a> <br>
-                        	{{proposal.date_created|timesince}}  ago
-                        	<i class="fas fa-check-circle text-danger"  aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Rejected"></i>
-                        	{% elif proposal.is_cancel %}
-                        	You Cancel this Request
-                        	<a href="{% url 'dantorial:notification_detail' proposal.id %}" class="btn btn-warning btn-sm">See Details</a> <br>
-                        	{{proposal.date_created|timesince}}  ago
-                        	<i class="fas fa-check-circle text-danger"  aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Cancel"></i>
-                        	{% else %}
-                        	Your Request is pending
-                        	<a href="{% url 'dantorial:notification_detail' proposal.id %}" class="btn btn-secondary btn-sm">See Details</a> <br>
-                        	{{proposal.date_created|timesince}}  ago
-                        	    <i class="fas fa-check-circle"  aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Pending"></i>
-                        	{% endif %}
-                        	</span>
-                        	
-						</div>
-						<hr>
-					{% endfor %}
+{% block content %}
+
+
+<div class="col-md-6 col-sm-12 mr-auto ml-auto">
+	<div class="card mb-3" style="border: 0px solid red">
+		<div class="card-body">
+			<h5 class="card-title text-center mb-3 fw-bold fs-5">Lesson History</h5>
+			<!-- header filter -->
+			<div class="row mb-3">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div class="panel panel-default text-center">
+						<button class="active btn btn-primary mb-2" data-toggle="portfilter"
+							data-target="all">All</button>
+						<button class="btn btn-success mb-2" data-toggle="portfilter"
+							data-target="accept">Accepted</button>
+						<button class="btn btn-secondary mb-2" data-toggle="portfilter"
+							data-target="pending">Pending</button>
+						<button class="btn btn-danger mb-2" data-toggle="portfilter"
+							data-target="reject">Rejected</button>
+						<button class="btn btn-warning mb-2" data-toggle="portfilter"
+							data-target="cancel">Canceled</button>
+					</div>
 				</div>
 			</div>
+			<!-- end filter -->
+			{% for proposal in my_proposal %}
+			<div class="d-flex justify-content-center">
+			{% if proposal.is_confirm %}
+			<div data-tag="accept">Your Request was Accepted
+				<a href="{% url 'dantorial:notification_detail' proposal.id %}" class="btn btn-success btn-sm">See
+					Details</a> <br>
+
+				<span class="direct-chat-timestamp">{{proposal.date_created|timesince}}</span>
+				<i class="fas fa-check-circle text-success" aria-hidden="true" data-toggle="tooltip"
+					data-placement="top" title="Accepted"></i>
+					<hr>
+			</div>
+			{% elif proposal.is_decline %}
+			<div data-tag="reject">Your Request was Rejected
+				<a href="{% url 'dantorial:notification_detail' proposal.id %}" class="btn btn-danger btn-sm">See
+					Details</a> <br>
+				{{proposal.date_created|timesince}} ago
+				<i class="fas fa-check-circle text-danger" aria-hidden="true" data-toggle="tooltip" data-placement="top"
+					title="Rejected"></i>
+					<hr>
+			</div>
+			{% elif proposal.is_cancel %}
+			<div data-tag="cancel">You Cancel this Request
+				<a href="{% url 'dantorial:notification_detail' proposal.id %}" class="btn btn-warning btn-sm">See
+					Details</a> <br>
+				{{proposal.date_created|timesince}} ago
+				<i class="fas fa-check-circle text-danger" aria-hidden="true" data-toggle="tooltip" data-placement="top"
+					title="Cancel"></i>
+					<hr>
+			</div>
+			{% else %}
+			<div data-tag="pending">Your Request is pending
+				<a href="{% url 'dantorial:notification_detail' proposal.id %}" class="btn btn-secondary btn-sm">See
+					Details</a> <br>
+				{{proposal.date_created|timesince}} ago
+				<i class="fas fa-check-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top"
+					title="Pending"></i>
+					<hr>
+			</div>
+			{% endif %}
 		</div>
-	{% endblock %}
+		{% endfor %}
+	</div>
+	</div>
+</div>
+<script>
+	!function (d) { var c = "portfilter"; var b = function (e) { this.$element = d(e); this.stuff = d("[data-tag]"); this.target = this.$element.data("target") || "" }; b.prototype.filter = function (g) { var e = [], f = this.target; this.stuff.fadeOut("fast").promise().done(function () { d(this).each(function () { if (d(this).data("tag") == f || f == "all") { e.push(this) } }); d(e).show() }) }; var a = d.fn[c]; d.fn[c] = function (e) { return this.each(function () { var g = d(this), f = g.data(c); if (!f) { g.data(c, (f = new b(this))) } if (e == "filter") { f.filter() } }) }; d.fn[c].defaults = {}; d.fn[c].Constructor = b; d.fn[c].noConflict = function () { d.fn[c] = a; return this }; d(document).on("click.portfilter.data-api", "[data-toggle^=portfilter]", function (f) { d(this).portfilter("filter") }) }(window.jQuery);
+
+</script>
+
+{% endblock %}

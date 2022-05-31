@@ -38,6 +38,7 @@
 <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+
     <title>
         {% block title %} {% endblock title %}
     </title>
@@ -371,6 +372,29 @@ section {
 <script src="//code.tidio.co/qvym5xdmezybvrxslrqzb6twcffkmgvc.js" async></script>
 
 <!-- <script type="text/javascript" src="https://www.monetbil.com/widget/v2/monetbil.min.js"></script> -->
+<script> 
+<script>
+	$(document).ready(function () {
+
+			$(".filter-button").click(function () {
+				var value = $(this).attr('data-filter');
+
+				if (value == "all") {
+					//$('.filter').removeClass('hidden');
+					$('.filter').show('1000');
+				}
+				else {
+					//            $('.filter[filter-item="'+value+'"]').removeClass('hidden');
+					//            $(".filter").not('.filter[filter-item="'+value+'"]').addClass('hidden');
+					$(".filter").not('.' + value).hide('3000');
+					$('.filter').filter('.' + value).show('3000');
+
+				}
+			});
+
+		});
+</script>
+</script>
 </body>
 
 </html>

@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.base import Model
 from django.views.generic.edit import CreateView
+from setuptools import Require
 from category.models import *
 from django.contrib.auth.models import User
 from PIL import Image
@@ -473,8 +474,8 @@ class OnlineLesson(models.Model):
     amount = models.IntegerField(null=True, blank=True)
     start = models.DateTimeField(default=timezone.now)
     end = models.DateTimeField(default=timezone.now)
-    mode = models.CharField(max_length=255, null=True,
-                            blank=True, choices=MODE)
+    mode = models.CharField(max_length=255, null=False,
+                            blank=False, choices=MODE)
     is_seen = models.BooleanField(default=False)
     is_decline = models.BooleanField(default=False)
     is_cancel = models.BooleanField(default=False)
