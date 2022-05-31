@@ -352,8 +352,6 @@ class Verification(models.Model):
 class Upgrade(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     amount = models.IntegerField(null=True, blank=True)
-    # start_date = models.DateTimeField(auto_now_add=True)
-    # end_date =models.DateTimeField(null=True, blank=True)
     is_complete = models.BooleanField(default=False)
     payment_method = models.CharField(max_length=40, choices=PAYMENT)
     phone_number = models.CharField(max_length=15)
@@ -450,19 +448,6 @@ class Privacy(models.Model):
     privacy_policy = RichTextField()
     terms = RichTextField()
 
-    # def __str__(self):
-    #     return self.id
-
-
-# class Booked(models.Model):
-#     student = models.ForeignKey(User, on_delete=models.CASCADE, related_name='student')
-#     teacher = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tutor')
-#     is_confirm = models.BooleanField(default=False)
-#     date_created = models.DateTimeField(auto_now_add=True)
-
-#     def __str__(self):
-#         return f'{self.student.profilepersonal.first_name} and {self.teacher.profilepersonal.first_name}'
-
 
 class OnlineLesson(models.Model):
     student = models.ForeignKey(
@@ -501,6 +486,18 @@ class LessonPayment(models.Model):
 def create_profile(sender, instance, created, **kwargs):
     if created:
         LessonPayment.objects.create(lesson=instance)
+
+
+class LessonEscrow(models.Model):
+    lesson = models.OneToOneField(LessonPayment, on_delete=models.CASCADE)
+    payout = models.BooleanField(default=False)
+    refund = models.BooleanField(default=False)
+    complete = models.BooleanField(default=False)
+    reason = models.TextField()
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.lesson) + ' escrow'
 
 
 class NewsLetter(models.Model):
