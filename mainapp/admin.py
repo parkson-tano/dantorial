@@ -63,4 +63,4 @@ admin.site.register(Upgrade, UpgradeAdmin)
 admin.site.register(ProfileViewed, ProfileViewedAdmin)
 admin.site.register(OnlineLesson, OnlineLessonAdmin)
 admin.site.register([About, OurTeam,  HowToUse, SearchHistory,
-                    Privacy, LessonPayment, LessonEscrow, NewsLetter])
+                    Privacy, LessonEscrow, Contract, NewsLetter])

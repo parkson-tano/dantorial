@@ -187,6 +187,10 @@ section {
 
                     </ul>
                     </li>
+					<li class="nav-item">
+                        <a class="nav-link text-dark font-weight-bold" href="{% url 'dantorial:contract' %}"><i class='fa fa-briefcase'></i>Contract
+                    </a>
+                    </li>
                     
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-black font-weight-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -372,7 +376,6 @@ section {
 <script src="//code.tidio.co/qvym5xdmezybvrxslrqzb6twcffkmgvc.js" async></script>
 
 <!-- <script type="text/javascript" src="https://www.monetbil.com/widget/v2/monetbil.min.js"></script> -->
-<script> 
 <script>
 	$(document).ready(function () {
 
@@ -394,7 +397,12 @@ section {
 
 		});
 </script>
+<script>
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
 </script>
+
 </body>
 
 </html>

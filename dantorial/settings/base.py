@@ -271,7 +271,7 @@ LANGUAGES = (
     ('fr', _('French')),
 )
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Libreville'
 
 USE_I18N = True
 

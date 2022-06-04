@@ -1,0 +1,98 @@
+{% extends 'base.html' %} {% load static %} {% load humanize %}
+{% block title %} tantorial-contract {% endblock title %} {% block content %}
+<div class="container mr-auto ml-auto">
+    <p class="fs-4 font-weight-bold text-center">Contract Details</p>
+
+    <div class="mb-4 mx-5">
+        <p class="font-weight-bolder fs-5">
+            {% if contract.escrow.lesson.teacher == request.user %} Hired by:
+            {{contract.escrow.lesson.student.profilepersonal.first_name}}
+            {{contract.escrow.lesson.student.profilepersonal.last_name}} {% else %} Hired:
+            {{contract.escrow.lesson.teacher.profilepersonal.first_name}}
+            {{contract.escrow.lesson.teacher.profilepersonal.last_name}}
+            {% endif %}
+        </p>
+
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <p class="fs-5 font-weight-bold text-center">Escrow</p>
+                <p class="fs-5 dispaly-6 text-center">{{contract.escrow.amount|intcomma}} XAF</p>
+            </div>
+            <div class="col-md-4 mb-3">
+                <p class="fs-5 font-weight-bold text-center">Status</p>
+                {% if contract.successful %}
+                <p class="fs-5 dispaly-6 text-center">Completed</p>
+                {% else %}
+                <p class="fs-5 dispaly-6 text-center">Pending</p>
+                {% endif %}
+            </div>
+            <div class="col-md-4 mb-3">
+                <p class="fs-5 font-weight-bold text-center">Payout</p>
+                {% if contract.escrow.payout %}
+                <p class="fs-5 dispaly-6 text-center">{{contract.escrow.payout_amount|intcomma}} XAF</p>
+                </p>
+                {% else %}
+                <p class="fs-5 dispaly-6 text-center">
+                    0 XAF
+                </p>
+                </p>
+                {% endif %}
+
+            </div>
+            <!-- <div class="col-md-2 mb-2">
+                <p class="fs-5 font-weight-bold">Status Action</p>
+                {% if contract.successful %}
+                <p class="fs-5 dispaly-6">Successful</p>
+                {% else %}
+                <form method="post">
+                    {% csrf_token %}
+                    <button class="btn btn-success font-weight-bold" name="post_complete">Successful</button>
+                </form>
+                {% endif %}
+            </div> -->
+            <div class="col-md-4 mb-3">
+                <p class="fs-5 font-weight-bold text-center">Action</p>
+
+                {% if contract.escrow.payout or contract.escrow.refund %}
+                {% if contract.escrow.lesson.teacher == request.user or contract.escrow.lesson.student == request.user %}
+                {% if contract.escrow.payout %}
+                <p class="fs-5 dispaly-6">Paid</p>
+                {% elif contract.escrow.refund %}
+                <p class="fs-5 dispaly-6 text-center">Refunded</p>
+                {% endif %}
+                {% endif %}
+                {% else %}
+                <form method="POST" id="payout_refund">
+                    {% csrf_token %}
+                    {% if contract.escrow.lesson.teacher == request.user %}
+                    <button class="btn btn-outline-success font-weight-bold d-block" name="post_refund">
+                        Refund
+                    </button>
+                    {% else %}
+                    <button class="btn btn-outline-success font-weight-bold d-block" name="post_payout">
+                        Payout
+                    </button>
+                    {% endif %}
+                </form>
+                {% endif %}
+            </div>
+            <div class="col-md-4 mb-3">
+                <p class="fs-5 font-weight-bold text-center">Lesson Details</p>
+                <a href="{% url 'dantorial:notification_detail' contract.escrow.lesson.id %}" class="btn btn-warning d-block font-weight-bold">
+                    See lesson Details
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <p class="fs-5 font-weight-bold text-center">Account Balance</p>
+                <a href="{% url 'dantorial:notification_detail' contract.escrow.lesson.id %}"
+                    class="btn btn-warning d-block font-weight-bold">
+                    See Acoount Balance
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
