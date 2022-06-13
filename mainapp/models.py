@@ -1,4 +1,5 @@
 from pyexpat import model
+from secrets import choice
 from django.db import models
 from django.db.models.base import Model
 from django.views.generic.edit import CreateView
@@ -515,8 +516,8 @@ class Contract(models.Model):
         return str(self.escrow.lesson) + ' contract'
 
 
-class EarnSpend(models.Model):
-    user = models.ForeignKey(
+class AccountBalance(models.Model):
+    user = models.OneToOneField(
         User, on_delete=models.CASCADE, null=True, blank=True)
     earn = models.IntegerField(default=0)
     spend = models.IntegerField(default=0)
@@ -525,7 +526,34 @@ class EarnSpend(models.Model):
     def __str__(self):
         return str(self.user.profilepersonal) + ' earn'
 
-
-class NewsLetter(models.Model):
-    email = models.EmailField()
+class AccountHistory(models.Model):
+    account = models.ForeignKey(AccountBalance, on_delete=models.CASCADE, null=True, blank=True)
+    amount = models.IntegerField()
+    transaction = models.CharField(max_length=20, choices=(
+        ('Withdraw', 'Withdraw'),
+        ('Deposit', 'Deposit'),
+    ))
     date_created = models.DateTimeField(auto_now_add=True)
+
+class Payment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    amount = models.IntegerField(null=True, blank=True)
+    is_complete = models.BooleanField(default=False)
+    payment_method = models.CharField(max_length=40, choices=PAYMENT)
+    phone_number = models.CharField(max_length=15)
+    escrow_payment = models.BooleanField(default=False)
+    purpose = models.CharField(max_length=20, choices=(
+        ('Payout', 'Payout'),
+        ('Refund', 'Refund'),
+    ))
+    reference = models.CharField(null=True, blank=True, max_length=100)
+    status = models.CharField(null=True, blank=True, max_length=100)
+    reason = models.CharField(null=True, blank=True, max_length=100)
+    code = models.CharField(null=True, blank=True, max_length=100)
+    operator = models.CharField(null=True, blank=True, max_length=100)
+    operator_ref = models.CharField(null=True, blank=True, max_length=100)
+    external_ref = models.CharField(null=True, blank=True, max_length=100)
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.user) + ' payment'

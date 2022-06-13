@@ -3,12 +3,10 @@ from django import forms
 from django.contrib.auth.models import User
 from django.db.models import fields
 from .models import *
-
 from flatpickr import DatePickerInput, TimePickerInput, DateTimePickerInput
 from category.models import Category
 from datetime import date
 # from bootstrap_datepicker_plus import DatePickerInput
-
 
 class DateSelectorWidget(forms.MultiWidget):
     def __init__(self, attrs=None):
@@ -34,7 +32,6 @@ class DateSelectorWidget(forms.MultiWidget):
         day, month, year = super().value_from_datadict(data, files, name)
         # DateField expects a single string that it can parse into a date.
         return '{}-{}-{}'.format(year, month, day)
-
 
 class UserRegistrationForm(forms.ModelForm):
     username = forms.CharField(widget=forms.TextInput)
@@ -66,16 +63,7 @@ class UserRegistrationForm(forms.ModelForm):
             forms.ValidationError("Password don't match")
         return pass2
 
-
 class PersonalProfileForm(forms.ModelForm):
-    # town = forms.ModelChoiceField(
-    #     queryset=Town.objects.all(),
-    #     empty_label=None,
-    #     required=True,
-    #     to_field_name='id',
-    #     label='Select town',
-    #     widget=forms.Select(attrs={'class': 'form-control'})
-    # )
     region = forms.ModelChoiceField(
         queryset=Region.objects.all(),
         empty_label=None,
@@ -84,14 +72,6 @@ class PersonalProfileForm(forms.ModelForm):
         label='Region',
         widget=forms.Select(attrs={'class': 'form-control'})
     )
-    # quater = forms.ModelChoiceField(
-    #     queryset=Quater.objects.filter(),
-    #     empty_label=None,
-    #     required=True,
-    #     to_field_name='id',
-    #     label='Select Quater',
-    #     widget=forms.Select(attrs={'class': 'form-control'})
-    # )
 
     class Meta:
         model = ProfilePersonal
@@ -106,102 +86,10 @@ class PersonalProfileForm(forms.ModelForm):
         labels = {
             'whatsapp_number': 'Whatsapp',
         }
-        # "account_type": forms.CharField(attrs= {
-        # 	'name' : 'account_type',
-        # 	'class': 'form-control',
-        # 	'id': 'floatingInput',
-        # 	'required' : True
-        # }),
-    #     "title": forms.CharField(attrs= {
-        # 		'name' : 'title',
-        # 		'class': 'form-control',
-        # 		'id': 'floatingInput',
-        # 		'required' : True
-        # 	}),
-    #     "gender": forms.CharField(attrs= {
-        # 		'name' : 'account_type',
-        # 		'class': 'form-control',
-        # 		'id': 'floatingInput',
-        # 		'required' : True
-        # 	}),
-    #     "level_of_education": forms.CharField(attrs= {
-        # 		'name' : 'level_of_education',
-        # 		'class': 'form-control',
-        # 		'id': 'floatingInput',
-        # 		'required' : True
-        # 	}),
-    #     "first_name": forms.TextInput(attrs= {
-        # 		'name' : 'firstName',
-        # 		'class': 'form-control',
-        # 		'id': 'floatingInput',
-        # 		'required' : True
-        # 	}),
-        # 	"last_name": forms.TextInput(attrs= {
-        # 		'name' : 'LastName',
-        # 		'class': 'form-control',
-        # 		'id': 'floatingInput',
-        # 		'required': True
-        # 	}),
-    #     "quater": forms.TextInput(attrs= {
-        # 		'name' : 'quater',
-        # 		'class': 'form-control',
-        # 		'id': 'floatingInput',
-        # 		'required': True
-        # 	}),
-        # 	"email": forms.EmailInput(attrs= {
-        # 		'name' : 'email',
-        # 		'class': 'form-control',
-        # 		'id': 'email',
-        # 		'required' : True
-        # 	}),
-        # 	"phone_number": forms.NumberInput(attrs= {
-        # 		'name' : 'phoneNumber',
-        # 		'class': 'form-control',
-        # 		'id': 'floatingInput',
-        # 		'required' : True
-        # 	}),
-        # 	"date_of_birth": forms.DateField(attrs= {
-        # 		'name' : 'date_of_birth',
-        # 		'class': 'form-control',
-        # 		'id': 'floatingInput',
-        # 		'required' : True
-        # 	}),
-
-        # 	"profile_pic": forms.ImageField(attrs= {
-        # 		'name' : 'profile_pic',
-        # 		'class': 'form-control',
-        # 		'id': 'floatingInput',
-        # 		'required' : True
-        # 	}),
-    #      "country": forms.CharField(attrs= {
-        # 		'name' : 'country',
-        # 		'class': 'form-control select-picker',
-        # 		'required' : True
-        # 	}),
-    #     "region": forms.CharField(attrs= {
-        # 		'name' : 'region',
-        # 		'class': 'form-control select-picker',
-        # 		'required' : True
-        # 	}),
-    #     "division": forms.CharField(attrs= {
-        # 		'name' : 'division',
-        # 		'class': 'form-control select-picker',
-        # 		'required' : True
-        # 	}),
-    #     "city": forms.CharField(attrs= {
-        # 		'name' : 'city',
-        # 		'class': 'form-control select-picker',
-        # 		'required' : True
-        # 	}),
-
-        # }
-
-
 class PersonalProfilePic(forms.ModelForm):
     class Meta:
         model = ProfilePersonal
         fields = ('id', 'profile_pic',)
-
 
 class ProfileInfoForm(forms.ModelForm):
     class Meta:
@@ -217,41 +105,16 @@ class ProfileInfoForm(forms.ModelForm):
                 'cols': 20,
                 'required': False
             }),
-            # "experience": forms.Textarea(attrs= {
-            # 	'name' : 'experience',
-            # 	'class': 'form-control',
-            #     'rows': 8,
-            #     'columns': 25,
-            # 	'required' : False
-            # }),
         }
-
 
 class UserLoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput)
     password = forms.CharField(widget=forms.PasswordInput)
-    # widgets = {
-    # 		"username": forms.TextInput(attrs= {
-    # 			'name' : 'username',
-    # 			'class': 'form-control',
-    # 			'id' : "floatingInput",
-    # 			'required' : True,
-    #             'placeholder':"name@example.com"
-    # 		}),
-    # "password": forms.PasswordInput(attrs= {
-    # 	'name' : 'password',
-    # 	'class': 'form-control',
-    # 	'id': 'floatingPassword',
-    #     'placeholder':"name@example.com"
-    # 	'required': True,
-    # }),
-
 
 class AddSubjectForm(forms.ModelForm):
     class Meta:
         model = Subject
         fields = ('category', 'subcategory', 'subject', 'charge', 'amount', )
-
 
 class AddExperienceForm(forms.ModelForm):
     class Meta:
@@ -264,31 +127,26 @@ class AddExperienceForm(forms.ModelForm):
 
         }
 
-
 class AddQualificationForm(forms.ModelForm):
     class Meta:
         model = Qualification
         fields = ('school', 'certificate', 'start_year',
                   'end_year', 'still_studying')
 
-
 class VerificationForm(forms.ModelForm):
     class Meta:
         model = Verification
         fields = ('document_type', 'number', 'photo_back', 'photo_front')
-
 
 class AvailabilityForm(forms.ModelForm):
     class Meta:
         model = Availability
         fields = ('day', 'hour')
 
-
 class SocialMediaForm(forms.ModelForm):
     class Meta:
         model = SocialMedia
         fields = ('facebook', 'instagram', 'linkedin', 'website', 'youtube')
-
 
 class UpgradeForm(forms.ModelForm):
     class Meta:
@@ -311,7 +169,6 @@ class UpgradeForm(forms.ModelForm):
             raise forms.ValidationError('this email is already in use')
         return phone
 
-
 class AddScheduleForm(forms.ModelForm):
     class Meta:
         model = OnlineLesson
@@ -326,29 +183,9 @@ class AddScheduleForm(forms.ModelForm):
                     'name': 'end'
                 }
             ),
-            # 'amount' : forms.NumberInput(attrs = {
-            # 	'name': 'amount',
-            # 	'label': 'Propose Fee',
-
-            # }
         }
-
 
 class ConfirmScheduleForm(forms.ModelForm):
     class Meta:
         model = OnlineLesson
         fields = ('is_confirm',)
-
-
-class NewsLetterForm(forms.ModelForm):
-    class Meta:
-        model = NewsLetter
-        fields = ('email',)
-        # widgets = {
-        # 	'email': forms.EmailInput(
-        # 		attrs = {
-        # 		'name': 'newsletter',
-        # 		'class': 'form-control shadow-none',
-        # 		}),
-
-        # }

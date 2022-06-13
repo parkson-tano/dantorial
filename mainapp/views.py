@@ -50,7 +50,7 @@ from campay.sdk import Client
 from django.http import JsonResponse
 from django.db.models import Avg
 from django.utils.translation import gettext as _
-
+from notifications.signals import notify
 import random
 import os
 from dotenv import load_dotenv
@@ -1027,6 +1027,9 @@ class ScheduleView(DetailView):
             new_schedule.save()
             messages.success(
                 self.request, f"Your Request has ben sent to {self.get_object().user.profilepersonal.first_name} {self.get_object().user.profilepersonal.last_name}")
+            notify.send(sender=self.request.user, recipient=self.get_object().user,
+                        verb=f'{self.request.user.profilepersonal.first_name} schedluel a lesson',
+                        cta_link='dantorial:notification_detail')
             return redirect(f'/accounts/login/?next=/userprofile/{self.get_object().id}')
 
         return self.get(self, request, *args, **kwargs)
@@ -1241,9 +1244,16 @@ class EscrowPaymentView(FormView):
             return redirect('/accounts/login/?next=/upgrade/')
 
         return super().dispatch(request, *args, **kwargs)
-    
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        amount = OnlineLesson.objects.filter(student=self.request.user)
+        context["amount"] = amount.amount
+        return context
+
     def form_valid(self, form):
         form.instance.user = self.request.user
+        amount = OnlineLesson.objects.filter(student=self.request.user)
         form.instance.amount = amount.amount
         form.instance.phone_number = form.cleaned_data.get('phone_number')
         form.instance.is_complete = True

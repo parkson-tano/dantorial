@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'category',
     'mainapp',
+    'notificate',
     'mooc',
     'messaging',
     'review',
@@ -76,7 +77,7 @@ INSTALLED_APPS = [
     'cookie_consent',
     'robots',
     # 'agora',
-    # 'notifications',
+    'notifications',
     # 'multiselectfield',
 
 ]
