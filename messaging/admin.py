@@ -8,7 +8,9 @@ class MessageAdmin(admin.ModelAdmin):
 class ContactAdmin(admin.ModelAdmin):
     list_display = ['first_name','email','date_created' ]
 
+class ChatAdmin(admin.ModelAdmin):
+    list_display = ['user', 'receiver', 'date_created']
 
 admin.site.register(Message, MessageAdmin)
 admin.site.register(Contact, ContactAdmin)
-admin.site.register(Chat)
+admin.site.register(Chat, ChatAdmin)

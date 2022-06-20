@@ -1,5 +1,8 @@
+from datetime import date
 from django.db import models
 from django.contrib.auth.models import User
+# from pytz import timezone
+from django.utils.timezone import now
 from review.models import Review
 from django.contrib.sessions.models import Session
 # Create your models here.
@@ -30,28 +33,33 @@ from django.contrib.sessions.models import Session
 # 	is_read = models.BooleanField(default=False)
 
 class Chat(models.Model):
-	user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+')
-	receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+')
+    receiver = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='+')
+    date_created = models.DateTimeField(default=now)
 
-	def __str__(self):
-		return (f'{self.user} and {self.receiver} chats')
+    def __str__(self):
+        return (f'{self.user} and {self.receiver} chats')
+
 
 class Message(models.Model):
-	chat = models.ForeignKey(Chat, on_delete=models.CASCADE)
-	sender_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+', null=True, blank=True)
-	receiver_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+')
-	name = models.CharField(max_length=256, null=True, blank=True)
-	email =models.EmailField(null=True, blank=True)
-	phone_number = models.IntegerField(null=True, blank=True)
-	message = models.TextField()
-	is_read = models.BooleanField(default=False)
-	date_created = models.DateTimeField(auto_now_add=True)
+    chat = models.ForeignKey(Chat, on_delete=models.CASCADE)
+    sender_user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='+', null=True, blank=True)
+    receiver_user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='+')
+    name = models.CharField(max_length=256, null=True, blank=True)
+    email = models.EmailField(null=True, blank=True)
+    phone_number = models.IntegerField(null=True, blank=True)
+    message = models.TextField()
+    is_read = models.BooleanField(default=False)
+    date_created = models.DateTimeField(auto_now_add=True)
 
 
 class Contact(models.Model):
-	first_name = models.CharField(max_length=156)
-	last_name = models.CharField(max_length=156, null=True, blank=True)
-	phone_number = models.CharField(max_length=15, null=True, blank=True)
-	email = models.EmailField()
-	message = models.TextField()
-	date_created = models.DateTimeField(auto_now_add=True)
+    first_name = models.CharField(max_length=156)
+    last_name = models.CharField(max_length=156, null=True, blank=True)
+    phone_number = models.CharField(max_length=15, null=True, blank=True)
+    email = models.EmailField()
+    message = models.TextField()
+    date_created = models.DateTimeField(auto_now_add=True)
