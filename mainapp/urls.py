@@ -113,6 +113,7 @@ urlpatterns = [
 
     # payment and support
     path('upgrade/', UpgradeAccountView.as_view(), name='upgrade_profile'),
+    path('escrowpay/', EscrowPaymentView.as_view(), name='escrow_payment'),
     path('payment-success/', PaymentSuccessView.as_view(), name='pay-success'),
     path('payment-fail/', PaymentFailView.as_view(), name='pay-fail'),
 
@@ -135,4 +136,8 @@ urlpatterns = [
     path('loaderio-c1a185840f545fea9a1f72d3524a5531.html/', load_test),
     path('loaderio-c1a185840f545fea9a1f72d3524a5531.txt/', load_test),
     #     path('meet/', meet, name="meet"),
+
+     #     contract
+     path('contract/', ContractView.as_view(), name='contract'),
+     path('contract/<int:pk>', ContractDetailView.as_view(), name='contract_detail'),
 ]

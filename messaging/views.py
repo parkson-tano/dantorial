@@ -1,3 +1,4 @@
+from time import time
 from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
@@ -14,81 +15,92 @@ from messaging.forms import MessageForm
 from django.urls import reverse_lazy, reverse
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from django.http.response import JsonResponse
+from django.utils.timezone import now
 import json
 
+
 class ChatView(TemplateView):
-	template_name = 'main/chat.html'
-	def dispatch(self, request, *args, **kwargs):
-		if request.user.is_authenticated:
-			pass
-		else:
-			return redirect('/accounts/login/?next=/message/')
-		return super().dispatch(request, *args, **kwargs)
-	def get_context_data(self, **kwargs):
-		context = super().get_context_data(**kwargs)
-		profile = self.request.user
-		chat = Chat.objects.filter(Q(user=profile) | Q(receiver=profile))
-		context['chats'] = chat
-		return context
+    template_name = 'main/chat.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            pass
+        else:
+            return redirect('/accounts/login/?next=/message/')
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        profile = self.request.user
+        chat = Chat.objects.filter(Q(user=profile) | Q(
+            receiver=profile)).order_by('-date_created')
+        context['chats'] = chat
+        return context
+
+
 class MessageView(TemplateView):
-	template_name = 'main/message.html'
-	# context_object_name = 'mess'
-	# model = Message
+    template_name = 'main/message.html'
+    # context_object_name = 'mess'
+    # model = Message
 
-	def dispatch(self, request, *args, **kwargs):
-		url_id = kwargs['pk']
-		profile = self.request.user
-		chat = Chat.objects.get(id=url_id)
-		if request.user.is_authenticated and (chat.user == profile or chat.receiver == profile):
-			pass
-		else:
-			return redirect('/accounts/login/?next=/message/')
-		return super().dispatch(request, *args, **kwargs)
+    def dispatch(self, request, *args, **kwargs):
+        url_id = kwargs['pk']
+        profile = self.request.user
+        chat = Chat.objects.get(id=url_id)
+        if request.user.is_authenticated and (chat.user == profile or chat.receiver == profile):
+            pass
+        else:
+            return redirect('/accounts/login/?next=/message/')
+        return super().dispatch(request, *args, **kwargs)
 
-	def get_context_data(self, **kwargs):
-		context = super().get_context_data(**kwargs)
-		url_id = kwargs['pk']
-		profile = self.request.user
-		chat = Chat.objects.get(id=url_id)
-		message = Message.objects.filter(Q(chat=url_id) & (Q(sender_user=profile) | Q(receiver_user=profile))).order_by('date_created')
-		# out = Message.objects.filter(receiver_user=profile).order_by('-date_created')
-		for mess in message:
-			if self.request.user == mess.receiver_user:
-				if self.request.user != mess.sender_user:
-					mess.is_read = True
-					mess.save()
-				else:
-					pass
-			chats_id = mess.chat.id
-		context['chat'] = url_id
-		context["message"] = message
-		return context
-		# context['out'] = out
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        url_id = kwargs['pk']
+        profile = self.request.user
+        chat = Chat.objects.get(id=url_id)
+        message = Message.objects.filter(Q(chat=url_id) & (
+            Q(sender_user=profile) | Q(receiver_user=profile))).order_by('date_created')
+        # out = Message.objects.filter(receiver_user=profile).order_by('-date_created')
+        for mess in message:
+            if self.request.user == mess.receiver_user:
+                if self.request.user != mess.sender_user:
+                    mess.is_read = True
+                    mess.save()
+                else:
+                    pass
+            chats_id = mess.chat.id
+        context['chat'] = url_id
+        context["message"] = message
+        return context
+        # context['out'] = out
+
 
 def send_message(request):
-    if request.POST.get('action') == 'post':
-        chatid = int(request.POST.get('chat_id'))
-        u = Chat.objects.get(id=chatid)
-        message_obj = Message.objects.filter(chat=chatid)
-        return JsonResponse({'message': message_obj})
-    return HttpResponse("Error access Denied by")
+	if request.POST.get('action') == 'post':
+		chatid = int(request.POST.get('chat_id'))
+		u = Chat.objects.get(id=chatid)
+		message_obj = Message.objects.filter(chat=chatid)
+		u.date_created = now
+		u.save()
+		return JsonResponse({'message': message_obj})
+	return HttpResponse("Error access Denied by")
+
 
 class SendView(View):
-    def post(self, request, *args, **kwargs):
-    	url_id = self.kwargs['pk']
-    	msg = request.POST.get('message')
-    	user = request.user
-    	c = Chat.objects.get(id=url_id)
-    	if c.receiver == request.user:
-    		receiver = c.user
-    	else:
-    		receiver = c.receiver
-    	new_message = Message(chat = c, sender_user = self.request.user,
-                receiver_user = receiver,
-                message = msg,
-                )
-    	new_message.save()
-    	return redirect(f'/message/chat/{url_id}')
+	def post(self, request, *args, **kwargs):
+		url_id = self.kwargs['pk']
+		msg = request.POST.get('message')
+		user = request.user
+		c = Chat.objects.get(id=url_id)
+		if c.receiver == request.user:
+			receiver = c.user
+		else:
+			receiver = c.receiver
+		new_message = Message(chat=c, sender_user=self.request.user, receiver_user=receiver, message=msg)
+		new_message.save()
+		c.date_created = new_message.date_created
+		c.save()
+		return redirect(f'/message/chat/{url_id}')
 
 
 # @login_required
@@ -106,7 +118,7 @@ class SendView(View):
 # def ajax_load_messages(request, pk):
 #     other_user = get_object_or_404(User, pk=pk)
 #     messages = Message.objects.filter(seen=False, receiver=request.user)
-    
+
 #     print("messages")
 #     message_list = [{
 #         "sender": message.sender.username,
@@ -118,10 +130,10 @@ class SendView(View):
 
 #     } for message in messages]
 #     messages.update(seen=True)
-    
+
 #     if request.method == "POST":
 #         message = json.loads(request.body)['message']
-        
+
 #         m = Message.objects.create(receiver=other_user, sender=request.user, message=message)
 #         message_list.append({
 #             "sender": request.user.username,

@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}
+tantorial-contracts
+{% endblock title %}
+{% block content %}
+<div class="container mr-auto ml-auto">
+    <p class="fs-4 font-weight-bold text-center ">My Contracts</p>
+    {% for contract in contracts %}
+
+    <div class="accordion accordion-flush mb-4" id="accordionFlushExample{{forloop.counter}}">
+        <div class="accordion-item">
+
+            <h2 class="accordion-header" id="flush-headingOne{{forloop.counter}}">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne{{forloop.counter}}" aria-expanded="false"
+                    aria-controls="flush-collapseOne">
+
+                    <p class="font-weight-bolder fs-5">
+                        {% if contract.escrow.lesson.teacher == request.user %}
+                        Hired by: {{contract.escrow.lesson.student.profilepersonal.first_name}}
+                        {{contract.escrow.lesson.student.profilepersonal.last_name}}
+                        {% else %}
+                        Hired: {{contract.escrow.lesson.teacher.profilepersonal.first_name}}
+                        {{contract.escrow.lesson.teacher.profilepersonal.last_name}}
+                        {% endif %}
+                    </p>
+
+                </button>
+            </h2>
+
+            <div id="flush-collapseOne{{forloop.counter}}" class="accordion-collapse collapse"
+                aria-labelledby="flush-headingOne{{forloop.counter}}"
+                data-bs-parent="#accordionFlushExample{{forloop.counter}}">
+                <div class="accordion-body">
+                    <div class="row">
+                        <div class="col-md-2 mb-3">
+                            <p class="fs-5 font-weight-bold">Amount</p>
+                            <p class="fs-5 dispaly-6">{{contract.escrow.amount|default:'...'|intcomma}} XAF</p>
+
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <p class="fs-5 font-weight-bold">Contract Status</p>
+                            {% if contract.successful %}
+                            <p class="fs-5 dispaly-6">Completed</p>
+                            {% else %}
+                            <p class="fs-5 dispaly-6">Pending</p>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <p class="fs-5 font-weight-bold">Lesson Details</p>
+                            <a href="{% url 'dantorial:notification_detail' contract.escrow.lesson.id %}"
+                                class="btn btn-warning">
+                                See Lesson Details
+                            </a>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <p class="fs-5 font-weight-bold">Contract Details</p>
+                            <a href="{% url 'dantorial:contract_detail' contract.id %}" class="btn btn-success">
+                                See More
+                            </a>
+                        </div>
+                        <div class="col-3">
+                            <p class="fs-5 font-weight-bold text-center">Date</p>
+                            <p class="fs-5 dispaly-6">
+                                {{contract.date_created}}
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {% endfor %}
+</div>
+
+{% endblock content %}

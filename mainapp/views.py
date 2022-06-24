@@ -50,7 +50,7 @@ from campay.sdk import Client
 from django.http import JsonResponse
 from django.db.models import Avg
 from django.utils.translation import gettext as _
-
+from notifications.signals import notify
 import random
 import os
 from dotenv import load_dotenv
@@ -1027,6 +1027,9 @@ class ScheduleView(DetailView):
             new_schedule.save()
             messages.success(
                 self.request, f"Your Request has ben sent to {self.get_object().user.profilepersonal.first_name} {self.get_object().user.profilepersonal.last_name}")
+            notify.send(sender=self.request.user, recipient=self.get_object().user,
+                        verb=f'{self.request.user.profilepersonal.first_name} schedluel a lesson',
+                        cta_link='dantorial:notification_detail')
             return redirect(f'/accounts/login/?next=/userprofile/{self.get_object().id}')
 
         return self.get(self, request, *args, **kwargs)
@@ -1142,7 +1145,6 @@ class FilterRegionView(TemplateView):
         kw = kwargs['pk']
         prof = ProfilePersonal.objects.filter(region=kw)
         regi = Region.objects.get(id=kw)
-        # print(f'region: {regi}')
         context["regi"] = regi
         context["prof"] = prof
         return context
@@ -1152,6 +1154,170 @@ class PriceView(TemplateView):
     template_name = 'main/pricing.html'
 
 
+class EscrowView(TemplateView):
+    template_name = 'main/escrow.html'
+
+
+class EscrowDetailView(DetailView):
+    pass
+
+
+class ContractView(TemplateView):
+    template_name = 'main/contract.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        account = self.request.user
+        lesson_pay = OnlineLesson.objects.select_related().filter(
+            Q(student=account) | Q(teacher=account)).filter(is_confirm=True)
+        lesson_escrow = LessonEscrow.objects.select_related().filter(lesson__in=lesson_pay)
+        contract = Contract.objects.select_related().filter(escrow__in=lesson_escrow)
+        context["contracts"] = contract
+        return context
+
+
+class ContractDetailView(DetailView):
+    template_name = 'main/contract_detail.html'
+    context_object_name = 'contract'
+    model = Contract
+
+    def post(self, request, *args, **kwargs):
+        pk = kwargs['pk']
+        contract = Contract.objects.get(id=pk)
+        if 'post_complete' in request.POST:
+            if contract.successful == False:
+                contract.successful = True
+                contract.escrow.lesson.is_complete = True
+
+            else:
+                contract.successful = False
+                contract.escrow.lesson.is_complete = False
+            contract.escrow.lesson.save()
+            contract.save()
+        if 'post_payout' in request.POST:
+            if contract.escrow.payout == False:
+                contract.escrow.payout = True
+                contract.successful = True
+                contract.escrow.lesson.is_complete = True
+                contract.escrow.payout_amount += contract.escrow.amount
+                contract.escrow.amount -= contract.escrow.payout_amount
+
+                # contract.escrow.lesson.is_complete = True
+            else:
+                contract.escrow.payout = False
+                contract.escrow.lesson.is_complete = False
+                contract.successful = False
+            contract.escrow.save()
+            contract.escrow.lesson.save()
+            contract.save()
+        if 'post_refund' in request.POST:
+            if contract.escrow.refund == False:
+                contract.escrow.refund = True
+                contract.successful = True
+                contract.escrow.lesson.is_complete = True
+                # contract.escrow.lesson.is_complete = True
+            else:
+                contract.escrow.refund = False
+                contract.successful = False
+                contract.escrow.lesson.is_complete = False
+                # contract.escrow.lesson.is_complete = False
+            contract.escrow.save()
+            contract.escrow.lesson.save()
+            contract.save()
+        return self.get(self, request, *args, **kwargs)
+
+
 def load_test(request):
     return HttpResponse('loaderio-c1a185840f545fea9a1f72d3524a5531')
     # return render(request, 'loaderio-c1a185840f545fea9a1f72d3524a5531.html')
+
+
+class EscrowPaymentView(FormView):
+    template_name = 'main/upgrade.html'
+    form_class = UpgradeForm
+    success_url = reverse_lazy('dantorial:upgrade_profile')
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            pass
+        else:
+            return redirect('/accounts/login/?next=/upgrade/')
+
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        amount = OnlineLesson.objects.filter(student=self.request.user)
+        context["amount"] = amount.amount
+        return context
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        amount = OnlineLesson.objects.filter(student=self.request.user)
+        form.instance.amount = amount.amount
+        form.instance.phone_number = form.cleaned_data.get('phone_number')
+        form.instance.is_complete = True
+        pay = form.save(commit=False)
+        profile = ProfilePersonal.objects.get(user=self.request.user)
+        # subscribe(form.instance.amount, form.instance.phone_number)
+        campay = Client({
+            "app_username": os.getenv('CAMPAY_APP_USERNAME'),
+            "app_password": os.getenv('CAMPAY_APP_PASSWORD'),
+            "environment": "DEV"  # use "DEV" for demo mode or "PROD" for live mode
+        })
+        collect = campay.collect({
+            "amount": amount.amount,  # The amount you want to collect
+            "currency": "XAF",
+            # Phone number to request amount from. Must include country code
+            "from": form.instance.phone_number,
+            "description": "Tantorial Premium Account",
+            "first_name": self.request.user.profilepersonal.first_name
+        })
+        print(collect)
+        disburse = campay.disburse({
+            "amount": "5",  # The amount you want to disburse
+            "currency": "XAF",
+            # Phone number to disburse amount to. Must include country code
+            "to": form.instance.phone_number,
+            "description": "Withdrwal from tantorial"
+        })
+        form.instance.reference = collect['reference']
+        form.instance.status = collect['status']
+        form.instance.reason = collect['reason']
+        form.instance.code = collect['code']
+        form.instance.operator = collect['operator']
+        form.instance.operator_ref = collect['operator_reference']
+        form.instance.external_ref = collect['external_reference']
+        form.instance.escrow_payment = True
+
+        # print(disburse)
+        pay = form.save(commit=False)
+        if form.instance.payment_method == 'MTN Mobile Money':
+            messages.success(self.request, "Dial *126# to complete payment")
+        else:
+            messages.success(self.request, "Dial #150*50# to complete payment")
+        # if collect.status == 'SUCCESSFUL':
+        # if Upgrade.objects.filter(user=self.request.user).exists():
+        #     redirect('dantorial:index')
+        if collect['status'] == 'SUCCESSFUL':
+            form.instance.is_complete = True
+            pay.save()
+            self.success_url = reverse_lazy('dantorial:pay-success')
+            subject = "Payment Confirmation"
+            message = f'{self.requset.user.profilepersonal.first_name},Your Payment for Premium Service is complete'
+            from_email = settings.DEFAULT_FROM_EMAIL
+            to_email = (self.request.user.email, )
+            send_mail(subject, message, from_email,
+                      to_email, fail_silently=True)
+        else:
+            form.instance.is_complete = False
+            self.success_url = reverse_lazy('dantorial:pay-fail')
+            subject = "Payment Fail"
+            message = f'{self.request.user.profilepersonal.first_name},Your Payment for Premium Service is not complete'
+            from_email = settings.DEFAULT_FROM_EMAIL
+            to_email = (self.request.user.email, )
+            # send_mail(subject, message, from_email, to_email, fail_silently=True)
+            # send_mail('hey thanks for nothing', 'here is the message', settings.DEFAULT_FROM_EMAIL, (self.request.user.email,), fail_silently=True,)
+            pay.save()
+
+        return super().form_valid(form)

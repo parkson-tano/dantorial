@@ -1,9 +1,8 @@
-{% extends "base.html" %} {% load static %} {% block title %} notification
-{%endblock title %} {% block content %}
+{% extends "base.html" %} {% load static %} {% load humanize %} {% block title %} notification {%endblock title %} {% block content %}
 <div class="col-md-6 col-sm-12 ml-auto mr-auto">
-  <div class="card mb-3 mx-md-5 mx-sm-auto" style="border: 0px solid red">
+  <div class="card mb-2 mx-md-5 mx-sm-auto" style="border: 0px solid red">
     <div class="card-body mx-md-4 mx-sm-0">
-      <h5 class="card-title text-center mb-3 fw-bold fs-5">Lesson Details</h5>
+      <h5 class="card-title text-center mb-2 fw-bold fs-5">Lesson Details</h5>
 
       <div class="row mx-auto">
         {% if notification.teacher == request.user %}
@@ -53,34 +52,36 @@
         <p>
           Propose Fee:
           <span class="font-weight-bold text-title"
-            >{{notification.amount|default:'...'}} XAF</span
+            >{{notification.amount|intcomma}} XAF</span
           >
         </p>
         <div>
-          {% if notification.teacher == request.user %} 
-          {% if notification.is_confirm %}
-          <button class="btn btn-success font-weight-bold">
-            You Accepted this Lesson
-          </button>
-          <span>
-            <form method="POST">
-              {% csrf_token %}
-              <button class="btn btn-outline-danger" name="post_decline">
-                Decline
-              </button>
-            </form>
-          </span>
+          {% if notification.lessonescrow.complete %}
+            <span class="font-weight-bold text-title"> Lesson Completed </span>
+            {% else %} {% if notification.teacher == request.user %} {% if notification.is_confirm %}
+            <button class="btn btn-success font-weight-bold mb-2">
+              You Accepted this Lesson
+            </button>
+            <span>
+              <form method="POST">
+                {% csrf_token %}
+                <button class="btn btn-outline-danger" name="post_decline">
+                  Decline
+                </button>
+              </form>
+            </span>
 
-          {% elif notification.is_decline %}
-          <button class="btn btn-danger font-weight-bold">
-            You Rejected this Lesson
-          </button>
+            {% elif notification.is_decline %}
+            <button class="btn btn-danger font-weight-bold mb-2">
+              You Rejected this Lesson
+            </button>
 
-          {% elif notification.is_cancel %}
-          <button class="btn btn-warning font-weight-bold">
-            This Request has been cancel
-          </button>
-          {% else %}
+            {% elif notification.is_cancel %}
+            <button class="btn btn-warning font-weight-bold mb-2">
+              This Request has been cancel
+            </button>
+            {% else %}
+
           <form method="POST">
             {% csrf_token %}
             <button class="btn btn-outline-success" name="post_accept">
@@ -91,7 +92,7 @@
             </button>
           </form>
           {% endif %} {% else %} {% if notification.is_confirm %}
-          <button class="btn btn-success font-weight-bold">
+          <button class="btn btn-success font-weight-bold mb-2">
             Your request is Accepted
           </button>
           <span>
@@ -102,6 +103,9 @@
               </button>
             </form>
           </span>
+          <a href="{% url 'dantorial:escrow_payment' %}" class="btn btn-success font-weight-bold mt-2">
+            Proceed to Payment
+          </a>
 
           {% elif notification.is_decline %}
           <button class="btn btn-danger font-weight-bold">
@@ -118,14 +122,13 @@
               Cancel
             </button>
           </form>
+          {% endif %} {% endif %}
+          
           {% endif %}
-          <a
-            href="{% url 'dantorial:allcategory' %}"
-            class="btn btn-primary"
+          <br>
+          <a href="{% url 'dantorial:allcategory' %}" class="btn btn-primary mt-3"
             >Find the best Tutor</a
           >
-
-          {% endif %}
         </div>
       </div>
       <hr />
