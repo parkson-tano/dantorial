@@ -1,3 +1,4 @@
+{% load pwa %}
 {% load cache %}
 {% load static %}
 {% load notifications_tags %}
@@ -6,384 +7,418 @@
 <!doctype html>
 <html lang="en">
 
-    <head>
+<head>
 
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Get connected to the Best Tutors. We help Bridge the gap between learners and tutors. Let’s learn and evolve">
-<meta name="keywords" content="tutor in cameroon, concour preparation, private tutors in cameroon, find learners around you, teach in cameroon, home lesson teacher in cameroon ">
-{% block metadescription %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description"
+    content="Get connected to the Best Tutors. We help Bridge the gap between learners and tutors. Let’s learn and evolve">
+  <meta name="keywords"
+    content="tutor in cameroon, concour preparation, private tutors in cameroon, find learners around you, teach in cameroon, home lesson teacher in cameroon ">
+  {% block metadescription %}
 
-{% endblock metadescription %}
-<!-- <link rel="preload" as="script"> -->
+  {% endblock metadescription %}
+  <!-- <link rel="preload" as="script"> -->
+
+  {% progressive_web_app_meta %}
+
+  <link rel="icon" href="{% static 'favicon_.ico' %}" type="image/x-icon" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'main.css' %}">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css"
+    rel="stylesheet">
+
+  <link href="{% static 'assets/css/styles.css' %}" rel="stylesheet">
 
 
+  {% comment %}
+  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet"> {% endcomment %}
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
 
-<link rel="icon" href="{% static 'favicon_.ico' %}" type="image/x-icon" />
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<!-- Font Awesome -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="{% static 'main.css' %}">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
-
-<link href="{% static 'assets/css/styles.css' %}" rel="stylesheet">
-
-
-{% comment %} <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet"> {% endcomment %}
-<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-<link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
-<link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
-
-    <title>
-        {% block title %} {% endblock title %}
-    </title>
-    <!--   <script data-ad-client="ca-pub-2235358777308916" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
-    {% load bootstrap4 %} {% bootstrap_css %} {% bootstrap_javascript jquery='full' %}
-<script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
+  <title>
+    {% block title %} {% endblock title %}
+  </title>
+  <!--   <script data-ad-client="ca-pub-2235358777308916" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
+  {% load bootstrap4 %} {% bootstrap_css %} {% bootstrap_javascript jquery='full' %}
+  <script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
 </head>
 
 <style>
-    a:hover {
-        text-decoration: none;
-    }
+  a:hover {
+    text-decoration: none;
+  }
 </style>
 <style>
-section {
-  padding: 60px 0;
-  overflow: hidden;
-}
+  section {
+    padding: 60px 0;
+    overflow: hidden;
+  }
 
-.section-bg {
-  background-color: #f5f5ff;
-}
+  .section-bg {
+    background-color: #f5f5ff;
+  }
 
-.section-title {
-  padding-bottom: 40px;
-}
-.section-title h2 {
-  font-size: 14px;
-  font-weight: 500;
-  padding: 0;
-  line-height: 1px;
-  margin: 0 0 5px 0;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: #aaaaaa;
-  font-family: "Poppins", sans-serif;
-}
-.section-title h2::after {
-  content: "";
-  width: 120px;
-  height: 1px;
-  display: inline-block;
-  background: #1acc8d;
-  margin: 4px 10px;
-}
-.section-title p {
-  margin: 0;
-  margin: 0;
-  font-size: 36px;
-  font-weight: 700;
-  text-transform: uppercase;
-  font-family: "Poppins", sans-serif;
-  color: #010483;
-}
-.features .icon-box {
-  display: flex;
-  align-items: center;
-  padding: 20px;
-  background: #f5f5ff;
-  transition: ease-in-out 0.3s;
-}
-.features .icon-box i {
-  font-size: 32px;
-  padding-right: 10px;
-  line-height: 1;
-}
-.features .icon-box h3 {
-  font-weight: 700;
-  margin: 0;
-  padding: 0;
-  line-height: 1;
-  font-size: 16px;
-}
-.features .icon-box h3 a {
-  color: #010483;
-  transition: ease-in-out 0.3s;
-}
-.features .icon-box h3 a:hover {
-  color: #01036f;
-}
-.features .icon-box:hover {
-  background: #ebebff;
-}
+  .section-title {
+    padding-bottom: 40px;
+  }
+
+  .section-title h2 {
+    font-size: 14px;
+    font-weight: 500;
+    padding: 0;
+    line-height: 1px;
+    margin: 0 0 5px 0;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #aaaaaa;
+    font-family: "Poppins", sans-serif;
+  }
+
+  .section-title h2::after {
+    content: "";
+    width: 120px;
+    height: 1px;
+    display: inline-block;
+    background: #1acc8d;
+    margin: 4px 10px;
+  }
+
+  .section-title p {
+    margin: 0;
+    margin: 0;
+    font-size: 36px;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-family: "Poppins", sans-serif;
+    color: #010483;
+  }
+
+  .features .icon-box {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    background: #f5f5ff;
+    transition: ease-in-out 0.3s;
+  }
+
+  .features .icon-box i {
+    font-size: 32px;
+    padding-right: 10px;
+    line-height: 1;
+  }
+
+  .features .icon-box h3 {
+    font-weight: 700;
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+    font-size: 16px;
+  }
+
+  .features .icon-box h3 a {
+    color: #010483;
+    transition: ease-in-out 0.3s;
+  }
+
+  .features .icon-box h3 a:hover {
+    color: #01036f;
+  }
+
+  .features .icon-box:hover {
+    background: #ebebff;
+  }
 </style>
 <header class="sticky-top">
-    <nav class="navbar navbar-light navbar-expand-lg bg-light sticky-top">
-        <div class="container me-auto">
-            <a class="navbar-brand" href="{% url 'dantorial:index' %}">
-                <div class='font-weight-bold text-uppercase'>
-                 Tantorial   
-                </div>
-                
-                <!-- <img src="{% static 'logo_png.png' %}" alt="find the best turtor in cameroon" style="width: 250px; height:80px"> -->
-            </a>
-
-            <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button> 
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
-                    {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link text-dark font-weight-bold" href="{% url 'dantorial_message:chat' %}"><i class='fa fa-envelope-o'></i>Message
-                            {% if messags.count > 0 %}
-                              <span class="badge rounded-pill badge-notification bg-success">{{ messags.count}}</span>
-                            {% endif %}
-                      
-                    </a>
-                    </li>
-
-                    <li>
-                        <a  class="nav-link text-dark font-weight-bold" href="{% url 'dantorial:myfavourites' %}">
-                            <i class='fa fa-heart'></i> Saved
-                            {% if user.profilepersonal.total_likes > 0 %}
-                                
-                            <span class="badge rounded-pill badge-notification bg-success like_count" id = 'like_count'>
-
-                      {{ user.profilepersonal.total_likes }}</span>
-                            {% endif %}
-                      
-                    </a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a href="#" class="nav-link text-dark dropdown-toggle font-weight-bold" data-toggle="dropdown" aria-expanded="false">
-                            <i class='fa fa-bell'></i> Notification
-                                <span class="badge rounded-pill badge-notification bg-success">{% live_notify_badge %}</span>
-                            {% if notificatio.count > 0 %}
-                              <span class="badge rounded-pill badge-notification bg-success">{{ notificatio.count}}</span>
-                            {% endif %}
-                    </a>
-                    <ul class="dropdown-menu border-0">
-                        {% if notificatio.count > 0 %}
-                        {% for notif in notificatio %}
-                        <li class="nav-link text-dark">
-                            <span>
-                            
-                            <a href="{% url 'dantorial:notification_detail' notif.id %}" class="card-link" >You have an Available Request</a>
-                            </span>
-                         </li>
-                        {% endfor %}
-                       
-                        {% else %}
-                        <li class="nav-link text-dark">No New Notification</li>
-                        {% endif %}
-                         <li class="nav-link text-dark"><a href="{% url 'dantorial:notification' %}" class="card-link">See all Unread</a></li>
-
-                    </ul>
-                    </li>
-					<li class="nav-item">
-                        <a class="nav-link text-dark font-weight-bold" href="{% url 'dantorial:contract' %}"><i class='fa fa-briefcase'></i>Contract
-                    </a>
-                    </li>
-                    
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-black font-weight-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <span><i class="fa fa-user" aria-hidden="true"></i></span> 
-                            {% trans "Account" %}
-                        </a>
-                        <ul class="dropdown-menu border-0" aria-lab elledby="navbarDropdownMenuLink">
-                            <li class="nav-link text-dark">
-                                <span>
-                                    <span><i class="fa fa-user" aria-hidden="true"></i></span>
-                                   {{user.profilepersonal.title|capfirst}} {{user.profilepersonal.first_name}} 
-                                </span>
-                            </li>
-                            <li>
-                        {% if user.profilepersonal.account_type == 'tutor' %}
-                        <a class="nav-link text-dark">
-                            <i class="fa fa-book"></i>
-                        Tutor Account</a> {% else %}
-                        <a class="nav-link text-dark">
-                            <i class="fas fa-book-reader"></i>
-                        Student Account</a> {% endif %}
-                            </li>
-                            <li><a class="dropdown-item" href="{% url 'dantorial:profile' %}">Profile</a></li>
-                            <li><a class="dropdown-item" href="{% url 'dantorial:request_history' %}">Request History</a></li>
-                            <li><a class="dropdown-item" href="{% url 'dantorial:my-subject' %}">My Subject</a></li>
-                            <li><a class="dropdown-item" href="{% url 'dantorial:my-account'%}">My Account</a></li>
-                            <li><a class="dropdown-item" href="{% url 'dantorial:logout'%}">Logout</a></li>
-                            <li>{% live_notify_badge %}</li>
-                        </ul>
-                    </li>
-                    {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link active text-dark font-weight-bold" aria-current="page" href="{% url 'account_login' %}">Login</a>
-                    </li> 
-                    <li class="nav-item">
-                        <a class="nav-link text-dark font-weight-bold" href="{% url 'account_signup' %}">Register</a>
-                    </li>
-                    {% endif %}
-                    <li>
-                    </li>
-                    <li class="nav-item">
-
-                        <form action="{% url 'dantorial:allsearch' %}">
-                            <div class="input-group">
-                                <input class="form-control" type="text" placeholder="Search" aria-label="Enter search term..." aria-describedby="button-search" name='keywords' />
-                                <button class="btn btn-primary" id="button-search" type="submit">
-                    <i class='fa fa-search'></i>
-                    </button>
-                            </div>
-                        </form>
-
-
-                    </li>
-                </ul>
-            </div>
+  <nav class="navbar navbar-light navbar-expand-lg bg-light sticky-top">
+    <div class="container me-auto">
+      <a class="navbar-brand" href="{% url 'dantorial:index' %}">
+        <div class='font-weight-bold text-uppercase'>
+          Tantorial
         </div>
-    </nav>
-</header>
-<body>
-    {% block carousel %} {% endblock carousel %}
-    <div style="width: 100;">
-        {% if messages %}
-            <div class="row">
-                <div class="col-12 col-md-6 col-sm-6 ml-auto mr-auto alert alert-success alert-dismissible fade show" role="alert">
-                    {% for message in messages %} {{message}} {% endfor %}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            </div>
-        {% endif %}        
-           {% block content %} {% endblock content %}         
+
+        <!-- <img src="{% static 'logo_png.png' %}" alt="find the best turtor in cameroon" style="width: 250px; height:80px"> -->
+      </a>
+
+      <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link text-dark font-weight-bold" href="{% url 'dantorial_message:chat' %}"><i
+                class='fa fa-envelope-o'></i>Message
+              {% if messags.count > 0 %}
+              <span class="badge rounded-pill badge-notification bg-success">{{ messags.count}}</span>
+              {% endif %}
+
+            </a>
+          </li>
+
+          <li>
+            <a class="nav-link text-dark font-weight-bold" href="{% url 'dantorial:myfavourites' %}">
+              <i class='fa fa-heart'></i> Saved
+              {% if user.profilepersonal.total_likes > 0 %}
+
+              <span class="badge rounded-pill badge-notification bg-success like_count" id='like_count'>
+
+                {{ user.profilepersonal.total_likes }}</span>
+              {% endif %}
+
+            </a>
+          </li>
+          <li class="nav-item dropdown">
+            <a href="#" class="nav-link text-dark dropdown-toggle font-weight-bold" data-toggle="dropdown"
+              aria-expanded="false">
+              <i class='fa fa-bell'></i> Notification
+              <span class="badge rounded-pill badge-notification bg-success">{% live_notify_badge %}</span>
+              {% if notificatio.count > 0 %}
+              <span class="badge rounded-pill badge-notification bg-success">{{ notificatio.count}}</span>
+              {% endif %}
+            </a>
+            <ul class="dropdown-menu border-0">
+              {% if notificatio.count > 0 %}
+              {% for notif in notificatio %}
+              <li class="nav-link text-dark">
+                <span>
+
+                  <a href="{% url 'dantorial:notification_detail' notif.id %}" class="card-link">You have an Available
+                    Request</a>
+                </span>
+              </li>
+              {% endfor %}
+
+              {% else %}
+              <li class="nav-link text-dark">No New Notification</li>
+              {% endif %}
+              <li class="nav-link text-dark"><a href="{% url 'dantorial:notification' %}" class="card-link">See all
+                  Unread</a></li>
+
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark font-weight-bold" href="{% url 'dantorial:contract' %}"><i
+                class='fa fa-briefcase'></i>Contract
+            </a>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-black font-weight-bold" href="#" id="navbarDropdownMenuLink"
+              role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <span><i class="fa fa-user" aria-hidden="true"></i></span>
+              {% trans "Account" %}
+            </a>
+            <ul class="dropdown-menu border-0" aria-lab elledby="navbarDropdownMenuLink">
+              <li class="nav-link text-dark">
+                <span>
+                  <span><i class="fa fa-user" aria-hidden="true"></i></span>
+                  {{user.profilepersonal.title|capfirst}} {{user.profilepersonal.first_name}}
+                </span>
+              </li>
+              <li>
+                {% if user.profilepersonal.account_type == 'tutor' %}
+                <a class="nav-link text-dark">
+                  <i class="fa fa-book"></i>
+                  Tutor Account</a> {% else %}
+                <a class="nav-link text-dark">
+                  <i class="fas fa-book-reader"></i>
+                  Student Account</a> {% endif %}
+              </li>
+              <li><a class="dropdown-item" href="{% url 'dantorial:profile' %}">Profile</a></li>
+              <li><a class="dropdown-item" href="{% url 'dantorial:request_history' %}">Request History</a></li>
+              <li><a class="dropdown-item" href="{% url 'dantorial:my-subject' %}">My Subject</a></li>
+              <li><a class="dropdown-item" href="{% url 'dantorial:my-account'%}">My Account</a></li>
+              <li><a class="dropdown-item" href="{% url 'dantorial:logout'%}">Logout</a></li>
+              <li>{% live_notify_badge %}</li>
+            </ul>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link active text-dark font-weight-bold" aria-current="page"
+              href="{% url 'account_login' %}">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark font-weight-bold" href="{% url 'account_signup' %}">Register</a>
+          </li>
+          {% endif %}
+          <li>
+          </li>
+          <li class="nav-item">
+
+            <form action="{% url 'dantorial:allsearch' %}">
+              <div class="input-group">
+                <input class="form-control" type="text" placeholder="Search" aria-label="Enter search term..."
+                  aria-describedby="button-search" name='keywords' />
+                <button class="btn btn-primary" id="button-search" type="submit">
+                  <i class='fa fa-search'></i>
+                </button>
+              </div>
+            </form>
+
+
+          </li>
+        </ul>
+      </div>
     </div>
-</main>
-    <!-- Footer -->
-      <!-- ======= Footer ======= -->
-	  <footer id="footer">
-		<div class="footer-top">
-		  <div class="container">
-			<div class="row">	
-			  <div class="col-lg-4 col-md-6">
-				<div class="footer-info">
-				  <h3>Tantorial</h3>
-				  <p class="pb-3"><em>Tantorial is Cameroon's first EdTech Start Up aim at bringing tutors and student together...</em></p>
-				  <p>
-					Mbalgong, Yaounde <br>
-					Yaounde, CAMEROON<br><br>
-					<strong>Phone:</strong> <a href="tel:+23764128573">+237 674128573</a><br>
-					<strong>Email:</strong> <a href = "mailto:info@tantorial.com">info@tantorial.com  </a><br>
-					<strong>Whatsapp:</strong> <a href="https://wa.me/+237674128573?text=Hello%20My%20is%20_________">+237 674128573</a><br>
-				  </p>
-				  <div class="social-links mt-3">
-          <a href="https://twitter.com/tantorial" target="_blank" class="twitter"><i class="bx bxl-twitter"></i></a>
-					<a href="https://www.m.me/tantorial" class="facebook"><i class="bx bxl-facebook"></i></a>
-          <a href="https://www.instagram.com/tantorial_official/" target="_blank" class="instagram"><i class="bx bxl-instagram"></i></a>
-					<a href="https://www.fb.me/tantorial" class="google-plus"><i class="bx bxl-messenger"></i></a>
-					<a href="https://www.linkedin.com/in/daniel-parkson-tano/" target="_blank" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-				  </div>
-				</div>
-			  </div>
-			  <div class="col-lg-2 col-md-6 col-xs-6 footer-links ">
-				<h4>Useful Links</h4>
-				<ul>
-				  <li><i class="bx bx-chevron-right"></i> <a href="{% url 'dantorial:index' %}">Home</a></li>
-				  <li><i class="bx bx-chevron-right"></i> <a href="{% url 'dantorial:aboutus' %}">About us</a></li>
-				  <li><i class="bx bx-chevron-right"></i> <a href="{% url 'dantorial:contactus' %}">Contact us</a></li>
-				  <li><i class="bx bx-chevron-right"></i> <a href="{% url 'dantorial:terms' %}">Terms of service</a></li>
-				  <li><i class="bx bx-chevron-right"></i> <a href="{% url 'dantorial:privacy_policy' %}">Privacy policy</a></li>
-				</ul>
-			  </div>	
-			  <div class="col-lg-2 col-md-6 col-xs-6 footer-links">
-				<h4>Our Services</h4>
-				<ul>
-				  <li><i class="bx bx-chevron-right"></i> <a href="#region">By Region</a></li>
-				  <li><i class="bx bx-chevron-right"></i> <a href="#category">By Catergory</a></li>
-				  <li><i class="bx bx-chevron-right"></i> <a href="#subcategory">By Subcategory</a></li>
-				  <li><i class="bx bx-chevron-right"></i> <a href="#subject">By Subject</a></li>
-				  <li><i class="bx bx-chevron-right"></i> <a href="#">All</a></li>
-				</ul>
-			  </div>	
-			  <div class="col-lg-4 col-md-6 footer-newsletter">
-				<h4>Our Newsletter</h4>
-				<p>Subscribe for our Newsletter</p>
-				<form action="" method="post">
-				  <input type="email" name="newsletter" class="form-control shadow-none"><input type="submit" value="Subscribe">
-				</form>
-			  </div>	
-			</div>
-		  </div>
-		</div>	
-		<div class="container"> 
-		  <div class="copyright">
-			&copy; Copyright <strong id="year"></strong> <strong><span>Tantorial</span></strong>. All Rights Reserved        
-      <script>
-				  document.getElementById('year').innerHTML = (new Date().getFullYear())
-			</script>
-		  </div>
-		  <div class="credits">
-			Designed by <a href="parksontano.com">ParksonTano</a>
-		  </div>
-		</div>
-	  </footer><!-- End Footer -->
-	  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-	  <div id="preloader"></div>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{% static 'main.js' %}"></script>
+  </nav>
+</header>
 
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<body>
+  {% block carousel %} {% endblock carousel %}
+  <div style="width: 100;">
+    {% if messages %}
+    <div class="row">
+      <div class="col-12 col-md-6 col-sm-6 ml-auto mr-auto alert alert-success alert-dismissible fade show"
+        role="alert">
+        {% for message in messages %} {{message}} {% endfor %}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    </div>
+    {% endif %}
+    {% block content %} {% endblock content %}
+  </div>
+  </main>
+  <!-- Footer -->
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4 col-md-6">
+            <div class="footer-info">
+              <h3>Tantorial</h3>
+              <p class="pb-3"><em>Tantorial is Cameroon's first EdTech Start Up aim at bringing tutors and student
+                  together...</em></p>
+              <p>
+                Mbalgong, Yaounde <br>
+                Yaounde, CAMEROON<br><br>
+                <strong>Phone:</strong> <a href="tel:+23764128573">+237 674128573</a><br>
+                <strong>Email:</strong> <a href="mailto:info@tantorial.com">info@tantorial.com </a><br>
+                <strong>Whatsapp:</strong> <a href="https://wa.me/+237674128573?text=Hello%20My%20is%20_________">+237
+                  674128573</a><br>
+              </p>
+              <div class="social-links mt-3">
+                <a href="https://twitter.com/tantorial" target="_blank" class="twitter"><i
+                    class="bx bxl-twitter"></i></a>
+                <a href="https://www.m.me/tantorial" class="facebook"><i class="bx bxl-facebook"></i></a>
+                <a href="https://www.instagram.com/tantorial_official/" target="_blank" class="instagram"><i
+                    class="bx bxl-instagram"></i></a>
+                <a href="https://www.fb.me/tantorial" class="google-plus"><i class="bx bxl-messenger"></i></a>
+                <a href="https://www.linkedin.com/in/daniel-parkson-tano/" target="_blank" class="linkedin"><i
+                    class="bx bxl-linkedin"></i></a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-6 col-xs-6 footer-links ">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="{% url 'dantorial:index' %}">Home</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="{% url 'dantorial:aboutus' %}">About us</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="{% url 'dantorial:contactus' %}">Contact us</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="{% url 'dantorial:terms' %}">Terms of service</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="{% url 'dantorial:privacy_policy' %}">Privacy policy</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-lg-2 col-md-6 col-xs-6 footer-links">
+            <h4>Our Services</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="#region">By Region</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#category">By Catergory</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#subcategory">By Subcategory</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#subject">By Subject</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">All</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-4 col-md-6 footer-newsletter">
+            <h4>Our Newsletter</h4>
+            <p>Subscribe for our Newsletter</p>
+            <form action="" method="post">
+              <input type="email" name="newsletter" class="form-control shadow-none"><input type="submit"
+                value="Subscribe">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong id="year"></strong> <strong><span>Tantorial</span></strong>. All Rights Reserved
+        <script>
+          document.getElementById('year').innerHTML = (new Date().getFullYear())
+        </script>
+      </div>
+      <div class="credits">
+        Designed by <a href="parksontano.com">ParksonTano</a>
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+  <div id="preloader"></div>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{% static 'main.js' %}"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 
 
-<!-- notification -->
+  <!-- notification -->
 
 
-<!--  -->
+  <!--  -->
 
   <!-- Vendor JS Files -->
-  {% comment %} <script src="{% static 'assets/vendor/aos/aos.js' %}"></script> {% endcomment %}
+  {% comment %}
+  <script src="{% static 'assets/vendor/aos/aos.js' %}"></script> {% endcomment %}
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
-  <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>  
-<script src="{% static 'assets/js/main.js' %}"></script>
-<script src="{% static 'assets/js/mains.js' %}"></script>
-<script src="//code.tidio.co/qvym5xdmezybvrxslrqzb6twcffkmgvc.js" async></script>
+  <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+  <script src="{% static 'assets/js/main.js' %}"></script>
+  <script src="{% static 'assets/js/mains.js' %}"></script>
+  <script src="//code.tidio.co/qvym5xdmezybvrxslrqzb6twcffkmgvc.js" async></script>
 
-<!-- <script type="text/javascript" src="https://www.monetbil.com/widget/v2/monetbil.min.js"></script> -->
-<script>
-	$(document).ready(function () {
+  <!-- <script type="text/javascript" src="https://www.monetbil.com/widget/v2/monetbil.min.js"></script> -->
+  <script>
+    $(document).ready(function () {
 
-			$(".filter-button").click(function () {
-				var value = $(this).attr('data-filter');
+      $(".filter-button").click(function () {
+        var value = $(this).attr('data-filter');
 
-				if (value == "all") {
-					//$('.filter').removeClass('hidden');
-					$('.filter').show('1000');
-				}
-				else {
-					//            $('.filter[filter-item="'+value+'"]').removeClass('hidden');
-					//            $(".filter").not('.filter[filter-item="'+value+'"]').addClass('hidden');
-					$(".filter").not('.' + value).hide('3000');
-					$('.filter').filter('.' + value).show('3000');
+        if (value == "all") {
+          //$('.filter').removeClass('hidden');
+          $('.filter').show('1000');
+        }
+        else {
+          //            $('.filter[filter-item="'+value+'"]').removeClass('hidden');
+          //            $(".filter").not('.filter[filter-item="'+value+'"]').addClass('hidden');
+          $(".filter").not('.' + value).hide('3000');
+          $('.filter').filter('.' + value).show('3000');
 
-				}
-			});
+        }
+      });
 
-		});
-</script>
-<script>
+    });
+  </script>
+  <script>
     if (window.history.replaceState) {
-        window.history.replaceState(null, null, window.location.href);
+      window.history.replaceState(null, null, window.location.href);
     }
-</script>
-<script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
+  </script>
+  <script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
 </body>
 
 </html>

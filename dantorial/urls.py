@@ -28,6 +28,7 @@ urlpatterns = [
     path("__reload__/", include("django_browser_reload.urls")),
     path('cookies/', include('cookie_consent.urls')),
     re_path(r'^robots\.txt', include('robots.urls')),
+    url('', include('pwa.urls')),
     # path('agora/',Agora.as_view(
     # app_id='4fb86dc603104fa5b15c80ead4b27d44',
     # channel='tantorial')),
