@@ -36,16 +36,23 @@ class QualificationAdmin(admin.ModelAdmin):
     list_display = ['user', 'school', 'certificate', 'start_year', 'end_year']
 
 
-class UpgradeAdmin(admin.ModelAdmin):
-    search_fields = ['user__username', 'operator', 'status']
-    list_filter = ['user', 'operator', 'status', 'date_created']
-    list_display = ['user', 'amount', 'operator', 'status', 'date_created']
+# class UpgradeAdmin(admin.ModelAdmin):
+#     search_fields = ['user__username', 'operator', 'status']
+#     list_filter = ['user', 'operator', 'status', 'date_created']
+#     list_display = ['user', 'amount', 'operator', 'status', 'date_created']
 
 
 class ProfileViewedAdmin(admin.ModelAdmin):
     search_fields = ['user', 'user_by']
     list_filter = ['user', 'viewed_by', 'date_created']
     list_display = ['user', 'viewed_by', 'date_created']
+
+
+class LessonEscrowAdmin(admin.ModelAdmin):
+    # search_fields = ['user', 'teacher', 'status']
+    list_filter = ['payout', 'refund', 'complete', 'payment_method']
+    list_display = ['__str__', 'payout',
+                    'refund', 'complete', 'payment_method']
 
 
 admin.site.register(ProfilePersonal, ProfileAdmin)
@@ -59,8 +66,8 @@ admin.site.register(Availability, AvailabilityAdmin)
 admin.site.register(SocialMedia)
 # admin.site.register(Booked)
 admin.site.register(Verification)
-admin.site.register(Upgrade, UpgradeAdmin)
+admin.site.register(LessonEscrow, LessonEscrowAdmin)
 admin.site.register(ProfileViewed, ProfileViewedAdmin)
 admin.site.register(OnlineLesson, OnlineLessonAdmin)
 admin.site.register([About, OurTeam,  HowToUse, SearchHistory,
-                    Privacy, LessonEscrow, Contract, Payment, AccountBalance, AccountHistory])
+                    Privacy, Contract, AccountBalance, AccountHistory])

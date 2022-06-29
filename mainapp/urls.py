@@ -112,10 +112,6 @@ urlpatterns = [
     path('landing', LandingView.as_view(), name='landing'),
 
     # payment and support
-    path('upgrade/', UpgradeAccountView.as_view(), name='upgrade_profile'),
-    path('escrowpay/', EscrowPaymentView.as_view(), name='escrow_payment'),
-    path('payment-success/', PaymentSuccessView.as_view(), name='pay-success'),
-    path('payment-fail/', PaymentFailView.as_view(), name='pay-fail'),
 
     # profile viewed
     path('profview/', ProfileViewList.as_view(), name='profview'),

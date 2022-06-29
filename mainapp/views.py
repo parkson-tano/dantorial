@@ -276,7 +276,12 @@ class PersonalProfileEditView(UpdateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
+        acc = ProfilePersonal.objects.get(user=self.request.user)
+        if acc.account_type == None:
+            form.instance.account_type = self.request.POST.get('account_type')
         print(self.request.user.profilepersonal.account_type)
+        print("_____________________________")
+        print(self.request.POST.get('account_type'))
         messages.success(self.request, "Successful")
         form.save()
         return super().form_valid(form)
@@ -806,113 +811,6 @@ class SearchAllView(TemplateView):
         return context
 
 
-def subscribe(amount, number):
-    campay = Client({
-        "app_username": "3_4hXF79S-PPnrduRjwCqu10EOjm6nXHezUaE76Gv-ZGuCa8qQxV-GwQP-xiaVQ_oFg4FqrduN33Od_Mi7FUmw",
-        "app_password": "ICqt9K5kx-GdFfPP52Z3apDwS0LJChjSs0h1SYZ4yDAuTAXDGxgsVZ8h_Ihk9j8kxqOsQGXqj6TurNnMNwDxLw",
-        "environment": "DEV"  # use "DEV" for demo mode or "PROD" for live mode
-    })
-    collect = campay.collect({
-        "amount": amount,  # The amount you want to collect
-        "currency": "XAF",
-        "from": number,  # Phone number to request amount from. Must include country code
-        "description": "some description"
-    })
-    print(collect)
-
-
-class UpgradeAccountView(FormView):
-    template_name = 'main/upgrade.html'
-    form_class = UpgradeForm
-    success_url = reverse_lazy('dantorial:upgrade_profile')
-
-    def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            pass
-        else:
-            return redirect('/accounts/login/?next=/upgrade/')
-
-        return super().dispatch(request, *args, **kwargs)
-
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        form.instance.amount = 2
-        form.instance.phone_number = form.cleaned_data.get('phone_number')
-        form.instance.is_complete = True
-        pay = form.save(commit=False)
-        profile = ProfilePersonal.objects.get(user=self.request.user)
-        # subscribe(form.instance.amount, form.instance.phone_number)
-        campay = Client({
-            "app_username": os.getenv('CAMPAY_APP_USERNAME'),
-            "app_password": os.getenv('CAMPAY_APP_PASSWORD'),
-            "environment": "DEV"  # use "DEV" for demo mode or "PROD" for live mode
-        })
-        collect = campay.collect({
-            "amount": 2,  # The amount you want to collect
-            "currency": "XAF",
-            # Phone number to request amount from. Must include country code
-            "from": form.instance.phone_number,
-            "description": "Tantorial Premium Account",
-            "first_name": self.request.user.profilepersonal.first_name
-        })
-        print(collect)
-        disburse = campay.disburse({
-            "amount": "5",  # The amount you want to disburse
-            "currency": "XAF",
-            # Phone number to disburse amount to. Must include country code
-            "to": form.instance.phone_number,
-            "description": "Withdrwal from tantorial"
-        })
-        form.instance.reference = collect['reference']
-        form.instance.status = collect['status']
-        form.instance.reason = collect['reason']
-        form.instance.code = collect['code']
-        form.instance.operator = collect['operator']
-        form.instance.operator_ref = collect['operator_reference']
-        form.instance.external_ref = collect['external_reference']
-        # print(disburse)
-        pay = form.save(commit=False)
-        if form.instance.payment_method == 'MTN Mobile Money':
-            messages.success(self.request, "Dial *126# to complete payment")
-        else:
-            messages.success(self.request, "Dial #150*50# to complete payment")
-        # if collect.status == 'SUCCESSFUL':
-        # if Upgrade.objects.filter(user=self.request.user).exists():
-        #     redirect('dantorial:index')
-        if collect['status'] == 'SUCCESSFUL':
-            form.instance.is_complete = True
-            profile.paid = True
-            profile.save()
-            pay.save()
-            self.success_url = reverse_lazy('dantorial:pay-success')
-            subject = "Payment Confirmation"
-            message = f'{self.requset.user.profilepersonal.first_name},Your Payment for Premium Service is complete'
-            from_email = settings.DEFAULT_FROM_EMAIL
-            to_email = (self.request.user.email, )
-            send_mail(subject, message, from_email,
-                      to_email, fail_silently=True)
-        else:
-            form.instance.is_complete = False
-            self.success_url = reverse_lazy('dantorial:pay-fail')
-            subject = "Payment Fail"
-            message = f'{self.request.user.profilepersonal.first_name},Your Payment for Premium Service is not complete'
-            from_email = settings.DEFAULT_FROM_EMAIL
-            to_email = (self.request.user.email, )
-            # send_mail(subject, message, from_email, to_email, fail_silently=True)
-            # send_mail('hey thanks for nothing', 'here is the message', settings.DEFAULT_FROM_EMAIL, (self.request.user.email,), fail_silently=True,)
-            pay.save()
-
-        return super().form_valid(form)
-
-
-class PaymentSuccessView(TemplateView):
-    template_name = 'main/payment-successful.html'
-
-
-class PaymentFailView(TemplateView):
-    template_name = 'main/payment-fail.html'
-
-
 class ProfileViewList(TemplateView):
     template_name = "main/profile_view.html"
 
@@ -1230,94 +1128,3 @@ class ContractDetailView(DetailView):
 def load_test(request):
     return HttpResponse('loaderio-c1a185840f545fea9a1f72d3524a5531')
     # return render(request, 'loaderio-c1a185840f545fea9a1f72d3524a5531.html')
-
-
-class EscrowPaymentView(FormView):
-    template_name = 'main/upgrade.html'
-    form_class = UpgradeForm
-    success_url = reverse_lazy('dantorial:upgrade_profile')
-
-    def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            pass
-        else:
-            return redirect('/accounts/login/?next=/upgrade/')
-
-        return super().dispatch(request, *args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        amount = OnlineLesson.objects.filter(student=self.request.user)
-        context["amount"] = amount.amount
-        return context
-
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        amount = OnlineLesson.objects.filter(student=self.request.user)
-        form.instance.amount = amount.amount
-        form.instance.phone_number = form.cleaned_data.get('phone_number')
-        form.instance.is_complete = True
-        pay = form.save(commit=False)
-        profile = ProfilePersonal.objects.get(user=self.request.user)
-        # subscribe(form.instance.amount, form.instance.phone_number)
-        campay = Client({
-            "app_username": os.getenv('CAMPAY_APP_USERNAME'),
-            "app_password": os.getenv('CAMPAY_APP_PASSWORD'),
-            "environment": "DEV"  # use "DEV" for demo mode or "PROD" for live mode
-        })
-        collect = campay.collect({
-            "amount": amount.amount,  # The amount you want to collect
-            "currency": "XAF",
-            # Phone number to request amount from. Must include country code
-            "from": form.instance.phone_number,
-            "description": "Tantorial Premium Account",
-            "first_name": self.request.user.profilepersonal.first_name
-        })
-        print(collect)
-        disburse = campay.disburse({
-            "amount": "5",  # The amount you want to disburse
-            "currency": "XAF",
-            # Phone number to disburse amount to. Must include country code
-            "to": form.instance.phone_number,
-            "description": "Withdrwal from tantorial"
-        })
-        form.instance.reference = collect['reference']
-        form.instance.status = collect['status']
-        form.instance.reason = collect['reason']
-        form.instance.code = collect['code']
-        form.instance.operator = collect['operator']
-        form.instance.operator_ref = collect['operator_reference']
-        form.instance.external_ref = collect['external_reference']
-        form.instance.escrow_payment = True
-
-        # print(disburse)
-        pay = form.save(commit=False)
-        if form.instance.payment_method == 'MTN Mobile Money':
-            messages.success(self.request, "Dial *126# to complete payment")
-        else:
-            messages.success(self.request, "Dial #150*50# to complete payment")
-        # if collect.status == 'SUCCESSFUL':
-        # if Upgrade.objects.filter(user=self.request.user).exists():
-        #     redirect('dantorial:index')
-        if collect['status'] == 'SUCCESSFUL':
-            form.instance.is_complete = True
-            pay.save()
-            self.success_url = reverse_lazy('dantorial:pay-success')
-            subject = "Payment Confirmation"
-            message = f'{self.requset.user.profilepersonal.first_name},Your Payment for Premium Service is complete'
-            from_email = settings.DEFAULT_FROM_EMAIL
-            to_email = (self.request.user.email, )
-            send_mail(subject, message, from_email,
-                      to_email, fail_silently=True)
-        else:
-            form.instance.is_complete = False
-            self.success_url = reverse_lazy('dantorial:pay-fail')
-            subject = "Payment Fail"
-            message = f'{self.request.user.profilepersonal.first_name},Your Payment for Premium Service is not complete'
-            from_email = settings.DEFAULT_FROM_EMAIL
-            to_email = (self.request.user.email, )
-            # send_mail(subject, message, from_email, to_email, fail_silently=True)
-            # send_mail('hey thanks for nothing', 'here is the message', settings.DEFAULT_FROM_EMAIL, (self.request.user.email,), fail_silently=True,)
-            pay.save()
-
-        return super().form_valid(form)

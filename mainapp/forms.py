@@ -2,11 +2,13 @@ from cProfile import label
 from django import forms
 from django.contrib.auth.models import User
 from django.db.models import fields
+from requests import request
 from .models import *
 from flatpickr import DatePickerInput, TimePickerInput, DateTimePickerInput
 from category.models import Category
 from datetime import date
 # from bootstrap_datepicker_plus import DatePickerInput
+
 
 class DateSelectorWidget(forms.MultiWidget):
     def __init__(self, attrs=None):
@@ -32,6 +34,7 @@ class DateSelectorWidget(forms.MultiWidget):
         day, month, year = super().value_from_datadict(data, files, name)
         # DateField expects a single string that it can parse into a date.
         return '{}-{}-{}'.format(year, month, day)
+
 
 class UserRegistrationForm(forms.ModelForm):
     username = forms.CharField(widget=forms.TextInput)
@@ -63,6 +66,7 @@ class UserRegistrationForm(forms.ModelForm):
             forms.ValidationError("Password don't match")
         return pass2
 
+
 class PersonalProfileForm(forms.ModelForm):
     region = forms.ModelChoiceField(
         queryset=Region.objects.all(),
@@ -75,9 +79,9 @@ class PersonalProfileForm(forms.ModelForm):
 
     class Meta:
         model = ProfilePersonal
-        fields = ['account_type', 'title', 'gender', 'first_name', 'last_name',
-                  'phone_number', 'date_of_birth', 'country', 'region', 'town', 'address', 'level_of_education', 'profile_pic', 'whatsapp_number', 'show_whatsapp_number', 'online_lesson']
 
+        fields = ['title', 'gender', 'first_name', 'last_name',
+                  'phone_number', 'date_of_birth', 'country', 'region', 'town', 'address', 'level_of_education', 'profile_pic', 'whatsapp_number', 'show_whatsapp_number', 'online_lesson']
         widgets = {
             'date_of_birth': DatePickerInput(),
 
@@ -86,10 +90,13 @@ class PersonalProfileForm(forms.ModelForm):
         labels = {
             'whatsapp_number': 'Whatsapp',
         }
+
+
 class PersonalProfilePic(forms.ModelForm):
     class Meta:
         model = ProfilePersonal
         fields = ('id', 'profile_pic',)
+
 
 class ProfileInfoForm(forms.ModelForm):
     class Meta:
@@ -107,14 +114,17 @@ class ProfileInfoForm(forms.ModelForm):
             }),
         }
 
+
 class UserLoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput)
     password = forms.CharField(widget=forms.PasswordInput)
+
 
 class AddSubjectForm(forms.ModelForm):
     class Meta:
         model = Subject
         fields = ('category', 'subcategory', 'subject', 'charge', 'amount', )
+
 
 class AddExperienceForm(forms.ModelForm):
     class Meta:
@@ -127,47 +137,52 @@ class AddExperienceForm(forms.ModelForm):
 
         }
 
+
 class AddQualificationForm(forms.ModelForm):
     class Meta:
         model = Qualification
         fields = ('school', 'certificate', 'start_year',
                   'end_year', 'still_studying')
 
+
 class VerificationForm(forms.ModelForm):
     class Meta:
         model = Verification
         fields = ('document_type', 'number', 'photo_back', 'photo_front')
+
 
 class AvailabilityForm(forms.ModelForm):
     class Meta:
         model = Availability
         fields = ('day', 'hour')
 
+
 class SocialMediaForm(forms.ModelForm):
     class Meta:
         model = SocialMedia
         fields = ('facebook', 'instagram', 'linkedin', 'website', 'youtube')
 
-class UpgradeForm(forms.ModelForm):
-    class Meta:
-        model = Upgrade
-        fields = ('payment_method', 'phone_number')
+# class UpgradeForm(forms.ModelForm):
+#     class Meta:
+#         model = Upgrade
+#         fields = ('payment_method', 'phone_number')
 
-        widgets = {
-            "phone_number": forms.TextInput(attrs={
-                'class': 'form-control',
-                'id': "phone",
-                'required': True,
-                'value': "237",
-                'min': 15,
-            }),
-        }
+#         widgets = {
+#             "phone_number": forms.TextInput(attrs={
+#                 'class': 'form-control',
+#                 'id': "phone",
+#                 'required': True,
+#                 'value': "237",
+#                 'min': 15,
+#             }),
+#         }
 
-    def clean_phone(self):
-        phone = self.cleaned_data.get('phone')
-        if len(phone) < 15:
-            raise forms.ValidationError('this email is already in use')
-        return phone
+#     def clean_phone(self):
+#         phone = self.cleaned_data.get('phone')
+#         if len(phone) < 15:
+#             raise forms.ValidationError('this email is already in use')
+#         return phone
+
 
 class AddScheduleForm(forms.ModelForm):
     class Meta:
@@ -184,6 +199,7 @@ class AddScheduleForm(forms.ModelForm):
                 }
             ),
         }
+
 
 class ConfirmScheduleForm(forms.ModelForm):
     class Meta:
