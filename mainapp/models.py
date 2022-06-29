@@ -76,8 +76,9 @@ TITLE = (
 
 
 ACC = (
-    ('tutor', "Tutor"),
-    ('learner', "Learner")
+    ('tutor', "tutor"),
+    ('learner', "learner"),
+    ('parent', "parent"),
 )
 
 GENDER = (
@@ -351,26 +352,6 @@ class Verification(models.Model):
         return str(self.user) + ' verification'
 
 
-class Upgrade(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    amount = models.IntegerField(null=True, blank=True)
-    is_complete = models.BooleanField(default=False)
-    payment_method = models.CharField(max_length=40, choices=PAYMENT)
-    phone_number = models.CharField(max_length=15)
-    escrow_payment = models.BooleanField(default=False)
-    reference = models.CharField(null=True, blank=True, max_length=100)
-    status = models.CharField(null=True, blank=True, max_length=100)
-    reason = models.CharField(null=True, blank=True, max_length=100)
-    code = models.CharField(null=True, blank=True, max_length=100)
-    operator = models.CharField(null=True, blank=True, max_length=100)
-    operator_ref = models.CharField(null=True, blank=True, max_length=100)
-    external_ref = models.CharField(null=True, blank=True, max_length=100)
-    date_created = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return str(self.user) + ' upgrade'
-
-
 class About(models.Model):
     about = RichTextField()
     mission = RichTextField()
@@ -474,17 +455,6 @@ class OnlineLesson(models.Model):
         return f'{self.student} online'
 
 
-# class LessonPayment(models.Model):
-#     lesson = models.OneToOneField(OnlineLesson, on_delete=models.CASCADE)
-#     amount = models.IntegerField(null=True, blank=True)
-#     payment_method = models.CharField(
-#         max_length=255, choices=PAYMENT, null=True, blank=True)
-#     complete = models.BooleanField(default=False)
-#     date_created = models.DateTimeField(auto_now_add=True)
-
-#     def __str__(self):
-#         return str(self.lesson) + ' payment'
-
 class LessonEscrow(models.Model):
     lesson = models.OneToOneField(OnlineLesson, on_delete=models.CASCADE)
     amount = models.IntegerField(default=0)
@@ -498,7 +468,7 @@ class LessonEscrow(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.lesson) + ' escrow'
+        return f'{self.lesson.student.profilepersonal.first_name} with {self.lesson.teacher.profilepersonal.first_name}'
 
 
 @receiver(post_save, sender=OnlineLesson)
@@ -526,34 +496,13 @@ class AccountBalance(models.Model):
     def __str__(self):
         return str(self.user.profilepersonal) + ' earn'
 
+
 class AccountHistory(models.Model):
-    account = models.ForeignKey(AccountBalance, on_delete=models.CASCADE, null=True, blank=True)
+    account = models.ForeignKey(
+        AccountBalance, on_delete=models.CASCADE, null=True, blank=True)
     amount = models.IntegerField()
     transaction = models.CharField(max_length=20, choices=(
         ('Withdraw', 'Withdraw'),
         ('Deposit', 'Deposit'),
     ))
     date_created = models.DateTimeField(auto_now_add=True)
-
-class Payment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    amount = models.IntegerField(null=True, blank=True)
-    is_complete = models.BooleanField(default=False)
-    payment_method = models.CharField(max_length=40, choices=PAYMENT)
-    phone_number = models.CharField(max_length=15)
-    escrow_payment = models.BooleanField(default=False)
-    purpose = models.CharField(max_length=20, choices=(
-        ('Payout', 'Payout'),
-        ('Refund', 'Refund'),
-    ))
-    reference = models.CharField(null=True, blank=True, max_length=100)
-    status = models.CharField(null=True, blank=True, max_length=100)
-    reason = models.CharField(null=True, blank=True, max_length=100)
-    code = models.CharField(null=True, blank=True, max_length=100)
-    operator = models.CharField(null=True, blank=True, max_length=100)
-    operator_ref = models.CharField(null=True, blank=True, max_length=100)
-    external_ref = models.CharField(null=True, blank=True, max_length=100)
-    date_created = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return str(self.user) + ' payment'

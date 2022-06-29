@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'review',
     'autoslug',
     'location',
+    'payments',
     # 'cities_light',
     'crispy_forms',
     # 'crispy_tailwind',
@@ -334,7 +335,7 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_VERIFICATION = 'optional'
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 
 
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = LOGIN_REDIRECT_URL
@@ -422,7 +423,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 
 PWA_APP_NAME = 'Tantorial'
-PWA_APP_DESCRIPTION = "Tantorial PWA for all"
+PWA_APP_DESCRIPTION = "Tantorial is a platform for people to share their knowledge and experience with each other."
 PWA_APP_THEME_COLOR = '#000000'
 PWA_APP_BACKGROUND_COLOR = '#ffffff'
 PWA_APP_DISPLAY = 'standalone'

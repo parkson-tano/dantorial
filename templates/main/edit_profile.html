@@ -41,9 +41,30 @@
                 {% csrf_token %}
                 {{ form.media }}
                 <div class="form-row">
-                  <div class="col-sm-6">
-                      {{form.account_type|as_crispy_field}}
+					{% if user.profilepersonal.account_type == None %}
+					<div class="col-sm-6">
+                      <div class="form-group">
+						<label for="">Account Type</label>
+						  <select class="form-control" name="account_type" id="">
+							<option value='tutor'>Tutor</option>
+							<option value='learner'>Learner</option>
+							<option value='parent'>Parent</option>
+						  </select>
+						</div>
                     </div>
+					{% else %}	
+					<div class="col-sm-6">
+                      <div class="form-group">
+						<label for="">Account Type</label>
+						
+							<input type="text" class="form-control" name="account_type"  id="" aria-describedby="helpId" value={{user.profilepersonal.account_type}} disabled>
+							
+						</div>
+                    </div>
+					{% endif %}
+					
+					
+                  
                   
                     <div class="col-sm-3">
                       {{form.title|as_crispy_field}}
@@ -57,7 +78,6 @@
                     <div class="col-md-6">
                       {{form.last_name|as_crispy_field}}
                     </div>
-                    
                     
                     <div class="col-md-4">
                       {{form.country|as_crispy_field}}

@@ -96,21 +96,19 @@
 										</span>
 
 									</p>
+									{% if userprofile.account_type == 'tutor' %}
 									<p class="mb-2">
 										<span>
 											{% if userprofile.online_lesson %}
-						
-											
 												<a href="{% url 'dantorial:schedule' userprofile.id %}" class="btn btn-outline-success">
 													Schedule Online Lesson
 												</a>
-												
-											
-
 											{% endif %}
 										</span>
 
 									</p>
+									{% endif %}
+									
 									<button data-toggle="modal" data-target="#exampleModal" class="btn btn-outline-primary mt-2"><i
 											class="fa fa-phone" style='color:rgb(5, 59, 41)'></i> Call
 									</button>
