@@ -80,6 +80,7 @@ INSTALLED_APPS = [
     # 'agora',
     'notifications',
     "pwa",
+    'rest_framework.authtoken',
     # 'multiselectfield',
 
 ]
@@ -199,6 +200,14 @@ CACHES = {
 }
 
 # STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+
+}
 
 
 ROBOTS_USE_SITEMAP = False

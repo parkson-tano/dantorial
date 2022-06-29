@@ -12,6 +12,7 @@ import json
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404, resolve_url
 
+
 class MyAccountAdapter(DefaultAccountAdapter):
 
     def get_signup_redirect_url(self, request):
@@ -19,8 +20,8 @@ class MyAccountAdapter(DefaultAccountAdapter):
         return path.format(user=request.user.profilepersonal.id)
 
     def get_login_redirect_url(self, request):
-        user =request.user.profilepersonal
-        if (user.account_type == 'tutor' or user.account_type == 'student' or user.account_type == 'parent'):
+        user = request.user.profilepersonal
+        if (user.account_type == 'tutor' or user.account_type == 'learner' or user.account_type == 'parent'):
             path = "/"
             return path
         path = '/profile-edit/{user}'

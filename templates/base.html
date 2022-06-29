@@ -192,7 +192,7 @@
             <a href="#" class="nav-link text-dark dropdown-toggle font-weight-bold" data-toggle="dropdown"
               aria-expanded="false">
               <i class='fa fa-bell'></i> Notification
-              <span class="badge rounded-pill badge-notification bg-success">{% live_notify_badge %}</span>
+
               {% if notificatio.count > 0 %}
               <span class="badge rounded-pill badge-notification bg-success">{{ notificatio.count}}</span>
               {% endif %}
@@ -212,8 +212,8 @@
               {% else %}
               <li class="nav-link text-dark">No New Notification</li>
               {% endif %}
-              <li class="nav-link text-dark"><a href="{% url 'dantorial:notification' %}" class="card-link">See all
-                  Unread</a></li>
+              <li class="nav-link text-dark"><a href="{% url 'dantorial:notification' %}" class="card-link">See all</a>
+              </li>
 
             </ul>
           </li>
@@ -250,7 +250,6 @@
               <li><a class="dropdown-item" href="{% url 'dantorial:my-subject' %}">My Subject</a></li>
               <li><a class="dropdown-item" href="{% url 'dantorial:my-account'%}">My Account</a></li>
               <li><a class="dropdown-item" href="{% url 'dantorial:logout'%}">Logout</a></li>
-              <li>{% live_notify_badge %}</li>
             </ul>
           </li>
           {% else %}
