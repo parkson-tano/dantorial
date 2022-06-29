@@ -1097,8 +1097,8 @@ class ContractDetailView(DetailView):
                 contract.escrow.payout = True
                 contract.successful = True
                 contract.escrow.lesson.is_complete = True
-                contract.escrow.payout_amount += contract.escrow.amount
-                contract.escrow.amount -= contract.escrow.payout_amount
+                contract.escrow.payout_amount += int(contract.escrow.amount)
+                contract.escrow.amount -= int(contract.escrow.payout_amount)
 
                 # contract.escrow.lesson.is_complete = True
             else:
