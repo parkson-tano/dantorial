@@ -1097,8 +1097,8 @@ class ContractDetailView(DetailView):
                 contract.escrow.payout = True
                 contract.successful = True
                 contract.escrow.lesson.is_complete = True
-                contract.escrow.payout_amount += contract.escrow.amount
-                contract.escrow.amount -= contract.escrow.payout_amount
+                contract.escrow.payout_amount += int(contract.escrow.amount)
+                contract.escrow.amount -= int(contract.escrow.payout_amount)
 
                 # contract.escrow.lesson.is_complete = True
             else:
@@ -1128,3 +1128,6 @@ class ContractDetailView(DetailView):
 def load_test(request):
     return HttpResponse('loaderio-c1a185840f545fea9a1f72d3524a5531')
     # return render(request, 'loaderio-c1a185840f545fea9a1f72d3524a5531.html')
+
+class AccountBalanceView(DetailView):
+    model = AccountBalance

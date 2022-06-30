@@ -461,7 +461,7 @@ class LessonEscrow(models.Model):
     payout = models.BooleanField(default=False)
     refund = models.BooleanField(default=False)
     complete = models.BooleanField(default=False)
-    payout_amount = models.IntegerField(null=True, blank=True, default=0)
+    payout_amount = models.IntegerField(default=0, blank=False, null=False)
     payment_method = models.CharField(
         max_length=255, choices=PAYMENT, null=True, blank=True)
     reason = models.TextField(null=True, blank=True)
