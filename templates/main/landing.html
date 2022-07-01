@@ -11,8 +11,10 @@
 <meta name="keywords" content="tutor in cameroon, concour preparation, private tutors in cameroon, find learners around you, teach in cameroon, home lesson teacher in cameroon ">
 
   <!-- Favicons -->
-  <link href="{% static 'favicon_.ico' %}" rel="icon">
-  <link href="{% static 'favicon_.ico' %}" rel="apple-touch-icon">
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'icons/apple-touch-icon.png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'icons/favicon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'icons/favicon-16x16.png' %}">
+  <link rel="manifest" href="{% static 'icons/site.webmanifest' %}">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -542,7 +544,7 @@
               </ul>
               <div class="btn-wrap">
                 			  {% if request.user.is_authenticated %}
-					<a href="{% url 'dantorial:upgrade_profile' %}" class="btn-buy">Get Started</a> 
+					<a href="{% url 'account_signup' %}" class="btn-buy">Get Started</a> 
 					{% else %}
 					<a href="{% url 'account_signup' %}" class="btn-buy">Get Started</a> 
 					{% endif %}
@@ -563,7 +565,7 @@
               </ul>
               <div class="btn-wrap">
                 			  {% if request.user.is_authenticated %}
-					<a href="{% url 'dantorial:upgrade_profile' %}" class="btn-buy">Get Started</a> 
+					<a href="{% url 'account_signup' %}" class="btn-buy">Get Started</a> 
 					{% else %}
 					<a href="{% url 'account_signup' %}" class="btn-buy">Get Started</a> 
 					{% endif %}

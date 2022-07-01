@@ -81,6 +81,8 @@ INSTALLED_APPS = [
     'notifications',
     "pwa",
     'rest_framework.authtoken',
+    'webpush',
+
     # 'multiselectfield',
 
 ]
@@ -158,34 +160,13 @@ AUTHENTICATION_BACKENDS = (
 )
 # STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-# CACHES = {
-#     'default': {
-#         'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
-#         'LOCATION': [
-#             '172.19.26.240:11211',
-#             '172.19.26.242:11212',
-#             '172.19.26.244:11213',
-#         ]
-#     }
-# }
 
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+WEBPUSH_SETTINGS = {
+    "VAPID_PUBLIC_KEY": "BCqIQ7dMD6j7xe9-gVcHhkG2ID6nzak8owscKsHP4Bghj6dW4ZZ5Bw5dW8W2BdQe9XUOM917Vm371-Cvwok_dF4",
+    "VAPID_PRIVATE_KEY": "G7wdzuixpCTlIHhjUZ1d__lc7PEzN1c5EoJhGa0EvyQ",
+    "VAPID_ADMIN_EMAIL": "tanoparksonsilencer@gmail.com"
+}
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-# DataFlair #Memcached
-# CACHES = {
-#     'default':{
-#         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-#         'LOCATION': '127.0.0.1;11211',
-#     }
-# }
 
 # DataFlair #Database Cache
 CACHES = {
@@ -310,7 +291,6 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 
-# PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'static/js', 'serviceworker.js')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -412,7 +392,7 @@ SOCIALACCOUNT_PROVIDERS = {
             # 'LOCALE_FUNC': 'path.to.callable',
             'VERIFIED_EMAIL': True,
             'VERSION': 'v7.0',
-        }
+            }
 }
 
 SOCIAL_AUTH_FACEBOOK_KEY = os.getenv('SOCIAL_AUTH_FACEBOOK_KEY')
@@ -460,3 +440,6 @@ PWA_APP_SPLASH_SCREEN = [
 ]
 PWA_APP_DIR = 'ltr'
 PWA_APP_LANG = 'en-US'
+
+PWA_SERVICE_WORKER_PATH = os.path.join(
+    BASE_DIR, 'static/js', 'serviceworker.js')
