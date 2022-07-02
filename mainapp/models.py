@@ -497,6 +497,12 @@ class AccountBalance(models.Model):
         return str(self.user.profilepersonal) + ' earn'
 
 
+@receiver(post_save, sender=User)
+def create_account(sender, instance, created, **kwargs):
+    if created:
+        AccountBalance.objects.create(user=instance)
+
+
 class AccountHistory(models.Model):
     account = models.ForeignKey(
         AccountBalance, on_delete=models.CASCADE, null=True, blank=True)

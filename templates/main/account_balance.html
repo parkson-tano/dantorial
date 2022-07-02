@@ -1,0 +1,31 @@
+{% extends "base.html" %} {% load humanize %} {% load crispy_forms_tags %}
+{% block title %} account balance {% endblock title %} {% block content %}
+
+<div class="container mb-5 mt-5">
+    <div class="row mx-sm-5">
+        <div class="col col-12 col-sm-6">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-header font-weight-bold fs-4">Earnings</div>
+                <div class="card-body">
+                    <h5 class="card-title">You have earned a total of </h5>
+                    <button class="btn btn-primary">
+                        {{account.earn|intcomma}}XAF
+                    </button>
+
+                </div>
+            </div>
+        </div>
+        <div class="col col-12 col-sm-6">
+            <div class="card text-white bg-danger mb-3">
+                <div class="card-header font-weight-bold fs-4">Spendings</div>
+                <div class="card-body">
+                    <h5 class="card-title">You have a spent a total of</h5>
+                    <button class="btn btn-primary">
+                        {{account.spend|intcomma}}XAF
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

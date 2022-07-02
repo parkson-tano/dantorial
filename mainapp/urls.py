@@ -136,4 +136,5 @@ urlpatterns = [
      #     contract
      path('contract/', ContractView.as_view(), name='contract'),
      path('contract/<int:pk>', ContractDetailView.as_view(), name='contract_detail'),
+     path('accountbalance/', AccountBalanceView.as_view(), name='account_balance'),
 ]

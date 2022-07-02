@@ -1082,6 +1082,10 @@ class ContractDetailView(DetailView):
     def post(self, request, *args, **kwargs):
         pk = kwargs['pk']
         contract = Contract.objects.get(id=pk)
+        learn = AccountBalance.objects.get(
+            user=contract.escrow.lesson.student)
+        tutor = AccountBalance.objects.get(
+            user=contract.escrow.lesson.teacher)
         if 'post_complete' in request.POST:
             if contract.successful == False:
                 contract.successful = True
@@ -1099,6 +1103,8 @@ class ContractDetailView(DetailView):
                 contract.escrow.lesson.is_complete = True
                 contract.escrow.payout_amount += int(contract.escrow.amount)
                 contract.escrow.amount -= int(contract.escrow.payout_amount)
+                learn.spend += contract.escrow.payout_amount
+                tutor.earn += contract.escrow.payout_amount
 
                 # contract.escrow.lesson.is_complete = True
             else:
@@ -1108,6 +1114,8 @@ class ContractDetailView(DetailView):
             contract.escrow.save()
             contract.escrow.lesson.save()
             contract.save()
+            learn.save()
+            tutor.save()
         if 'post_refund' in request.POST:
             if contract.escrow.refund == False:
                 contract.escrow.refund = True
@@ -1129,5 +1137,13 @@ def load_test(request):
     return HttpResponse('loaderio-c1a185840f545fea9a1f72d3524a5531')
     # return render(request, 'loaderio-c1a185840f545fea9a1f72d3524a5531.html')
 
-class AccountBalanceView(DetailView):
-    model = AccountBalance
+
+class AccountBalanceView(TemplateView):
+    template_name = 'main/account_balance.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if AccountBalance.objects.filter(user=self.request.user).exists():
+            account = AccountBalance.objects.get(user=self.request.user)
+            context["account"] = account
+        return context
