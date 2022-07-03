@@ -223,7 +223,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link text-dark font-weight-bold" href="{% url 'dantorial:contract' %}"><i
-                class='fa fa-briefcase'></i>Contract
+                class='fa fa-briefcase'></i> Contract
             </a>
           </li>
 
@@ -262,7 +262,8 @@
               href="{% url 'account_login' %}">Login</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-dark font-weight-bold" href="{% url 'account_signup' %}">Register</a>
+            <a class="nav-link text-dark font-weight-bold" href="{% url 'account_signup' %}">
+                 Register
           </li>
           {% endif %}
           <li>
@@ -292,7 +293,7 @@
   <div style="width: 100;">
     {% if messages %}
     <div class="row">
-      <div class="col-12 col-md-6 col-sm-6 ml-auto mr-auto alert alert-success alert-dismissible fade show"
+      <div class="col-12 col-md-6 col-sm-6 ml-auto mr-auto alert alert-primary alert-dismissible fade show"
         role="alert">
         {% for message in messages %} {{message}} {% endfor %}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
