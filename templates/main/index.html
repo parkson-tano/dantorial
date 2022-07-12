@@ -23,15 +23,15 @@
         <div class="col-md-4 col-sm-12 mt-md-5">
             <h1 class="fs-sm-3 fs-md-2 mb-sm-0 mb-lg-5 fw-bold">
                 <p class="typewrite mb-auto  fw-bold text-center mt-auto mt-md-5 bg-dark" data-period="2000"
-                    data-type='[ "Welcome to Tantorial", "Find your Perfect Tutor", "Get Connected to Students"]' style="
-                                background: -webkit-linear-gradient(#003, #3a3);
+                    data-type='[ "Welcome To Tantorial", "Find Your Perfect Tutor", "Get Connected To Students"]' style="
+                                background: -webkit-linear-gradient(#007bff, #007bff);
                                 -webkit-background-clip: text;
                                 -webkit-text-fill-color: transparent;">
                     <span class="wrap"></span>
                 </p>
             </h1>
-            <p class="fs-2 fw-bold mt-0 text-center text-black" style="font-size: 72px;">
-                Find the Best Tutor Closest to You.
+            <p class="fs-2 fw-bold mt-0 text-center text-black" style="font-size: 8vw;">
+                Closest To You
             </p>
             <div class="row justify-content-sm-center mb-lg-0">
                 <div class="col col-sm-12 col-md-12">
@@ -65,7 +65,7 @@
 {% endblock carousel %} 
 {% block content %}
 <div class="container-fluid">
-    <form action="{% url 'dantorial:search' %}" class="mx-auto text-dark bg-dark rounded-5 mt-auto">
+    <form action="{% url 'dantorial:search' %}" class="mx-auto text-dark bg-primary  rounded-5 mt-auto">
         <div class="row align-items-md-stretch mx-0 p-3">
             <div class="col-sm-3 col-lg-2 col-12">
                 <div class="input-group mb-3">
@@ -76,7 +76,7 @@
                     </select>
                 </div>
             </div>
-            <div class="col-sm-5 col-lg-2">
+            <div class="col-sm-5 col-lg-2 ">
                 <div class="input-group mb-3">
                     <select name='category' class="form-select select-picker" id="inputGroupSelect02"
                         data-live-search="true" data-placeholder="Select an option" data-allow-clear="true">
@@ -121,7 +121,7 @@
             </div>
 
             <div class="col-sm-3 col-lg-1 d-md-block gap-5">
-                <button class="btn btn-primary" type="submit">Search</button>
+                <button class="btn text-light bg-dark" type="submit">Search</button>
             </div>
         </div>
     </form>
@@ -162,26 +162,25 @@
     <div class="row mb-4 mt-3">
         <div class="d-lg-flex flex-md-equal w-100 my-md-3 ps-md-3 mb-3">
             <div
-                class="col-lg-6 col-md-12 col-sm-12 bg-success me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden mb-3">
+                class="col-lg-6 col-md-12 col-sm-12 bg-primary me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden mb-3">
                 <div class="my-3 py-3">
                     <h2 class="display-5 text-center">Do you want to teach</h2>
                     <!-- <p class="lead mb-auto fw-dark fs-3">Study profile and get in touch with the best for your children</p> -->
                 </div>
-                <div class="bg-dark shadow-sm" style="width: 100%; height: auto; border-radius: 21px 21px 0 0;">
+                <div class="bg-light shadow-sm" style="width: 100%; height: auto; border-radius: 21px 21px 0 0;">
                     <ul class="list-group mb-auto">
 
                         <li class="list-group-item border-bottom-0 text-center fw-dark fs-5">
-                            <i class='fa fa-check'></i>Create your profile
+                            <i class='fa fa-check'></i> Create your profile
                         </li>
                         <li class="list-group-item border-bottom-0 text-center fw-dark fs-5">
-                            <i class='fa fa-check'></i>Add subjects and prices
+                            <i class='fa fa-check'></i> Add subjects and prices
                         </li>
                         <li class="list-group-item border-bottom-0 text-center fw-dark fs-5">
-                            <i class='fa fa-check'></i>
-                            Let Learners find you
+                            <i class='fa fa-check'></i> Let Learners find you
                         </li>
                         <li class="list-group-item border-bottom-0 text-center fw-dark fs-5">
-                            <i class='fa fa-check'></i>Start now
+                            <i class='fa fa-check'></i> Start now
                         </li>
                     </ul>
                     <a href="{% url 'account_signup' %}" class='btn btn-primary mt-3 mb-3'
@@ -207,10 +206,10 @@
                             Create learning Profile
                         </li>
                         <li class="list-group-item border-bottom-0 text-center fw-dark fs-5">
-                            <i class='fa fa-check'></i>Meet tutor and start learning
+                            <i class='fa fa-check'></i> Meet tutor and start learning
                         </li>
                         <li class="list-group-item border-bottom-0 text-center fw-dark fs-5">
-                            <i class='fa fa-check'></i>Start now
+                            <i class='fa fa-check'></i> Start now
                         </li>
                     </ul>
                     <a href="{% url 'account_signup' %}" class='btn btn-primary mt-3 mb-3'
