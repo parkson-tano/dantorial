@@ -1,3 +1,4 @@
 {
-    "tabnine.receiveBetaChannelUpdates": true
+  "tabnine.receiveBetaChannelUpdates": true,
+  "githubPullRequests.ignoredPullRequestBranches": ["main"]
 }

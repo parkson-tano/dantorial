@@ -153,12 +153,12 @@
   }
 </style>
 <header class="sticky-top">
-  <nav class="navbar navbar-light navbar-expand-lg bg-light sticky-top">
-    <div class="container me-auto">
+  <nav class="navbar navbar-light navbar-expand-lg bg-white sticky-top">
+    <div class="container-fluid">
       <a class="navbar-brand" href="{% url 'dantorial:index' %}">
-        <div class='font-weight-bold text-uppercase'>
+        <em class='font-weight-bold text-uppercase'>
           Tantorial
-        </div>
+        </em>
 
         <!-- <img src="{% static 'logo_png.png' %}" alt="find the best turtor in cameroon" style="width: 250px; height:80px"> -->
       </a>
@@ -216,16 +216,18 @@
               {% else %}
               <li class="nav-link text-dark">No New Notification</li>
               {% endif %}
-              <li class="nav-link text-dark"><a href="{% url 'dantorial:notification' %}" class="card-link">See all</a>
-              </li>
+              <li class="nav-link text-dark"><a href="{% url 'dantorial:notification' %}" class="card-link">See all
+                  Unread</a></li>
 
             </ul>
           </li>
+
           <li class="nav-item">
             <a class="nav-link text-dark font-weight-bold" href="{% url 'dantorial:contract' %}"><i
                 class='fa fa-briefcase'></i> Contract
             </a>
           </li>
+
 
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle text-black font-weight-bold" href="#" id="navbarDropdownMenuLink"
@@ -263,12 +265,14 @@
               href="{% url 'account_login' %}">Login</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-dark font-weight-bold" href="{% url 'account_signup' %}">
-                 Register
+            <a class="nav-link text-dark font-weight-bold" href="{% url 'account_signup' %}">Register</a>
           </li>
           {% endif %}
-          <li>
-          </li>
+          <!-- <li class="nav-item">
+                        <a class="nav-link text-dark" href="http://www.parksontano.me" target="_blank">
+                              Blog  
+                        </a>
+                    </li> -->
           <li class="nav-item">
 
             <form action="{% url 'dantorial:allsearch' %}">
@@ -293,13 +297,21 @@
   {% block carousel %} {% endblock carousel %}
   <div style="width: 100;">
     {% if messages %}
+    <!-- <div class='alert alert-success alert-dismissible fade show' role='alert'>
+                {% for message in messages %}
+                  {{message}}
+                {% endfor %}
+              </div> -->
     <div class="row">
-      <div class="col-12 col-md-6 col-sm-6 ml-auto mr-auto alert alert-primary alert-dismissible fade show"
+
+      <div class="col-12 col-md-6 col-sm-6 ml-auto mr-auto alert alert-success alert-dismissible fade show"
         role="alert">
         {% for message in messages %} {{message}} {% endfor %}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
+
     </div>
+
     {% endif %}
     {% block content %} {% endblock content %}
   </div>
