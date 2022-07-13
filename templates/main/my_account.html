@@ -24,7 +24,13 @@ account
                 <div class="card-body p-2 p-sm-5">Account Detail</h5>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item"><strong>Email: </strong> <em>{{ prof.user.email}}</em> </li>
-                        <li class="list-group-item"><strong>Email is verified :</strong> <em>{{ auth.verified}}</em>
+                        <li class="list-group-item"><strong>
+                            {% if auth.verified %}
+                            Email is verified 
+                            {% else %}
+                            Email is not verified 
+                            {% endif %}
+                            </strong>
                         </li>
 
                     </ul>
