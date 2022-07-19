@@ -4,6 +4,7 @@ from category.views import *
 import random
 from django.views.decorators.cache import cache_page
 from django.contrib.sitemaps.views import sitemap
+from payments.views import *
 from .sitemap import *
 app_name = 'dantorial'
 
@@ -137,4 +138,7 @@ urlpatterns = [
      path('contract/', ContractView.as_view(), name='contract'),
      path('contract/<int:pk>', ContractDetailView.as_view(), name='contract_detail'),
      path('accountbalance/', AccountBalanceView.as_view(), name='account_balance'),
+     path('accounthistory/', AccountBalanceHistoryView.as_view(), name='account_balance_history'),
+     path('payments/', PaymentView.as_view(), name='payment'),
+     path('withdraws/', WithdrawView.as_view(), name='withdraw'),
 ]

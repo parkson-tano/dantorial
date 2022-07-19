@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% load crispy_forms_tags %} {% block title %} upgrade {% endblock title %} 
+{% extends "base.html" %} {% load crispy_forms_tags %} {% block title %} withdraw {% endblock title %} 
 
 <style>
 body {font-family: Arial, Helvetica, sans-serif;}
@@ -85,18 +85,36 @@ body {font-family: Arial, Helvetica, sans-serif;}
 </style>
 
 {% block content %}
-<div class="container-fluid p-0">
+<div class="container">
 <div class="row">
-    <div class="col-sm-8 col-md-4 col-lg-4 mx-auto">
+    <div class="col-sm-8 col-md-6 col-lg-6 mx-auto">
         <div class="card border-0 shadow rounded-3 my-5">
             <div class="card-body p-2 p-sm-5">
-                <h5 class="card-title text-center mb-0 fw-light fs-5">Upgrade Account</h5>
-                <h5 class="card-title mb-3 fw-dark fs-5">Amount: FCFA 2000</h5>
+                <h5 class="card-title text-center mb-0 fw-light fs-5">Withdraw Form</h5>
                 <form class="needs-validation" method="post" action="" onsubmit="return validate();" novalidate>
-                    
-                    {% csrf_token %} {{form.media.js}}
-                    {{form.payment_method|as_crispy_field}}
-                    {{form.phone_number|as_crispy_field}}   
+                    {% csrf_token %} 
+						<div class="form-group">
+							<label for="payment_method">Payment Method</label>
+							<select class="form-control" id="payment_method" name='payment_method'>
+							<option value='orange money'>Orange Money</option>
+							<option value='mobile money'>MTN Mobile Money</option>
+							</select>
+						</div>
+                        <div class="form-group">
+                            <label for="amount">Amount</label>
+                            <input type="number" name="amount" id="amount" class="form-control" placeholder="" aria-describedby="helpId">
+                            <small id="helpId" class="text-muted">Enter Amount to be withdrawn</small>
+                        </div>
+						<div class="form-group">
+							<label for="inlineFormInputGroup">Phone Number</label>
+							<div class="input-group mb-2">
+								<div class="input-group-prepend">
+								<div class="input-group-text">+237</div>
+								</div>
+								<input type="number" class="form-control" id="inlineFormInputGroup" name='phone_number' placeholder="Phone Number">
+							</div>
+						</div>
+
                     <div class="d-grid">
                         <button class="btn btn-primary btn-login text-uppercase fw-bold mt-3" id='btnSubmit' type="submit">Complete Payment</button>
                     </div>
@@ -108,47 +126,8 @@ body {font-family: Arial, Helvetica, sans-serif;}
         </div>
     </div>
 </div>
-<!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p id="warn"></p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div> -->
-<!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div> -->
 </div>
-<!-- <script src="/static/smart-selects/admin/js/chainedfk.js"></script>
-<script src="/static/smart-selects/admin/js/bindfields.js"></script> -->
+</div>
 <script>
 if (window.history.replaceState) {
 window.history.replaceState(null, null, window.location.href);

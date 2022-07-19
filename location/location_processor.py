@@ -23,7 +23,7 @@ def location_renderer(request):
         'team': OurTeam.objects.all(),
         'how':  HowToUse.objects.all(),
         'messags': messags,
-        'notification': notification,
+        'notificatio': notification,
         # 'favourite': ProfilePersonal.objects.get(user=request.user),
 
     }

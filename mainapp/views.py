@@ -1147,3 +1147,14 @@ class AccountBalanceView(TemplateView):
             account = AccountBalance.objects.get(user=self.request.user)
             context["account"] = account
         return context
+
+
+class AccountBalanceHistoryView(TemplateView):
+    template_name = 'main/account_balance_history.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if AccountBalance.objects.filter(user=self.request.user).exists():
+            account = AccountBalance.objects.get(user=self.request.user)
+            context["account"] = account
+        return context

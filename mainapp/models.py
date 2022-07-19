@@ -512,3 +512,14 @@ class AccountHistory(models.Model):
         ('Deposit', 'Deposit'),
     ))
     date_created = models.DateTimeField(auto_now_add=True)
+
+
+class BillingPayment(models.Model):
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, null=True, blank=True)
+    billing = models.BigIntegerField(null=True, blank=True)
+    payment = models.BigIntegerField(null=True, blank=True)
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.user.profilepersonal) + ' payment'

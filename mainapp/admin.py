@@ -55,6 +55,11 @@ class LessonEscrowAdmin(admin.ModelAdmin):
                     'refund', 'complete', 'payment_method']
 
 
+class BillingPaymentAdmin(admin.ModelAdmin):
+    list_display = ('user', 'payment', 'billing')
+
+
+admin.site.register(BillingPayment, BillingPaymentAdmin)
 admin.site.register(ProfilePersonal, ProfileAdmin)
 admin.site.register(ProfileInfo, TutorProfileAdmin)
 admin.site.register(Subject, SubjectAdmin)
