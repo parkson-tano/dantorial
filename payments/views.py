@@ -113,7 +113,7 @@ class WithdrawView(TemplateView):
         if request.user.is_authenticated:
             pass
         else:
-            return redirect('/accounts/login/?next=/payments/')
+            return redirect('/accounts/login/?next=/withdraws/')
 
         return super().dispatch(request, *args, **kwargs)
 
