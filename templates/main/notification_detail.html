@@ -57,7 +57,18 @@
         </p>
         <div>
           {% if notification.lessonescrow.complete %}
-            <span class="font-weight-bold text-title"> Lesson Completed </span>
+           {% if notification.lessonescrow.contract.successful %}
+            <span class="font-weight-bold text-title"> Lesson Completed </span> <br>
+            <a href="{% url 'dantorial:contract_detail' notification.lessonescrow.contract.id %}" class="btn btn-success font-weight-bold mt-2">
+            View Contract
+          </a>
+          {% else %}
+          <span class="font-weight-bold text-title"> Lesson Started </span> <br>
+            <a href="{% url 'dantorial:contract_detail' notification.lessonescrow.contract.id %}" class="btn btn-success font-weight-bold mt-2">
+            View Contract
+          </a>
+           {% endif %}
+            
             {% else %} {% if notification.teacher == request.user %} {% if notification.is_confirm %}
             <button class="btn btn-success font-weight-bold mb-2">
               You Accepted this Lesson
@@ -103,7 +114,7 @@
               </button>
             </form>
           </span>
-          <a href="{% url 'dantorial:payment' %}" class="btn btn-success font-weight-bold mt-2">
+          <a href="{% url 'dantorial:payment' notification.id %}" class="btn btn-success font-weight-bold mt-2">
             Proceed to Payment
           </a>
 

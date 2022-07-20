@@ -134,11 +134,14 @@ urlpatterns = [
     path('loaderio-c1a185840f545fea9a1f72d3524a5531.txt/', load_test),
     #     path('meet/', meet, name="meet"),
 
-     #     contract
-     path('contract/', ContractView.as_view(), name='contract'),
-     path('contract/<int:pk>', ContractDetailView.as_view(), name='contract_detail'),
-     path('accountbalance/', AccountBalanceView.as_view(), name='account_balance'),
-     path('accounthistory/', AccountBalanceHistoryView.as_view(), name='account_balance_history'),
-     path('payments/', PaymentView.as_view(), name='payment'),
-     path('withdraws/', WithdrawView.as_view(), name='withdraw'),
+    #     contract
+    path('contract/', ContractView.as_view(), name='contract'),
+    path('contract/<int:pk>', ContractDetailView.as_view(), name='contract_detail'),
+    path('accountbalance/', AccountBalanceView.as_view(), name='account_balance'),
+    path('accounthistory/', AccountBalanceHistoryView.as_view(),
+         name='account_balance_history'),
+    path('payments/<int:pk>/', PaymentView.as_view(), name='payment'),
+    path('withdraws/', WithdrawView.as_view(), name='withdraw'),
+    path('payment-success/', PaymentSuccessView.as_view(), name='pay-success'),
+    path('payment-fail/', PaymentFailView.as_view(), name='pay-fail'),
 ]

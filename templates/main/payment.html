@@ -91,7 +91,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
         <div class="card border-0 shadow rounded-3 my-5">
             <div class="card-body p-2 p-sm-5">
                 <h5 class="card-title text-center mb-0 fw-light fs-5">Payment Form</h5>
-                <h5 class="card-title mb-3 fw-dark fs-6 mt-3">Amount: FCFA 2000</h5>
+                <h5 class="card-title mb-3 fw-dark fs-6 mt-3">Amount: FCFA {{ lesson.amount }}</h5>
                 
                 <form class="needs-validation" method="post" action="" onsubmit="return validate();" novalidate>
                     {% csrf_token %} 
@@ -144,7 +144,7 @@ console.log(document.getElementsByTagName('forms'))
 <script>function validate() {
  // check if input is bigger than 3
  var value = document.getElementById('phone').value;
- if (value.length != 12) {
+ if (value.length != 9) {
 alert('Please Enter a Valid phone number');
    return false; // keep form from submitting
    
