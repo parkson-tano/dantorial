@@ -125,11 +125,14 @@ class PaymentView(TemplateView):
             pay.save()
 
             subject = "Payment Confirmation"
-            message = f'{self.request.user.profilepersonal.first_name},Your Payment for Premium Service is complete'
+            message = f'{self.request.user.profilepersonal.first_name},Your Payment for a lesson with {lesson.teacher.profilepersonal.first_name} {lesson.teacher.profilepersonal.last_name} is complete'
+            message2 = f'{self.request.user.profilepersonal.first_name} has successful paid the sum of {amount}XAF for a lesson with you.'
             from_email = settings.DEFAULT_FROM_EMAIL
             to_email = (self.request.user.email, )
+            to_email2 = (lesson.teacher.email,)
             send_mail(subject, message, from_email,
                       to_email, fail_silently=True)
+            send_mail(subject, message2, to_email2, )
 
             # messages.success(self.request, "Successful")
             return redirect('dantorial:pay-success')
