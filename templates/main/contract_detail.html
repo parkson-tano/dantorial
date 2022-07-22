@@ -40,39 +40,37 @@
                 {% endif %}
 
             </div>
-            <!-- <div class="col-md-2 mb-2">
-                <p class="fs-5 font-weight-bold">Status Action</p>
-                {% if contract.successful %}
-                <p class="fs-5 dispaly-6">Successful</p>
-                {% else %}
-                <form method="post">
-                    {% csrf_token %}
-                    <button class="btn btn-success font-weight-bold" name="post_complete">Successful</button>
-                </form>
-                {% endif %}
-            </div> -->
+
             <div class="col-md-4 mb-3">
                 <p class="fs-5 font-weight-bold text-center">Action</p>
 
                 {% if contract.escrow.payout or contract.escrow.refund %}
                 {% if contract.escrow.lesson.teacher == request.user or contract.escrow.lesson.student == request.user %}
                 {% if contract.escrow.payout %}
-                <p class="fs-5 dispaly-6">Paid</p>
+    
+                <p class="fs-5 dispaly-6 text-center">Paid</p>
+                
                 {% elif contract.escrow.refund %}
+               
                 <p class="fs-5 dispaly-6 text-center">Refunded</p>
+        
                 {% endif %}
                 {% endif %}
                 {% else %}
                 <form method="POST" id="payout_refund">
                     {% csrf_token %}
                     {% if contract.escrow.lesson.teacher == request.user %}
+                    <div class="row justify-content-center">
                     <button class="btn btn-outline-success font-weight-bold d-block" name="post_refund">
                         Refund
                     </button>
+                    </div>
                     {% else %}
+                    <div class="row justify-content-center">
                     <button class="btn btn-outline-success font-weight-bold d-block" name="post_payout">
                         Payout
                     </button>
+                    </div>
                     {% endif %}
                 </form>
                 {% endif %}
@@ -94,5 +92,4 @@
         </div>
     </div>
 </div>
-
 {% endblock content %}

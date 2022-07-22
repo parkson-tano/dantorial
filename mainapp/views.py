@@ -1107,10 +1107,10 @@ class ContractDetailView(DetailView):
                 tutor.earn += contract.escrow.payout_amount
 
                 # contract.escrow.lesson.is_complete = True
-            else:
-                contract.escrow.payout = False
-                contract.escrow.lesson.is_complete = False
-                contract.successful = False
+            # else:
+            #     contract.escrow.payout = False
+            #     contract.escrow.lesson.is_complete = False
+            #     contract.successful = False
             contract.escrow.save()
             contract.escrow.lesson.save()
             contract.save()
@@ -1122,10 +1122,10 @@ class ContractDetailView(DetailView):
                 contract.successful = True
                 contract.escrow.lesson.is_complete = True
                 # contract.escrow.lesson.is_complete = True
-            else:
-                contract.escrow.refund = False
-                contract.successful = False
-                contract.escrow.lesson.is_complete = False
+            # else:
+            #     contract.escrow.refund = False
+            #     contract.successful = False
+            #     contract.escrow.lesson.is_complete = False
                 # contract.escrow.lesson.is_complete = False
             contract.escrow.save()
             contract.escrow.lesson.save()
@@ -1140,6 +1140,14 @@ def load_test(request):
 
 class AccountBalanceView(TemplateView):
     template_name = 'main/account_balance.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            pass
+        else:
+            return redirect('/accounts/login/?next=/accountbalance/')
+
+        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -85,7 +85,7 @@ class PaymentView(TemplateView):
             "environment": "DEV"  # use "DEV" for demo mode or "PROD" for live mode
         })
         collect = campay.collect({
-            "amount": 2,  # The amount you want to collect
+            "amount": 5,  # The amount you want to collect
             "currency": "XAF",
             # Phone number to request amount from. Must include country code
             "from": "237" + phone_number,
@@ -116,7 +116,7 @@ class PaymentView(TemplateView):
             profile.paid = True
             lesson_escrow.complete = True
             lesson_escrow.amount = amount
-            lesson_escrow.payout_amount = amount
+            # lesson_escrow.payout_amount = amount
             lesson_escrow.save()
             profile.save()
             contract = Contract(escrow=lesson_escrow)
@@ -132,7 +132,8 @@ class PaymentView(TemplateView):
             to_email2 = (lesson.teacher.email,)
             send_mail(subject, message, from_email,
                       to_email, fail_silently=True)
-            send_mail(subject, message2, to_email2, )
+            send_mail(subject, message2, from_email,
+                      to_email2, fail_silently=True)
 
             # messages.success(self.request, "Successful")
             return redirect('dantorial:pay-success')
@@ -184,51 +185,55 @@ class WithdrawView(FormView):
         })
 
         disburse = campay.disburse({
-            "amount": "1",  # The amount you want to disburse
+            # The amount you want to disburse
+            "amount": self.request.POST.get('amount'),
             "currency": "XAF",
             # Phone number to disburse amount to. Must include country code
             "to": "237" + form.instance.phone_number,
-            "description": "Withdrwal from tantorial"
+            "description": "Withdrawal from tantorial"
         })
         print(disburse)
-        form.instance.reference = disburse['reference']
-        form.instance.status = disburse['status']
-        form.instance.reason = disburse['reason']
-        form.instance.code = disburse['code']
-        form.instance.operator = disburse['operator']
-        form.instance.operator_ref = disburse['operator_reference']
-        form.instance.external_ref = disburse['external_reference']
-        # print(disburse)
-        pay = form.save(commit=False)
-        if form.instance.payment_method == 'MTN Mobile Money':
-            messages.success(self.request, "Dial *126# to complete payment")
-        else:
-            messages.success(self.request, "Dial #150*50# to complete payment")
-        if disburse['status'] == 'SUCCESSFUL':
-            form.instance.is_complete = True
-            profile.paid = True
-            profile.save()
-            pay.save()
-            self.success_url = reverse_lazy('dantorial:pay-success')
-            subject = "Withdrawal Confirmation"
-            message = f'{self.request.user.profilepersonal.first_name},Your Withdrawal is complete'
-            from_email = settings.DEFAULT_FROM_EMAIL
-            to_email = (self.request.user.email, )
-            send_mail(subject, message, from_email,
-                      to_email, fail_silently=True)
+        if (disburse['reference']):
+            form.instance.reference = disburse['reference']
+            form.instance.status = disburse['status']
+            form.instance.reason = disburse['reason']
+            form.instance.code = disburse['code']
+            form.instance.operator = disburse['operator']
+            form.instance.operator_ref = disburse['operator_reference']
+            form.instance.external_ref = disburse['external_reference']
+            # print(disburse)
+            pay = form.save(commit=False)
+            if form.instance.payment_method == 'MTN Mobile Money':
+                messages.success(
+                    self.request, "Dial *126# to complete payment")
+            else:
+                messages.success(
+                    self.request, "Dial #150*50# to complete payment")
+            if disburse['status'] == 'SUCCESSFUL':
+                form.instance.is_complete = True
+                profile.paid = True
+                profile.save()
+                pay.save()
+                self.success_url = reverse_lazy('dantorial:pay-success')
+                subject = "Withdrawal Confirmation"
+                message = f'{self.request.user.profilepersonal.first_name},Your Withdrawal is complete'
+                from_email = settings.DEFAULT_FROM_EMAIL
+                to_email = (self.request.user.email, )
+                send_mail(subject, message, from_email,
+                          to_email, fail_silently=True)
 
-            # messages.success(self.request, "Successful")
-        else:
-            form.instance.is_complete = False
-            self.success_url = reverse_lazy('dantorial:pay-fail')
-            # messages.success(self.request, "Failed")
-            subject = "Withdraw Fail"
-            message = f'{self.request.user.profilepersonal.first_name},Your Withdrawal is not complete'
-            from_email = settings.DEFAULT_FROM_EMAIL
-            to_email = (self.request.user.email, )
-            # send_mail(subject, message, from_email, to_email, fail_silently=True)
-            # send_mail('hey thanks for nothing', 'here is the message', settings.DEFAULT_FROM_EMAIL, (self.request.user.email,), fail_silently=True,)
-            pay.save()
+                # messages.success(self.request, "Successful")
+            else:
+                form.instance.is_complete = False
+                self.success_url = reverse_lazy('dantorial:pay-fail')
+                # messages.success(self.request, "Failed")
+                subject = "Withdraw Fail"
+                message = f'{self.request.user.profilepersonal.first_name},Your Withdrawal is not complete'
+                from_email = settings.DEFAULT_FROM_EMAIL
+                to_email = (self.request.user.email, )
+                # send_mail(subject, message, from_email, to_email, fail_silently=True)
+                # send_mail('hey thanks for nothing', 'here is the message', settings.DEFAULT_FROM_EMAIL, (self.request.user.email,), fail_silently=True,)
+                pay.save()
 
         return super().form_valid(form)
 
