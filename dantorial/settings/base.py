@@ -68,8 +68,8 @@ INSTALLED_APPS = [
     'bootstrap4',
     'bootstrap_datepicker_plus',
     'api',
-    'rest_framework',
     "corsheaders",
+    'rest_framework',
     # "translation_manager",
     'django.contrib.humanize',
     'mathfilters',
@@ -89,10 +89,10 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     # 'django.middleware.csrf.CsrfViewMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.gzip.GZipMiddleware',
     'django.middleware.security.SecurityMiddleware',
     "whitenoise.middleware.WhiteNoiseMiddleware",
-    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     'django.middleware.locale.LocaleMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -291,6 +291,10 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 
+
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:19000',
+]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

@@ -17,6 +17,8 @@ from django.db.models import Q
 from django.contrib import messages
 from django.shortcuts import redirect, get_object_or_404
 from requests.api import request
+
+from payments.models import Payment
 from .models import *
 from django.utils.decorators import method_decorator
 from django.http import Http404
@@ -1162,7 +1164,6 @@ class AccountBalanceHistoryView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        if AccountBalance.objects.filter(user=self.request.user).exists():
-            account = AccountBalance.objects.get(user=self.request.user)
-            context["account"] = account
+        payments = Payment.objects.filter(Q(user=self.request.user) & (Q(status = 'SUCCESSFUL') | Q(status = 'FAILED')))
+        context['payments'] = payments
         return context

@@ -503,16 +503,6 @@ def create_account(sender, instance, created, **kwargs):
         AccountBalance.objects.create(user=instance)
 
 
-class AccountHistory(models.Model):
-    account = models.ForeignKey(
-        AccountBalance, on_delete=models.CASCADE, null=True, blank=True)
-    amount = models.IntegerField()
-    transaction = models.CharField(max_length=20, choices=(
-        ('Withdraw', 'Withdraw'),
-        ('Deposit', 'Deposit'),
-    ))
-    date_created = models.DateTimeField(auto_now_add=True)
-
 
 class BillingPayment(models.Model):
     user = models.OneToOneField(

@@ -37,6 +37,7 @@ django-smart-selects==1.5.9
 django-webpush==0.3.4
 django-zoom-meetings==0.1.0
 djangorestframework==3.13.1
+gunicorn==20.1.0
 http-ece==1.1.0
 idna==3.3
 install==1.3.5

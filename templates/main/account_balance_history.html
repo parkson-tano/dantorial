@@ -1,44 +1,70 @@
-{% extends "base.html" %} {% load humanize %} {% load crispy_forms_tags %} 
+{% extends "base.html" %} {% load humanize %} {% load crispy_forms_tags %}
 {% block title %} account balance {% endblock title %} {% block content %}
 
+
 <div class="container mb-5 mt-5">
-  <div class="row mx-sm-5">
-    <div class="col col-12 col-sm-3">
-      <ul class="list-group">
-        <li class="list-group-item">
-          <a href="{% url 'dantorial:account_balance' %}" class="text-black">Account Balance</a>
-        </li>
-        <li class="list-group-item active">
-          <a href="" class="text-black">Account History</a>
-        </li>
-        <li class="list-group-item">
-          <a href="" class="text-black">Payment Account</a>
-        </li>
-        <li class="list-group-item">
-          <a href="" class="text-black">Billing Account</a>
-        </li>
-      </ul>
-    </div>
-    <div class="col col-12 col-sm-5">
-      <div class="card text-white bg-success mb-3">
-        <div class="card-header font-weight-bold fs-4">Earnings</div>
-        <div class="card-body">
-          <h5 class="card-title">You have earned a total of</h5>
-          <button class="btn btn-primary">{{account.earn|intcomma}}XAF</button>
-          <a href="" class="btn btn-info"> View History </a>
-        </div>
-      </div>
-    </div>
-    <div class="col col-12 col-sm-4">
-      <div class="card text-white bg-danger mb-3">
-        <div class="card-header font-weight-bold fs-4">Spendings</div>
-        <div class="card-body">
-          <h5 class="card-title">You have a spent a total of</h5>
-          <button class="btn btn-primary">{{account.spend|intcomma}}XAF</button>
-          <a href="" class="btn btn-info"> View History </a>
-        </div>
-      </div>
-    </div>
-  </div>
+	<div class="row mx-sm-5">
+		<div class="col col-md-3">
+			<ul class="list-group">
+				<li class="list-group-item">
+					<a href="{% url 'dantorial:account_balance' %}" class="text-black">Account Balance</a>
+				</li>
+				<li class="list-group-item active">
+					<a href="" class="text-black">Account History</a>
+				</li>
+				<li class="list-group-item">
+					<a href="" class="text-black">Payment Account</a>
+				</li>
+				<li class="list-group-item">
+					<a href="" class="text-black">Billing Account</a>
+				</li>
+			</ul>
+		</div>
+
+		<div class="col col-md-9">
+			<div class="table-responsive">
+
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">Type</th>
+							<th scope="col">Amount</th>
+							<th scope="col">Reason</th>
+							<!-- <th scope="col">Method</th> -->
+						</tr>
+					</thead>
+					<tbody>
+						{% for payment in payments %}
+						<tr>
+							<td scope="row">{{forloop.counter}}</td>
+							<td>
+								{% if payment.withdrawal %}
+								Withdraw
+								{% else %}
+								Deposit
+								{% endif %}
+							</td>
+							<td>
+								{{payment.amount}}
+							</td>
+							<td>
+								{{ payment.reason_payment }}
+							</td>
+							<!-- <td>
+							{{ payment.operator}}
+						</td> -->
+
+
+						</tr>
+						{% endfor %}
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
 </div>
 {% endblock %}
