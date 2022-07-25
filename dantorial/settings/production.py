@@ -5,7 +5,7 @@ load_dotenv()
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['tantorial.com', 'www.tantorial.com']
+ALLOWED_HOSTS = ['*']
 
 DATABASES = {
     'default': {

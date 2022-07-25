@@ -3,7 +3,8 @@ from django.utils.translation import gettext_lazy as _
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-
+import django_heroku
+import dj_database_url
 load_dotenv()
 # import django_heroku
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -447,3 +448,6 @@ PWA_APP_LANG = 'en-US'
 
 PWA_SERVICE_WORKER_PATH = os.path.join(
     BASE_DIR, 'static/js', 'serviceworker.js')
+
+    
+django_heroku.settings(locals())
