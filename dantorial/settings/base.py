@@ -151,7 +151,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'dantorial.wsgi.application'
+# WSGI_APPLICATION = 'dantorial.wsgi.application'
 
 # ASGI_APPLICATION = 'dantorial.routing.application'
 

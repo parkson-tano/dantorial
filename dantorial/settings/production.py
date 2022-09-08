@@ -8,17 +8,17 @@ DEBUG = False
 ALLOWED_HOSTS = ['*']
 
 DATABASES = {
-    'default': {
-        'ENGINE': "django.db.backends.mysql",
-        'NAME': "tantwexs_db",
-        'USER': "tantwexs_tantorialadmin",
-        'PASSWORD':  os.getenv('PASSWORD'),
-        'HOST':  "localhost",
-        'PORT': 3306,
-        'OPTIONS': {
-            'sql_mode': 'traditional',
-        }
-    }
+    # 'default': {
+    #     'ENGINE': "django.db.backends.mysql",
+    #     'NAME': "tantwexs_db",
+    #     'USER': "tantwexs_tantorialadmin",
+    #     'PASSWORD':  os.getenv('PASSWORD'),
+    #     'HOST':  "localhost",
+    #     'PORT': 3306,
+    #     'OPTIONS': {
+    #         'sql_mode': 'traditional',
+    #     }
+    # }
 }
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
