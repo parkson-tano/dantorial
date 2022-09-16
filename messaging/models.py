@@ -1,10 +1,11 @@
 from datetime import date
 from django.db import models
-from django.contrib.auth.models import User
 # from pytz import timezone
 from django.utils.timezone import now
 from review.models import Review
 from django.contrib.sessions.models import Session
+from django.contrib.auth import get_user_model
+User = get_user_model()
 # Create your models here.
 
 # class ThreadModel(models.Model):

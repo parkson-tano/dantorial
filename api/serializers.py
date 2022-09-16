@@ -1,8 +1,9 @@
 from mainapp.models import ProfilePersonal, ProfileInfo, Subject, Qualification, Experience
-from django.contrib.auth.models import User
 from rest_framework import serializers
 from category.models import Category, SubCategory, Subject
 from location.models import Country, Region, Town, Quater
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 class UserSerializer(serializers.ModelSerializer):
 	class Meta:

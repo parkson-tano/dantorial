@@ -7,11 +7,12 @@ from numpy import less
 from campay.sdk import Client
 from django.urls import reverse_lazy, reverse
 from django.http import JsonResponse
-from django.contrib.auth.models import User
 from django.contrib import messages
 from mainapp.models import *
 from .models import Payment
 from .forms import *
+from django.contrib.auth import get_user_model
+User = get_user_model()
 # Create your views here.
 import campay
 

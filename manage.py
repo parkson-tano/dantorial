@@ -6,7 +6,7 @@ import dotenv
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dantorial.settings.local')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dantorial.settings')
     if os.getenv('DJANGO_SETTINGS_MODULE'):
         os.environ['DJANGO_SETTINGS_MODULE'] = os.getenv('DJANGO_SETTINGS_MODULE')
     try:

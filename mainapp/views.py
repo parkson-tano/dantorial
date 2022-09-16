@@ -17,7 +17,6 @@ from django.db.models import Q
 from django.contrib import messages
 from django.shortcuts import redirect, get_object_or_404
 from requests.api import request
-
 from payments.models import Payment
 from .models import *
 from django.utils.decorators import method_decorator
@@ -27,7 +26,6 @@ from .forms import *
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy, reverse
-from django.contrib.auth.models import User
 from django.contrib import messages
 from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth.tokens import default_token_generator
@@ -56,6 +54,8 @@ from notifications.signals import notify
 import random
 import os
 from dotenv import load_dotenv
+from django.contrib.auth import get_user_model
+User = get_user_model()
 load_dotenv()
 
 
@@ -121,7 +121,7 @@ class UserProfileView(DetailView):
         context['ur'] = urr[:3]
         print(ur)
         prof = ProfilePersonal.objects.get(
-            user__username=self.get_object().user)
+            user__email=self.get_object().user)
         if self.request.user.is_authenticated:
             if (self.request.user != self.get_object().user):
                 new_view = ProfileViewed.objects.create(

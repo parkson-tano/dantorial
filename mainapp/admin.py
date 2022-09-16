@@ -1,6 +1,25 @@
 from django.contrib import admin
 from .models import *
-# Register your models here.
+from django.utils.translation import gettext as _
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib.auth.admin import UserAdmin
+class UserAdmin(BaseUserAdmin):
+    # form = UserChangeForm
+    fieldsets = (
+        (None, {'fields': ('email', 'password', )}),
+        (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
+                                        'groups', 'user_permissions')}),
+        (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
+    )
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide', ),
+            'fields': ('email', 'password1', 'password2'),
+        }),
+    )
+    search_fields = ('email', 'first_name', 'last_name')
+    ordering = ('email', )
+admin.site.register(User, UserAdmin)
 
 
 class ProfileAdmin(admin.ModelAdmin):

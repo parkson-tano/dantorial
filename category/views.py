@@ -3,9 +3,10 @@ from django.views.generic import TemplateView, View
 from .models import Category, SubCategory, Subject
 from mainapp.models import ProfilePersonal
 from mainapp.views import UserProfileView
-from django.contrib.auth.models import User
 import random
 from review.models import Review
+from django.contrib.auth import get_user_model
+User = get_user_model()
 # Create your views here.
 
 

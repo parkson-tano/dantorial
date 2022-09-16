@@ -1,7 +1,8 @@
 from statistics import mode
 from django.db import models
-from django.contrib.auth.models import User
 from mainapp.models import OnlineLesson
+from django.contrib.auth import get_user_model
+User = get_user_model()
 # Create your models here.
 
 

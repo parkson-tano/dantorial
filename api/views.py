@@ -7,7 +7,8 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 from category.models import Category, SubCategory, Subject
 from location.models import Country, Region, Town, Quater
 # Create your views here.
-
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 class UserView(viewsets.ModelViewSet):
     authentication_classes = (

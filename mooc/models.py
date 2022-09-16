@@ -1,9 +1,10 @@
 from django.db import models
-from django.contrib.auth.models import User
 from django.urls import reverse
 from autoslug import AutoSlugField
 from django.utils import timezone
 from smart_selects.db_fields import ChainedForeignKey
+from django.contrib.auth import get_user_model
+User = get_user_model()
 # Create your models here.
 
 PAYMENT = (
@@ -53,7 +54,7 @@ class Course(models.Model):
 
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     subcategory = models.ForeignKey(SubCategory, on_delete=models.CASCADE)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    owner = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
     title = models.CharField(max_length=60)
     slug = AutoSlugField(populate_from='title')
     description = models.TextField(blank=True, null=True)
@@ -119,7 +120,7 @@ class Lesson(models.Model):
     
 
 class Enrollment(models.Model):
-    student = models.ForeignKey(User, on_delete=models.CASCADE)
+    student = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     complete = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True)
