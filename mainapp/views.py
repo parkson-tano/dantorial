@@ -194,7 +194,7 @@ class UserProfileView(DetailView):
             to_email = (self.get_object().user.email,)
 
             send_mail(subject, message, from_email, to_email,
-                      fail_silently=False, html_message=html_message)
+                      fail_silently=True, html_message=html_message)
             print(f'email sent: {to_email}')
             messages.success(self.request, 'message successfully sent')
         elif 'send_message' in request.GET:
