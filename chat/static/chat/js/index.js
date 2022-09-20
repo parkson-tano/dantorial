@@ -2,8 +2,9 @@ const host = window.location.host;
 const httpProtocol = window.location.protocol;
 const rootChatApiBase = `${httpProtocol}//${window.location.host}/chat-testing/api`
 
+const roomId = document.querySelector("#chat-id").value
 const allUserRoomEnpoint = `${rootChatApiBase}/personal/`;
-const contactMessagesEndPoint = `${rootChatApiBase}/messages/1/`
+const contactMessagesEndPoint = `${rootChatApiBase}/messages/${roomId}/`
 
 function getconversationListHtmlText(data) {
     const { user, bio, last_message, last_message_time, profile_pic, chat_url } = data;

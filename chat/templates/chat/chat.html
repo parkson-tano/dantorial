@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="{% static 'chat/css/media-queries.css' %}" />
 {% endblock stuffForHeader %} 
 {% block content %}
+<input type="hidden" id="chat-id" value="{{object.id}}"/>
 <main class="main">
     <section class="conversation-list-section">
         <div class="conversation-list-header">
