@@ -13,6 +13,7 @@
     .main {
         grid-template-columns: 270px auto;
     }
+
 }
 
 
@@ -22,7 +23,9 @@
         position: relative;
         align-items: center;
         justify-content: center;
+        width: 100%;
     }
+
 
     .header p {
         width: 0px;

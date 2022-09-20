@@ -34,6 +34,9 @@ DATABASES = {
 # Application definition
 
 INSTALLED_APPS = [
+    # Django cleanup to remove unused media files
+    # https://github.com/un1t/django-cleanup
+    'django_cleanup.apps.CleanupConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

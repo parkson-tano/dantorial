@@ -113,12 +113,15 @@ MODE = (
     ('Audio', 'Audio'),
 )
 
+
 class User(AbstractUser):
-    email = models.EmailField(_('email address'), unique = True)
+    email = models.EmailField(_('email address'), unique=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name', 'username']
+
     def __str__(self):
         return "{}".format(self.email)
+
 
 class ProfilePersonal(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -499,7 +502,6 @@ class AccountBalance(models.Model):
 def create_account(sender, instance, created, **kwargs):
     if created:
         AccountBalance.objects.create(user=instance)
-
 
 
 class BillingPayment(models.Model):

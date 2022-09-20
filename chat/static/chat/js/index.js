@@ -1,14 +1,14 @@
 const host = window.location.host;
 const httpProtocol = window.location.protocol;
-const rootChatApiBase = "chat-testing/api";
+const rootChatApiBase = `${httpProtocol}//${window.location.host}/chat-testing/api`
 
-// http://localhost:8000/chat-testing/api/personal/
-const allUserRoomEnpoint = `${httpProtocol}//${window.location.host}/${rootChatApiBase}/personal/`;
+const allUserRoomEnpoint = `${rootChatApiBase}/personal/`;
+const contactMessagesEndPoint = `${rootChatApiBase}/messages/1/`
 
 function getconversationListHtmlText(data) {
-    console.log(data);
-    const { user, bio, last_message, last_message_time, profile_pic } = data;
-    return `<div class="conversation-element">
+    const { user, bio, last_message, last_message_time, profile_pic, chat_url } = data;
+    console.log(data)
+    return `<div class="conversation-element" role="button" xhref=${chat_url}>
         <img width="30px" src="${profile_pic}" class="profile-image" />
         <h3 class="room-name">${user}</h3>
         <p class="room-group-info">${bio}</p>
@@ -17,11 +17,26 @@ function getconversationListHtmlText(data) {
     </div>`;
 }
 
-async function getPersonalRooms() {
-    const response = await fetch(allUserRoomEnpoint);
+function getMessageHtmlText(data){
+    const {username, content, userprofile, isowner, created} = data;
+    return `
+        <div class="${isowner ? "owner": ""} message">
+            <img src="${userprofile}" alt="" class="profile-image" />
+            <div class="message-body">
+                <h4>${username}</h4>
+                <span>
+                ${content}
+                </span>
+            </div>
+            <p class="message-delivery-time">12:30pm</p>
+        </div>
+    `;
+}
+
+async function getData(endpoint) {
+    const response = await fetch(endpoint);
     if (response.status === 200) {
         const data = await response.json();
-        console.log(data);
         return data;
     }
     return [];
@@ -29,14 +44,25 @@ async function getPersonalRooms() {
 
 async function updateContactsList() {
     const parent = document.querySelector(".conversation-elements-container");
-    const contacts = await getPersonalRooms();
+    const contacts = await getData(allUserRoomEnpoint);
     const htmlText = contacts
         .map((contact) => {
             return getconversationListHtmlText(contact);
         })
         .join("");
-    // console.log(htmlText);
     parent.innerHTML = htmlText;
 }
 
-document.addEventListener("DOMContentLoaded", updateContactsList);
+async function updateMessagesList(){
+    const parent = document.querySelector(".chat-main > div");
+    const messages = await getData(contactMessagesEndPoint);
+    const htmlText  = messages.messages.map(msg => {
+        return getMessageHtmlText(msg)
+    }).join("");
+    parent.innerHTML = htmlText
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+    await updateMessagesList();
+    await updateContactsList();
+});

@@ -60,11 +60,27 @@ class PersonalRoom(models.Model):
             return ""
         return str(naturaltime(message.created))
 
+    def get_members(self):
+        return {self.user_1, self.user_2}
+
+    def get_other_user(self, user):
+        if user == self.user_1:
+            return self.user_2
+        return self.user_1
+
 
 class PersonalMessage(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     content = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     chatroom = models.ForeignKey(
-        PersonalRoom, on_delete=models.CASCADE, related_name="personal_messages"
+        PersonalRoom, on_delete=models.CASCADE, related_name="messages"
     )
+
+    @property
+    def username(self):
+        return str(self.user.email.title())
+
+    @property
+    def userprofile(self):
+        return str(self.user.profilepersonal.profile_pic.url)
