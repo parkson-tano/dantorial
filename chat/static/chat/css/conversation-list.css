@@ -61,7 +61,7 @@
     width: 100%;
     height: 80px;
     padding: 14px 19px;
-    border: 1px solid #D1E6FF;
+    border-bottom: 1px solid #D1E6FF;
     position: relative;
 }
 
