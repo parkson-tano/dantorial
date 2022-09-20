@@ -1,0 +1,100 @@
+/* Global variable from --main-color, --body-backgound */
+/* See ./header.css */
+
+.conversation-list-section {
+    background-color: inherit;
+    display: grid;
+    grid-template-rows: 40px 40px auto;
+    gap: 10px;
+    height: calc(100vh - 80px);
+}
+
+.conversation-list-section * {
+    font-family: "Questrial", serif;
+    color: var(--main-font-color)
+}
+
+.conversation-list-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+}
+
+
+.conversation-list-header h2 {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 16px;
+}
+
+.conversation-list-section form,
+.conversation-list-section input {
+    width: 100%;
+    height: 100%;
+    border-radius: 100px;
+}
+
+
+.conversation-list-section form input {
+    background: #FFFFFF;
+    padding-left: 20px;
+    color: #000;
+    border: none;
+}
+
+.conversation-list-section form button {
+    position: fixed;
+    left: -10000000px;
+}
+
+.conversation-elements-container {
+    background-color: var(--main-color);
+    border-radius: 10px;
+    overflow-y: scroll;
+    height: 100%;
+    /* padding-bottom: 200px; */
+}
+
+.conversation-element {
+    width: 100%;
+    height: 80px;
+    padding: 14px 19px;
+    border: 1px solid #D1E6FF;
+    position: relative;
+}
+
+.conversation-element .profile-image {
+    float: left;
+    margin-right: 10px;
+}
+
+.room-name {
+    font-weight: 500;
+    font-size: 0.9rem;
+    line-height: 1rem;
+    margin: 2px;
+}
+
+.room-group-info {
+    font-weight: 400;
+    font-size: .6rem;
+    line-height: 9px;
+}
+
+.room-group-last-message {
+    clear: both;
+    overflow: hidden;
+    font-size: 10px;
+    padding-top: 3px;
+}
+
+.room-last-active {
+    position: absolute;
+    top: 14px;
+    right: 24px;
+    font-weight: 400;
+    font-size: .6rem;
+    line-height: 9px;
+}

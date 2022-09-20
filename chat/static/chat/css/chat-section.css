@@ -1,0 +1,145 @@
+.chat-section {
+    display: grid;
+    grid-template-rows: 80px auto;
+    gap: 15px;
+    font-family: "Questrial", serif;
+    height: 100%;
+}
+
+.chat-section>div {
+    background-color: var(--main-color);
+    border-radius: 10px;
+    height: 100%;
+}
+
+
+.chat-section-header {
+    display: flex;
+    align-items: center;
+    color: #989BA1;
+    padding-left: 25px;
+}
+
+.chat-section-header img {
+    float: left;
+    margin-right: .5rem;
+}
+
+.chat-section-header .room-name {
+    padding-left: 50px;
+    margin: 5px;
+}
+
+.chat-section-header .room-group-info {
+    font-size: 10px;
+    margin: 5px;
+}
+
+.chat-container {
+    display: grid;
+    grid-template-rows: calc(100vh - 220px) 50px;
+    height: 100%;
+}
+
+.chat-container form {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    /* margin: auto; */
+    position: relative;
+}
+
+.chat-container form .message-input {
+    width: 97%;
+    margin: auto;
+    border-radius: 3px;
+    border: 1px solid #989BA1;
+    height: 35px;
+    background: #FFFFFF;
+    padding-left: 20px;
+    padding: 5px;
+    padding-right: 40px;
+    padding-top: 10px;
+    resize: none;
+    font-family: "Questrial" sans-serif;
+}
+
+/* This is going to match the send button */
+*[icon="fluent:send-28-filled"] {
+    color: #fff
+}
+
+.chat-container button {
+    position: absolute;
+    right: 13px;
+    width: 25px;
+    height: 30px;
+    background: linear-gradient(90deg, #1D75DD 0%, #085EC4 100%);
+    border: none;
+    border-radius: 3px;
+    top: calc(25px - 15px);
+}
+
+.chat-main {
+    padding: 20px;
+    overflow-y: scroll;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    padding-bottom: 20px;
+}
+
+.chat-main>div {
+    max-width: 1000px;
+}
+
+.message {
+    display: flex;
+    gap: 10px;
+    max-width: 700px;
+    position: relative;
+    float: both;
+    max-width: 70%;
+    padding-bottom: 30px;
+    clear: both;
+}
+
+.message-body {
+    border-radius: 5px;
+    padding: 10px;
+    font-weight: 400;
+    font-size: .7rem;
+    line-height: .91rem;
+    color: #555758;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    background-color: var(--main-color);
+    width: calc(100% - 40px);
+}
+
+
+.message .profile-image {
+    width: 30px;
+    height: 30px;
+}
+
+.message.owner {
+    float: right;
+    flex-direction: row-reverse;
+}
+
+.message.owner>.message-body {
+    background: #D1E6FF;
+    border-radius: 5px;
+}
+
+.message-delivery-time {
+    position: absolute;
+    bottom: 0px;
+    left: 70px;
+    font-size: 10px;
+}
+
+.owner .message-delivery-time {
+    right: 70px;
+    left: auto;
+}

@@ -1,0 +1,138 @@
+/* https://getbootstrap.com/docs/5.2/components/navbar/ */
+html {
+    --sidebar-width: 340px;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0px;
+    width: 100vw;
+    overflow-y: scroll;
+    left: 0px;
+    height: 100vh;
+    z-index: 2;
+    transition: .5s all;
+    border-right: 2px solid #fff;
+    max-width: 320px;
+    color: #E4EEF9;
+    background: #010246;
+}
+
+.sidebar a {
+    color: #E4EEF9;
+}
+
+.sidebar-hidden {
+    left: calc(-1 * var(--sidebar-width));
+}
+
+.fake-shadow {
+    display: none;
+    position: fixed;
+    left: 0;
+    z-index: 1;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.3);
+
+}
+
+.shadow-show {
+    display: block;
+}
+
+.sidebar form {
+    display: grid;
+    width: 85%;
+    gap: 10px;
+    margin: 15px 0;
+    margin-left: 5%;
+    height: max-content;
+    grid-template-columns: auto 40px;
+    /* border: 2px solid rgb(225, 234, 225); */
+    border-radius: 8px;
+}
+
+.sidebar form input {
+    height: 30px;
+    border: none;
+    padding-left: 15px;
+    border-radius: 7px;
+}
+
+.sidebar form input:focus {
+    outline-color: rgb(129, 118, 231);
+}
+
+.sidebar form button {
+    background-color: green;
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+}
+
+
+.sidebar-element {
+    display: flex;
+    justify-content: center;
+}
+
+
+.close {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 1.4rem;
+    color: grey;
+    width: max-content;
+    height: max-content;
+    border: none;
+    background-color: transparent;
+    transition: .2s all;
+}
+
+.close:hover {
+    color: #fff;
+    transform: scale(1.2);
+}
+
+.sidebar-element>div {
+    height: 50px;
+    align-items: center;
+    display: flex;
+    width: 90%;
+    gap: 20px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 1.2rem;
+}
+
+.sidebar-element>div {
+    transition: .4s all;
+}
+
+.sidebar-element>div:hover {
+    transform: scale(1.02);
+}
+
+.sidebar-header {
+    display: flex;
+    position: relative;
+    align-items: center;
+    height: 50px;
+    width: 100%;
+    /* justify-content: center; */
+    margin-top: 30px;
+    padding-left: 20%;
+}
+
+.sidebar-element iconify-icon {
+    font-size: 1.5rem;
+    padding-left: 20px;
+}
+
+.sidebar-element.active-element {
+    color: #1D75DD;
+}

@@ -78,7 +78,7 @@ INSTALLED_APPS = [
     "pwa",
     'rest_framework.authtoken',
     'webpush',
-
+    'chat',
 ]
 
 MIDDLEWARE = [
@@ -343,7 +343,7 @@ SOCIALACCOUNT_PROVIDERS = {
             # 'LOCALE_FUNC': 'path.to.callable',
             'VERIFIED_EMAIL': True,
             'VERSION': 'v7.0',
-            }
+        }
 }
 
 SOCIAL_AUTH_FACEBOOK_KEY = os.getenv('SOCIAL_AUTH_FACEBOOK_KEY')

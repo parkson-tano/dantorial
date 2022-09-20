@@ -1,0 +1,49 @@
+@media (max-width:1330px) {
+
+    .main {
+        grid-template-columns: 270px auto 300px;
+    }
+}
+
+@media (max-width:1100px) {
+    .main>section:last-child {
+        display: none;
+    }
+
+    .main {
+        grid-template-columns: 270px auto;
+    }
+}
+
+
+@media (max-width:700px) {
+    .main {
+        display: flex;
+        position: relative;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .header p {
+        width: 0px;
+        height: 0px;
+        overflow: hidden;
+    }
+
+    .main>section {
+        position: absolute;
+        width: 93%;
+        height: 95%;
+        display: none;
+        margin: auto;
+    }
+
+    .chat-section {
+        display: grid !important;
+    }
+
+    .message {
+        max-width: 80%;
+    }
+
+}

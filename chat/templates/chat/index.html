@@ -1,25 +1,277 @@
-<html>
-<head>
-    <meta charset="utf-8"/>
-    <title>Chat Rooms</title>
-</head>
-<body>
-    What chat room would you like to enter?<br>
-    <input id="room-name-input" type="text" size="100"><br>
-    <input id="room-name-submit" type="button" value="Enter">
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="{% static 'chat/css/fonts.css' %}" />
+        <link rel="stylesheet" href="{% static 'chat/css/header.css' %}" />
+        <link rel="stylesheet" href="{% static 'chat/css/main.css' %}" />
+        <link rel="stylesheet" href="{% static 'chat/css/conversation-list.css' %}" />
+        <link rel="stylesheet" href="{% static 'chat/css/chat-section.css' %}" />
+        <link rel="stylesheet" href="{% static 'chat/css/about-section.css' %}" />
+        <link rel="stylesheet" href="{% static 'chat/css/sidebar.css' %}" />
+        <script src="https://code.iconify.design/iconify-icon/1.0.0/iconify-icon.min.js"></script>
+        <link rel="stylesheet" href="{% static 'chat/css/media-queries.css' %}" />
+        <title>Chat</title>
+    </head>
+    <body>
+        <header class="header">
+            <div class="header-left-side">
+                <button class="toggle-sidebar">
+                    <iconify-icon class="show-sidebar" icon="charm:menu-hamburger">
+                        show sidebar
+                    </iconify-icon>
+                </button>
+                <a href="{% url 'index' %}" target="_blank">
+                    <h1>Tantorial</h1>
+                </a>
+            </div>
+            <nav>
+                <button class="new-room">
+                    <iconify-icon icon="akar-icons:plus"></iconify-icon><span> New Chat </span>
+                </button>
+                <iconify-icon icon="clarity:notification-line">notification</iconify-icon>
 
-    <script>
-        document.querySelector('#room-name-input').focus();
-        document.querySelector('#room-name-input').onkeyup = function(e) {
-            if (e.keyCode === 13) {  // enter, return
-                document.querySelector('#room-name-submit').click();
-            }
-        };
-
-        document.querySelector('#room-name-submit').onclick = function(e) {
-            var roomName = document.querySelector('#room-name-input').value;
-            window.location.pathname = '/chat/' + roomName + '/';
-        };
-    </script>
-</body>
+                <a href="{% url 'profile' %}">
+                    <img
+                        width="30px"
+                        src="{{user.profilepersonal.profile_pic.url}}"
+                        class="profile-image"
+                    />
+                </a>
+                <p>Frank Peters</p>
+            </nav>
+        </header>
+        <div class="sidebar sidebar-hidden">
+            <button class="close">
+                <iconify-icon icon="bytesize:close">close</iconify-icon>
+            </button>
+            <div class="sidebar-header">
+                <h2>Tantorial</h2>
+            </div>
+            <form>
+                <label for="sidebar-search">Search</label>
+                <input ïd="sidebar-search" type="text" placeholder="search whole site" />
+                <button type="submit">
+                    <iconify-icon icon="eva:search-fill">search</iconify-icon>
+                </button>
+            </form>
+            <div class="sidebar-element">
+                <div>
+                    <iconify-icon icon="clarity:contract-line"></iconify-icon>
+                    <p>Contract</p>
+                </div>
+            </div>
+            <div class="sidebar-element">
+                <div>
+                    <iconify-icon icon="dashicons:cloud-saved"></iconify-icon>
+                    <p>Saved</p>
+                </div>
+            </div>
+            <div class="sidebar-element">
+                <div>
+                    <iconify-icon icon="arcticons:hidden-settings"></iconify-icon>
+                    <p>Settings</p>
+                </div>
+            </div>
+            <div class="sidebar-element active-element">
+                <div>
+                    <iconify-icon icon="bx:message-rounded"></iconify-icon>
+                    <p>Chat</p>
+                </div>
+            </div>
+            <div class="sidebar-element">
+                <div>
+                    <iconify-icon icon="fe:logout"></iconify-icon>
+                    <p>Logout</p>
+                </div>
+            </div>
+        </div>
+        <div class="fake-shadow"></div>
+        <main class="main">
+            <section class="conversation-list-section">
+                <div class="conversation-list-header">
+                    <h2>Your Inbox</h2>
+                    <iconify-icon icon="arcticons:settings">settings</iconify-icon>
+                </div>
+                <form class="search-form" method="get">
+                    <input type="text" placeholder="Search" />
+                    <button type="submit">Search</button>
+                </form>
+                <div class="conversation-elements-container">
+                    <div class="conversation-element">
+                        <img
+                            width="30px"
+                            src="./profile3.jpeg"
+                            class="profile-image"
+                        />
+                        <h3 class="room-name">David Ade</h3>
+                        <p class="room-group-info">Bio: This David's Bio</p>
+                        <p class="room-group-last-message">David: will you be availabe today</p>
+                        <span class="room-last-active">3m</span>
+                    </div>
+                    <div class="conversation-element">
+                        <img
+                            width="30px"
+                            src="./profile2.jpeg"
+                            class="profile-image"
+                        />
+                        <h3 class="room-name">David Ade</h3>
+                        <p class="room-group-info">Bio: This David's Bio</p>
+                        <p class="room-group-last-message">David: will you be availabe today</p>
+                        <span class="room-last-active">3m</span>
+                    </div>
+                    <div class="conversation-element active">
+                        <img
+                            width="30px"
+                            src="./profile4.jpeg "
+                            class="profile-image"
+                        />
+                        <h3 class="room-name">Random name</h3>
+                        <p class="room-group-info">Bio: This Groups Bio</p>
+                        <p class="room-group-last-message">Dave: Hi this is my last message</p>
+                        <span class="room-last-active">3m</span>
+                    </div>
+                    <div class="conversation-element">
+                        <img
+                            width="30px"
+                            src="./profile2.jpeg"
+                            class="profile-image"
+                        />
+                        <h3 class="room-name">David Ade</h3>
+                        <p class="room-group-info">Bio: This David's Bio</p>
+                        <p class="room-group-last-message">David: will you be availabe today</p>
+                        <span class="room-last-active">3m</span>
+                    </div>
+                    <div class="conversation-element">
+                        <img
+                            width="30px"
+                            src="./profile3.jpeg"
+                            class="profile-image"
+                        />
+                        <h3 class="room-name">David Ade</h3>
+                        <p class="room-group-info">Bio: This David's Bio</p>
+                        <p class="room-group-last-message">David: will you be availabe today</p>
+                        <span class="room-last-active">3m</span>
+                    </div>
+                    <div class="conversation-element">
+                        <img
+                            width="30px"
+                            src="./profile2.jpeg"
+                            class="profile-image"
+                        />
+                        <h3 class="room-name">David Ade</h3>
+                        <p class="room-group-info">Bio: This David's Bio</p>
+                        <p class="room-group-last-message">David: will you be availabe today</p>
+                        <span class="room-last-active">3m</span>
+                    </div>
+                </div>
+            </section>
+            <section class="chat-section">
+                <div class="chat-section-header">
+                    <div>
+                        <img
+                            width="30px"
+                            src="./profile4.jpeg"
+                            class="profile-image"
+                        />
+                        <h2 class="room-name">Random name</h2>
+                        <p class="room-group-info">Bio: This Groups Bio</p>
+                    </div>
+                </div>
+                <div class="chat-container">
+                    <div class="chat-main">
+                        <div>
+                            <div class="message">
+                                <img src="./profile4.jpeg" alt="" class="profile-image" />
+                                <div class="message-body">
+                                    <h4>Bill Gate</h4>
+                                    <span>
+                                        Sed ut perspiciatis unde omnis iste natus error sit
+                                        voluptatem accusantium doloremque laudantium, totam rem
+                                        aperiam, eaque ipsa quae ab illo inventore veritatis et
+                                        quasi architecto
+                                    </span>
+                                </div>
+                                <p class="message-delivery-time">13:00am</p>
+                            </div>
+                            <div class="message">
+                                <img src="./profile4.jpeg" alt="" class="profile-image" />
+                                <div class="message-body">
+                                    <h4>Bill Gate</h4>
+                                    <span>
+                                        Sed ut perspiciatis unde omnis iste natus error sit
+                                        voluptatem accusantium doloremque laudantium, totam rem
+                                        aperiam, eaque ipsa quae ab illo inventore veritatis et
+                                        quasi architecto
+                                    </span>
+                                </div>
+                                <p class="message-delivery-time">13:01am</p>
+                            </div>
+                            <div class="owner message">
+                                <img src="./profile.jpg" alt="" class="profile-image" />
+                                <div class="message-body">
+                                    <h4>You</h4>
+                                    <span>
+                                        Sed ut perspiciatis unde omnis iste natus error sit
+                                        voluptatem accusantium doloremque laudantium, totam rem
+                                        aperiam, eaque ipsa quae ab illo inventore veritatis et
+                                        quasi architecto
+                                    </span>
+                                </div>
+                                <p class="message-delivery-time">13:15am</p>
+                            </div>
+                            <div class="owner message">
+                                <img src="./profile.jpg" alt="" class="profile-image" />
+                                <div class="message-body">
+                                    <h4>You</h4>
+                                    <span>
+                                        Sed ut perspiciatis unde omnis iste natus error sit
+                                        voluptatem accusantium doloremque laudantium, totam rem
+                                        aperiam, eaque ipsa quae ab illo inventore veritatis et
+                                        quasi architecto
+                                    </span>
+                                </div>
+                                <p class="message-delivery-time">12:30pm</p>
+                            </div>
+                        </div>
+                    </div>
+                    <form>
+                        <textarea
+                            class="message-input"
+                            placeholder="Type message here ....."
+                        ></textarea>
+                        <button>
+                            <iconify-icon icon="fluent:send-28-filled">Send</iconify-icon>
+                        </button>
+                    </form>
+                </div>
+            </section>
+            <section class="about-section">
+                <div class="about-section-header">
+                    <img src="profile4.jpeg" alt="profile4 pictures" class="profile-image" />
+                    <h2 class="room-name">Random Name</h2>
+                    <p class="role">Tutor</p>
+                    <span class="rating">
+                        <iconify-icon icon="flat-color-icons:rating"></iconify-icon>
+                        <span> 4.7 (Rating) </span>
+                    </span>
+                </div>
+            </section>
+        </main>
+        <script>
+            const toggleSidebar = () => {
+                const sidebar = document.querySelector(".sidebar");
+                sidebar.classList.toggle("sidebar-hidden");
+                const shadow = document.querySelector(".fake-shadow");
+                shadow.classList.toggle("shadow-show");
+            };
+            document.querySelector(".sidebar .close").addEventListener("click", toggleSidebar);
+            document.querySelector(".show-sidebar").addEventListener("click", toggleSidebar);
+            document.querySelector(".fake-shadow").addEventListener("click", toggleSidebar);
+        </script>
+        <script src="{% static 'chat/js/index.js' %}" type="text/javascript"></script>
+    </body>
 </html>
