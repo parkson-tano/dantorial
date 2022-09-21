@@ -14,7 +14,7 @@ class PersonalRoomSerializer(serializers.ModelSerializer):
     class Meta:
         model = PersonalRoom
         fields = (
-            "user_id",
+            "id",
             "last_message",
             "last_message_time",
             "last_user_to_message",

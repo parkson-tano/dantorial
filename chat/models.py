@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.humanize.templatetags.humanize import naturaltime
-from django.db.models import Q
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
@@ -28,13 +27,15 @@ class PersonalRoom(models.Model):
                 "user_1": ValidationError(_("First user should not be equal to second user")),
                 "user_2": ValidationError(_("Second user should not be equal to first user"))
             })
-        query = (Q(user_1=self.user_1) & Q(user_2=self.user_2)) | (
-            Q(user_1=self.user_2) & Q(user_2=self.user_1))
+        queryset = self.__class__.objects
+        room = queryset.filter(user_1=self.user_1, user_2=self.user_2) or queryset.filter(
+            user_1=self.user_2, user_2=self.user_1)
 
-        if self.__class__.objects.filter(query).exists:
+        if room:
             raise ValidationError(
                 _("Relationship between this users exists already")
             )
+
         return super().clean()
 
     def __str__(self):
@@ -68,6 +69,9 @@ class PersonalRoom(models.Model):
             return self.user_2
         return self.user_1
 
+    def is_member(self, user):
+        return self.user_1 == user or self.user_2 == user
+
 
 class PersonalMessage(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
@@ -84,3 +88,11 @@ class PersonalMessage(models.Model):
     @property
     def userprofile(self):
         return str(self.user.profilepersonal.profile_pic.url)
+
+    def clean(self):
+        if not self.chatroom.is_member(self.user):
+            raise ValidationError(_("User does not belong in room"))
+        return super().clean()
+
+    def __str__(self):
+        return f"{self.user.email} => {self.content}"

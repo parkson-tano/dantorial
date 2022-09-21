@@ -82,7 +82,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'webpush',
     'chat',
-    "channels",
+    # "channels",
 ]
 
 MIDDLEWARE = [
