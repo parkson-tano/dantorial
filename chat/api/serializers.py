@@ -8,7 +8,6 @@ class PersonalRoomSerializer(serializers.ModelSerializer):
     user = serializers.SerializerMethodField()
     profile_pic = serializers.SerializerMethodField()
     bio = serializers.SerializerMethodField()
-    user_id = serializers.SerializerMethodField()
     chat_url = serializers.SerializerMethodField()
 
     class Meta:
@@ -38,9 +37,6 @@ class PersonalRoomSerializer(serializers.ModelSerializer):
     def get_bio(self, obj):
         bio = self.get_other_user_object(obj).profileinfo.bio
         return bio if bio else "User has not set a bio"
-
-    def get_user_id(self, obj):
-        return self.get_other_user_object(obj).id
 
     def get_chat_url(sel, obj):
         return reverse_lazy("contact-detail", kwargs={"pk": obj.id})

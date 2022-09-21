@@ -50,7 +50,9 @@
             <p class="role">{{other_user.profilepersonal.account_type.title}}</p>
             <span class="rating">
                 <iconify-icon icon="flat-color-icons:rating"></iconify-icon>
-                <span> 4.7 (Rating) </span>
+                <span> {{contact_rating_info.rating}} (Rated by {{contact_rating_info.people_count}} 
+                {% if contact_rating_info.people_count == 1 %} user {% else %} users {% endif %}) 
+                </span>
             </span>
         </div>
     </section>
