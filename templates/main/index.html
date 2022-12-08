@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load cache %}
 {% load i18n %}
 {% load mathfilters %}
 
@@ -376,7 +375,7 @@
     
     <div class="row align-items-md-stretch mb-auto">
         <h5 class="text-center mb-3 fw-dark fs-3 font-weight-bold">How to use Tantorial</h5>
-        {% cache 500 how %}
+
         {% for caro in how %}
         <div class="col-lg-3 col-md-3 col-sm-6 me-0 ml-0 mb-2 p-2">
             <div class="card y-0 mr-auto ml-auto me-0 border-0" style="width: 100%">
@@ -391,7 +390,7 @@
             </div>
         </div>
         {% endfor %}
-       {% endcache %}
+
 
     </div>
      

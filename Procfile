@@ -1,1 +1,1 @@
-web: gunicorn dantorial.wsgi --log-file -
+web: gunicorn "dantorial.wsgi"
