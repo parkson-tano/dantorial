@@ -18,8 +18,8 @@ def location_renderer(request):
         'region': Region.objects.all(),
         'towns': Town.objects.all(),
         'quater': Quater.objects.all(),
-        'about': About.objects.get(id=1),
-        'privacy': Privacy.objects.get(id=1),
+        # 'about': About.objects.get(id=1),
+        # 'privacy': Privacy.objects.get(id=1),
         'team': OurTeam.objects.all(),
         'how':  HowToUse.objects.all(),
         'messags': messags,
@@ -27,4 +27,3 @@ def location_renderer(request):
         # 'favourite': ProfilePersonal.objects.get(user=request.user),
 
     }
-    print(messags)

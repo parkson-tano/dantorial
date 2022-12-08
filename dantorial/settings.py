@@ -34,6 +34,9 @@ DATABASES = {
 # Application definition
 
 INSTALLED_APPS = [
+    # Django cleanup to remove unused media files
+    # https://github.com/un1t/django-cleanup
+    'django_cleanup.apps.CleanupConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -78,7 +81,8 @@ INSTALLED_APPS = [
     "pwa",
     'rest_framework.authtoken',
     'webpush',
-
+    'chat',
+    "channels",
 ]
 
 MIDDLEWARE = [
@@ -139,7 +143,13 @@ TEMPLATES = [
 
 # WSGI_APPLICATION = 'dantorial.wsgi.application'
 
-# ASGI_APPLICATION = 'dantorial.routing.application'
+ASGI_APPLICATION = 'dantorial.asgi.application'
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
 
 AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
@@ -343,7 +353,7 @@ SOCIALACCOUNT_PROVIDERS = {
             # 'LOCALE_FUNC': 'path.to.callable',
             'VERIFIED_EMAIL': True,
             'VERSION': 'v7.0',
-            }
+        }
 }
 
 SOCIAL_AUTH_FACEBOOK_KEY = os.getenv('SOCIAL_AUTH_FACEBOOK_KEY')

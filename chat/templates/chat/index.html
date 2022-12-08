@@ -1,25 +1,31 @@
-<html>
-<head>
-    <meta charset="utf-8"/>
-    <title>Chat Rooms</title>
-</head>
-<body>
-    What chat room would you like to enter?<br>
-    <input id="room-name-input" type="text" size="100"><br>
-    <input id="room-name-submit" type="button" value="Enter">
-
-    <script>
-        document.querySelector('#room-name-input').focus();
-        document.querySelector('#room-name-input').onkeyup = function(e) {
-            if (e.keyCode === 13) {  // enter, return
-                document.querySelector('#room-name-submit').click();
-            }
-        };
-
-        document.querySelector('#room-name-submit').onclick = function(e) {
-            var roomName = document.querySelector('#room-name-input').value;
-            window.location.pathname = '/chat/' + roomName + '/';
-        };
-    </script>
-</body>
-</html>
+{% extends "chat/root.html" %}
+{% block stuffForHeader %}
+<style>
+    main{
+        width:: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 10px;
+    }
+    main div, main ul{
+        display: flex;
+        gap: 20px;
+        flex-direction: column;
+    }
+</style>
+{% endblock stuffForHeader %}
+{% block content %}
+<main>
+    <h2>This Page Is Still Under Development</h2>
+    <div>
+    <p>To view a conversation</p>
+    <ul>
+        <li>Create a conversation between to users</li>
+        <li>Go to "/chat-testing/(conversation-id)" to view the conversation page</li>
+    </ul>
+    </div>
+</main>
+{% endblock content %}

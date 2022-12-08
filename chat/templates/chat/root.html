@@ -1,0 +1,102 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="{% static 'chat/css/sidebar.css' %}" />
+        <link rel="stylesheet" href="{% static 'chat/css/fonts.css' %}" />
+        <link rel="stylesheet" href="{% static 'chat/css/header.css' %}" />
+        {% block stuffForHeader %} {% endblock stuffForHeader %}
+        <link rel="stylesheet" href="{% static 'chat/css/media-queries.css' %}" />
+        <title>{% block pagetitle %} Chat {% endblock pagetitle %}</title>
+    </head>
+    <body>
+        <header class="header">
+            <div class="header-left-side">
+                <button class="toggle-sidebar">
+                    <iconify-icon class="show-sidebar" icon="charm:menu-hamburger">
+                        show sidebar
+                    </iconify-icon>
+                </button>
+                <a href="/" >
+                    <h1>Tantorial</h1>
+                </a>
+            </div>
+            <nav>
+                <button class="new-room">
+                    <iconify-icon icon="akar-icons:plus"></iconify-icon><span> New Chat </span>
+                </button>
+                <iconify-icon icon="clarity:notification-line">notification</iconify-icon>
+                <a href="{% url 'dantorial:profile' %}">
+                    <img
+                        width="30px"
+                        src="{{user.profilepersonal.profile_pic.url}}"
+                        class="profile-image"
+                    />
+                </a>
+                <p>{{user.email.title}}</p>
+            </nav>
+        </header>
+        <div class="sidebar sidebar-hidden">
+            <button class="close">
+                <iconify-icon icon="bytesize:close">close</iconify-icon>
+            </button>
+            <div class="sidebar-header">
+                <h2>Tantorial</h2>
+            </div>
+            <form>
+                <label for="sidebar-search">Search</label>
+                <input ïd="sidebar-search" type="text" placeholder="search whole site" />
+                <button type="submit">
+                    <iconify-icon icon="eva:search-fill">search</iconify-icon>
+                </button>
+            </form>
+            <div class="sidebar-element">
+                <div>
+                    <iconify-icon icon="clarity:contract-line"></iconify-icon>
+                    <p>Contract</p>
+                </div>
+            </div>
+            <div class="sidebar-element">
+                <div>
+                    <iconify-icon icon="dashicons:cloud-saved"></iconify-icon>
+                    <p>Saved</p>
+                </div>
+            </div>
+            <div class="sidebar-element">
+                <div>
+                    <iconify-icon icon="arcticons:hidden-settings"></iconify-icon>
+                    <p>Settings</p>
+                </div>
+            </div>
+            <div class="sidebar-element active-element">
+                <div>
+                    <iconify-icon icon="bx:message-rounded"></iconify-icon>
+                    <p>Chat</p>
+                </div>
+            </div>
+            <div class="sidebar-element">
+                <div>
+                    <iconify-icon icon="fe:logout"></iconify-icon>
+                    <p>Logout</p>
+                </div>
+            </div>
+        </div>
+        <div class="fake-shadow"></div>
+        {% block content %} {% endblock content %}
+        <script>
+            const toggleSidebar = () => {
+                const sidebar = document.querySelector(".sidebar");
+                sidebar.classList.toggle("sidebar-hidden");
+                const shadow = document.querySelector(".fake-shadow");
+                shadow.classList.toggle("shadow-show");
+            };
+            document.querySelector(".sidebar .close").addEventListener("click", toggleSidebar);
+            document.querySelector(".show-sidebar").addEventListener("click", toggleSidebar);
+            document.querySelector(".fake-shadow").addEventListener("click", toggleSidebar);
+        </script>
+        <script src="https://code.iconify.design/iconify-icon/1.0.0/iconify-icon.min.js"></script>
+    </body>
+</html>

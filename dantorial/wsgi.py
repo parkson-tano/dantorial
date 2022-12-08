@@ -23,4 +23,8 @@ if os.getenv('DJANGO_SETTINGS_MODULE'):
     os.environ['DJANGO_SETTINGS_MODULE'] = os.getenv('DJANGO_SETTINGS_MODULE')
 
 application = get_wsgi_application()
+<<<<<<< HEAD
 app = application
+=======
+app = application
+>>>>>>> 4f236226881f5ca1e6b8b1d3c212ad56d3e96d0b

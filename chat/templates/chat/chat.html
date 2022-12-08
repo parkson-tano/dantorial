@@ -1,0 +1,61 @@
+{% extends "chat/root.html" %} 
+{% load static %} 
+{% block stuffForHeader %}
+        <link rel="stylesheet" href="{% static 'chat/css/main.css' %}" />
+        <link rel="stylesheet" href="{% static 'chat/css/conversation-list.css' %}" />
+        <link rel="stylesheet" href="{% static 'chat/css/chat-section.css' %}" />
+        <link rel="stylesheet" href="{% static 'chat/css/about-section.css' %}" />
+        <link rel="stylesheet" href="{% static 'chat/css/media-queries.css' %}" />
+{% endblock stuffForHeader %} 
+{% block content %}
+<input type="hidden" id="chat-id" value="{{object.id}}"/>
+<main class="main">
+    <section class="conversation-list-section">
+        <div class="conversation-list-header">
+            <h2>Your Inbox</h2>
+            <iconify-icon icon="arcticons:settings">settings</iconify-icon>
+        </div>
+        <form class="search-form" method="get">
+            <input type="text" placeholder="Search" />
+            <button type="submit">Search</button>
+        </form>
+        <div class="conversation-elements-container">
+        </div>
+    </section>
+    <section class="chat-section">
+        <div class="chat-section-header">
+            <div>
+                <img width="30px" src="{{other_user.profilepersonal.profile_pic.url}}" class="profile-image" />
+                <h2 class="room-name">{{other_user.email}}</h2>
+                <p class="room-group-info">{{other_user.profileinfo.bio}}</p>
+            </div>
+        </div>
+        <div class="chat-container">
+            <div class="chat-main">
+                <div>
+                </div>
+            </div>
+            <form>
+                <textarea class="message-input" placeholder="Type message here ....."></textarea>
+                <button>
+                    <iconify-icon icon="fluent:send-28-filled">Send</iconify-icon>
+                </button>
+            </form>
+        </div>
+    </section>
+    <section class="about-section">
+        <div class="about-section-header">
+            <img src="{{other_user.profilepersonal.profile_pic.url}}" alt="profile4 pictures" class="profile-image" />
+            <h2 class="room-name">{{other_user.email.title}}</h2>
+            <p class="role">{{other_user.profilepersonal.account_type.title}}</p>
+            <span class="rating">
+                <iconify-icon icon="flat-color-icons:rating"></iconify-icon>
+                <span> {{contact_rating_info.rating}} (Rated by {{contact_rating_info.people_count}} 
+                {% if contact_rating_info.people_count == 1 %} user {% else %} users {% endif %}) 
+                </span>
+            </span>
+        </div>
+    </section>
+</main>
+<script src="{% static 'chat/js/index.js' %}" type="text/javascript"></script>
+{% endblock content %}

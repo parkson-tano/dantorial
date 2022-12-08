@@ -17,12 +17,14 @@ handler500 = 'mainapp.views.error500'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("chat-testing/", include("chat.urls")),
     path('accounts/', include('allauth.urls')),
     path('chaining/', include('smart_selects.urls')),
     path('', include('mainapp.urls')),
     path('course/', include('mooc.urls')),
     path('message/', include('messaging.urls')),
-    path("accounts/email/", page_not_found,{'exception': Exception('Not Found')}, name="account_email"),
+    path("accounts/email/", page_not_found,
+         {'exception': Exception('Not Found')}, name="account_email"),
     path("api/", include('api.urls')),
     path('__debug__', include(debug_toolbar.urls)),
     path("__reload__/", include("django_browser_reload.urls")),
@@ -32,7 +34,8 @@ urlpatterns = [
     # path('agora/',Agora.as_view(
     # app_id='4fb86dc603104fa5b15c80ead4b27d44',
     # channel='tantorial')),
-    url('^inbox/notifications/', include(notifications.urls, namespace='notifications'), name='notification'),
+    url('^inbox/notifications/', include(notifications.urls,
+        namespace='notifications'), name='notification'),
 
 
 ]
