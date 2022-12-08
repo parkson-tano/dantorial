@@ -1,0 +1,39 @@
+.about-section-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    font-family: "Questrial", serif;
+    margin: 20px;
+}
+
+.about-section-header .profile-image {
+    width: 90px;
+    height: 90px;
+    border-radius: 45px;
+    border: 5px solid #1D75DD;
+}
+
+.about-section-header .room-name {
+    font-weight: 700;
+    font-size: 1.2rem;
+    line-height: 1.3rem;
+    color: #555758;
+}
+
+.about-section-header .role {
+    font-weight: 400;
+    font-size: .9rem;
+}
+
+.about-section-header .rating {
+    font-style: normal;
+    font-weight: 700;
+    display: flex;
+    gap: 5px;
+    font-size: .85rem;
+    display: flex;
+    align-items: center;
+    color: #555758;
+}

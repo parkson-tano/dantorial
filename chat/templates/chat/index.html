@@ -1,0 +1,31 @@
+{% extends "chat/root.html" %}
+{% block stuffForHeader %}
+<style>
+    main{
+        width:: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 10px;
+    }
+    main div, main ul{
+        display: flex;
+        gap: 20px;
+        flex-direction: column;
+    }
+</style>
+{% endblock stuffForHeader %}
+{% block content %}
+<main>
+    <h2>This Page Is Still Under Development</h2>
+    <div>
+    <p>To view a conversation</p>
+    <ul>
+        <li>Create a conversation between to users</li>
+        <li>Go to "/chat-testing/(conversation-id)" to view the conversation page</li>
+    </ul>
+    </div>
+</main>
+{% endblock content %}

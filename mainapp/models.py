@@ -5,7 +5,7 @@ from django.db.models.base import Model
 from django.views.generic.edit import CreateView
 from setuptools import Require
 from category.models import *
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from PIL import Image
 from location.models import *
 from django.db.models.signals import post_save
@@ -16,6 +16,9 @@ from smart_selects.db_fields import ChainedForeignKey
 from ckeditor.fields import RichTextField
 import numpy as np
 from allauth.account.admin import EmailAddress
+from django.contrib.auth.models import AbstractUser
+from django.utils.translation import gettext as _
+
 # from multiselectfield import MultiSelectField
 # Create your models here.
 
@@ -110,16 +113,14 @@ MODE = (
     ('Audio', 'Audio'),
 )
 
-# User._meta.get_field('username')._unique = False
 
-# day = (
-#     ('monday','monday'),
-#     ('tuesday', 'tuesday'),
-#     ('wednesday', 'wednesday'),
-#     ('thursday', 'thursday'),
-#     ('friday', 'friday'),
-#     ('sat')
-# )
+class User(AbstractUser):
+    email = models.EmailField(_('email address'), unique=True)
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'username']
+
+    def __str__(self):
+        return "{}".format(self.email)
 
 
 class ProfilePersonal(models.Model):
@@ -501,7 +502,6 @@ class AccountBalance(models.Model):
 def create_account(sender, instance, created, **kwargs):
     if created:
         AccountBalance.objects.create(user=instance)
-
 
 
 class BillingPayment(models.Model):
