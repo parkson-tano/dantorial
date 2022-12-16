@@ -1,4 +1,4 @@
-agora-token-builder==1.0.0
+wheel
 asgiref==3.5.1
 async-timeout==4.0.2
 attrs==22.1.0
@@ -90,3 +90,4 @@ uuid==1.30
 whitenoise==6.0.0
 wrapt==1.14.1
 zope.interface==5.4.0
+
