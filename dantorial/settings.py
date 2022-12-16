@@ -82,7 +82,6 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'webpush',
     'chat',
-    "channels",
 ]
 
 MIDDLEWARE = [
@@ -141,15 +140,9 @@ TEMPLATES = [
     },
 ]
 
-# WSGI_APPLICATION = 'dantorial.wsgi.application'
+WSGI_APPLICATION = 'dantorial.wsgi.application'
 
-ASGI_APPLICATION = 'dantorial.asgi.application'
-
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels.layers.InMemoryChannelLayer"
-    }
-}
+# ASGI_APPLICATION = 'dantorial.asgi.application'
 
 AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
