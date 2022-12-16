@@ -34,8 +34,6 @@ DATABASES = {
 # Application definition
 
 INSTALLED_APPS = [
-    # Django cleanup to remove unused media files
-    # https://github.com/un1t/django-cleanup
     'django_cleanup.apps.CleanupConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -80,7 +78,6 @@ INSTALLED_APPS = [
     'notifications',
     "pwa",
     'rest_framework.authtoken',
-    'webpush',
     'chat',
 ]
 
@@ -104,10 +101,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'dantorial.urls'
 
-CACHE_MIDDLEWARE_ALIAS = 'default'  # which cache alias to use
-# number of seconds to cache a page for (TTL)
-CACHE_MIDDLEWARE_SECONDS = 60*60*24
-CACHE_MIDDLEWARE_KEY_PREFIX = ''
 
 TEMPLATES = [
     {
@@ -151,11 +144,6 @@ AUTHENTICATION_BACKENDS = (
 # STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-WEBPUSH_SETTINGS = {
-    "VAPID_PUBLIC_KEY": "BCqIQ7dMD6j7xe9-gVcHhkG2ID6nzak8owscKsHP4Bghj6dW4ZZ5Bw5dW8W2BdQe9XUOM917Vm371-Cvwok_dF4",
-    "VAPID_PRIVATE_KEY": "G7wdzuixpCTlIHhjUZ1d__lc7PEzN1c5EoJhGa0EvyQ",
-    "VAPID_ADMIN_EMAIL": "tanoparksonsilencer@gmail.com"
-}
 
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
@@ -266,7 +254,7 @@ CORS_ORIGIN_WHITELIST = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-ASGI_APPLICATION = 'dantorial.asgi.application'
+# ASGI_APPLICATION = 'dantorial.asgi.application'
 
 # ACCOUNT_FORMS = {
 #     'login': 'mainapp.forms.UserLoginForm'
