@@ -14,7 +14,6 @@ from django.utils import timezone
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from smart_selects.db_fields import ChainedForeignKey
 from ckeditor.fields import RichTextField
-import numpy as np
 from allauth.account.admin import EmailAddress
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext as _

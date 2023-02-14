@@ -41,8 +41,6 @@ from itertools import chain
 from review.models import Review
 from review.forms import ReviewForm
 from allauth.account.admin import EmailAddress
-from messaging.models import Message, Contact, Chat
-from messaging.forms import MessageForm, ContactForm
 # Create your views here.
 from django.core.mail import send_mail
 from django.conf import Settings, settings
@@ -50,7 +48,6 @@ from campay.sdk import Client
 from django.http import JsonResponse
 from django.db.models import Avg
 from django.utils.translation import gettext as _
-from notifications.signals import notify
 import random
 import os
 from dotenv import load_dotenv
@@ -225,20 +222,6 @@ class TermsView(TemplateView):
 
 class ContactView(CreateView):
     template_name = 'main/contact_us.html'
-    form_class = ContactForm
-    success_url = reverse_lazy('dantorial:index')
-
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        messages.success(self.request, "We will get back to you shortly")
-        subject = "Thanks for contacting us"
-        message = f'{form.instance.first_name} thanks for contacting us'
-        from_email = settings.DEFAULT_FROM_EMAIL
-        to_email = (form.instance.email, )
-
-        send_mail(subject, message, from_email, to_email, fail_silently=True)
-        form.save()
-        return super().form_valid(form)
 
 
 class UserRegistrationView(CreateView):

@@ -3,7 +3,6 @@ from django.views.generic import TemplateView, DetailView, View, ListView, FormV
 from django.core.mail import send_mail
 from django.conf import Settings, settings
 from django.shortcuts import redirect, get_object_or_404
-from numpy import less
 from campay.sdk import Client
 from django.urls import reverse_lazy, reverse
 from django.http import JsonResponse

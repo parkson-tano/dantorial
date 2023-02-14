@@ -3,7 +3,6 @@ from django.utils.translation import gettext_lazy as _
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-import dj_database_url
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -52,9 +51,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'category',
     'mainapp',
-    'notificate',
     'mooc',
-    'messaging',
     'review',
     'autoslug',
     'location',
@@ -75,7 +72,6 @@ INSTALLED_APPS = [
     'django_browser_reload',
     'cookie_consent',
     'robots',
-    'notifications',
     "pwa",
     'rest_framework.authtoken',
     'chat',
